@@ -237,8 +237,6 @@
                 android:text="@string/withdraw"
                 android:textColor="@color/primary_blue"
                 android:textStyle="bold" />
-
-
         </LinearLayout>
 
     </LinearLayout>

@@ -100,5 +100,8 @@
     <string name="leave_a_comment">Leave a comment</string>
     <string name="become_a">Become a</string>
     <string name="find_a">Find a</string>
+    <string name="active_parcels">Activity parcels</string>
+    <string name="add_parcels">Add parcels</string>
+    <string name="all_parcels">All parcels</string>
 
 </resources>
