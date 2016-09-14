@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/background"
+    android:weightSum="10">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:orientation="vertical"
+        android:padding="@dimen/dim_16">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/text_extra_large"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dim_6"
+                android:layout_weight="1"
+                android:background="@drawable/rectangle_white_border"
+                android:gravity="center"
+                android:padding="@dimen/dim_24"
+                android:text="@string/login"
+                android:textColor="@color/white" />
+
+            <TextView
+                style="@style/text_extra_large"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dim_6"
+                android:layout_weight="1"
+                android:background="@drawable/rectangle_white_border"
+                android:gravity="center"
+                android:padding="@dimen/dim_24"
+                android:text="@string/sign_up"
+                android:textColor="@color/white" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dim_12"
+            android:background="@drawable/rectangle_white_border"
+            android:gravity="center_vertical"
+            android:padding="@dimen/dim_24">
+
+            <ImageView
+                android:layout_width="@dimen/dim_32"
+                android:layout_height="@dimen/dim_32"
+                android:src="@mipmap/white_calender" />
+
+            <TextView
+                style="@style/text_extra_large"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dim_6"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:paddingLeft="@dimen/dim_8"
+                android:text="@string/connect_with_faceboook"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

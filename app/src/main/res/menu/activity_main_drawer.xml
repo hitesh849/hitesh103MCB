@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="@string/dashboard">
+        <menu>
+            <item
+                android:id="@+id/nav_profile"
+                android:title="@string/profile" />
+            <item
+                android:id="@+id/nav_my_parcel"
+                android:title="@string/my_parcels" />
+            <item
+                android:id="@+id/nav_my_trip"
+                android:title="@string/my_trips" />
+
+            <item
+                android:id="@+id/nav_my_receivings"
+                android:title="@string/my_receivings" />
+
+            <item
+                android:id="@+id/nav_my_wallet"
+                android:title="@string/wallet" />
+            <item
+                android:id="@+id/nav_withdraw"
+                android:title="@string/withdraw" />
+        </menu>
+    </item>
+    <item android:title="@string/general">
+        <menu>
+            <item
+                android:id="@+id/nav_settings"
+                android:title="@string/settings" />
+            <item
+                android:id="@+id/nav_t_and_c"
+                android:title="@string/terms_conditions" />
+        </menu>
+    </item>
+
+</menu>

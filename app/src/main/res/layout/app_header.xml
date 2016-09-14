@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/colorPrimary"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginRight="@dimen/h_dim_45"
+        android:layout_alignParentLeft="true"
+        >
+        <LinearLayout
+            android:id="@+id/llBackHeader"
+            android:layout_width="@dimen/h_dim_52"
+            android:gravity="center"
+            android:layout_height="match_parent"
+            android:background="?attr/actionBarItemBackground"
+            >
+
+            <ImageView
+                android:id="@+id/imgBackHeaderArrow"
+                android:layout_width="@dimen/dim_36"
+                android:layout_height="match_parent"
+                android:src="@mipmap/hamber"
+                android:layout_gravity="center_vertical"
+                android:foregroundTint="@color/white"
+                />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/LeftHederSpaceLeftSide"
+            android:layout_width="16dp"
+            android:visibility="gone"
+            android:layout_height="match_parent"
+            />
+
+        <RelativeLayout
+            android:id="@+id/rlHeaderLeft"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:padding="@dimen/h_dim_3"
+            android:layout_alignParentRight="true">
+
+
+            <ImageView
+                android:id="@+id/imgToolbarNameLeft"
+                android:layout_width="@dimen/dim_36"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/profile"
+                android:layout_alignParentLeft="true" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlHeaderNamecenter"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+
+        android:layout_centerInParent="true">
+
+        <TextView
+            android:id="@+id/txtHeaderNamecenter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:textSize="@dimen/h_text_dim_16"
+            android:singleLine="true"
+            android:textStyle="bold"
+            android:text="Welcome"
+            android:layout_centerInParent="true"
+            android:textColor="@color/white" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_alignParentRight="true"
+        > <RelativeLayout
+        android:id="@+id/rlNotificationHeader"
+        android:layout_width="@dimen/h_dim_52"
+        android:layout_height="@dimen/h_dim_52"
+        android:padding="@dimen/h_dim_3"
+        android:layout_alignParentRight="true"
+        android:background="?attr/actionBarItemBackground"
+        >
+
+        <ImageView
+            android:id="@+id/imgHeaderNotification"
+            android:layout_width="@dimen/h_dim_20"
+            android:layout_height="@dimen/h_dim_20"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/notification"/>
+        <TextView
+            android:id="@+id/txtNotiCount"
+            android:layout_width="@dimen/h_dim_18"
+            android:layout_height="@dimen/h_dim_18"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/white"
+            android:text="1"
+            android:gravity="center"
+            android:textSize="@dimen/h_text_dim_12"
+            android:background="@drawable/circle_blue_bg"/>
+
+    </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rlUserHeader"
+            android:layout_width="@dimen/h_dim_45"
+            android:layout_height="@dimen/h_dim_52"
+            android:padding="@dimen/h_dim_3"
+            android:layout_alignParentRight="true"
+            android:background="?attr/actionBarItemBackground"
+            >
+
+            <ImageView
+                android:id="@+id/imgUserLogout"
+                android:layout_width="@dimen/h_dim_20"
+                android:layout_height="@dimen/h_dim_20"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/user"/>
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/rlLogoutHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/h_dim_52"
+            android:padding="@dimen/h_dim_3"
+            android:layout_marginRight="@dimen/h_dim_12"
+            android:layout_alignParentRight="true"
+            android:background="?attr/actionBarItemBackground"
+            >
+
+            <ImageView
+                android:id="@+id/imgHeaderLogout"
+                android:layout_width="@dimen/h_dim_20"
+                android:layout_height="@dimen/h_dim_20"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/logout"/>
+
+        </RelativeLayout>
+    </LinearLayout>
+
+</RelativeLayout>

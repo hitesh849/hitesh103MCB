@@ -1,0 +1,16 @@
+<resources>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+
+    <style name="editxt_small" parent="text_semi_medium">
+        <item name="android:inputType">textNoSuggestions</item>
+        <item name="android:colorAccent">@color/black</item>
+    </style>
+
+
+</resources>
