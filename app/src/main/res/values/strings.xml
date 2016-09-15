@@ -13,6 +13,8 @@
     <string name="my_wallet">My Wallet</string>
     <string name="wallet">Wallet</string>
     <string name="withdraw">Withdraw</string>
+    <string name="withdraw_status">Withdraw Status</string>
+
     <string name="general">GENERAL</string>
     <string name="settings">Settings</string>
     <string name="terms_conditions">Terms &amp; Conditions</string>

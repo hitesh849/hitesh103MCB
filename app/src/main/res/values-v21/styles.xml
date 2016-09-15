@@ -12,5 +12,11 @@
         <item name="android:colorAccent">@color/black</item>
     </style>
 
+    <style name="withdraw_editxt">
+        <item name="android:inputType">textNoSuggestions</item>
+        <item name="android:textColorHint">@color/black</item>
+        <item name="android:backgroundTint">@color/black</item>
+    </style>
+
 
 </resources>

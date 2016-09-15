@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/screen_bg"
     android:orientation="vertical">
 
 
@@ -16,6 +17,7 @@
         android:weightSum="2">
 
         <TextView
+            android:id="@+id/txtWithDrawStatus"
             style="@style/text_medium"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -23,10 +25,12 @@
             android:background="@drawable/rect_left_corners_pink_bg"
             android:gravity="center"
             android:padding="@dimen/dim_8"
-            android:text="@string/existing_user"
+            android:text="@string/withdraw_status"
             android:textColor="@color/white" />
 
         <TextView
+
+            android:id="@+id/txtNewUserWithDraw"
             style="@style/text_medium"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -39,4 +43,12 @@
 
     </LinearLayout>
 
+    <RelativeLayout
+        android:id="@+id/rlWithDrawMain"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+    </RelativeLayout>
 </LinearLayout>

@@ -7,11 +7,6 @@
     <corners
         android:bottomRightRadius="@dimen/dim_6"
         android:topRightRadius="@dimen/dim_6" />
-    <padding
-        android:bottom="@dimen/dim_1"
-        android:left="@dimen/dim_1"
-        android:right="@dimen/dim_1"
-        android:top="@dimen/dim_1" />
-    />
+
     <solid android:color="@null" />
 </shape>

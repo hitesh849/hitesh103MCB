@@ -3,7 +3,6 @@ package com.app.mcb.adapters;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -14,11 +13,11 @@ import com.app.mcb.R;
 /**
  * Created by Hitesh kumawat on 14-09-2016.
  */
-public class HomeTripAdapter extends RecyclerView.Adapter<HomeTripAdapter.ViewHolder> {
+public class TripListCommonAdapter extends RecyclerView.Adapter<TripListCommonAdapter.ViewHolder> {
     private View.OnClickListener onClickListener;
     private boolean isRowHeaderShow;
 
-    public HomeTripAdapter(Context context, View.OnClickListener onClickListener, boolean isRowHeaderShow) {
+    public TripListCommonAdapter(Context context, View.OnClickListener onClickListener, boolean isRowHeaderShow) {
         this.onClickListener = onClickListener;
         this.isRowHeaderShow = isRowHeaderShow;
     }

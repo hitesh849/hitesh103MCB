@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import com.app.mcb.R;
@@ -18,6 +19,7 @@ public class AppHeaderView extends RelativeLayout {
     public LinearLayout llBackHeader;
     public RelativeLayout rlNotificationHeader;
     public RelativeLayout rlLogoutHeader;
+    public ImageView imgBackHeaderArrow;
 
     public AppHeaderView(Context context) {
         super(context);
@@ -40,6 +42,7 @@ public class AppHeaderView extends RelativeLayout {
         this.llBackHeader = (LinearLayout) findViewById(R.id.llBackHeader);
         this.rlNotificationHeader = (RelativeLayout) findViewById(R.id.rlNotificationHeader);
         this.rlLogoutHeader = (RelativeLayout) findViewById(R.id.rlLogoutHeader);
+        this.imgBackHeaderArrow = (ImageView) findViewById(R.id.imgBackHeaderArrow);
         this.llBackHeader.setOnClickListener((OnClickListener) Env.currentActivity);
 
         this.rlNotificationHeader.setOnClickListener(new OnClickListener() {

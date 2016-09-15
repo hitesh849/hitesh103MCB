@@ -4,11 +4,6 @@
         android:width="@dimen/dim_1"
         android:color="@color/colorPrimary" />
     <corners android:topLeftRadius="@dimen/dim_6" android:bottomLeftRadius="@dimen/dim_6" />
-    <padding
-        android:bottom="@dimen/dim_1"
-        android:left="@dimen/dim_1"
-        android:right="@dimen/dim_1"
-        android:top="@dimen/dim_1" />
-    />
+
     <solid android:color="@color/colorPrimary"/>
 </shape>

@@ -2,8 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/screen_bg"
     android:orientation="vertical">
+
+
+    <include
+        android:id="@+id/productHeader"
+        layout="@layout/app_header_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <include layout="@layout/transporter_search_filter2" />
 

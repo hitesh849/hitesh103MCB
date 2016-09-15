@@ -9,5 +9,6 @@
     <color name="white">#FFFFFF</color>
     <color name="trans_blue">#C8C6D6</color>
     <color name="dark_grey">#B0B0B0</color>
+    <color name="screen_bg">#E6E7EB</color>
 
 </resources>

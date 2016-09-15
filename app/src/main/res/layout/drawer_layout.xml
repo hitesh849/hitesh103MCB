@@ -13,6 +13,7 @@
        >
 
        <LinearLayout
+           android:id="@+id/llDashboardMain"
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
            android:layout_marginTop="@dimen/dim_16"
@@ -31,12 +32,14 @@
        </LinearLayout>
 
        <LinearLayout
+           android:id="@+id/llProfileMain"
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
            android:paddingLeft="@dimen/dim_8"
            android:paddingTop="@dimen/dim_12"
            >
            <TextView
+
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
                android:text="@string/profile"
@@ -48,6 +51,7 @@
 
        </LinearLayout>
        <LinearLayout
+           android:id="@+id/llMyParcelsMain"
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
            android:paddingLeft="@dimen/dim_8"
@@ -66,6 +70,7 @@
 
        </LinearLayout>
        <LinearLayout
+           android:id="@+id/llMyTripMain"
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
            android:paddingLeft="@dimen/dim_8"
@@ -84,6 +89,7 @@
 
        </LinearLayout>
        <LinearLayout
+           android:id="@+id/llMyRecivingMain"
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
            android:paddingLeft="@dimen/dim_8"
@@ -103,6 +109,7 @@
        </LinearLayout>
 
        <LinearLayout
+           android:id="@+id/llWalletMain"
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
            android:paddingLeft="@dimen/dim_8"
@@ -122,6 +129,7 @@
        </LinearLayout>
 
        <LinearLayout
+           android:id="@+id/llWithDrawMain"
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
            android:paddingLeft="@dimen/dim_8"
@@ -131,25 +139,6 @@
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
                android:text="@string/withdraw"
-               android:textColor="@color/white"
-               style="@style/text_medium"
-
-               android:paddingBottom="@dimen/dim_6"
-               android:background="@drawable/rect_bottom_line_blue_bg_point_5dp"
-               />
-
-       </LinearLayout>
-
-       <LinearLayout
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:paddingLeft="@dimen/dim_8"
-           android:paddingTop="@dimen/dim_12"
-           >
-           <TextView
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:text="@string/wallet"
                android:textColor="@color/white"
                style="@style/text_medium"
 
@@ -176,6 +165,7 @@
        </LinearLayout>
 
        <LinearLayout
+           android:id="@+id/llSettingsMain"
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
            android:paddingLeft="@dimen/dim_8"
@@ -194,6 +184,7 @@
 
        </LinearLayout>
        <LinearLayout
+           android:id="@+id/llTandCMain"
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
            android:paddingLeft="@dimen/dim_8"
@@ -211,6 +202,7 @@
 
        </LinearLayout>
        <LinearLayout
+           android:id="@+id/llPrivacyPolicyMain"
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
            android:paddingLeft="@dimen/dim_8"
