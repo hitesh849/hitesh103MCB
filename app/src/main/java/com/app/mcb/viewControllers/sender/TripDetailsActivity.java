@@ -15,7 +15,7 @@ import org.byteclues.lib.view.AbstractFragmentActivity;
 import java.util.Observable;
 
 /**
- * Created by u on 9/16/2016.
+ * Created by Hitesh on 9/16/2016.
  */
 public class TripDetailsActivity extends AbstractFragmentActivity implements View.OnClickListener {
 
@@ -30,7 +30,7 @@ public class TripDetailsActivity extends AbstractFragmentActivity implements Vie
 
     private void init() {
         vpTripDetails = (ViewPager) findViewById(R.id.vpTripDetails);
-        vpTripDetails.setAdapter(new TipDetailsVPAdapter(this,this));
+        vpTripDetails.setAdapter(new TipDetailsVPAdapter(this, this));
     }
 
     @Override
@@ -46,11 +46,9 @@ public class TripDetailsActivity extends AbstractFragmentActivity implements Vie
     @Override
     public void onClick(View v) {
 
-        int id=v.getId();
-        if(id==R.id.llBookNoewTripDetailsRow)
-        {
+        int id = v.getId();
+        if (id == R.id.llBookNoewTripDetailsRow) {
             startActivity(new Intent(this, LoginActivity.class));
         }
-
     }
 }

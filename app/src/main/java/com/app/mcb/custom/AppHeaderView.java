@@ -1,6 +1,7 @@
 package com.app.mcb.custom;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,8 +11,10 @@ import android.widget.RelativeLayout;
 
 import com.app.mcb.MainActivity;
 import com.app.mcb.R;
+import com.app.mcb.sharedPreferences.Config;
 
 import org.byteclues.lib.init.Env;
+import org.byteclues.lib.view.AbstractFragment;
 import org.byteclues.lib.view.AbstractFragmentActivity;
 
 /**
@@ -68,7 +71,9 @@ public class AppHeaderView extends RelativeLayout {
         this.rlLogoutHeader.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Config.clearPreferences();
+                Env.currentActivity.startActivity(new Intent(Env.currentActivity,MainActivity.class));
+                ((AbstractFragmentActivity) Env.currentActivity).finish();
             }
         });
     }

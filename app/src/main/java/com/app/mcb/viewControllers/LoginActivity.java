@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.app.mcb.R;
+import com.app.mcb.sharedPreferences.Config;
 
 import org.byteclues.lib.model.BasicModel;
 import org.byteclues.lib.view.AbstractFragmentActivity;
@@ -49,11 +50,15 @@ public class LoginActivity extends AbstractFragmentActivity implements View.OnCl
         int id=v.getId();
         if(id==R.id.txtLogin)
         {
+            Config.setLoginStatus(true);
+            Config.savePreferences();
             onBackPressed();
         }
         else if(id==R.id.txtSignUpLogin)
         {
+
             startActivity(new Intent(this,SignUpActivity.class));
+
         }
     }
 }

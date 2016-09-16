@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.app.mcb.custom.AppHeaderView;
+import com.app.mcb.sharedPreferences.Config;
 import com.app.mcb.viewControllers.TripListWithAllState;
 import com.app.mcb.viewControllers.dashboardFragments.DashBoardFragment;
 import com.app.mcb.viewControllers.dashboardFragments.MyProfileFragment;
@@ -16,6 +17,7 @@ import com.app.mcb.viewControllers.dashboardFragments.MyWalletFragment;
 import com.app.mcb.viewControllers.dashboardFragments.WithDrawFragment;
 
 import org.byteclues.lib.model.BasicModel;
+import org.byteclues.lib.view.AbstractFragment;
 import org.byteclues.lib.view.AbstractFragmentActivity;
 
 import java.util.Observable;
@@ -40,7 +42,12 @@ public class MainActivity extends AbstractFragmentActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         init();
-        getSupportFragmentManager().beginTransaction().add(R.id.fmHomeContainer, new TripListWithAllState(),"HomeFragment").commit();
+        AbstractFragment abstractFragment=new TripListWithAllState();
+        if(Config.getLoginStatus())
+        {
+            abstractFragment=new DashBoardFragment();
+        }
+        getSupportFragmentManager().beginTransaction().add(R.id.fmHomeContainer,abstractFragment ,"HomeFragment").commit();
 
     }
 
