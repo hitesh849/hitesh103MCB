@@ -19,7 +19,7 @@ import java.util.Observable;
 /**
  * Created by Hitesh kumawat on 14-09-2016.
  */
-public class HomeFragment extends AbstractFragment implements View.OnClickListener {
+public class TripListWithAllState extends AbstractFragment implements View.OnClickListener {
 
     private RecyclerView rvTripHome;
 

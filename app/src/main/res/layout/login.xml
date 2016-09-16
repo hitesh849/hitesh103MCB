@@ -12,7 +12,14 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_gravity="bottom"
-        android:layout_weight="1"></LinearLayout>
+        android:layout_weight="1">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/mcb_logo_bg"
+            />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -32,32 +39,28 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dim_16"
-
+                android:layout_marginTop="@dimen/dim_8"
                 android:textColorHint="@color/dark_grey">
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/dark_grey"
                     android:hint="@string/username"
-                    android:textColor="@color/white" />
+                    style="@style/et_login"/>
 
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dim_16"
-
+                android:layout_marginTop="@dimen/dim_8"
                 android:textColorHint="@color/dark_grey">
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/dark_grey"
-                    android:hint="@string/password"
-                    android:textColor="@color/white" />
+                    style="@style/et_login"
+                    android:hint="@string/password" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -69,32 +72,23 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    style="@style/text_extra_large"
+                    android:id="@+id/txtLogin"
+                    style="@style/button_pink"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/dim_6"
                     android:layout_weight="1"
-                    android:background="@drawable/rounded_pink"
-                    android:gravity="center"
-                    android:paddingBottom="@dimen/dim_12"
-                    android:paddingTop="@dimen/dim_12"
-                    android:text="@string/login"
-                    android:textColor="@color/white"
-                    android:textStyle="bold" />
+                    android:text="@string/login" />
+                <View
+                    android:layout_width="@dimen/dim_8"
+                    android:layout_height="match_parent"/>
 
                 <TextView
-                    style="@style/text_extra_large"
+                    android:id="@+id/txtSignUpLogin"
+                    style="@style/button_blue"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dim_6"
                     android:layout_weight="1"
-                    android:background="@drawable/rounded_blue"
-                    android:gravity="center"
-                    android:paddingBottom="@dimen/dim_12"
-                    android:paddingTop="@dimen/dim_12"
-                    android:text="@string/sign_up"
-                    android:textColor="@color/white"
-                    android:textStyle="bold" />
+                    android:text="@string/sign_up" />
 
 
             </LinearLayout>

@@ -9,6 +9,7 @@ import android.view.View;
 import com.app.mcb.R;
 import com.app.mcb.adapters.TripListStateWiseAdapter;
 import com.app.mcb.custom.AppHeaderView;
+import com.app.mcb.viewControllers.sender.TripDetailsActivity;
 
 import org.byteclues.lib.model.BasicModel;
 import org.byteclues.lib.view.AbstractFragmentActivity;
@@ -52,14 +53,12 @@ public class TripListWithState extends AbstractFragmentActivity implements View.
     @Override
     public void onClick(View v) {
 
-        int id=v.getId();
-        if(id==R.id.llBackHeader)
-        {
+        int id = v.getId();
+        if (id == R.id.llBackHeader) {
             onBackPressed();
-        }
-        else if (id == R.id.txtViewAllStateRow) {
-            Intent intent = new Intent(this, TripListWithState.class);
-            startActivity(intent);
+        } else if (id == R.id.llHomeRowMain) {
+
+            startActivity(new Intent(this, TripDetailsActivity.class));
         }
     }
 }

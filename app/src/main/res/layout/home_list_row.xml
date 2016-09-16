@@ -49,6 +49,7 @@
     </RelativeLayout>
 
     <LinearLayout
+        android:id="@+id/llHomeRowMain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dim_8"

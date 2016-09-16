@@ -90,7 +90,17 @@
         <item name="android:textColorHint">@color/black</item>
     </style>
 
-    <style name="withdraw_editxt">
+    <style name="et_withdraw">
+        <item name="android:inputType">textNoSuggestions</item>
+        <item name="android:textColorHint">@color/black</item>
+    </style>
+
+    <style name="et_signup">
+        <item name="android:inputType">textNoSuggestions</item>
+        <item name="android:textColorHint">@color/black</item>
+    </style>
+
+    <style name="et_login">
         <item name="android:inputType">textNoSuggestions</item>
         <item name="android:textColorHint">@color/black</item>
     </style>

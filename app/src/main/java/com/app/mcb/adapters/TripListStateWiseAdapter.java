@@ -39,7 +39,7 @@ public class TripListStateWiseAdapter extends RecyclerView.Adapter<TripListState
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        holder.txtViewAllStateRow.setOnClickListener(onClickListener);
+        holder.llHomeRowMain.setOnClickListener(onClickListener);
         if (!isRowHeaderShow) {
             if (position == 0) {
                 holder.llRowHeaderMain.setVisibility(View.VISIBLE);
@@ -56,13 +56,15 @@ public class TripListStateWiseAdapter extends RecyclerView.Adapter<TripListState
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        public LinearLayout llHomeRowMain;
         public TextView txtViewAllStateRow;
         public LinearLayout llRowHeaderMain;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            txtViewAllStateRow = (TextView) itemView.findViewById(R.id.txtViewAllStateRow);
+            llHomeRowMain = (LinearLayout) itemView.findViewById(R.id.llHomeRowMain);
             llRowHeaderMain = (LinearLayout) itemView.findViewById(R.id.llRowHeaderMain);
+            txtViewAllStateRow = (TextView) itemView.findViewById(R.id.txtViewAllStateRow);
 
         }
     }

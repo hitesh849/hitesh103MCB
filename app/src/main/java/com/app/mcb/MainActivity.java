@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.app.mcb.custom.AppHeaderView;
-import com.app.mcb.viewControllers.HomeFragment;
+import com.app.mcb.viewControllers.TripListWithAllState;
 import com.app.mcb.viewControllers.dashboardFragments.DashBoardFragment;
 import com.app.mcb.viewControllers.dashboardFragments.MyProfileFragment;
 import com.app.mcb.viewControllers.dashboardFragments.MyWalletFragment;
@@ -40,7 +40,7 @@ public class MainActivity extends AbstractFragmentActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         init();
-        getSupportFragmentManager().beginTransaction().add(R.id.fmHomeContainer, new HomeFragment(),"HomeFragment").commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.fmHomeContainer, new TripListWithAllState(),"HomeFragment").commit();
 
     }
 
@@ -68,6 +68,7 @@ public class MainActivity extends AbstractFragmentActivity implements View.OnCli
         llSettingsMain = (LinearLayout) findViewById(R.id.llSettingsMain);
         llTandCMain = (LinearLayout) findViewById(R.id.llTandCMain);
         llPrivacyPolicyMain = (LinearLayout) findViewById(R.id.llPrivacyPolicyMain);
+        appHeaderView.imgBackHeaderArrow.setImageResource(R.mipmap.hamber);
         llDashboardMain.setOnClickListener(this);
         llProfileMain.setOnClickListener(this);
         llMyParcelsMain.setOnClickListener(this);

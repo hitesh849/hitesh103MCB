@@ -7,9 +7,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+
+import com.app.mcb.MainActivity;
 import com.app.mcb.R;
 
 import org.byteclues.lib.init.Env;
+import org.byteclues.lib.view.AbstractFragmentActivity;
 
 /**
  * Created by Hitesh kumawat on 14-09-2016.
@@ -36,7 +39,7 @@ public class AppHeaderView extends RelativeLayout {
         init(context);
     }
 
-    private void init(Context context) {
+    private void init(final Context context) {
         super.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
         LayoutInflater.from(context).inflate(R.layout.app_header, this, true);
         this.llBackHeader = (LinearLayout) findViewById(R.id.llBackHeader);
@@ -44,6 +47,17 @@ public class AppHeaderView extends RelativeLayout {
         this.rlLogoutHeader = (RelativeLayout) findViewById(R.id.rlLogoutHeader);
         this.imgBackHeaderArrow = (ImageView) findViewById(R.id.imgBackHeaderArrow);
         this.llBackHeader.setOnClickListener((OnClickListener) Env.currentActivity);
+
+
+        if(!(Env.currentActivity instanceof MainActivity))
+        {
+            this.llBackHeader.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((AbstractFragmentActivity) Env.currentActivity).onBackPressed();
+                }
+            });
+        }
 
         this.rlNotificationHeader.setOnClickListener(new OnClickListener() {
             @Override

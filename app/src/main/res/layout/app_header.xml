@@ -23,7 +23,7 @@
                 android:id="@+id/imgBackHeaderArrow"
                 android:layout_width="@dimen/dim_36"
                 android:layout_height="match_parent"
-                android:src="@mipmap/hamber"
+                android:src="@mipmap/back"
                 android:layout_gravity="center_vertical"
                 android:foregroundTint="@color/white"
                 />
