@@ -9,6 +9,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_white_bg"
         android:orientation="vertical"
+        android:layout_margin="@dimen/dim_8"
         android:padding="@dimen/dim_8">
 
 
@@ -175,19 +176,6 @@
                     </LinearLayout>
 
 
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical">
-
-
-                        <ImageView
-                            android:layout_width="@dimen/dim_52"
-                            android:layout_height="@dimen/dim_52"
-                            android:src="@mipmap/chat" />
-
-                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
@@ -218,7 +206,7 @@
                     style="@style/text_medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/parcel_id" />
+                    android:text="@string/flight_details" />
 
                 <TextView
                     style="@style/text_large"
@@ -240,39 +228,16 @@
                     style="@style/text_medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/type" />
+                    android:text="@string/pnr_booking_ref" />
 
                 <TextView
                     style="@style/text_large"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Envlope" />
+                    android:text="Tmc102" />
 
             </LinearLayout>
 
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-
-                <TextView
-                    style="@style/text_medium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/weight" />
-
-
-                <TextView
-                    style="@style/text_large"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="10 kg" />
-
-
-            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
@@ -294,7 +259,7 @@
                     style="@style/text_medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/transporter_id" />
+                    android:text="@string/trip_id" />
 
                 <TextView
                     style="@style/text_large"
@@ -318,39 +283,17 @@
                     style="@style/text_medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/receiver_id" />
+                    android:text="@string/capacity" />
 
                 <TextView
                     style="@style/text_large"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="MCB111DB" />
+                    android:text="Total 10 Kg" />
 
             </LinearLayout>
 
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-
-                <TextView
-                    style="@style/text_medium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/status" />
-
-
-                <TextView
-                    style="@style/text_large"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Booked" />
-
-
-            </LinearLayout>
         </LinearLayout>
 
         <View
@@ -373,19 +316,15 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="10"
-                android:text="@string/action" />
+                android:text="@string/status" />
 
 
             <ImageView
+                android:id="@+id/imgViewParcelListRow"
                 android:layout_width="@dimen/dim_52"
                 android:layout_height="wrap_content"
-
                 android:src="@mipmap/action_view" />
 
-            <ImageView
-                android:layout_width="@dimen/dim_52"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/action_edit" />
 
             <ImageView
                 android:layout_width="@dimen/dim_52"
@@ -395,7 +334,7 @@
             <ImageView
                 android:layout_width="@dimen/dim_52"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/action_setting" />
+                android:src="@mipmap/uploadticket" />
 
 
         </LinearLayout>

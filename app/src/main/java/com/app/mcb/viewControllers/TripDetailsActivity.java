@@ -1,4 +1,4 @@
-package com.app.mcb.viewControllers.sender;
+package com.app.mcb.viewControllers;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,7 +6,7 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import com.app.mcb.R;
-import com.app.mcb.adapters.TipDetailsVPAdapter;
+import com.app.mcb.adapters.TripDetailsVPAdapter;
 import com.app.mcb.viewControllers.LoginActivity;
 
 import org.byteclues.lib.model.BasicModel;
@@ -30,7 +30,7 @@ public class TripDetailsActivity extends AbstractFragmentActivity implements Vie
 
     private void init() {
         vpTripDetails = (ViewPager) findViewById(R.id.vpTripDetails);
-        vpTripDetails.setAdapter(new TipDetailsVPAdapter(this, this));
+        vpTripDetails.setAdapter(new TripDetailsVPAdapter(this, this));
     }
 
     @Override

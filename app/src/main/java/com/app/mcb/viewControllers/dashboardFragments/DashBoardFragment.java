@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.app.mcb.R;
+import com.app.mcb.viewControllers.sender.SenderHomeFragment;
+import com.app.mcb.viewControllers.transporter.TransporterHomeFragment;
 
 import org.byteclues.lib.model.BasicModel;
 import org.byteclues.lib.view.AbstractFragment;
@@ -69,17 +71,17 @@ public class DashBoardFragment extends AbstractFragment implements View.OnClickL
         } else if (id == R.id.llMyWalletDashBoard) {
             addFragment(new MyWalletFragment());
         } else if (id == R.id.llSenderDetailsDashBoard) {
-
+            addFragment(new SenderHomeFragment());
         } else if (id == R.id.llDetailsOfTransDashBoard) {
-
+            addFragment(new TransporterHomeFragment());
         } else if (id == R.id.llTotalReceiverDashBoard) {
-
+            addFragment(new ReceiverListFragment());
         } else if (id == R.id.llTotalWithDrawerDashBoard) {
             addFragment(new WithDrawFragment());
         }
     }
-    public void addFragment(Fragment fragment)
-    {
-        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.fmHomeContainer, fragment).commit();
+
+    public void addFragment(Fragment fragment) {
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fmHomeContainer, fragment).commit();
     }
 }

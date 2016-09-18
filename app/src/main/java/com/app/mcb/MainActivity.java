@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
 
 import com.app.mcb.custom.AppHeaderView;
 import com.app.mcb.sharedPreferences.Config;
-import com.app.mcb.viewControllers.TripListWithAllState;
+import com.app.mcb.viewControllers.TripListWithAllStateFragment;
 import com.app.mcb.viewControllers.dashboardFragments.DashBoardFragment;
 import com.app.mcb.viewControllers.dashboardFragments.MyProfileFragment;
 import com.app.mcb.viewControllers.dashboardFragments.MyWalletFragment;
@@ -42,7 +42,7 @@ public class MainActivity extends AbstractFragmentActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         init();
-        AbstractFragment abstractFragment=new TripListWithAllState();
+        AbstractFragment abstractFragment=new TripListWithAllStateFragment();
         if(Config.getLoginStatus())
         {
             abstractFragment=new DashBoardFragment();

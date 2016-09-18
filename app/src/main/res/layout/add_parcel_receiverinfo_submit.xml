@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dim_6"
+        android:layout_marginTop="@dimen/dim_6"
+        android:text="@string/Receiver_info" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_white_bg"
+        android:orientation="vertical"
+        android:padding="@dimen/dim_8">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/dim_12"
+            android:paddingRight="@dimen/dim_12"
+            android:weightSum="2">
+
+            <TextView
+                android:id="@+id/txtExistingReceiverAddParcel"
+                style="@style/text_medium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/rect_left_corners_pink_bg"
+                android:gravity="center"
+                android:padding="@dimen/dim_8"
+                android:text="@string/existing_user"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/txtNewReceiverAddParcel"
+                style="@style/text_medium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/rect_right_corners_pink_border_grey_bg"
+                android:gravity="center"
+                android:padding="@dimen/dim_8"
+                android:text="@string/new_user"
+                android:textColor="@color/colorPrimary" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/dim_8">
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/text_medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hitesh Kumawat" />
+
+                <TextView
+                    style="@style/text_semi_medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dim_3"
+                    android:background="@drawable/rectangle_bottom_line_white_bg"
+                    android:text="hitesh.kumawat@byteclues.com" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".6"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/text_medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="9782218212" />
+
+                <TextView
+                    style="@style/text_medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dim_3"
+                    android:background="@drawable/rectangle_bottom_line_white_bg"
+                    android:text="MCB110002" />
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="@dimen/dim_32"
+                    android:layout_height="@dimen/dim_32"
+                    android:src="@mipmap/edit"
+                    android:tint="@color/black" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dim_8"
+        android:gravity="center"
+        android:weightSum="3">
+
+        <TextView
+            android:id="@+id/txtSubmitAddParcel"
+            style="@style/button_blue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
+            android:text="@string/submit" />
+    </LinearLayout>
+
+</LinearLayout>

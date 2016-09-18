@@ -48,7 +48,7 @@
                 android:id="@+id/imgToolbarNameLeft"
                 android:layout_width="@dimen/dim_36"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/profile"
+                android:src="@mipmap/headerlogo"
                 android:layout_alignParentLeft="true" />
 
         </RelativeLayout>

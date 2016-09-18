@@ -9,8 +9,8 @@
         android:background="@color/primary_blue"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingBottom="@dimen/dim_24"
-        android:paddingTop="@dimen/dim_24">
+        android:paddingBottom="@dimen/dim_16"
+        android:paddingTop="@dimen/dim_16">
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="0dp"
@@ -41,14 +41,12 @@
                 android:layout_weight="1">
 
                 <EditText
-                    style="@style/text_extra_large"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/dark_grey"
                     android:hint="@string/till_date"
-                    android:textColor="@color/white"
                     android:textColorHint="@color/dark_grey"
-                    />
+                    android:textColor="@color/white" />
 
             </android.support.design.widget.TextInputLayout>
 

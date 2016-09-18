@@ -39,6 +39,7 @@
             android:weightSum="3.2">
 
             <LinearLayout
+                android:id="@+id/llBecomeTransporter"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5"
@@ -48,9 +49,9 @@
                 android:padding="@dimen/dim_6">
 
                 <LinearLayout
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
                     android:orientation="vertical">
 
                     <TextView
@@ -76,6 +77,7 @@
                 android:layout_height="match_parent" />
 
             <LinearLayout
+                android:id="@+id/llFindSenderTransporter"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5"

@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.app.mcb.R;
 import com.app.mcb.adapters.TripListCommonAdapter;
@@ -19,9 +20,10 @@ import java.util.Observable;
 /**
  * Created by Hitesh kumawat on 14-09-2016.
  */
-public class TripListWithAllState extends AbstractFragment implements View.OnClickListener {
+public class TripListWithAllStateFragment extends AbstractFragment implements View.OnClickListener {
 
     private RecyclerView rvTripHome;
+    private LinearLayout llBecomeTransporter;
 
     @Override
     protected View onCreateViewPost(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -38,6 +40,8 @@ public class TripListWithAllState extends AbstractFragment implements View.OnCli
 
     private void init(View rootView) {
         rvTripHome = (RecyclerView) rootView.findViewById(R.id.rvTripHome);
+        llBecomeTransporter = (LinearLayout) rootView.findViewById(R.id.llBecomeTransporter);
+        llBecomeTransporter.setOnClickListener(this);
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         rvTripHome.setLayoutManager(llm);
@@ -60,7 +64,10 @@ public class TripListWithAllState extends AbstractFragment implements View.OnCli
         int id = view.getId();
         if (id == R.id.txtViewAllStateRow) {
             //rvTripHome.setAdapter(new TripListCommonAdapter(getActivity(), this, false));
-            Intent intent = new Intent(getActivity(), TripListWithState.class);
+            Intent intent = new Intent(getActivity(), TripListWithStateActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.llBecomeTransporter) {
+            Intent intent = new Intent(getActivity(), SignUpActivity.class);
             startActivity(intent);
         }
     }

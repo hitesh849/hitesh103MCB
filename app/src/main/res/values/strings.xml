@@ -105,5 +105,12 @@
     <string name="active_parcels">Activity parcels</string>
     <string name="add_parcels">Add parcels</string>
     <string name="all_parcels">All parcels</string>
+    <string name="message">Message</string>
+    <string name="send_invite">Send Invite</string>
+    <string name="active_trip">Active Trip</string>
+    <string name="add_trip">Add Trip</string>
+    <string name="cancelled_trip">Cancelled Trip</string>
+    <string name="pnr_booking_ref">PNR/Booking Ref</string>
+    <string name="capacity">Capacity</string>
 
 </resources>

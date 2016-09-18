@@ -1,6 +1,5 @@
 package com.app.mcb.viewControllers.dashboardFragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,8 +9,6 @@ import android.view.ViewGroup;
 
 import com.app.mcb.R;
 import com.app.mcb.adapters.MyWalletAdapter;
-import com.app.mcb.adapters.TripListCommonAdapter;
-import com.app.mcb.viewControllers.TripListWithState;
 
 import org.byteclues.lib.model.BasicModel;
 import org.byteclues.lib.view.AbstractFragment;
