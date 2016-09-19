@@ -112,5 +112,13 @@
     <string name="cancelled_trip">Cancelled Trip</string>
     <string name="pnr_booking_ref">PNR/Booking Ref</string>
     <string name="capacity">Capacity</string>
+    <string name="parcel_idcreated">Parcel ID Created</string>
+    <string name="created_payment_due">Created Payment Due</string>
+    <string name="booking_with_tr">Booking With TR</string>
+    <string name="parcel_collected">Parcel collected</string>
+    <string name="parcel_delivered">Parcel Delivered</string>
+    <string name="delivery_completed">Delivery Completed</string>
+    <string name="cancelled">Cancelled</string>
+    <string name="rejected_by_tr">Rejected by TR</string>
 
 </resources>

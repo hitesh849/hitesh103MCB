@@ -2,8 +2,21 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
+        android:id="@+id/action_parcel_created"
+        android:title="@string/parcel_idcreated" />
+    <item
+        android:title="@string/created_payment_due" />
+
+    <item
+        android:title="@string/booking_with_tr" />
+    <item
+        android:title="@string/parcel_collected" />
+    <item
+        android:title="@string/parcel_delivered" />
+    <item
+        android:title="@string/delivery_completed" />
+    <item
+        android:title="@string/cancelled" />
+    <item
+        android:title="@string/rejected_by_tr" />
 </menu>

@@ -18,6 +18,7 @@ public class ParcelsListVPAdapter extends PagerAdapter {
     private Context mContext;
     private View.OnClickListener onClickListener;
     private ImageView imgViewParcelListRow;
+    private ImageView imgSettingsParcelList;
 
     public ParcelsListVPAdapter(Context context, View.OnClickListener onClickListener) {
         mContext = context;
@@ -35,7 +36,9 @@ public class ParcelsListVPAdapter extends PagerAdapter {
 
     private void init(ViewGroup viewGroup) {
         imgViewParcelListRow = (ImageView) viewGroup.findViewById(R.id.imgViewParcelListRow);
+        imgSettingsParcelList = (ImageView) viewGroup.findViewById(R.id.imgSettingsParcelList);
         imgViewParcelListRow.setOnClickListener(onClickListener);
+        imgSettingsParcelList.setOnClickListener(onClickListener);
     }
 
     @Override
