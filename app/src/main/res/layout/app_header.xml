@@ -69,7 +69,6 @@
             android:textSize="@dimen/h_text_dim_16"
             android:singleLine="true"
             android:textStyle="bold"
-            android:text="Welcome"
             android:layout_centerInParent="true"
             android:textColor="@color/white" />
 

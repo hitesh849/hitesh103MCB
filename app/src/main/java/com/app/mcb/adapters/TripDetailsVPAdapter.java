@@ -17,6 +17,7 @@ public class TripDetailsVPAdapter extends PagerAdapter {
     private Context mContext;
     private View.OnClickListener onClickListener;
     private LinearLayout llBookNoewTripDetailsRow;
+    private LinearLayout llBookNoewTripDetailsRow0;
 
     public TripDetailsVPAdapter(Context context, View.OnClickListener onClickListener ) {
         mContext = context;
@@ -28,7 +29,9 @@ public class TripDetailsVPAdapter extends PagerAdapter {
         LayoutInflater inflater = LayoutInflater.from(mContext);
         ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.trip_details_row, collection, false);
         llBookNoewTripDetailsRow=(LinearLayout)layout.findViewById(R.id.llBookNoewTripDetailsRow);
+        llBookNoewTripDetailsRow0=(LinearLayout)layout.findViewById(R.id.llBookNoewTripDetailsRow0);
         llBookNoewTripDetailsRow.setOnClickListener(onClickListener);
+        llBookNoewTripDetailsRow0.setOnClickListener(onClickListener);
         collection.addView(layout);
         return layout;
     }

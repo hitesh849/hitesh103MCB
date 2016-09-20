@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.app.mcb.R;
+import com.app.mcb.custom.AppHeaderView;
 
 import org.byteclues.lib.model.BasicModel;
 import org.byteclues.lib.view.AbstractFragmentActivity;
@@ -17,6 +18,7 @@ import java.util.Observable;
 public class SignUpActivity extends AbstractFragmentActivity implements View.OnClickListener {
 
     private TextView txtRagisterSignUp;
+    private AppHeaderView appHeaderView;
 
     @Override
     protected void onCreatePost(Bundle savedInstanceState) {
@@ -27,6 +29,8 @@ public class SignUpActivity extends AbstractFragmentActivity implements View.OnC
 
     private void init() {
         txtRagisterSignUp = (TextView) findViewById(R.id.txtRagisterSignUp);
+        appHeaderView = (AppHeaderView) findViewById(R.id.appHeaderView);
+        appHeaderView.txtHeaderNamecenter.setText(getResources().getString(R.string.sign_up));
         txtRagisterSignUp.setOnClickListener(this);
     }
 

@@ -41,6 +41,7 @@ public class TripListWithStateActivity extends AbstractFragmentActivity implemen
         rvTripHome.setLayoutManager(llm);
         rvTripHome.setAdapter(new TripListStateWiseAdapter(this, this));
         llBecomeTransporter.setOnClickListener(this);
+        appHeaderView.txtHeaderNamecenter.setText("Welcome");
     }
 
     @Override

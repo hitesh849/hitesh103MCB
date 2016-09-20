@@ -8,7 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.app.mcb.MainActivity;
 import com.app.mcb.R;
+import com.app.mcb.Utility.Util;
+import com.app.mcb.custom.AppHeaderView;
 import com.app.mcb.viewControllers.sender.SenderHomeFragment;
 import com.app.mcb.viewControllers.transporter.TransporterHomeFragment;
 
@@ -50,6 +53,7 @@ public class DashBoardFragment extends AbstractFragment implements View.OnClickL
         llDetailsOfTransDashBoard.setOnClickListener(this);
         llTotalReceiverDashBoard.setOnClickListener(this);
         llTotalWithDrawerDashBoard.setOnClickListener(this);
+        ((MainActivity) getActivity()).setHeader(getResources().getString(R.string.dashboard));
     }
 
     @Override
@@ -67,17 +71,17 @@ public class DashBoardFragment extends AbstractFragment implements View.OnClickL
 
         int id = view.getId();
         if (id == R.id.llAboutProfileDashBoard) {
-            addFragment(new MyProfileFragment());
+            Util.replaceFragment(getActivity(),R.id.fmHomeContainer,new MyProfileFragment());
         } else if (id == R.id.llMyWalletDashBoard) {
-            addFragment(new MyWalletFragment());
+            Util.replaceFragment(getActivity(),R.id.fmHomeContainer,new MyWalletFragment());
         } else if (id == R.id.llSenderDetailsDashBoard) {
-            addFragment(new SenderHomeFragment());
+            Util.replaceFragment(getActivity(),R.id.fmHomeContainer,new SenderHomeFragment());
         } else if (id == R.id.llDetailsOfTransDashBoard) {
-            addFragment(new TransporterHomeFragment());
+            Util.replaceFragment(getActivity(),R.id.fmHomeContainer,new TransporterHomeFragment());
         } else if (id == R.id.llTotalReceiverDashBoard) {
-            addFragment(new ReceiverListFragment());
+            Util.replaceFragment(getActivity(),R.id.fmHomeContainer,new ReceiverListFragment());
         } else if (id == R.id.llTotalWithDrawerDashBoard) {
-            addFragment(new WithDrawFragment());
+            Util.replaceFragment(getActivity(),R.id.fmHomeContainer,new WithDrawFragment());
         }
     }
 

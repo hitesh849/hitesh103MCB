@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.app.mcb.MainActivity;
 import com.app.mcb.R;
 import com.app.mcb.adapters.TripListCommonAdapter;
 
@@ -46,6 +47,7 @@ public class TripListWithAllStateFragment extends AbstractFragment implements Vi
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         rvTripHome.setLayoutManager(llm);
         rvTripHome.setAdapter(new TripListCommonAdapter(getActivity(), this, true));
+        ((MainActivity) getActivity()).setHeader("Welcome");
     }
 
     @Override
@@ -69,6 +71,10 @@ public class TripListWithAllStateFragment extends AbstractFragment implements Vi
         } else if (id == R.id.llBecomeTransporter) {
             Intent intent = new Intent(getActivity(), SignUpActivity.class);
             startActivity(intent);
+        }
+        else if (id == R.id.llHomeRowMain) {
+
+            startActivity(new Intent(getActivity(), TripDetailsActivity.class));
         }
     }
 }

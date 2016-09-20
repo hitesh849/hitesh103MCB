@@ -16,5 +16,16 @@
             android:layout_height="match_parent"
             android:layout_above="@id/llFooter"
             android:layout_gravity="center"/>
+
+        <LinearLayout
+            android:id="@+id/llCountDotsMain"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dim_30"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/dim_6"
+            android:gravity="center"
+
+            android:orientation="horizontal" />
     </RelativeLayout>
 </LinearLayout>

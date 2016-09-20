@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.app.mcb.MainActivity;
 import com.app.mcb.R;
 
 import org.byteclues.lib.model.BasicModel;
@@ -29,6 +30,7 @@ public class MyProfileFragment extends AbstractFragment implements View.OnClickL
     }
 
     private void init(View view) {
+        ((MainActivity) getActivity()).setHeader(getResources().getString(R.string.my_profile));
     }
 
     @Override

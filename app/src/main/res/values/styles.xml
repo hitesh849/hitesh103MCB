@@ -105,6 +105,10 @@
         <item name="android:textColorHint">@color/black</item>
     </style>
 
+    <style name="et_AddTrip">
+        <item name="android:inputType">textNoSuggestions</item>
+    </style>
+
 
 <!--
     <style name="text_double_extra_large">

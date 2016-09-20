@@ -8,7 +8,9 @@
     <string name="dashboard">DASHBOARD</string>
     <string name="profile">Profile</string>
     <string name="my_parcels">My Parcels</string>
+    <string name="my_profile">My Profile</string>
     <string name="my_trips">My Trips</string>
+    <string name="my_trip">My Trip</string>
     <string name="my_receivings">My Receivings</string>
     <string name="my_wallet">My Wallet</string>
     <string name="wallet">Wallet</string>
@@ -68,7 +70,8 @@
     <string name="take_a_photo">Take a photo</string>
     <string name="ragister">Ragister</string>
     <string name="trasporter_details">Transporter\'s Details</string>
-    <string name="receiver_details">Receiver\'s Details</string>
+    <string name="receivers_details">Receiver\'s Details</string>
+    <string name="receiver_details">Receiver Details</string>
     <string name="flight_no">Flight No.</string>
     <string name="departure">Departure</string>
     <string name="arrival">Arrival</string>
@@ -83,6 +86,8 @@
     <string name="new_user">New User</string>
     <string name="email_address">Email Address</string>
     <string name="search">Search</string>
+    <string name="confirm">Confirm</string>
+    <string name="confirm_parcel">Confirm Parcel</string>
     <string name="Receiver_info">Receiver Info</string>
     <string name="bank_name">Bank Name</string>
     <string name="amount">Amount</string>
@@ -103,7 +108,7 @@
     <string name="become_a">Become a</string>
     <string name="find_a">Find a</string>
     <string name="active_parcels">Activity parcels</string>
-    <string name="add_parcels">Add parcels</string>
+    <string name="add_parcels">Add parcel</string>
     <string name="all_parcels">All parcels</string>
     <string name="message">Message</string>
     <string name="send_invite">Send Invite</string>
@@ -117,8 +122,11 @@
     <string name="booking_with_tr">Booking With TR</string>
     <string name="parcel_collected">Parcel collected</string>
     <string name="parcel_delivered">Parcel Delivered</string>
+    <string name="parcel_details">Parcel Details</string>
+    <string name="list_of_parcels">List of Parcels</string>
     <string name="delivery_completed">Delivery Completed</string>
     <string name="cancelled">Cancelled</string>
     <string name="rejected_by_tr">Rejected by TR</string>
+    <string name="feedback">Feedback</string>
 
 </resources>

@@ -47,8 +47,8 @@ public class LoginActivity extends AbstractFragmentActivity implements View.OnCl
     }
 
     @Override
-    public void onClick(View v) {
-
+    public void onClick(View v)
+    {
         int id=v.getId();
         if(id==R.id.txtLogin)
         {
@@ -60,9 +60,7 @@ public class LoginActivity extends AbstractFragmentActivity implements View.OnCl
         }
         else if(id==R.id.txtSignUpLogin)
         {
-
             startActivity(new Intent(this,SignUpActivity.class));
-
         }
     }
 }

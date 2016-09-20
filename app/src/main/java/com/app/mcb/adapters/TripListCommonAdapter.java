@@ -40,6 +40,7 @@ public class TripListCommonAdapter extends RecyclerView.Adapter<TripListCommonAd
     public void onBindViewHolder(ViewHolder holder, int position) {
 
         holder.txtViewAllStateRow.setOnClickListener(onClickListener);
+        holder.llHomeRowMain.setOnClickListener(onClickListener);
         if (!isRowHeaderShow) {
             if (position == 0) {
                 holder.llRowHeaderMain.setVisibility(View.VISIBLE);
@@ -58,11 +59,13 @@ public class TripListCommonAdapter extends RecyclerView.Adapter<TripListCommonAd
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView txtViewAllStateRow;
         public LinearLayout llRowHeaderMain;
+        public LinearLayout llHomeRowMain;
 
         public ViewHolder(View itemView) {
             super(itemView);
             txtViewAllStateRow = (TextView) itemView.findViewById(R.id.txtViewAllStateRow);
-            llRowHeaderMain = (LinearLayout) itemView.findViewById(R.id.llRowHeaderMain);
+            llRowHeaderMain = (LinearLayout) itemView.findViewById(R.id.llHomeRowMain);
+            llHomeRowMain = (LinearLayout) itemView.findViewById(R.id.llHomeRowMain);
 
         }
     }

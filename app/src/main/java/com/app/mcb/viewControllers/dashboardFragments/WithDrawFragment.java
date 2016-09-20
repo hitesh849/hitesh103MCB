@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.app.mcb.MainActivity;
 import com.app.mcb.R;
 
 import org.byteclues.lib.model.BasicModel;
@@ -40,6 +41,7 @@ public class WithDrawFragment extends AbstractFragment implements View.OnClickLi
         txtWithDrawStatus.setOnClickListener(this);
         txtNewUserWithDraw.setOnClickListener(this);
         addViewInRelayout(R.layout.withdraw_status);
+        ((MainActivity) getActivity()).setHeader(getResources().getString(R.string.withdraw));
 
 
     }

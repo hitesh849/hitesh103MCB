@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.app.mcb.MainActivity;
 import com.app.mcb.R;
 import com.app.mcb.adapters.MyWalletAdapter;
 
@@ -41,6 +42,7 @@ public class MyWalletFragment extends AbstractFragment implements View.OnClickLi
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         rvTripListMyWallet.setLayoutManager(llm);
         rvTripListMyWallet.setAdapter(new MyWalletAdapter(getActivity()));
+        ((MainActivity) getActivity()).setHeader(getResources().getString(R.string.my_wallet));
     }
 
     @Override

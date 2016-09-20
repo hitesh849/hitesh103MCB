@@ -2,13 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     android:orientation="vertical">
 
     <include layout="@layout/existing_parcel_search_filter" />
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/screen_bg">
 
         <android.support.v4.view.ViewPager
             android:id="@+id/vpMyList"
@@ -16,5 +18,16 @@
             android:layout_height="match_parent"
             android:layout_above="@id/llFooter"
             android:layout_gravity="center"/>
+
+        <LinearLayout
+            android:id="@+id/llCountDotsMain"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dim_30"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/dim_6"
+            android:gravity="center"
+
+            android:orientation="horizontal" />
     </RelativeLayout>
 </LinearLayout>

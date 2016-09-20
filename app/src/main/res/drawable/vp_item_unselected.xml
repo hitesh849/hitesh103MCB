@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval" android:useLevel="true"
+    android:dither="true">
+    <size android:height="@dimen/dim_12" android:width="@dimen/dim_12"/>
+    <solid android:color="@color/vp_item_unselct"/>
+</shape>

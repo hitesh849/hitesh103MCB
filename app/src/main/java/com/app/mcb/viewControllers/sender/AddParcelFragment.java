@@ -10,7 +10,9 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.app.mcb.MainActivity;
 import com.app.mcb.R;
+import com.app.mcb.Utility.Util;
 
 import org.byteclues.lib.model.BasicModel;
 import org.byteclues.lib.view.AbstractFragment;
@@ -38,12 +40,10 @@ public class AddParcelFragment extends AbstractFragment implements View.OnClickL
 
     private void init(View view) {
         llReceiverContainerMain = (LinearLayout) view.findViewById(R.id.llReceiverContainerMain);
-
-        txtSubmitAddParcel = (TextView) view.findViewById(R.id.txtSubmitAddParcel);
         addViewInRelayout(R.layout.add_parcel_receiverinfo_search);
         llSearchReciver = (LinearLayout) view.findViewById(R.id.llSearchReciver);
-
         llSearchReciver.setOnClickListener(this);
+        ((MainActivity) getActivity()).setHeader(getResources().getString(R.string.add_parcels));
 
     }
 
@@ -57,6 +57,10 @@ public class AddParcelFragment extends AbstractFragment implements View.OnClickL
         txtNewReceiverAddParcel.setOnClickListener(this);
         txtExistingReceiverAddParcel = (TextView) llLayout.findViewById(R.id.txtExistingReceiverAddParcel);
         txtExistingReceiverAddParcel.setOnClickListener(this);
+
+        txtSubmitAddParcel = (TextView) llLayout.findViewById(R.id.txtSubmitAddParcel);
+        if(txtSubmitAddParcel!=null)
+        txtSubmitAddParcel.setOnClickListener(this);
     }
 
     @Override
@@ -75,15 +79,14 @@ public class AddParcelFragment extends AbstractFragment implements View.OnClickL
         int id = view.getId();
         if (id == R.id.llSearchReciver) {
             addViewInRelayout(R.layout.add_parcel_receiverinfo_submit);
-        } else if (id == R.id.txtSubmitAddParcel) {
 
-        } else if (id == R.id.txtNewReceiverAddParcel) {
+        }  else if (id == R.id.txtNewReceiverAddParcel) {
             addViewInRelayout(R.layout.add_parcel_receiverinfo_new_user);
 
-        } else if (id == R.id.txtSubmitAddParcel) {
-
-        }else if (id == R.id.txtExistingReceiverAddParcel) {
+        } else if (id == R.id.txtExistingReceiverAddParcel) {
             addViewInRelayout(R.layout.add_parcel_receiverinfo_search);
+        }else if (id == R.id.txtSubmitAddParcel) {
+            Util.replaceFragment(getActivity(),R.id.fmContainerSenderHomeMain,new ConfirmParcelFragment());
         }
 
     }

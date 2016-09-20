@@ -14,7 +14,10 @@ import com.app.mcb.viewControllers.TripListWithAllStateFragment;
 import com.app.mcb.viewControllers.dashboardFragments.DashBoardFragment;
 import com.app.mcb.viewControllers.dashboardFragments.MyProfileFragment;
 import com.app.mcb.viewControllers.dashboardFragments.MyWalletFragment;
+import com.app.mcb.viewControllers.dashboardFragments.ReceiverListFragment;
 import com.app.mcb.viewControllers.dashboardFragments.WithDrawFragment;
+import com.app.mcb.viewControllers.sender.SenderHomeFragment;
+import com.app.mcb.viewControllers.transporter.TransporterHomeFragment;
 
 import org.byteclues.lib.model.BasicModel;
 import org.byteclues.lib.view.AbstractFragment;
@@ -89,6 +92,10 @@ public class MainActivity extends AbstractFragmentActivity implements View.OnCli
 
     }
 
+    public void setHeader(String tittle)
+    {
+        appHeaderView.txtHeaderNamecenter.setText(tittle);
+    }
     @Override
     public void onBackPressed() {
 
@@ -102,7 +109,6 @@ public class MainActivity extends AbstractFragmentActivity implements View.OnCli
 
     @Override
     public void onClick(View view) {
-
         int id = view.getId();
         if (id == R.id.llBackHeader) {
             drawerStateChanged();
@@ -111,11 +117,11 @@ public class MainActivity extends AbstractFragmentActivity implements View.OnCli
         } else if (id == R.id.llProfileMain) {
             addFragment(new MyProfileFragment());
         } else if (id == R.id.llMyParcelsMain) {
-
+            addFragment(new SenderHomeFragment());
         } else if (id == R.id.llMyTripMain) {
-
+            addFragment(new TransporterHomeFragment());
         } else if (id == R.id.llMyRecivingMain) {
-
+            addFragment(new ReceiverListFragment());
         } else if (id == R.id.llWalletMain) {
             addFragment(new MyWalletFragment());
         } else if (id == R.id.llWithDrawMain) {
@@ -131,7 +137,7 @@ public class MainActivity extends AbstractFragmentActivity implements View.OnCli
 
     public void addFragment(Fragment fragment)
     {
-        getSupportFragmentManager().beginTransaction().add(R.id.fmHomeContainer, fragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fmHomeContainer, fragment).commit();
         drawerStateChanged();
 
     }
