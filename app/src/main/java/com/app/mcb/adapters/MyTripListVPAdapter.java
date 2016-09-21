@@ -49,7 +49,6 @@ public class MyTripListVPAdapter extends PagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-
         return null;
     }
 
