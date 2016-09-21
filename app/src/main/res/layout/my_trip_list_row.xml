@@ -321,20 +321,22 @@
 
             <ImageView
                 android:id="@+id/imgViewParcelListRow"
-                android:layout_width="@dimen/dim_52"
+                android:layout_width="@dimen/dim_46"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/action_view" />
+                android:src="@mipmap/process" />
 
 
             <ImageView
-                android:layout_width="@dimen/dim_52"
+                android:layout_width="@dimen/dim_46"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/action_delete" />
+                android:layout_marginLeft="@dimen/dim_6"
+                android:layout_marginRight="@dimen/dim_6"
+                android:src="@mipmap/cancel" />
 
             <ImageView
-                android:layout_width="@dimen/dim_52"
+                android:layout_width="@dimen/dim_46"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/uploadticket" />
+                android:src="@mipmap/upload" />
 
 
         </LinearLayout>

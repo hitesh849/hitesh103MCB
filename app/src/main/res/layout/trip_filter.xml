@@ -19,11 +19,13 @@
             android:padding="@dimen/dim_8">
 
             <android.support.design.widget.TextInputLayout
+                android:id="@+id/tiltFromTripFilter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColorHint="@color/dark_grey">
 
                 <EditText
+                    android:id="@+id/etFromTripFilter"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/dark_grey"
@@ -51,11 +53,13 @@
             android:padding="@dimen/dim_8">
 
             <android.support.design.widget.TextInputLayout
+                android:id="@+id/etTilTripFilter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColorHint="@color/dark_grey">
 
                 <EditText
+                    android:id="@+id/etToTripFilter"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/dark_grey"
@@ -89,6 +93,7 @@
                 android:layout_weight="1">
 
                 <EditText
+                    android:id="@+id/etTillDateTripFilter"
                     style="@style/text_medium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -101,15 +106,16 @@
             </android.support.design.widget.TextInputLayout>
 
             <ImageView
+                android:id="@+id/imgCalenderTripFilter"
                 android:layout_width="@dimen/dim_24"
                 android:layout_height="@dimen/dim_24"
                 android:src="@mipmap/white_calender" />
 
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/llSearchTripFilter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:orientation="vertical"
             android:padding="@dimen/dim_8">
 

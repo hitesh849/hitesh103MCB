@@ -2,6 +2,8 @@ package com.app.mcb.viewControllers;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,7 +13,9 @@ import android.widget.LinearLayout;
 
 import com.app.mcb.MainActivity;
 import com.app.mcb.R;
+import com.app.mcb.Utility.Util;
 import com.app.mcb.adapters.TripListCommonAdapter;
+import com.app.mcb.custom.ProgressDialog;
 
 import org.byteclues.lib.model.BasicModel;
 import org.byteclues.lib.view.AbstractFragment;
@@ -32,6 +36,8 @@ public class TripListWithAllStateFragment extends AbstractFragment implements Vi
         try {
             View rootView = inflater.inflate(R.layout.home_fragment, container, false);
             init(rootView);
+         //  Util.showProDialog(getActivity());
+
             return rootView;
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -48,6 +54,7 @@ public class TripListWithAllStateFragment extends AbstractFragment implements Vi
         rvTripHome.setLayoutManager(llm);
         rvTripHome.setAdapter(new TripListCommonAdapter(getActivity(), this, true));
         ((MainActivity) getActivity()).setHeader("Welcome");
+
     }
 
     @Override
@@ -59,7 +66,13 @@ public class TripListWithAllStateFragment extends AbstractFragment implements Vi
     public void update(Observable observable, Object o) {
 
     }
-
+    private Fragment getCurrentFragment(){
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        String fragmentTag = fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount() - 1).getName();
+        Fragment currentFragment = fragmentManager
+                .findFragmentByTag(fragmentTag);
+        return currentFragment;
+    }
     @Override
     public void onClick(View view) {
 
