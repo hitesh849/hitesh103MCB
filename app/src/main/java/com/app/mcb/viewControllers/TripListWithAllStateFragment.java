@@ -16,6 +16,9 @@ import com.app.mcb.R;
 import com.app.mcb.Utility.Util;
 import com.app.mcb.adapters.TripListCommonAdapter;
 import com.app.mcb.custom.ProgressDialog;
+import com.app.mcb.dao.FilterData;
+import com.app.mcb.filters.TripFilter;
+import com.app.mcb.filters.TripListener;
 
 import org.byteclues.lib.model.BasicModel;
 import org.byteclues.lib.view.AbstractFragment;
@@ -25,7 +28,7 @@ import java.util.Observable;
 /**
  * Created by Hitesh kumawat on 14-09-2016.
  */
-public class TripListWithAllStateFragment extends AbstractFragment implements View.OnClickListener {
+public  class TripListWithAllStateFragment extends AbstractFragment implements View.OnClickListener,TripListener {
 
     private RecyclerView rvTripHome;
     private LinearLayout llBecomeTransporter;
@@ -36,7 +39,6 @@ public class TripListWithAllStateFragment extends AbstractFragment implements Vi
         try {
             View rootView = inflater.inflate(R.layout.home_fragment, container, false);
             init(rootView);
-         //  Util.showProDialog(getActivity());
 
             return rootView;
         } catch (Exception ex) {
@@ -49,6 +51,7 @@ public class TripListWithAllStateFragment extends AbstractFragment implements Vi
         rvTripHome = (RecyclerView) rootView.findViewById(R.id.rvTripHome);
         llBecomeTransporter = (LinearLayout) rootView.findViewById(R.id.llBecomeTransporter);
         llBecomeTransporter.setOnClickListener(this);
+        TripFilter.addFilterView(getActivity(),rootView,this);
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         rvTripHome.setLayoutManager(llm);
@@ -78,7 +81,6 @@ public class TripListWithAllStateFragment extends AbstractFragment implements Vi
 
         int id = view.getId();
         if (id == R.id.txtViewAllStateRow) {
-            //rvTripHome.setAdapter(new TripListCommonAdapter(getActivity(), this, false));
             Intent intent = new Intent(getActivity(), TripListWithStateActivity.class);
             startActivity(intent);
         } else if (id == R.id.llBecomeTransporter) {
@@ -89,5 +91,11 @@ public class TripListWithAllStateFragment extends AbstractFragment implements Vi
 
             startActivity(new Intent(getActivity(), TripDetailsActivity.class));
         }
+    }
+
+
+    @Override
+    public void filterData(FilterData filterData) {
+        System.out.println("");
     }
 }

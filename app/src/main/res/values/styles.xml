@@ -109,12 +109,9 @@
         <item name="android:inputType">textNoSuggestions</item>
     </style>
 
-
-<!--
-    <style name="text_double_extra_large">
-        <item name="android:textSize">@dimen/text_dim_26</item>
-        <item name="android:textColor">@color/black</item>
-    </style>-->
+    <style name="DialogTheme" parent="Theme.AppCompat.Light">
+        <item name="colorAccent">@color/primary_blue</item>
+    </style>
 
 
 </resources>
