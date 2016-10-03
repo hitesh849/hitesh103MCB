@@ -1,0 +1,120 @@
+package com.app.mcb.model;
+
+import android.content.Context;
+
+import com.app.mcb.Utility.Constants;
+import com.app.mcb.dao.AirportData;
+import com.app.mcb.dao.ChangePasswordData;
+import com.app.mcb.dao.ForgetPasswordData;
+import com.app.mcb.dao.UserInfoData;
+import com.app.mcb.database.DatabaseMgr;
+import com.app.mcb.retrointerface.RestInterface;
+
+import org.byteclues.lib.model.BasicModel;
+
+import java.util.HashMap;
+
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+
+/**
+ * Created by Hitesh on 29-09-2016.
+ */
+public class UserAuthenticationModel extends BasicModel {
+    RestAdapter adapter = new RestAdapter.Builder().setEndpoint(Constants.BASE_URL).build();
+    RestInterface restInterface = adapter.create(RestInterface.class);
+
+    public void forgetPassword(String email) {
+        try {
+
+            HashMap<String, String> response = new HashMap<String, String>();
+            response.put("userName", email);
+            restInterface.forgetPassword(response, new Callback<ForgetPasswordData>() {
+                @Override
+                public void success(ForgetPasswordData forgetPasswordData, Response response) {
+                    notifyObservers(forgetPasswordData);
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    notifyObservers(error);
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void registerUser(String email) {
+        try {
+            HashMap<String, String> response = new HashMap<String, String>();
+            response.put("firstName", email);
+            response.put("lastName", email);
+            response.put("email", email);
+            response.put("countrycode", email);
+            response.put("mobilenumber", email);
+            response.put("password", email);
+            response.put("passwordRepeat", email);
+            restInterface.registerUser(response, new Callback<UserInfoData>() {
+                @Override
+                public void success(UserInfoData userInfoData, Response response) {
+                    notifyObservers(userInfoData);
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    notifyObservers(error);
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void changePassword(String email) {
+        try {
+
+            HashMap<String, String> response = new HashMap<String, String>();
+            response.put("userID", email);
+            response.put("password", email);
+            response.put("newpassword", email);
+            restInterface.changePassword(response, new Callback<ChangePasswordData>() {
+                @Override
+                public void success(ChangePasswordData changePasswordData, Response response) {
+                    notifyObservers(changePasswordData);
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    notifyObservers(error);
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void getLoginUser(String email) {
+        try {
+
+            HashMap<String, String> response = new HashMap<String, String>();
+            response.put("email", email);
+            response.put("password", email);
+            restInterface.getLoginUser(response, new Callback<UserInfoData>() {
+                @Override
+                public void success(UserInfoData changePasswordData, Response response) {
+                    notifyObservers(changePasswordData);
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    notifyObservers(error);
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}

@@ -78,7 +78,7 @@ public class TripDetailsActivity extends AbstractFragmentActivity implements Vie
     public void onClick(View v) {
 
         int id = v.getId();
-        if (id == R.id.llBookNoewTripDetailsRow || id == R.id.llBookNoewTripDetailsRow0) {
+        if (id == R.id.llBookNoewTripDetailsRow1 || id == R.id.llBookNoewTripDetailsRow2) {
             startActivity(new Intent(this, LoginActivity.class));
         }
     }

@@ -2,6 +2,7 @@ package com.app.mcb.viewControllers;
 
 import android.support.multidex.MultiDexApplication;
 
+import com.app.mcb.database.DatabaseMgr;
 import com.app.mcb.sharedPreferences.Config;
 
 import org.byteclues.lib.init.Env;
@@ -15,6 +16,7 @@ public class MCBAPP extends MultiDexApplication {
         super.onCreate();
         Env.appContext = this;
         Config.init(this);
+        DatabaseMgr.getInstance(this);
     }
 
     @Override

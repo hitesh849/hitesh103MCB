@@ -15,11 +15,9 @@ import com.app.mcb.R;
  */
 public class TripListStateWiseAdapter extends RecyclerView.Adapter<TripListStateWiseAdapter.ViewHolder> {
     private View.OnClickListener onClickListener;
-    private boolean isRowHeaderShow;
 
     public TripListStateWiseAdapter(Context context, View.OnClickListener onClickListener) {
         this.onClickListener = onClickListener;
-        this.isRowHeaderShow = isRowHeaderShow;
     }
 
     @Override
@@ -40,13 +38,11 @@ public class TripListStateWiseAdapter extends RecyclerView.Adapter<TripListState
     public void onBindViewHolder(ViewHolder holder, int position) {
 
         holder.llHomeRowMain.setOnClickListener(onClickListener);
-        if (!isRowHeaderShow) {
-            if (position == 0) {
-                holder.llRowHeaderMain.setVisibility(View.VISIBLE);
-                holder.txtViewAllStateRow.setVisibility(View.GONE);
-            } else {
-                holder.llRowHeaderMain.setVisibility(View.GONE);
-            }
+        if (position == 0) {
+            holder.llRowHeaderMain.setVisibility(View.VISIBLE);
+            holder.txtViewAllStateRow.setVisibility(View.GONE);
+        } else {
+            holder.llRowHeaderMain.setVisibility(View.GONE);
         }
     }
 
@@ -59,13 +55,28 @@ public class TripListStateWiseAdapter extends RecyclerView.Adapter<TripListState
         public LinearLayout llHomeRowMain;
         public TextView txtViewAllStateRow;
         public LinearLayout llRowHeaderMain;
+        public TextView txtFromStateRowTripList;
+        public TextView txtTripIDTripList;
+        public TextView txtUserIdTripList;
+        public TextView txtFlightIdTripList;
+        public TextView txtFlightDateTripList;
+        public TextView txtArrivalTripList;
+        public TextView txtArrivalTimeTripList;
+        public TextView txtWeightTripList;
 
         public ViewHolder(View itemView) {
             super(itemView);
             llHomeRowMain = (LinearLayout) itemView.findViewById(R.id.llHomeRowMain);
             llRowHeaderMain = (LinearLayout) itemView.findViewById(R.id.llRowHeaderMain);
             txtViewAllStateRow = (TextView) itemView.findViewById(R.id.txtViewAllStateRow);
-
+            txtFromStateRowTripList = (TextView) itemView.findViewById(R.id.txtFromStateRowTripList);
+            txtTripIDTripList = (TextView) itemView.findViewById(R.id.txtTripIDTripList);
+            txtUserIdTripList = (TextView) itemView.findViewById(R.id.txtUserIdTripList);
+            txtFlightIdTripList = (TextView) itemView.findViewById(R.id.txtFlightIdTripList);
+            txtFlightDateTripList = (TextView) itemView.findViewById(R.id.txtFlightDateTripList);
+            txtArrivalTripList = (TextView) itemView.findViewById(R.id.txtArrivalTripList);
+            txtArrivalTimeTripList = (TextView) itemView.findViewById(R.id.txtArrivalTimeTripList);
+            txtWeightTripList = (TextView) itemView.findViewById(R.id.txtWeightTripList);
         }
     }
 }

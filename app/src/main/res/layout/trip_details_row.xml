@@ -35,6 +35,7 @@
                     android:text="@string/transporter_id" />
 
                 <TextView
+                    android:id="@+id/txtTransporterId1TD"
                     style="@style/text_large"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -57,6 +58,7 @@
                     android:text="@string/weight" />
 
                 <TextView
+                    android:id="@+id/txtWeight1TD"
                     style="@style/text_large"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -79,7 +81,7 @@
                     android:text="@string/action" />
 
                 <LinearLayout
-                    android:id="@+id/llBookNoewTripDetailsRow0"
+                    android:id="@+id/llBookNoewTripDetailsRow1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
@@ -127,12 +129,14 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/txtFromShort1TD"
                         style="@style/text_large"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="JPR" />
 
                     <TextView
+                        android:id="@+id/txtFromLong1TD"
                         style="@style/text_small"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -161,12 +165,14 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/txtToShort1TD"
                         style="@style/text_large"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="DEL" />
 
                     <TextView
+                        android:id="@+id/txtToLong1TD"
                         style="@style/text_small"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -204,6 +210,7 @@
                         android:src="@mipmap/blackcalender" />
 
                     <TextView
+                        android:id="@+id/txtDtaeFrom1TD"
                         style="@style/text_small"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -233,6 +240,7 @@
                         android:src="@mipmap/blackcalender" />
 
                     <TextView
+                        android:id="@+id/txtDtaeTo1TD"
                         style="@style/text_small"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -271,6 +279,7 @@
                         android:src="@mipmap/clock" />
 
                     <TextView
+                        android:id="@+id/txtTimeFrom1TD"
                         style="@style/text_small"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -300,6 +309,7 @@
                         android:src="@mipmap/clock" />
 
                     <TextView
+                        android:id="@+id/txtTimeTo1TD"
                         style="@style/text_small"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -343,6 +353,7 @@
                     android:text="@string/transporter_id" />
 
                 <TextView
+                    android:id="@+id/txtTransporterId2TD"
                     style="@style/text_large"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -365,6 +376,7 @@
                     android:text="@string/weight" />
 
                 <TextView
+                    android:id="@+id/txtWeight2TD"
                     style="@style/text_large"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -387,7 +399,7 @@
                     android:text="@string/action" />
 
                 <LinearLayout
-                    android:id="@+id/llBookNoewTripDetailsRow"
+                    android:id="@+id/llBookNoewTripDetailsRow2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
@@ -435,12 +447,14 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/txtFromShort2TD"
                         style="@style/text_large"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="JPR" />
 
                     <TextView
+                        android:id="@+id/txtFromLong2TD"
                         style="@style/text_small"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -469,12 +483,14 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/txtToShort2TD"
                         style="@style/text_large"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="DEL" />
 
                     <TextView
+                        android:id="@+id/txtToLong2TD"
                         style="@style/text_small"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -512,6 +528,7 @@
                         android:src="@mipmap/blackcalender" />
 
                     <TextView
+                        android:id="@+id/txtDtaeFrom2TD"
                         style="@style/text_small"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -541,6 +558,7 @@
                         android:src="@mipmap/blackcalender" />
 
                     <TextView
+                        android:id="@+id/txtDtaeTo2TD"
                         style="@style/text_small"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -579,6 +597,7 @@
                         android:src="@mipmap/clock" />
 
                     <TextView
+                        android:id="@+id/txtTimeFrom2TD"
                         style="@style/text_small"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -608,6 +627,7 @@
                         android:src="@mipmap/clock" />
 
                     <TextView
+                        android:id="@+id/txtTimeTo2TD"
                         style="@style/text_small"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
