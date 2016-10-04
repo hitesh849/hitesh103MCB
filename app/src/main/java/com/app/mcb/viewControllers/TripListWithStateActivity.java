@@ -9,11 +9,13 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.app.mcb.R;
+import com.app.mcb.Utility.Constants;
 import com.app.mcb.Utility.Util;
 import com.app.mcb.adapters.TripListStateWiseAdapter;
 import com.app.mcb.custom.AppHeaderView;
 import com.app.mcb.dao.AirportData;
 import com.app.mcb.dao.FilterData;
+import com.app.mcb.dao.TripData;
 import com.app.mcb.database.DatabaseMgr;
 import com.app.mcb.filters.TripFilter;
 import com.app.mcb.filters.TripListener;
@@ -24,10 +26,12 @@ import org.byteclues.lib.view.AbstractFragmentActivity;
 
 import java.util.Observable;
 
+import retrofit.RetrofitError;
+
 /**
  * Created by u on 9/15/2016.
  */
-public class TripListWithStateActivity extends AbstractFragmentActivity implements View.OnClickListener,TripListener {
+public class TripListWithStateActivity extends AbstractFragmentActivity implements View.OnClickListener, TripListener {
 
     private AppHeaderView appHeaderView;
     private RecyclerView rvTripHome;
@@ -44,17 +48,17 @@ public class TripListWithStateActivity extends AbstractFragmentActivity implemen
     private void init() {
         llTripListWithState = (LinearLayout) findViewById(R.id.llTripListWithState);
         appHeaderView = (AppHeaderView) findViewById(R.id.appHeaderView);
-        TripFilter.addFilterView(this,llTripListWithState,this);
+        TripFilter.addFilterView(this, llTripListWithState, this);
         appHeaderView.imgBackHeaderArrow.setImageResource(R.mipmap.back);
         rvTripHome = (RecyclerView) findViewById(R.id.rvTripHome);
         llBecomeTransporter = (LinearLayout) findViewById(R.id.llBecomeTransporter);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         rvTripHome.setLayoutManager(llm);
-        rvTripHome.setAdapter(new TripListStateWiseAdapter(this, this));
         llBecomeTransporter.setOnClickListener(this);
         appHeaderView.txtHeaderNamecenter.setText("Welcome");
-        getAirportList();
+        if (DatabaseMgr.getInstance(this).getNoOfRecords(AirportData.TABLE_NAME) <= 0)
+            getAirportList();
     }
 
     @Override
@@ -63,8 +67,27 @@ public class TripListWithStateActivity extends AbstractFragmentActivity implemen
     }
 
     @Override
-    public void update(Observable o, Object arg) {
+    public void update(Observable o, Object data) {
         Util.dimissProDialog();
+
+        try {
+            if (data != null && data instanceof TripData) {
+                TripData tripData = (TripData) data;
+                if (tripData.status.equals("success")) {
+                    if (tripData.response != null)
+                        rvTripHome.setAdapter(new TripListStateWiseAdapter(this, this, tripData.response));
+
+                    if (tripData.response.size() <= 0)
+                        Util.showOKSnakBar(llTripListWithState, getResources().getString(R.string.trip_unavailable));
+
+
+                }
+            } else if (data != null && data instanceof RetrofitError) {
+                Util.showOKSnakBar(llTripListWithState, getResources().getString(R.string.pls_try_again));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
 
     }
 
@@ -85,7 +108,7 @@ public class TripListWithStateActivity extends AbstractFragmentActivity implemen
 
     private void getAirportList() {
         try {
-            if (Util.isDeviceOnline() && DatabaseMgr.getInstance(this).getNoOfRecords(AirportData.TABLE_NAME) <= 0) {
+            if (Util.isDeviceOnline()) {
                 Util.showProDialog(this);
                 tripModel.getAirportData(this);
             } else {
@@ -96,8 +119,22 @@ public class TripListWithStateActivity extends AbstractFragmentActivity implemen
         }
     }
 
+    private void getTripByFilter(FilterData filterData) {
+        try {
+            if (Util.isDeviceOnline()) {
+                Util.showProDialog(this);
+                tripModel.getTripListByFilter(filterData);
+            } else {
+                Util.showAlertDialog(null, getResources().getString(R.string.noInternetMsg));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
     @Override
     public void filterData(FilterData filterData) {
-
+        filterData.type = Constants.KEY_SENDER;
+        getTripByFilter(filterData);
     }
 }

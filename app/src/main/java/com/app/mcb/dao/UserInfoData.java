@@ -9,7 +9,6 @@ public class UserInfoData
 {
     public String id;
     public String username;
-    public String password;
     public String name;
     public String l_name;
     public String activation_code;
@@ -37,6 +36,11 @@ public class UserInfoData
     public String verificationcode;
     public String passportno;
     public String UserID;
+    public String firstName;
+    public String lastName;
+    public String email;
+    public String password;
+    public String errorMessage;
     public ArrayList<UserInfoData>response;
 
 }

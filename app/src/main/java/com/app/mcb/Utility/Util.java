@@ -5,14 +5,18 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Environment;
 import android.provider.Settings;
+import android.support.design.widget.Snackbar;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.app.mcb.R;
@@ -21,6 +25,8 @@ import com.squareup.picasso.Picasso;
 import org.byteclues.lib.init.Env;
 import org.byteclues.lib.view.AbstractFragment;
 import org.byteclues.lib.view.AbstractFragmentActivity;
+import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -35,6 +41,7 @@ public class Util {
     public static final String VAL_OK = "OK";
     private static ProgressDialog progressDialog = null;
     private static AlertDialog alertDialog = null;
+    private static Snackbar retrySnackbar = null;
     public static String FLD_STATUS = "status";
     public static final String STATUS_CODE_USER_LOGOUT = "UserLogout";
     public static final String ACTION_USER_LOGOUT = "userLogout";
@@ -170,4 +177,35 @@ public class Util {
         ((AbstractFragmentActivity) context).getSupportFragmentManager().beginTransaction().add(container, abstractFragment).commit();
     }
 
+    public static void showOKSnakBar(android.view.View view, String msg) {
+        try {
+            if (view != null && msg != null) {
+                retrySnackbar = Snackbar
+                        .make(view, msg, Snackbar.LENGTH_INDEFINITE)
+                        .setAction("OK", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                retrySnackbar.dismiss();
+                            }
+                        });
+                ViewGroup group = (ViewGroup) retrySnackbar.getView();
+                group.setBackgroundColor(Env.appContext.getResources().getColor(R.color.trans_blue));
+                retrySnackbar.setActionTextColor(Env.appContext.getResources().getColor(R.color.primary_blue));
+                View sbView = retrySnackbar.getView();
+                TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+
+                textView.setTextColor(Env.appContext.getResources().getColor(R.color.primary_blue));
+                retrySnackbar.show();
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+    }
+
+    public static String getCurrentDate() {
+        DateTime now = new DateTime();
+        LocalDate today = now.toLocalDate();
+        return today.toString().replaceAll("-", "/");
+    }
 }

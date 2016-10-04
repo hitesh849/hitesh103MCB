@@ -5,6 +5,7 @@ import android.content.Context;
 import com.app.mcb.Utility.Constants;
 import com.app.mcb.dao.AirportData;
 import com.app.mcb.dao.FilterData;
+import com.app.mcb.dao.TripData;
 import com.app.mcb.database.DatabaseMgr;
 
 import org.byteclues.lib.model.BasicModel;
@@ -17,6 +18,7 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 import com.app.mcb.retrointerface.RestInterface;
+import com.google.gson.JsonElement;
 
 /**
  * Created by Hitesh on 28-09-2016.
@@ -47,21 +49,22 @@ public class TripModel extends BasicModel {
         }
     }
 
-    public void getTripListByFilter(final Context context, FilterData filterData) {
+    public void getTripListByFilter(FilterData filterData) {
         try {
 
-            HashMap<String, String> request = new HashMap<String, String>();
-            request.put("dateFrom", "");
-            request.put("dateTo", "");
-            request.put("locationfrom", "");
-            request.put("locationto", "");
-            request.put("type", "Transporter/Sender");
-            restInterface.getAirportData(new Callback<AirportData>() {
+            HashMap<String, HashMap> request = new HashMap<String, HashMap>();
+            HashMap<String, String> subrequest = new HashMap<String, String>();
+            subrequest.put("dateFrom", filterData.fromDate);
+            subrequest.put("dateTo", filterData.toDate);
+            subrequest.put("locationfrom", filterData.fromLocation);
+            subrequest.put("locationto", filterData.toLocation);
+            subrequest.put("type", filterData.type);
+            request.put("params", subrequest);
+
+            restInterface.getTripListByFilter(request, new Callback<TripData>() {
                 @Override
-                public void success(AirportData airportData, Response response) {
-                    if (Constants.RESPONSE_SUCCESS_MSG.equals(airportData.status))
-                        DatabaseMgr.getInstance(context).insertDataToAirportTable(airportData.response);
-                    notifyObservers(airportData);
+                public void success(TripData tripData, Response response) {
+                    notifyObservers(tripData);
                 }
 
                 @Override

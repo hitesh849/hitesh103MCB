@@ -9,15 +9,20 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.app.mcb.R;
+import com.app.mcb.dao.TripData;
+
+import java.util.ArrayList;
 
 /**
  * Created by u on 9/15/2016.
  */
 public class TripListStateWiseAdapter extends RecyclerView.Adapter<TripListStateWiseAdapter.ViewHolder> {
     private View.OnClickListener onClickListener;
+    private ArrayList<TripData> tripDatas;
 
-    public TripListStateWiseAdapter(Context context, View.OnClickListener onClickListener) {
+    public TripListStateWiseAdapter(Context context, View.OnClickListener onClickListener, ArrayList<TripData> tripDatas) {
         this.onClickListener = onClickListener;
+        this.tripDatas = tripDatas;
     }
 
     @Override
@@ -48,7 +53,7 @@ public class TripListStateWiseAdapter extends RecyclerView.Adapter<TripListState
 
     @Override
     public int getItemCount() {
-        return 5;
+        return tripDatas.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

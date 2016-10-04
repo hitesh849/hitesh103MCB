@@ -47,16 +47,16 @@ public class UserAuthenticationModel extends BasicModel {
         }
     }
 
-    public void registerUser(String email) {
+    public void registerUser(UserInfoData userInfoData) {
         try {
             HashMap<String, String> response = new HashMap<String, String>();
-            response.put("firstName", email);
-            response.put("lastName", email);
-            response.put("email", email);
-            response.put("countrycode", email);
-            response.put("mobilenumber", email);
-            response.put("password", email);
-            response.put("passwordRepeat", email);
+            response.put("firstName", userInfoData.firstName);
+            response.put("lastName", userInfoData.lastName);
+            response.put("email", userInfoData.email);
+            response.put("countrycode", userInfoData.country_code);
+            response.put("mobilenumber", userInfoData.mobile);
+            response.put("password", userInfoData.passportno);
+            response.put("passwordRepeat", userInfoData.password);
             restInterface.registerUser(response, new Callback<UserInfoData>() {
                 @Override
                 public void success(UserInfoData userInfoData, Response response) {
@@ -96,12 +96,12 @@ public class UserAuthenticationModel extends BasicModel {
     }
 
 
-    public void getLoginUser(String email) {
+    public void getLoginUser(String email,String password) {
         try {
 
             HashMap<String, String> response = new HashMap<String, String>();
             response.put("email", email);
-            response.put("password", email);
+            response.put("password", password);
             restInterface.getLoginUser(response, new Callback<UserInfoData>() {
                 @Override
                 public void success(UserInfoData changePasswordData, Response response) {

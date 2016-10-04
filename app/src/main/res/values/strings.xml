@@ -128,5 +128,14 @@
     <string name="cancelled">Cancelled</string>
     <string name="rejected_by_tr">Rejected by TR</string>
     <string name="feedback">Feedback</string>
+    <string name="pls_try_again">Please try again.</string>
+    <string name="trip_unavailable">Trip unavailable.</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="email_adrress">Email Address</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="pass_do_not_match_error_msg">Passwords do not match.</string>
+
+
 
 </resources>

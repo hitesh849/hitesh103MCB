@@ -7,6 +7,7 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/llSignUpMain"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/rounded_white_bg"
@@ -31,10 +32,11 @@
                 android:textColorHint="@color/black">
 
                 <EditText
+                    android:id="@+id/etextFirstName"
                     style="@style/et_signup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/name" />
+                    android:hint="@string/first_name" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -44,10 +46,11 @@
                 android:textColorHint="@color/black">
 
                 <EditText
+                    android:id="@+id/etextLastName"
                     style="@style/et_signup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/name" />
+                    android:hint="@string/last_name" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -57,10 +60,11 @@
                 android:textColorHint="@color/black">
 
                 <EditText
+                    android:id="@+id/etextEmail"
                     style="@style/et_signup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/name" />
+                    android:hint="@string/email_address" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -70,10 +74,13 @@
                 android:textColorHint="@color/black">
 
                 <EditText
+                    android:id="@+id/etextMobile"
                     style="@style/et_signup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/name" />
+                    android:maxLength="10"
+                    android:inputType="number"
+                    android:hint="@string/mobile_number" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -83,10 +90,12 @@
                 android:textColorHint="@color/black">
 
                 <EditText
+                    android:id="@+id/etextPassword"
                     style="@style/et_signup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/name" />
+                    android:hint="@string/password"
+                    android:inputType="textPassword" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -96,10 +105,12 @@
                 android:textColorHint="@color/black">
 
                 <EditText
+                    android:id="@+id/etextConfirmPassword"
                     style="@style/et_signup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/name" />
+                    android:hint="@string/confirm_password"
+                    android:inputType="textPassword" />
 
             </android.support.design.widget.TextInputLayout>
 

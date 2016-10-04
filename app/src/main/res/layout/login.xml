@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:background="@mipmap/background"
     android:orientation="vertical"
+    android:id="@+id/llLoginMain"
     android:padding="@dimen/dim_16"
     android:weightSum="2">
 
@@ -43,9 +44,10 @@
                 android:textColorHint="@color/dark_grey">
 
                 <EditText
+                    android:id="@+id/etEmailLogin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/username"
+                    android:hint="@string/email_address"
                     style="@style/et_login"/>
 
             </android.support.design.widget.TextInputLayout>
@@ -57,6 +59,7 @@
                 android:textColorHint="@color/dark_grey">
 
                 <EditText
+                    android:id="@+id/etPasswordLogin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/et_login"
@@ -95,6 +98,7 @@
 
 
             <TextView
+                android:id="@+id/txtForgetPasswordLogin"
                 style="@style/text_semi_medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
