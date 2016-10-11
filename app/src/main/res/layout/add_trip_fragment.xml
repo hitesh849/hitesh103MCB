@@ -1,11 +1,208 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <ImageView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@mipmap/t5"
-        />
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dim_5"
+        android:background="@drawable/rounded_white_bg"
+        android:orientation="vertical"
+        android:padding="@dimen/dim_5">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dim_5"
+            android:orientation="horizontal">
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dim_52"
+                android:layout_margin="@dimen/dim_5"
+                android:layout_weight="1"
+                android:textColorHint="@color/black">
+
+                <AutoCompleteTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="bottom"
+                    android:background="@null"
+                    android:gravity="bottom"
+                    android:hint="Select From"
+                    android:singleLine="true"
+                    android:textColorHint="@color/black"
+                    android:textSize="@dimen/text_medium_14sp" />
+            </android.support.design.widget.TextInputLayout>
+
+
+            <ImageView
+                android:layout_width="@dimen/dim_52"
+                android:layout_height="@dimen/dim_52"
+                android:src="@mipmap/takeoff" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dim_1"
+            android:background="@color/grey" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dim_5"
+            android:orientation="horizontal">
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dim_52"
+                android:layout_margin="@dimen/dim_5"
+                android:layout_weight="1"
+                android:textColorHint="@color/black">
+
+                <AutoCompleteTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="bottom"
+                    android:background="@null"
+                    android:gravity="bottom"
+                    android:hint="Select To"
+                    android:singleLine="true"
+                    android:textColorHint="@color/black"
+                    android:textSize="@dimen/text_medium_14sp" />
+            </android.support.design.widget.TextInputLayout>
+
+
+            <ImageView
+                android:layout_width="@dimen/dim_52"
+                android:layout_height="@dimen/dim_52"
+                android:src="@mipmap/destination" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dim_1"
+            android:background="@color/grey" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dim_5"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_weight="1"
+                android:singleLine="true"
+                android:text="Upload Ticket"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_medium_14sp" />
+
+            <ImageView
+                android:layout_width="@dimen/dim_52"
+                android:layout_height="@dimen/dim_52"
+                android:src="@mipmap/uploadticket" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dim_1"
+            android:background="@color/grey" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="@dimen/dim_5"
+            android:singleLine="true"
+            android:text="(Upload files of .jpg)"
+            android:textColor="@color/grey"
+            android:textSize="@dimen/text_medium_14sp" />
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dim_52"
+            android:layout_margin="@dimen/dim_5"
+            android:textColorHint="@color/black">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom"
+                android:background="@null"
+                android:gravity="bottom"
+                android:hint="Capacity"
+                android:inputType="numberDecimal"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black"
+                android:textSize="@dimen/text_medium_14sp" />
+
+        </android.support.design.widget.TextInputLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dim_1"
+            android:background="@color/grey" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="@dimen/dim_5"
+            android:singleLine="true"
+            android:text="(Amount of weight in kg you can carry easily)"
+            android:textColor="@color/grey"
+            android:textSize="@dimen/text_medium_14sp" />
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dim_52"
+            android:layout_margin="@dimen/dim_5"
+            android:textColorHint="@color/black">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom"
+                android:background="@null"
+                android:gravity="bottom"
+                android:hint="Add Comment"
+                android:maxLines="3"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black"
+                android:textSize="@dimen/text_medium_14sp" />
+
+        </android.support.design.widget.TextInputLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dim_1"
+            android:background="@color/grey" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/dim_8"
+        android:weightSum="3">
+
+        <TextView
+            style="@style/button_blue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
+            android:text="Add" />
+    </LinearLayout>
+
 </LinearLayout>
