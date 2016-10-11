@@ -36,5 +36,6 @@ public class ParcelDetailsData implements Serializable {
     public String statusdescription;
     public String channelid;
     public String Isactive;
-
+    public String transemail;
+    public String MCBTransporterID;
 }

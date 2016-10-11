@@ -4,11 +4,9 @@ import com.app.mcb.dao.AddParcelData;
 import com.app.mcb.dao.AirportData;
 import com.app.mcb.dao.ChangePasswordData;
 import com.app.mcb.dao.ForgetPasswordData;
-import com.app.mcb.dao.ParcelDetailsData;
-import com.app.mcb.dao.TripData;
+import com.app.mcb.dao.ParcelListData;
 import com.app.mcb.dao.TripTransporterData;
 import com.app.mcb.dao.UserInfoData;
-import com.google.gson.JsonElement;
 
 import java.util.HashMap;
 
@@ -17,6 +15,7 @@ import retrofit.http.Body;
 import retrofit.http.GET;
 import retrofit.http.Headers;
 import retrofit.http.POST;
+import retrofit.http.Path;
 
 /**
  * Created by Hitesh on 28-09-2016.
@@ -53,4 +52,12 @@ public interface RestInterface {
     @Headers({"Content-Type:application/json"})
     @POST("/addparcel")
     public void addParcel(@Body HashMap<String, String> request, Callback<AddParcelData> cb);
+
+    @Headers({"Content-Type:application/json"})
+    @GET("/parcellist/{userId}")
+    public void getActiveParcels(@Path("userId") String userId, Callback<ParcelListData> cb);
+
+    @Headers({"Content-Type:application/json"})
+    @GET("/cancelparcellist/{userId}")
+    public void getAllParcels(@Path("userId") String userId, Callback<ParcelListData> cb);
 }

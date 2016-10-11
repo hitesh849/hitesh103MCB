@@ -87,6 +87,9 @@ public class LoginActivity extends AbstractFragmentActivity implements View.OnCl
 
     private void saveUserData(UserInfoData userInfoData) {
         Config.setLoginStatus(true);
+        if (userInfoData.id != null) {
+            Config.setUserId(userInfoData.id);
+        }
         if (userInfoData.username != null) {
             Config.setUserName(userInfoData.username);
         }

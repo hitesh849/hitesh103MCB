@@ -227,6 +227,20 @@ public class Util {
         return null;
     }
 
+    public static String getDateDDMMYY(String YYMMDD) {
+
+        try {
+
+            DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd");
+            DateTime obj = formatter.parseDateTime(YYMMDD).toDateTime();
+            DateTimeFormatter localDateFormat = DateTimeFormat.forPattern("dd/MM/yyyy");
+            obj.toString(localDateFormat);
+            return  obj.toString(localDateFormat);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
     public static String getTimeFromDateTimeFormat(String dateTime) {
 
         try {

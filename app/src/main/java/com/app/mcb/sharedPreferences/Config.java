@@ -12,6 +12,7 @@ public class Config {
     private static SharedPreferences preferences = null;
     private static SharedPreferences.Editor editor;
     public static String PREFERENCES_NAME = "mcbPreferences";
+    public static final String USER_ID = "user_id";
     public static final String ISLOGIN = "islogin";
     public static final String USERNAME = "username";
     public static final String FIRST_NAME = "first_name";
@@ -61,6 +62,15 @@ public class Config {
 
     public static boolean getLoginStatus() {
         return preferences.getBoolean(ISLOGIN, false);
+    }
+
+    public static void setUserId(String userName) {
+        editor.putString(USER_ID, userName);
+        savePreferences();
+    }
+
+    public static String getUserId() {
+        return preferences.getString(USER_ID, null);
     }
 
     public static void setUserName(String userName) {

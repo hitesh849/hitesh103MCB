@@ -17,7 +17,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1">
 
-            <EditText
+            <AutoCompleteTextView
+                android:id="@+id/autoCompParcelIdFilter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/dark_grey"
@@ -41,6 +42,7 @@
                 android:layout_weight="1">
 
                 <EditText
+                    android:id="@+id/etTillDateFilter"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/dark_grey"
@@ -51,6 +53,7 @@
             </android.support.design.widget.TextInputLayout>
 
             <ImageView
+                android:id="@+id/imgCalenderParcelFilter"
                 android:layout_width="@dimen/dim_32"
                 android:layout_height="@dimen/dim_32"
                 android:src="@mipmap/white_calender" />
@@ -76,9 +79,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/select"
+                    android:visibility="gone"
                     android:textColor="@color/dark_grey" />
 
                 <LinearLayout
+                    android:id="@+id/llStatusFilter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/rect_bottom_line_blue_bg"
@@ -101,6 +106,7 @@
             </LinearLayout>
 
             <ImageView
+                android:id="@+id/imgSearchParcelFilter"
                 android:layout_width="@dimen/dim_32"
                 android:layout_height="@dimen/dim_32"
                 android:src="@mipmap/search" />

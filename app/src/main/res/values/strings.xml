@@ -36,7 +36,7 @@
     <string name="transporter_list">Transporter List</string>
     <string name="trip_details">Trip Details</string>
     <string name="where_send_your_parcel">Where do you want to send your parcel?</string>
-    <string name="enter_parcel_id">Enter Parcel ID</string>
+    <string name="enter_parcel_id">Parcel ID</string>
     <string name="select">SELECT</string>
     <string name="status">STATUS</string>
     <string name="login">LOGIN</string>

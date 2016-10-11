@@ -12,5 +12,7 @@ public class Constants
     public static final String KEY_TRANSPORTER = "Transporter";
     public static final String BEGIN_WITH_TRANSPORTER_ID = "T";
     public static final String BEGIN_WITH_USER_ID = "MCB";
+    public static final String ENVELOPE = "Envelope";
+    public static final String BOX = "Box";
 }
 

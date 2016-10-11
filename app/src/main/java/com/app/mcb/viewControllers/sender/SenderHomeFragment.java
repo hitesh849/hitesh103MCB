@@ -62,15 +62,22 @@ public class SenderHomeFragment extends AbstractFragment implements View.OnClick
     @Override
     public void onClick(View view) {
         int id = view.getId();
-        if (id == R.id.llActiveParcelSenderHome) {
-            Util.replaceFragment(getActivity(),R.id.fmContainerSenderHomeMain,new ParcelsListFragment());
-            backgroundChange(llActiveParcelSenderHome);
+        if (id == R.id.llActiveParcelSenderHome || id == R.id.llAllParcelSenderHome) {
+            Bundle bundle = new Bundle();
+            ParcelsListFragment parcelsListFragment = new ParcelsListFragment();
+            if (id == R.id.llActiveParcelSenderHome) {
+                backgroundChange(llActiveParcelSenderHome);
+                bundle.putString("DATA", "Active");
+            } else if (id == R.id.llAllParcelSenderHome) {
+                backgroundChange(llAllParcelSenderHome);
+                bundle.putString("DATA", "All");
+            }
+            parcelsListFragment.setArguments(bundle);
+            Util.replaceFragment(getActivity(), R.id.fmContainerSenderHomeMain, parcelsListFragment);
+
         } else if (id == R.id.llAddParcelSenderHome) {
-            Util.replaceFragment(getActivity(),R.id.fmContainerSenderHomeMain,new AddParcelFragment());
+            Util.replaceFragment(getActivity(), R.id.fmContainerSenderHomeMain, new AddParcelFragment());
             backgroundChange(llAddParcelSenderHome);
-        } else if (id == R.id.llAllParcelSenderHome) {
-            Util.replaceFragment(getActivity(),R.id.fmContainerSenderHomeMain,new ParcelsListFragment());
-            backgroundChange(llAllParcelSenderHome);
         }
     }
 
