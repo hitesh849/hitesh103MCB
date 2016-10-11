@@ -8,38 +8,55 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.app.mcb.R;
+import com.app.mcb.Utility.Constants;
+import com.app.mcb.Utility.Util;
 import com.app.mcb.adapters.TripDetailsVPAdapter;
+import com.app.mcb.adapters.TripListStateWiseAdapter;
 import com.app.mcb.custom.AppHeaderView;
+import com.app.mcb.dao.FilterData;
+import com.app.mcb.dao.TripTransporterData;
+import com.app.mcb.filters.TripFilter;
+import com.app.mcb.filters.TripListener;
+import com.app.mcb.model.TripModel;
 
 import org.byteclues.lib.model.BasicModel;
 import org.byteclues.lib.view.AbstractFragmentActivity;
 
 import java.util.Observable;
 
+import retrofit.RetrofitError;
+
 /**
  * Created by Hitesh on 9/16/2016.
  */
-public class TripDetailsActivity extends AbstractFragmentActivity implements View.OnClickListener {
+public class TripDetailsActivity extends AbstractFragmentActivity implements View.OnClickListener, TripListener {
 
     private ViewPager vpTripDetails;
     private LinearLayout llCountDotsMain;
     private AppHeaderView appHeaderView;
-
+    private LinearLayout llTripDetailsMain;
+    private TripModel tripModel = new TripModel();
+    private TripTransporterData tripTransporterData;
 
     @Override
     protected void onCreatePost(Bundle savedInstanceState) {
         setContentView(R.layout.trip_details);
         init();
+        Bundle bundle = getIntent().getBundleExtra("KEY_BUNDLE");
+        if (bundle != null) {
+            tripTransporterData = (TripTransporterData) bundle.getSerializable("KEY_DATA");
+            vpTripDetails.setAdapter(new TripDetailsVPAdapter(this, tripTransporterData.response, this));
+        }
         drawPageSelectionIndicators(0);
     }
 
     private void init() {
+        llTripDetailsMain = (LinearLayout) findViewById(R.id.llTripDetailsMain);
+        TripFilter.addFilterView(this, llTripDetailsMain, this);
         vpTripDetails = (ViewPager) findViewById(R.id.vpTripDetails);
         appHeaderView = (AppHeaderView) findViewById(R.id.appHeaderView);
-        vpTripDetails.setAdapter(new TripDetailsVPAdapter(this, this));
         appHeaderView.txtHeaderNamecenter.setText(getResources().getString(R.string.trip_details));
         viewPagerChangeListener();
-
     }
 
     private void viewPagerChangeListener() {
@@ -51,9 +68,6 @@ public class TripDetailsActivity extends AbstractFragmentActivity implements Vie
 
             @Override
             public void onPageSelected(int position) {
-
-
-
                 drawPageSelectionIndicators(position);
             }
 
@@ -66,11 +80,29 @@ public class TripDetailsActivity extends AbstractFragmentActivity implements Vie
 
     @Override
     protected BasicModel getModel() {
-        return null;
+        return tripModel;
     }
 
     @Override
-    public void update(Observable o, Object arg) {
+    public void update(Observable o, Object data) {
+        Util.dimissProDialog();
+
+        try {
+            if (data != null && data instanceof TripTransporterData) {
+                TripTransporterData tripTransporterData = (TripTransporterData) data;
+                if (tripTransporterData.status.equals("success")) {
+                    if (tripTransporterData.response != null)
+                        vpTripDetails.setAdapter(new TripDetailsVPAdapter(this, tripTransporterData.response, this));
+
+                    if (tripTransporterData.response.size() <= 0)
+                        Util.showOKSnakBar(llTripDetailsMain, getResources().getString(R.string.trip_unavailable));
+                }
+            } else if (data != null && data instanceof RetrofitError) {
+                Util.showOKSnakBar(llTripDetailsMain, getResources().getString(R.string.pls_try_again));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
 
     }
 
@@ -90,20 +122,15 @@ public class TripDetailsActivity extends AbstractFragmentActivity implements Vie
         llCountDotsMain = (LinearLayout) findViewById(R.id.llCountDotsMain);
         ImageView[] dots = new ImageView[3];
 
-        if(mPosition>2)
-        {
-            mPosition=(mPosition%3);
+        if (mPosition > 2) {
+            mPosition = (mPosition % 3);
         }
         for (int i = 0; i < 3; i++) {
-
-
             dots[i] = new ImageView(this);
             if (i == mPosition)
                 dots[i].setImageDrawable(getResources().getDrawable(R.drawable.item_selected));
             else
                 dots[i].setImageDrawable(getResources().getDrawable(R.drawable.vp_item_unselected));
-
-
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT
@@ -111,6 +138,25 @@ public class TripDetailsActivity extends AbstractFragmentActivity implements Vie
 
             params.setMargins(5, 0, 5, 0);
             llCountDotsMain.addView(dots[i], params);
+        }
+    }
+
+    @Override
+    public void filterData(FilterData filterData) {
+        filterData.type = Constants.KEY_TRANSPORTER;
+        getTripByFilter(filterData);
+    }
+
+    private void getTripByFilter(FilterData filterData) {
+        try {
+            if (Util.isDeviceOnline()) {
+                Util.showProDialog(this);
+                tripModel.getTripListByFilter(filterData);
+            } else {
+                Util.showAlertDialog(null, getResources().getString(R.string.noInternetMsg));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 }

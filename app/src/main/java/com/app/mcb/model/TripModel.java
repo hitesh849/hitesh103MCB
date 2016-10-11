@@ -6,6 +6,7 @@ import com.app.mcb.Utility.Constants;
 import com.app.mcb.dao.AirportData;
 import com.app.mcb.dao.FilterData;
 import com.app.mcb.dao.TripData;
+import com.app.mcb.dao.TripTransporterData;
 import com.app.mcb.database.DatabaseMgr;
 
 import org.byteclues.lib.model.BasicModel;
@@ -51,7 +52,6 @@ public class TripModel extends BasicModel {
 
     public void getTripListByFilter(FilterData filterData) {
         try {
-
             HashMap<String, HashMap> request = new HashMap<String, HashMap>();
             HashMap<String, String> subrequest = new HashMap<String, String>();
             subrequest.put("dateFrom", filterData.fromDate);
@@ -61,9 +61,9 @@ public class TripModel extends BasicModel {
             subrequest.put("type", filterData.type);
             request.put("params", subrequest);
 
-            restInterface.getTripListByFilter(request, new Callback<TripData>() {
+            restInterface.getTripListByFilter(request, new Callback<TripTransporterData>() {
                 @Override
-                public void success(TripData tripData, Response response) {
+                public void success(TripTransporterData tripData, Response response) {
                     notifyObservers(tripData);
                 }
 

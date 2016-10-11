@@ -210,7 +210,7 @@
                     style="@style/text_medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="10" />
+                    android:text="" />
 
                 <TextView
                     style="@style/text_extra_small"

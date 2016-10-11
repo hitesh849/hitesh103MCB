@@ -14,7 +14,6 @@ import com.app.mcb.Utility.Util;
 import com.app.mcb.dao.UserInfoData;
 import com.app.mcb.model.UserAuthenticationModel;
 import com.app.mcb.sharedPreferences.Config;
-import com.app.mcb.viewControllers.sender.SenderHomeFragment;
 
 import org.byteclues.lib.model.BasicModel;
 import org.byteclues.lib.view.AbstractFragmentActivity;
@@ -38,7 +37,6 @@ public class LoginActivity extends AbstractFragmentActivity implements View.OnCl
 
     @Override
     protected void onCreatePost(Bundle savedInstanceState) {
-
         setContentView(R.layout.login);
         init();
     }
@@ -50,6 +48,8 @@ public class LoginActivity extends AbstractFragmentActivity implements View.OnCl
         txtForgetPasswordLogin = (TextView) findViewById(R.id.txtForgetPasswordLogin);
         etEmailLogin = (EditText) findViewById(R.id.etEmailLogin);
         etPasswordLogin = (EditText) findViewById(R.id.etPasswordLogin);
+        etEmailLogin.setText("lalit.sharma@byteclues.com");
+        txtForgetPasswordLogin.setText("123456");
         txtLogin.setOnClickListener(this);
         txtSignUp.setOnClickListener(this);
         txtForgetPasswordLogin.setOnClickListener(this);
@@ -69,8 +69,7 @@ public class LoginActivity extends AbstractFragmentActivity implements View.OnCl
                 if (userInfoData.status.equals("success")) {
                     if (userInfoData.response != null) {
                         userInfoData = userInfoData.response.get(0);
-                        Config.setLoginStatus(true);
-                        Config.savePreferences();
+                        saveUserData(userInfoData);
                         Intent intent = new Intent(this, MainActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
@@ -84,15 +83,82 @@ public class LoginActivity extends AbstractFragmentActivity implements View.OnCl
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
 
+    private void saveUserData(UserInfoData userInfoData) {
+        Config.setLoginStatus(true);
+        if (userInfoData.username != null) {
+            Config.setUserName(userInfoData.username);
+        }
+        if (userInfoData.firstName != null) {
+            Config.setUserFirstName(userInfoData.firstName);
+        }
+        if (userInfoData.lastName != null) {
+            Config.setUserLastName(userInfoData.lastName);
+        }
+        if (userInfoData.role_id != null) {
+            Config.setUserRoleId(userInfoData.role_id);
+        }
+        if (userInfoData.gender != null) {
+            Config.setUserGender(userInfoData.gender);
+        }
+        if (userInfoData.addr1 != null) {
+            String address = userInfoData.addr1;
+            if (userInfoData.addr2 != null)
+                address += " " + userInfoData.addr2;
+            if (userInfoData.addr3 != null)
+                address += " " + userInfoData.addr3;
+            Config.setUserAddress(address);
+        }
+        if (userInfoData.photo != null) {
+            Config.setUserImageURl(userInfoData.photo);
+        }
+        if (userInfoData.phone != null) {
+            Config.setUserPhone(userInfoData.phone);
+        }
+        if (userInfoData.country_code != null) {
+            Config.setUserCountryCode(userInfoData.country_code);
+        }
+        if (userInfoData.mobile != null) {
+            Config.setUserMobile(userInfoData.mobile);
+        }
+        if (userInfoData.altr_mobile != null) {
+            Config.setUserPinCode(userInfoData.altr_mobile);
+        }
+        if (userInfoData.bank_act_no != null) {
+            Config.setUserAccountNumber(userInfoData.bank_act_no);
+        }
+        if (userInfoData.bank_act_name != null) {
+            Config.setUserAccountName(userInfoData.bank_act_name);
+        }
+        if (userInfoData.bank_name != null) {
+            Config.setUserBankName(userInfoData.bank_name);
+        }
+        if (userInfoData.bank_ifsc != null) {
+            Config.setUserBankIFSC(userInfoData.bank_ifsc);
+        }
+        if (userInfoData.bank_swift_code != null) {
+            Config.setUserBankSwiftCode(userInfoData.bank_swift_code);
+        }
+        if (userInfoData.wallet != null) {
+            Config.setUserWallet(userInfoData.wallet);
+        }
+        if (userInfoData.passportno != null) {
+            Config.setUserPassportNumber(userInfoData.passportno);
+        }
+        if (userInfoData.UserID != null) {
+            Config.setUserModifyUserName(userInfoData.UserID);
+        }
     }
 
     public boolean validation(String email, String password) {
         if (TextUtils.isEmpty(email)) {
+            etPasswordLogin.requestFocus();
             etEmailLogin.setError("Can't be Empty");
             return false;
         }
         if (TextUtils.isEmpty(password)) {
+            etPasswordLogin.requestFocus();
             etPasswordLogin.setError("Can't be Empty");
             return false;
         }
@@ -116,13 +182,11 @@ public class LoginActivity extends AbstractFragmentActivity implements View.OnCl
     public void onClick(View v) {
         int id = v.getId();
         if (id == R.id.txtLogin) {
-
             String email = etEmailLogin.getText().toString();
             String password = etPasswordLogin.getText().toString();
             if (validation(email, password)) {
                 userLogin(email, password);
             }
-
         } else if (id == R.id.txtSignUpLogin) {
             startActivity(new Intent(this, SignUpActivity.class));
         } else if (id == R.id.txtForgetPasswordLogin) {

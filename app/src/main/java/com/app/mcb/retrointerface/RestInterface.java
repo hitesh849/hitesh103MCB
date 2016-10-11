@@ -1,10 +1,12 @@
 package com.app.mcb.retrointerface;
 
+import com.app.mcb.dao.AddParcelData;
 import com.app.mcb.dao.AirportData;
 import com.app.mcb.dao.ChangePasswordData;
 import com.app.mcb.dao.ForgetPasswordData;
 import com.app.mcb.dao.ParcelDetailsData;
 import com.app.mcb.dao.TripData;
+import com.app.mcb.dao.TripTransporterData;
 import com.app.mcb.dao.UserInfoData;
 import com.google.gson.JsonElement;
 
@@ -26,7 +28,7 @@ public interface RestInterface {
 
     @Headers({"Content-Type:application/json"})
     @POST("/searchhome")
-    public void getTripListByFilter(@Body HashMap<String, HashMap> request,Callback<TripData> cb);
+    public void getTripListByFilter(@Body HashMap<String, HashMap> request,Callback<TripTransporterData> cb);
 
     @Headers({"Content-Type:application/json"})
     @POST("/forgetpassword")
@@ -50,5 +52,5 @@ public interface RestInterface {
 
     @Headers({"Content-Type:application/json"})
     @POST("/addparcel")
-    public void addParcel(@Body HashMap<String, String> request, Callback<ParcelDetailsData> cb);
+    public void addParcel(@Body HashMap<String, String> request, Callback<AddParcelData> cb);
 }

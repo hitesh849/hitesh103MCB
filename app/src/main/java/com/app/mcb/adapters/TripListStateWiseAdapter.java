@@ -9,7 +9,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.app.mcb.R;
+import com.app.mcb.Utility.Constants;
+import com.app.mcb.Utility.Util;
 import com.app.mcb.dao.TripData;
+import com.app.mcb.dao.TripTransporterData;
 
 import java.util.ArrayList;
 
@@ -18,9 +21,9 @@ import java.util.ArrayList;
  */
 public class TripListStateWiseAdapter extends RecyclerView.Adapter<TripListStateWiseAdapter.ViewHolder> {
     private View.OnClickListener onClickListener;
-    private ArrayList<TripData> tripDatas;
+    private ArrayList<TripTransporterData> tripDatas;
 
-    public TripListStateWiseAdapter(Context context, View.OnClickListener onClickListener, ArrayList<TripData> tripDatas) {
+    public TripListStateWiseAdapter(Context context, View.OnClickListener onClickListener, ArrayList<TripTransporterData> tripDatas) {
         this.onClickListener = onClickListener;
         this.tripDatas = tripDatas;
     }
@@ -42,6 +45,8 @@ public class TripListStateWiseAdapter extends RecyclerView.Adapter<TripListState
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
+
+        TripTransporterData tripDataTransporter = (TripTransporterData) tripDatas.get(position);
         holder.llHomeRowMain.setOnClickListener(onClickListener);
         if (position == 0) {
             holder.llRowHeaderMain.setVisibility(View.VISIBLE);
@@ -49,12 +54,48 @@ public class TripListStateWiseAdapter extends RecyclerView.Adapter<TripListState
         } else {
             holder.llRowHeaderMain.setVisibility(View.GONE);
         }
+        if (tripDataTransporter.id != null)
+            holder.txtTripIDTripList.setText(Constants.BEGIN_WITH_TRANSPORTER_ID + tripDataTransporter.id);
+        else
+            holder.txtTripIDTripList.setText("");
+
+        if (tripDataTransporter.t_id != null)
+            holder.txtUserIdTripList.setText(Constants.BEGIN_WITH_USER_ID + tripDataTransporter.t_id);
+        else
+            holder.txtUserIdTripList.setText("");
+
+        if (tripDataTransporter.flight_no != null)
+            holder.txtFlightIdTripList.setText(tripDataTransporter.flight_no);
+        else
+            holder.txtFlightIdTripList.setText("");
+
+        if (tripDataTransporter.flight_no != null)
+            holder.txtArrivalTripList.setText(tripDataTransporter.flight_no);
+        else
+            holder.txtArrivalTripList.setText("");
+
+        if (tripDataTransporter.arrival_time != null)
+            holder.txtFlightDateTripList.setText(Util.getDateFromDateTimeFormat(tripDataTransporter.arrival_time));
+        else
+            holder.txtFlightIdTripList.setText("");
+
+        if(tripDataTransporter.arrival_time != null)
+            holder.txtArrivalTimeTripList.setText(Util.getTimeFromDateTimeFormat(tripDataTransporter.arrival_time));
+        else
+            holder.txtArrivalTimeTripList.setText("");
+
+        if(tripDataTransporter.capacity != null)
+            holder.txtWeightTripList.setText(tripDataTransporter.capacity);
+        else
+            holder.txtWeightTripList.setText("");
+
     }
 
     @Override
     public int getItemCount() {
         return tripDatas.size();
     }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public LinearLayout llHomeRowMain;

@@ -45,12 +45,11 @@ public class MainActivity extends AbstractFragmentActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         init();
-        AbstractFragment abstractFragment=new TripListWithAllStateFragment();
-        if(Config.getLoginStatus())
-        {
-            abstractFragment=new DashBoardFragment();
+        AbstractFragment abstractFragment = new TripListWithAllStateFragment();
+        if (Config.getLoginStatus()) {
+            abstractFragment = new DashBoardFragment();
         }
-        getSupportFragmentManager().beginTransaction().add(R.id.fmHomeContainer,abstractFragment ,"HomeFragment").commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.fmHomeContainer, abstractFragment, "HomeFragment").commit();
 
     }
 
@@ -92,10 +91,10 @@ public class MainActivity extends AbstractFragmentActivity implements View.OnCli
 
     }
 
-    public void setHeader(String tittle)
-    {
+    public void setHeader(String tittle) {
         appHeaderView.txtHeaderNamecenter.setText(tittle);
     }
+
     @Override
     public void onBackPressed() {
 
@@ -135,20 +134,20 @@ public class MainActivity extends AbstractFragmentActivity implements View.OnCli
         }
     }
 
-    public void addFragment(Fragment fragment)
-    {
+    public void addFragment(Fragment fragment) {
         getSupportFragmentManager().beginTransaction().replace(R.id.fmHomeContainer, fragment).commit();
         drawerStateChanged();
 
     }
-    private void drawerStateChanged()
-    {
+
+    private void drawerStateChanged() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
             drawer.openDrawer(GravityCompat.START);
         }
     }
+
     @Override
     public void update(Observable observable, Object o) {
 

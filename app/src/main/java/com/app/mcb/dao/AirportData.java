@@ -7,7 +7,6 @@ import java.util.ArrayList;
  */
 public class AirportData extends CommonResponseData {
     public static final String TABLE_NAME = "airport";
-
     public static final String FLD_ID = "id";
     public static final String FLD_AIRPORT_ID = "airport_id";
     public static final String FLD_LOCATION = "location";
@@ -33,6 +32,5 @@ public class AirportData extends CommonResponseData {
     public String toString() {
         return location;
     }
-
 
 }

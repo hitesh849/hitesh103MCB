@@ -16,6 +16,7 @@ import com.app.mcb.custom.AppHeaderView;
 import com.app.mcb.dao.AirportData;
 import com.app.mcb.dao.FilterData;
 import com.app.mcb.dao.TripData;
+import com.app.mcb.dao.TripTransporterData;
 import com.app.mcb.database.DatabaseMgr;
 import com.app.mcb.filters.TripFilter;
 import com.app.mcb.filters.TripListener;
@@ -38,6 +39,7 @@ public class TripListWithStateActivity extends AbstractFragmentActivity implemen
     private LinearLayout llBecomeTransporter;
     private LinearLayout llTripListWithState;
     TripModel tripModel = new TripModel();
+    private TripTransporterData tripTransporterData;
 
     @Override
     protected void onCreatePost(Bundle savedInstanceState) {
@@ -71,16 +73,14 @@ public class TripListWithStateActivity extends AbstractFragmentActivity implemen
         Util.dimissProDialog();
 
         try {
-            if (data != null && data instanceof TripData) {
-                TripData tripData = (TripData) data;
-                if (tripData.status.equals("success")) {
-                    if (tripData.response != null)
-                        rvTripHome.setAdapter(new TripListStateWiseAdapter(this, this, tripData.response));
+            if (data != null && data instanceof TripTransporterData) {
+                tripTransporterData = (TripTransporterData) data;
+                if (tripTransporterData.status.equals("success")) {
+                    if (tripTransporterData.response != null)
+                        rvTripHome.setAdapter(new TripListStateWiseAdapter(this, this, tripTransporterData.response));
 
-                    if (tripData.response.size() <= 0)
+                    if (tripTransporterData.response.size() <= 0)
                         Util.showOKSnakBar(llTripListWithState, getResources().getString(R.string.trip_unavailable));
-
-
                 }
             } else if (data != null && data instanceof RetrofitError) {
                 Util.showOKSnakBar(llTripListWithState, getResources().getString(R.string.pls_try_again));
@@ -89,17 +89,20 @@ public class TripListWithStateActivity extends AbstractFragmentActivity implemen
             ex.printStackTrace();
         }
 
+
     }
 
     @Override
     public void onClick(View v) {
-
         int id = v.getId();
         if (id == R.id.llBackHeader) {
             onBackPressed();
         } else if (id == R.id.llHomeRowMain) {
-
-            startActivity(new Intent(this, TripDetailsActivity.class));
+            Intent intent = new Intent(this, TripDetailsActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("KEY_DATA", tripTransporterData);
+            intent.putExtra("KEY_BUNDLE", bundle);
+            startActivity(intent);
         } else if (id == R.id.llBecomeTransporter) {
             Intent intent = new Intent(this, SignUpActivity.class);
             startActivity(intent);
@@ -134,7 +137,7 @@ public class TripListWithStateActivity extends AbstractFragmentActivity implemen
 
     @Override
     public void filterData(FilterData filterData) {
-        filterData.type = Constants.KEY_SENDER;
+        filterData.type = Constants.KEY_TRANSPORTER;
         getTripByFilter(filterData);
     }
 }

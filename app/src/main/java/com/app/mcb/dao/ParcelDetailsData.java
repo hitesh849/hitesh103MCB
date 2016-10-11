@@ -30,5 +30,11 @@ public class ParcelDetailsData implements Serializable {
     public String trans_comment;
     public String reason;
     public String ParcelID;
-    public ParcelDetailsData response;
+    public String receiveremail;
+    public String MCBreceiverID;
+    public String transporterID;
+    public String statusdescription;
+    public String channelid;
+    public String Isactive;
+
 }

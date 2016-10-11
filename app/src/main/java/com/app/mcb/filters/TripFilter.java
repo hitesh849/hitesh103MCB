@@ -114,7 +114,6 @@ public class TripFilter implements View.OnClickListener {
             if (filterValidation(filterData)) {
                 tripListener.filterData(filterData);
             }
-
         } else if (id == R.id.imgCalenderTripFilter) {
             showCalander();
         }
@@ -140,7 +139,6 @@ public class TripFilter implements View.OnClickListener {
     }
 
     private boolean filterValidation(FilterData filterData) {
-
 
         if (TextUtils.isEmpty(filterData.fromLocation)) {
             autoCompFromTripFilter.setError("Can't be Empty");

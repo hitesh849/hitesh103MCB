@@ -27,12 +27,15 @@ import org.byteclues.lib.view.AbstractFragment;
 import org.byteclues.lib.view.AbstractFragmentActivity;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Date;
 
 /**
  * Created by u on 9/15/2016.
@@ -207,5 +210,39 @@ public class Util {
         DateTime now = new DateTime();
         LocalDate today = now.toLocalDate();
         return today.toString().replaceAll("-", "/");
+    }
+
+    public static String getDateFromDateTimeFormat(String dateTime) {
+
+        try {
+
+            DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
+            DateTime obj = formatter.parseDateTime(dateTime).toDateTime();
+            DateTimeFormatter localDateFormat = DateTimeFormat.forPattern("dd/MM/yyyy");
+            obj.toString(localDateFormat);
+            return  obj.toString(localDateFormat);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    public static String getTimeFromDateTimeFormat(String dateTime) {
+
+        try {
+            DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
+            DateTime obj = formatter.parseDateTime(dateTime).toDateTime();
+            DateTimeFormatter localDateFormat = DateTimeFormat.forPattern("HH:mm a");
+            obj.toString(localDateFormat);
+            return  obj.toString(localDateFormat);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+    public static String getFirstName(String str)
+    {
+        String code[] = str.split(" ");
+        return code[0];
     }
 }
