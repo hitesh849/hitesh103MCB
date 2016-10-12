@@ -9,6 +9,7 @@ import com.app.mcb.dao.ParcelListData;
 import com.app.mcb.dao.ReceiverData;
 import com.app.mcb.dao.TripTransporterData;
 import com.app.mcb.dao.UserInfoData;
+import com.google.gson.JsonElement;
 
 import java.util.HashMap;
 
@@ -29,7 +30,7 @@ public interface RestInterface {
 
     @Headers({"Content-Type:application/json"})
     @POST("/searchhome")
-    public void getTripListByFilter(@Body HashMap<String, HashMap> request,Callback<TripTransporterData> cb);
+    public void getTripListByFilter(@Body HashMap<String, HashMap> request, Callback<TripTransporterData> cb);
 
     @Headers({"Content-Type:application/json"})
     @POST("/forgetpassword")
@@ -74,4 +75,8 @@ public interface RestInterface {
     @Headers({"Content-Type:application/json"})
     @GET("/receiverlist/{userId}")
     public void getReceiverData(@Path("userId") String userId, Callback<ReceiverData> cb);
+
+    @Headers({"Content-Type:application/json"})
+    @GET("/triplist/{userId}")
+    public void getUserTripList(@Path("userId") String userId, Callback<JsonElement> cb);
 }

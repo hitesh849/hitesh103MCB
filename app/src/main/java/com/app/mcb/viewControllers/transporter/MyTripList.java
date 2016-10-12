@@ -13,21 +13,24 @@ import com.app.mcb.MainActivity;
 import com.app.mcb.R;
 import com.app.mcb.Utility.Util;
 import com.app.mcb.adapters.MyTripListVPAdapter;
-import com.app.mcb.adapters.ParcelsListVPAdapter;
-import com.app.mcb.viewControllers.sender.ParcelDetailsFragment;
+import com.app.mcb.model.MyTripsModel;
 
 import org.byteclues.lib.model.BasicModel;
 import org.byteclues.lib.view.AbstractFragment;
 
+import java.util.ArrayList;
 import java.util.Observable;
+
+import retrofit.RetrofitError;
 
 /**
  * Created by Hitesh kumawat on 19-09-2016.
  */
-public class MyTripList  extends AbstractFragment implements View.OnClickListener {
+public class MyTripList extends AbstractFragment implements View.OnClickListener {
 
     private ViewPager vpMyList;
     private LinearLayout llCountDotsMain;
+    private MyTripsModel myTripsModel = new MyTripsModel();
 
     @Override
     protected View onCreateViewPost(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -43,21 +46,34 @@ public class MyTripList  extends AbstractFragment implements View.OnClickListene
         vpMyList.setAdapter(new MyTripListVPAdapter(getActivity(), this));
         viewPagerChangeListener();
         drawPageSelectionIndicators(0);
+        getMyTripsList();
     }
 
     @Override
     protected BasicModel getModel() {
-        return null;
+        return myTripsModel;
     }
 
     @Override
     public void update(Observable observable, Object o) {
+        Util.dimissProDialog();
+        if (o instanceof ArrayList) {
+        } else if (o instanceof RetrofitError) {
+        }
 
+    }
+
+    private void getMyTripsList() {
+        if (Util.isDeviceOnline()) {
+            Util.showProDialog(getActivity());
+            myTripsModel.getUserTripList();
+        } else {
+            Util.showAlertDialog(null, getResources().getString(R.string.noInternetMsg));
+        }
     }
 
     @Override
     public void onClick(View view) {
-
         int id = view.getId();
     }
 
@@ -70,18 +86,15 @@ public class MyTripList  extends AbstractFragment implements View.OnClickListene
 
             @Override
             public void onPageSelected(int position) {
-
-
-
                 drawPageSelectionIndicators(position);
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
-
             }
         });
     }
+
     private void drawPageSelectionIndicators(int mPosition) {
         if (llCountDotsMain != null) {
             llCountDotsMain.removeAllViews();
@@ -89,9 +102,8 @@ public class MyTripList  extends AbstractFragment implements View.OnClickListene
 
         ImageView[] dots = new ImageView[3];
 
-        if(mPosition>2)
-        {
-            mPosition=(mPosition%3);
+        if (mPosition > 2) {
+            mPosition = (mPosition % 3);
         }
         for (int i = 0; i < 3; i++) {
 
