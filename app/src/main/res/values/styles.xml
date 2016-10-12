@@ -103,7 +103,6 @@
 
     <style name="et_withdraw">
         <item name="android:inputType">textNoSuggestions</item>
-        <item name="android:textColorHint">@color/black</item>
     </style>
 
     <style name="et_signup">

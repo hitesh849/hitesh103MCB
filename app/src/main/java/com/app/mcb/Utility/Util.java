@@ -35,6 +35,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -218,7 +219,7 @@ public class Util {
 
             DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
             DateTime obj = formatter.parseDateTime(dateTime).toDateTime();
-            DateTimeFormatter localDateFormat = DateTimeFormat.forPattern("dd/MM/yyyy");
+            DateTimeFormatter localDateFormat = DateTimeFormat.forPattern("dd MMM yyyy");
             obj.toString(localDateFormat);
             return  obj.toString(localDateFormat);
         } catch (Exception ex) {
@@ -258,5 +259,20 @@ public class Util {
     {
         String code[] = str.split(" ");
         return code[0];
+    }
+
+    public static String getdd_MM_YYYYFormat(String dateTime) {
+        try {
+
+            DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
+            DateTime obj = formatter.parseDateTime(dateTime).toDateTime();
+            DateTimeFormatter localDateFormat = DateTimeFormat.forPattern("dd MMM yyyy");
+            obj.toString(localDateFormat);
+            return  obj.toString(localDateFormat);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

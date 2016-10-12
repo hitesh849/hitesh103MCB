@@ -4,7 +4,9 @@ import com.app.mcb.dao.AddParcelData;
 import com.app.mcb.dao.AirportData;
 import com.app.mcb.dao.ChangePasswordData;
 import com.app.mcb.dao.ForgetPasswordData;
+import com.app.mcb.dao.MyWalletData;
 import com.app.mcb.dao.ParcelListData;
+import com.app.mcb.dao.ReceiverData;
 import com.app.mcb.dao.TripTransporterData;
 import com.app.mcb.dao.UserInfoData;
 
@@ -60,4 +62,16 @@ public interface RestInterface {
     @Headers({"Content-Type:application/json"})
     @GET("/cancelparcellist/{userId}")
     public void getAllParcels(@Path("userId") String userId, Callback<ParcelListData> cb);
+
+    @Headers({"Content-Type:application/json"})
+    @GET("/getwalletstatement/{userId}")
+    public void getMyWalletDetails(@Path("userId") String userId, Callback<MyWalletData> cb);
+
+    @Headers({"Content-Type:application/json"})
+    @GET("/getuserdetails/{userId}")
+    public void getUserDetails(@Path("userId") String userId, Callback<UserInfoData> cb);
+
+    @Headers({"Content-Type:application/json"})
+    @GET("/receiverlist/{userId}")
+    public void getReceiverData(@Path("userId") String userId, Callback<ReceiverData> cb);
 }

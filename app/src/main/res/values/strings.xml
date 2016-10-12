@@ -135,6 +135,7 @@
     <string name="email_adrress">Email Address</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="pass_do_not_match_error_msg">Passwords do not match.</string>
+    <string name="rs">&#x20B9;</string>
 
 
 

@@ -27,7 +27,6 @@ public class AddTripFragment extends AbstractFragment implements View.OnClickLis
 
     private void init(View view) {
         ((MainActivity) getActivity()).setHeader(getResources().getString(R.string.add_trip));
-
     }
 
     @Override

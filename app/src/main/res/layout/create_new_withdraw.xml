@@ -25,10 +25,15 @@
                 >
 
                 <EditText
+                    android:id="@+id/etPaymentMethodNewWithDraw"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/payment_method"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:gravity="center"
                     style="@style/et_withdraw"
+                    android:text="Bank Transfer"
                     />
 
             </android.support.design.widget.TextInputLayout>
@@ -37,12 +42,15 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dim_8"
                 android:textColorHint="@color/black">
 
                 <EditText
+                    android:id="@+id/etAmountNewWithDraw"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/withdraw_amount"
+                    android:inputType="number"
                     style="@style/et_withdraw" />
 
             </android.support.design.widget.TextInputLayout>
@@ -53,6 +61,7 @@
                 android:textColorHint="@color/black">
 
                 <EditText
+                    android:id="@+id/etAccountNumNewWithDraw"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/account_number"
@@ -67,6 +76,7 @@
                 android:textColorHint="@color/black">
 
                 <EditText
+                    android:id="@+id/etReAccountNumNewWithDraw"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
 
@@ -82,6 +92,23 @@
                 android:textColorHint="@color/black">
 
                 <EditText
+                    android:id="@+id/etAccHolderNameWithDraw"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:hint="@string/account_holder_name"
+                    style="@style/et_withdraw"
+                    />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/black">
+
+                <EditText
+                    android:id="@+id/etBanlNameNewWithDraw"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/et_withdraw"
@@ -89,18 +116,7 @@
 
             </android.support.design.widget.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColorHint="@color/black">
 
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/account_number"
-                    style="@style/et_withdraw"/>
-
-            </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -108,6 +124,7 @@
                 android:textColorHint="@color/black">
 
                 <EditText
+                    android:id="@+id/etIFSCNewWithDraw"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/et_withdraw"
@@ -122,6 +139,7 @@
                 >
 
                 <EditText
+                    android:id="@+id/etSwiftNumNewWithDraw"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/swift"
@@ -136,6 +154,7 @@
                 android:weightSum="3">
 
                 <TextView
+                    android:id="@+id/txtSubmitWithDraw"
                     style="@style/button_blue"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

@@ -47,19 +47,24 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+
+                            android:orientation="vertical">
 
                             <TextView
+                                android:id="@+id/txtFromCityShortReceiver"
                                 style="@style/text_large"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="JPR" />
 
                             <TextView
+                                android:id="@+id/txtFromCityLongReceiver"
                                 style="@style/text_small"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/dim_4"
+                                android:minLines="2"
+                                android:gravity="center_vertical"
                                 android:text="(Jaipur)" />
                         </LinearLayout>
 
@@ -75,10 +80,13 @@
                                 android:src="@mipmap/blackcalender" />
 
                             <TextView
+                                android:id="@+id/txtFromDateReceiver"
                                 style="@style/text_small"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+
                                 android:layout_marginLeft="@dimen/dim_4"
+
                                 android:text="17 July, 2016" />
                         </LinearLayout>
 
@@ -95,6 +103,7 @@
                                 android:src="@mipmap/clock" />
 
                             <TextView
+                                android:id="@+id/txtFromTimeReceiver"
                                 style="@style/text_small"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -119,19 +128,23 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                            android:orientation="vertical">
 
                             <TextView
+                                android:id="@+id/txtToCityShortReceiver"
                                 style="@style/text_large"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="DEL" />
 
                             <TextView
+                                android:id="@+id/txtToCityLongReceiver"
                                 style="@style/text_small"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/dim_4"
+                                android:minLines="2"
+                                android:gravity="center_vertical"
                                 android:text="(New Delhi)" />
                         </LinearLayout>
 
@@ -147,6 +160,7 @@
                                 android:src="@mipmap/blackcalender" />
 
                             <TextView
+                                android:id="@+id/txtToDateReceiver"
                                 style="@style/text_small"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -166,6 +180,7 @@
                                 android:src="@mipmap/clock" />
 
                             <TextView
+                                android:id="@+id/txtToTimeReceiver"
                                 style="@style/text_small"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -189,6 +204,7 @@
                             android:text="@string/flight_no" />
 
                         <TextView
+                            android:id="@+id/txtFlightNumReceiver"
                             style="@style/text_large"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -228,6 +244,7 @@
                     android:text="@string/parcel_id" />
 
                 <TextView
+                    android:id="@+id/txtParcelIdReceiver"
                     style="@style/text_large"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -250,6 +267,7 @@
                     android:text="@string/type" />
 
                 <TextView
+                    android:id="@+id/txtParcelTypeReceiver"
                     style="@style/text_large"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -273,6 +291,7 @@
 
 
                 <TextView
+                    android:id="@+id/txtParcelWeightReceiver"
                     style="@style/text_large"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -304,6 +323,7 @@
                     android:text="@string/transporter_id" />
 
                 <TextView
+                    android:id="@+id/txtTransporterIdReceiver"
                     style="@style/text_large"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -328,7 +348,8 @@
                     android:text="@string/status" />
 
                 <TextView
-                    style="@style/text_large"
+                    android:id="@+id/txtParcelStatusReceiver"
+                    style="@style/text_medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Booked" />
