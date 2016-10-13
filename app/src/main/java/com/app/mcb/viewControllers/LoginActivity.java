@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.app.mcb.MainActivity;
 import com.app.mcb.R;
+import com.app.mcb.Utility.Constants;
 import com.app.mcb.Utility.Util;
 import com.app.mcb.dao.UserInfoData;
 import com.app.mcb.model.UserAuthenticationModel;
@@ -88,16 +89,16 @@ public class LoginActivity extends AbstractFragmentActivity implements View.OnCl
     private void saveUserData(UserInfoData userInfoData) {
         Config.setLoginStatus(true);
         if (userInfoData.id != null) {
-            Config.setUserId(userInfoData.id);
+            Config.setUserId(Constants.BEGIN_WITH_USER_ID+userInfoData.id);
         }
         if (userInfoData.username != null) {
             Config.setUserName(userInfoData.username);
         }
-        if (userInfoData.firstName != null) {
-            Config.setUserFirstName(userInfoData.firstName);
+        if (userInfoData.name != null) {
+            Config.setUserFirstName(userInfoData.name);
         }
-        if (userInfoData.lastName != null) {
-            Config.setUserLastName(userInfoData.lastName);
+        if (userInfoData.l_name != null) {
+            Config.setUserLastName(userInfoData.l_name);
         }
         if (userInfoData.role_id != null) {
             Config.setUserRoleId(userInfoData.role_id);

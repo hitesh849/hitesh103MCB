@@ -72,6 +72,7 @@ public class UserAuthenticationModel extends BasicModel {
             e.printStackTrace();
         }
     }
+
     public void changePassword(String email) {
         try {
 
@@ -96,7 +97,7 @@ public class UserAuthenticationModel extends BasicModel {
     }
 
 
-    public void getLoginUser(String email,String password) {
+    public void getLoginUser(String email, String password) {
         try {
 
             HashMap<String, String> response = new HashMap<String, String>();

@@ -81,7 +81,7 @@
     <string name="parcel_type">Parcel Type</string>
     <string name="delivery_till">Delivery Till</string>
     <string name="size">Size</string>
-    <string name="Parcel_deccription">Parcel Deccription</string>
+    <string name="Parcel_description">Parcel Description</string>
     <string name="existing_user">Existing User</string>
     <string name="new_user">New User</string>
     <string name="email_address">Email Address</string>
@@ -136,6 +136,10 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="pass_do_not_match_error_msg">Passwords do not match.</string>
     <string name="rs">&#x20B9;</string>
+    <string name="update">Update</string>
+    <string name="box">Box</string>
+    <string name="envelope">Envelope</string>
+    <string name="parcel">Parcel</string>
 
 
 

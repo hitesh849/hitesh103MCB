@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.app.mcb.R;
 import com.squareup.picasso.Picasso;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import org.byteclues.lib.init.Env;
 import org.byteclues.lib.view.AbstractFragment;
@@ -35,7 +36,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -221,7 +224,7 @@ public class Util {
             DateTime obj = formatter.parseDateTime(dateTime).toDateTime();
             DateTimeFormatter localDateFormat = DateTimeFormat.forPattern("dd MMM yyyy");
             obj.toString(localDateFormat);
-            return  obj.toString(localDateFormat);
+            return obj.toString(localDateFormat);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -236,12 +239,13 @@ public class Util {
             DateTime obj = formatter.parseDateTime(YYMMDD).toDateTime();
             DateTimeFormatter localDateFormat = DateTimeFormat.forPattern("dd/MM/yyyy");
             obj.toString(localDateFormat);
-            return  obj.toString(localDateFormat);
+            return obj.toString(localDateFormat);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
         return null;
     }
+
     public static String getTimeFromDateTimeFormat(String dateTime) {
 
         try {
@@ -249,30 +253,28 @@ public class Util {
             DateTime obj = formatter.parseDateTime(dateTime).toDateTime();
             DateTimeFormatter localDateFormat = DateTimeFormat.forPattern("HH:mm a");
             obj.toString(localDateFormat);
-            return  obj.toString(localDateFormat);
+            return obj.toString(localDateFormat);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
         return null;
     }
-    public static String getFirstName(String str)
-    {
+
+    public static String getFirstName(String str) {
         String code[] = str.split(" ");
         return code[0];
     }
 
-    public static String getdd_MM_YYYYFormat(String dateTime) {
+    public static String getDDMMYYYYFormat(String dateTime, String pattern) {
         try {
-
-            DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
-            DateTime obj = formatter.parseDateTime(dateTime).toDateTime();
-            DateTimeFormatter localDateFormat = DateTimeFormat.forPattern("dd MMM yyyy");
-            obj.toString(localDateFormat);
-            return  obj.toString(localDateFormat);
-
-        } catch (Exception e) {
+            SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+            Date dateObj = sdf.parse(dateTime);
+            String timein12Format = new SimpleDateFormat("dd MMM yyyy").format(dateObj);
+            return timein12Format;
+        } catch (final ParseException e) {
             e.printStackTrace();
-            return null;
         }
+        return null;
     }
+
 }

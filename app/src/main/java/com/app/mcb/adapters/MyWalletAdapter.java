@@ -6,8 +6,6 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.app.mcb.R;
@@ -48,7 +46,7 @@ public class MyWalletAdapter extends RecyclerView.Adapter<MyWalletAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, int position) {
 
         MyWalletData myWalletData = myWalletTripList.get(position);
-        holder.txtDateMyWalletRow.setText(Util.getdd_MM_YYYYFormat(myWalletData.insertdate));
+        holder.txtDateMyWalletRow.setText(Util.getDDMMYYYYFormat(myWalletData.insertdate,"yyyy-MM-dd HH:mm:ss"));
         if (!TextUtils.isEmpty(myWalletData.MTripID))
             holder.txtTripIdMyWalletRow.setText(myWalletData.MTripID);
         else

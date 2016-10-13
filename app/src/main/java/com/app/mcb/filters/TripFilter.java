@@ -115,11 +115,11 @@ public class TripFilter implements View.OnClickListener {
                 tripListener.filterData(filterData);
             }
         } else if (id == R.id.imgCalenderTripFilter) {
-            showCalander();
+            showCalendar();
         }
     }
 
-    private void showCalander() {
+    private void showCalendar() {
         Calendar c = Calendar.getInstance();
         int mYear = c.get(Calendar.YEAR);
         int mMonth = c.get(Calendar.MONTH);

@@ -35,7 +35,8 @@
                         android:layout_weight="1"
                         android:textColorHint="@color/dark_grey">
 
-                        <EditText
+                        <AutoCompleteTextView
+                            android:id="@+id/autoCompFromAddParcel"
                             style="@style/editxt_small"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -52,7 +53,8 @@
                         android:layout_weight="1"
                         android:textColorHint="@color/dark_grey">
 
-                        <EditText
+                        <AutoCompleteTextView
+                            android:id="@+id/autoCompToAddParcel"
                             style="@style/editxt_small"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -71,22 +73,43 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <android.support.design.widget.TextInputLayout
+                    <RelativeLayout
+                        android:id="@+id/rlParcelTypeAddParcel"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:textColorHint="@color/dark_grey">
+                        android:gravity="bottom">
 
-                        <EditText
-                            style="@style/editxt_small"
+                        <android.support.design.widget.TextInputLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:backgroundTint="@color/dark_grey"
-                            android:hint="@string/parcel_type"
-                            android:textColorHint="@color/dark_grey" />
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
+                            android:textColorHint="@color/dark_grey">
 
-                    </android.support.design.widget.TextInputLayout>
+                            <EditText
+                                style="@style/editxt_small"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:backgroundTint="@color/dark_grey"
+                                android:focusable="false"
+                                android:clickable="false"
+                                android:cursorVisible="false"
+                                android:focusableInTouchMode="false"
+                                android:hint="@string/parcel_type"
+                                android:textColorHint="@color/dark_grey" />
 
+                        </android.support.design.widget.TextInputLayout>
+
+                        <ImageView
+                            android:id="@+id/imgSelectParcelAddParcel"
+                            android:layout_width="@dimen/dim_24"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="@dimen/dim_6"
+                            android:src="@mipmap/arrow_down"
+                            android:tint="@color/grey" />
+                    </RelativeLayout>
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="0dp"
@@ -95,6 +118,7 @@
                         android:textColorHint="@color/dark_grey">
 
                         <EditText
+                            android:id="@+id/etParcelSizeAddParcel"
                             style="@style/editxt_small"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -114,21 +138,44 @@
                     android:orientation="horizontal"
                     android:weightSum="2">
 
-                    <android.support.design.widget.TextInputLayout
+                    <RelativeLayout
+                        android:id="@+id/rlDeliveryTillAddParcel"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:textColorHint="@color/dark_grey">
+                        android:gravity="bottom">
 
-                        <EditText
-                            style="@style/editxt_small"
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:backgroundTint="@color/dark_grey"
-                            android:hint="@string/delivery_till"
-                            android:textColorHint="@color/dark_grey" />
+                            android:layout_height="wrap_content">
 
-                    </android.support.design.widget.TextInputLayout>
+                            <android.support.design.widget.TextInputLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColorHint="@color/dark_grey">
+
+                                <EditText
+                                    android:id="@+id/etDeliveryTillAddParcel"
+                                    style="@style/editxt_small"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:backgroundTint="@color/dark_grey"
+                                    android:focusable="false"
+                                    android:hint="@string/delivery_till"
+                                    android:textColorHint="@color/dark_grey" />
+
+                            </android.support.design.widget.TextInputLayout>
+                        </LinearLayout>
+
+                        <ImageView
+                            android:id="@+id/imgCalenderAddParcel"
+                            android:layout_width="24dp"
+                            android:layout_height="@dimen/dim_24"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="@dimen/dim_6"
+                            android:src="@mipmap/white_calender"
+                            android:tint="@color/grey" />
+                    </RelativeLayout>
                 </LinearLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -137,11 +184,12 @@
                     android:textColorHint="@color/dark_grey">
 
                     <EditText
+                        android:id="@+id/etDescriptionAddParcel"
                         style="@style/editxt_small"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/dark_grey"
-                        android:hint="@string/Parcel_deccription"
+                        android:hint="@string/Parcel_description"
                         android:textColor="@color/black"
                         android:textColorHint="@color/dark_grey" />
 

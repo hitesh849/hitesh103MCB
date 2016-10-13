@@ -118,5 +118,10 @@
         <item name="android:inputType">textNoSuggestions</item>
     </style>
 
+    <style name="et_UserInfo">
+        <item name="android:inputType">textNoSuggestions</item>
+        <item name="android:background">@null</item>
+    </style>
+
 
 </resources>

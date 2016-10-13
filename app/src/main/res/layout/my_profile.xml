@@ -21,8 +21,10 @@
             android:gravity="right|bottom">
 
             <LinearLayout
+                android:id="@+id/llEditProfile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+
                 android:gravity="center">
 
                 <ImageView
@@ -30,7 +32,8 @@
                     android:layout_width="@dimen/dim_24"
                     android:layout_height="@dimen/dim_24"
                     android:src="@mipmap/edit"
-                    android:tint="@color/black" />
+                    android:tint="@color/black"
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/txtEditProfile"
@@ -38,6 +41,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dim_8"
+                    android:background="@drawable/rect_black_border_rounded"
+                    android:paddingBottom="@dimen/dim_4"
+                    android:paddingLeft="@dimen/dim_16"
+                    android:paddingRight="@dimen/dim_16"
+                    android:paddingTop="@dimen/dim_4"
                     android:text="@string/edit"
 
                     />
@@ -49,6 +57,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/rectangle_bottom_line_white_bg"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
             android:padding="@dimen/dim_8"
 
@@ -61,31 +70,23 @@
                 android:src="@mipmap/profile" />
 
 
-            <LinearLayout
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dim_16"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                android:textColorHint="@color/black">
 
-                <TextView
-                    style="@style/text_semi_medium"
+                <EditText
+                    android:id="@+id/etNameMyProfile"
+                    style="@style/et_UserInfo"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text="@string/name" />
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:hint="@string/name" />
 
+            </android.support.design.widget.TextInputLayout>
 
-                <TextView
-                    style="@style/text_large"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text="Ashu Sharma"
-                    android:textStyle="bold" />
-            </LinearLayout>
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -97,6 +98,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/rectangle_bottom_line_white_bg"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
             android:padding="@dimen/dim_8"
 
@@ -109,32 +111,21 @@
                 android:src="@mipmap/memberid" />
 
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dim_16"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:textColorHint="@color/black">
 
-                <TextView
-                    style="@style/text_semi_medium"
+                <EditText
+                    android:id="@+id/etMemberIdMyProfile"
+                    style="@style/et_UserInfo"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text="@string/member_id" />
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:hint="@string/member_id" />
 
-
-                <TextView
-                    style="@style/text_large"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text="MCB111HH187"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
+            </android.support.design.widget.TextInputLayout>
         </LinearLayout>
 
 
@@ -142,10 +133,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/rectangle_bottom_line_white_bg"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:padding="@dimen/dim_8"
-
-            >
+            android:padding="@dimen/dim_8">
 
 
             <ImageView
@@ -154,31 +144,21 @@
                 android:src="@mipmap/email" />
 
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dim_16"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:textColorHint="@color/black">
 
-                <TextView
-                    style="@style/text_semi_medium"
+                <EditText
+                    android:id="@+id/etEmailIdMyProfile"
+                    style="@style/et_UserInfo"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text="@string/email_id" />
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:hint="@string/email_id" />
 
-
-                <TextView
-                    style="@style/text_large"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text="hitesh849@gmail.com"
-                    android:textStyle="bold" />
-            </LinearLayout>
+            </android.support.design.widget.TextInputLayout>
 
         </LinearLayout>
 
@@ -187,6 +167,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/rectangle_bottom_line_white_bg"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
             android:padding="@dimen/dim_8"
 
@@ -198,32 +179,21 @@
                 android:layout_height="wrap_content"
                 android:src="@mipmap/mobile" />
 
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dim_16"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:textColorHint="@color/black">
 
-                <TextView
-                    style="@style/text_semi_medium"
+                <EditText
+                    android:id="@+id/etMobileNumberMyProfile"
+                    style="@style/et_UserInfo"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text="@string/mobile_number" />
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:hint="@string/mobile_number" />
 
-
-                <TextView
-                    style="@style/text_large"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text="9782281212"
-                    android:textStyle="bold" />
-            </LinearLayout>
+            </android.support.design.widget.TextInputLayout>
 
         </LinearLayout>
 
@@ -231,6 +201,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/rectangle_bottom_line_white_bg"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
             android:padding="@dimen/dim_8"
 
@@ -243,31 +214,21 @@
                 android:src="@mipmap/landline" />
 
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dim_16"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:textColorHint="@color/black">
 
-                <TextView
-                    style="@style/text_semi_medium"
+                <EditText
+                    android:id="@+id/etLandLineMyProfile"
+                    style="@style/et_UserInfo"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text="@string/landline_number" />
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:hint="@string/landline_number" />
 
-
-                <TextView
-                    style="@style/text_large"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text="0141-2711477"
-                    android:textStyle="bold" />
-            </LinearLayout>
+            </android.support.design.widget.TextInputLayout>
 
         </LinearLayout>
 
@@ -275,6 +236,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/rectangle_bottom_line_white_bg"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
             android:padding="@dimen/dim_8"
 
@@ -287,31 +249,21 @@
                 android:src="@mipmap/cc" />
 
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dim_16"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:textColorHint="@color/black">
 
-                <TextView
-                    style="@style/text_semi_medium"
+                <EditText
+                    android:id="@+id/etCardNumberMyProfile"
+                    style="@style/et_UserInfo"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text="@string/card_number" />
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:hint="@string/card_number" />
 
-
-                <TextView
-                    style="@style/text_large"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text="5555 XXXX XXXX 4444"
-                    android:textStyle="bold" />
-            </LinearLayout>
+            </android.support.design.widget.TextInputLayout>
 
         </LinearLayout>
 
@@ -319,10 +271,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/rectangle_bottom_line_white_bg"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:padding="@dimen/dim_8"
-
-            >
+            android:padding="@dimen/dim_8">
 
 
             <ImageView
@@ -330,32 +281,21 @@
                 android:layout_height="wrap_content"
                 android:src="@mipmap/mappin" />
 
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dim_16"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:textColorHint="@color/black">
 
-                <TextView
-                    style="@style/text_semi_medium"
+                <EditText
+                    android:id="@+id/etAddressMyProfile"
+                    style="@style/et_UserInfo"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text="@string/address" />
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:hint="@string/address" />
 
-
-                <TextView
-                    style="@style/text_large"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text="S23, Prajapati vihar, Jaipur"
-                    android:textStyle="bold" />
-            </LinearLayout>
+            </android.support.design.widget.TextInputLayout>
 
         </LinearLayout>
     </LinearLayout>
