@@ -11,8 +11,10 @@ import android.widget.LinearLayout;
 
 import com.app.mcb.MainActivity;
 import com.app.mcb.R;
+import com.app.mcb.Utility.Constants;
 import com.app.mcb.Utility.Util;
 import com.app.mcb.adapters.MyTripListVPAdapter;
+import com.app.mcb.dao.MyTripsData;
 import com.app.mcb.model.MyTripsModel;
 
 import org.byteclues.lib.model.BasicModel;
@@ -31,6 +33,8 @@ public class MyTripList extends AbstractFragment implements View.OnClickListener
     private ViewPager vpMyList;
     private LinearLayout llCountDotsMain;
     private MyTripsModel myTripsModel = new MyTripsModel();
+    private MyTripListVPAdapter myTripListVPAdapter;
+
 
     @Override
     protected View onCreateViewPost(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -43,7 +47,6 @@ public class MyTripList extends AbstractFragment implements View.OnClickListener
         ((MainActivity) getActivity()).setHeader(getResources().getString(R.string.my_trip));
         vpMyList = (ViewPager) view.findViewById(R.id.vpMyList);
         llCountDotsMain = (LinearLayout) view.findViewById(R.id.llCountDotsMain);
-        vpMyList.setAdapter(new MyTripListVPAdapter(getActivity(), this));
         viewPagerChangeListener();
         drawPageSelectionIndicators(0);
         getMyTripsList();
@@ -57,8 +60,14 @@ public class MyTripList extends AbstractFragment implements View.OnClickListener
     @Override
     public void update(Observable observable, Object o) {
         Util.dimissProDialog();
-        if (o instanceof ArrayList) {
+        if (o instanceof MyTripsData) {
+            MyTripsData myTripsData = ((MyTripsData) o);
+            if (Constants.RESPONSE_SUCCESS_MSG.equals(myTripsData.status)) {
+                myTripListVPAdapter = new MyTripListVPAdapter(getActivity(), this, myTripsData.response);
+                vpMyList.setAdapter(myTripListVPAdapter);
+            }
         } else if (o instanceof RetrofitError) {
+
         }
 
     }

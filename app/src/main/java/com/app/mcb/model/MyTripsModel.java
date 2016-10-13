@@ -1,6 +1,7 @@
 package com.app.mcb.model;
 
 import com.app.mcb.Utility.Constants;
+import com.app.mcb.dao.MyTripsData;
 import com.app.mcb.retrointerface.RestInterface;
 import com.app.mcb.sharedPreferences.Config;
 import com.google.gson.JsonElement;
@@ -20,10 +21,10 @@ public class MyTripsModel extends BasicModel {
     RestInterface restInterface = adapter.create(RestInterface.class);
 
     public void getUserTripList() {
-        restInterface.getUserTripList(Config.getUserId(), new Callback<JsonElement>() {
+        restInterface.getUserTripList("11334", new Callback<MyTripsData>() {
             @Override
-            public void success(JsonElement jsonElement, Response response) {
-                notifyObservers(jsonElement);
+            public void success(MyTripsData responesData, Response response) {
+                notifyObservers(responesData);
             }
 
             @Override
