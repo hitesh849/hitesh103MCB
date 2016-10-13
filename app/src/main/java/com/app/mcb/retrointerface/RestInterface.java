@@ -4,6 +4,7 @@ import com.app.mcb.dao.AddParcelData;
 import com.app.mcb.dao.AirportData;
 import com.app.mcb.dao.ChangePasswordData;
 import com.app.mcb.dao.ForgetPasswordData;
+import com.app.mcb.dao.MyTripsData;
 import com.app.mcb.dao.MyWalletData;
 import com.app.mcb.dao.ParcelListData;
 import com.app.mcb.dao.ReceiverData;
@@ -78,5 +79,5 @@ public interface RestInterface {
 
     @Headers({"Content-Type:application/json"})
     @GET("/triplist/{userId}")
-    public void getUserTripList(@Path("userId") String userId, Callback<JsonElement> cb);
+    public void getUserTripList(@Path("userId") String userId, Callback<MyTripsData> cb);
 }
