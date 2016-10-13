@@ -79,7 +79,7 @@ public interface RestInterface {
 
     @Headers({"Content-Type:application/json"})
     @GET("/triplist/{userId}")
-    public void getUserTripList(@Path("userId") String userId, Callback<JsonElement> cb);
+    public void getUserTripList(@Path("userId") String userId, Callback<MyTripsData> cb);
 
     @Headers({"Content-Type:application/json"})
     @GET("/sendinvite")

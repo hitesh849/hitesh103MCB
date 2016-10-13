@@ -3,8 +3,6 @@ package com.app.mcb.model;
 import com.app.mcb.Utility.Constants;
 import com.app.mcb.dao.MyTripsData;
 import com.app.mcb.retrointerface.RestInterface;
-import com.app.mcb.sharedPreferences.Config;
-import com.google.gson.JsonElement;
 
 import org.byteclues.lib.model.BasicModel;
 
