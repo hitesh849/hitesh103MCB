@@ -2,9 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/llconfirmParcelMain"
     android:orientation="vertical">
 
-    <include layout="@layout/transporter_search_filter1" />
+    <include layout="@layout/transporter_search_filter" />
 
 
     <LinearLayout
@@ -22,6 +23,7 @@
             android:paddingBottom="@dimen/dim_16"
             android:paddingLeft="@dimen/dim_8"
             android:paddingRight="@dimen/dim_8">
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -44,15 +46,17 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/txtFromShortConfirmParcel"
                             style="@style/text_large"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="JAIPUR" />
 
                         <TextView
+                            android:id="@+id/txtFromLongConfirmParcel"
                             style="@style/text_small"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -79,15 +83,17 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/txtToShortConfirmParcel"
                             style="@style/text_large"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="NEW DELHI" />
 
                         <TextView
+                            android:id="@+id/txtToLongConfirmParcel"
                             style="@style/text_small"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -102,6 +108,56 @@
             </LinearLayout>
 
             <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dim_8"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/text_semi_medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/status" />
+
+                    <TextView
+                        android:id="@+id/txtStatusConfirmParcel"
+                        style="@style/text_large"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Booked" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dim_8"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/text_semi_medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/payment" />
+
+                    <TextView
+                        android:id="@+id/txtPaymentConfirmParcel"
+                        style="@style/text_large"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                         />
+
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dim_8"
@@ -114,6 +170,7 @@
                     android:text="@string/parcel_type" />
 
                 <TextView
+                    android:id="@+id/txtParcelTypeConfirmParcel"
                     style="@style/text_large"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -121,25 +178,7 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dim_8"
-                android:orientation="vertical">
 
-                <TextView
-                    style="@style/text_semi_medium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/status" />
-
-                <TextView
-                    style="@style/text_large"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Booked" />
-
-            </LinearLayout>
         </LinearLayout>
 
         <TextView
@@ -169,12 +208,14 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/txtReceiverNameConfirmParcel"
                     style="@style/text_medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Hitesh Kumawat" />
 
                 <TextView
+                    android:id="@+id/txtReceiverEmailConfirmParcel"
                     style="@style/text_semi_medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -193,12 +234,14 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/txtReceiverMobileConfirmParcel"
                     style="@style/text_medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="9782218212" />
 
                 <TextView
+                    android:id="@+id/txtReceiverIdConfirmParcel"
                     style="@style/text_medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

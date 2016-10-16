@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/llAddParcelMain"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/transporter_search_filter1" />
+    <include layout="@layout/transporter_search_filter" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -88,13 +89,14 @@
                             android:textColorHint="@color/dark_grey">
 
                             <EditText
+                                android:id="@+id/etParcelTypeAddParcelType"
                                 style="@style/editxt_small"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:backgroundTint="@color/dark_grey"
-                                android:focusable="false"
                                 android:clickable="false"
                                 android:cursorVisible="false"
+                                android:focusable="false"
                                 android:focusableInTouchMode="false"
                                 android:hint="@string/parcel_type"
                                 android:textColorHint="@color/dark_grey" />
@@ -124,6 +126,7 @@
                             android:layout_height="wrap_content"
                             android:backgroundTint="@color/dark_grey"
                             android:hint="@string/size"
+                            android:inputType="number"
                             android:textColorHint="@color/dark_grey" />
 
                     </android.support.design.widget.TextInputLayout>

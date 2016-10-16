@@ -5,18 +5,25 @@
         android:id="@+id/action_parcel_created"
         android:title="@string/parcel_idcreated" />
     <item
+        android:id="@+id/action_payment_due"
         android:title="@string/created_payment_due" />
 
     <item
+        android:id="@+id/action_booking_with_tr"
         android:title="@string/booking_with_tr" />
     <item
+        android:id="@+id/action_parcel_collected"
         android:title="@string/parcel_collected" />
     <item
+        android:id="@+id/action_parcel_delivered"
         android:title="@string/parcel_delivered" />
     <item
+        android:id="@+id/action_parcel_del_completed"
         android:title="@string/delivery_completed" />
     <item
+        android:id="@+id/action_parcel_cancelled"
         android:title="@string/cancelled" />
     <item
+        android:id="@+id/action_parcel_rejected_by_tr"
         android:title="@string/rejected_by_tr" />
 </menu>

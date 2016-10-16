@@ -4,6 +4,7 @@ import com.app.mcb.Utility.Constants;
 import com.app.mcb.dao.ParcelListData;
 import com.app.mcb.dao.UserInfoData;
 import com.app.mcb.retrointerface.RestInterface;
+import com.app.mcb.sharedPreferences.Config;
 
 import org.byteclues.lib.model.BasicModel;
 
@@ -22,7 +23,7 @@ public class WithDrawModel  extends BasicModel {
     public void getUserDetails() {
         try {
 
-            restInterface.getUserDetails("11334",new Callback<UserInfoData>() {
+            restInterface.getUserDetails(Config.getUserId(),new Callback<UserInfoData>() {
                 @Override
                 public void success(UserInfoData userInfoData, Response response) {
                     notifyObservers(userInfoData);

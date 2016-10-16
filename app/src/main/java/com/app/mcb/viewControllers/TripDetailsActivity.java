@@ -111,7 +111,14 @@ public class TripDetailsActivity extends AbstractFragmentActivity implements Vie
 
         int id = v.getId();
         if (id == R.id.llBookNoewTripDetailsRow1 || id == R.id.llBookNoewTripDetailsRow2) {
-            startActivity(new Intent(this, LoginActivity.class));
+
+            TripTransporterData tripTransporterData=(TripTransporterData)v.getTag();
+            Intent intent=new Intent(this, LoginActivity.class);
+            intent.putExtra("data",tripTransporterData);
+            /*Bundle bundle=new Bundle();
+            bundle.putSerializable();
+            intent.putExtra("bundle",bundle);*/
+            startActivity(intent);
         }
     }
 

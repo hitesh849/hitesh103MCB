@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/transporter_search_filter1" />
+    <include layout="@layout/transporter_search_filter" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,11 +25,12 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="1.2"
                 android:orientation="vertical">
 
 
                 <TextView
+                    android:id="@+id/txtFromShortParcelDetails"
                     style="@style/text_large"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -37,9 +38,11 @@
 
 
                 <TextView
+                    android:id="@+id/txtFromLongParcelDetails"
                     style="@style/text_small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:singleLine="true"
                     android:text="Jaipur" />
 
 
@@ -56,6 +59,7 @@
                         android:src="@mipmap/blackcalender" />
 
                     <TextView
+                        android:id="@+id/txtFromDateParcelDetails"
                         style="@style/text_small"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -68,11 +72,10 @@
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
-
-                >
+                android:layout_height="match_parent"
+                android:layout_weight=".6"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -85,7 +88,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:gravity="center|bottom">
+                        android:gravity="center">
 
                         <ImageView
                             android:layout_width="@dimen/dim_16"
@@ -97,14 +100,15 @@
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1">
+
+                        android:layout_weight="1"
+                        android:visibility="gone">
 
                         <TextView
                             style="@style/text_large"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="JPR"
-                            android:visibility="invisible" />
+                            android:text="JPR" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -115,7 +119,8 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:orientation="vertical"
-                    android:paddingTop="@dimen/dim_16">
+                    android:paddingTop="@dimen/dim_16"
+                    android:visibility="gone">
 
                     <TextView
                         style="@style/text_small"
@@ -138,11 +143,12 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="1.2"
                 android:orientation="vertical">
 
 
                 <TextView
+                    android:id="@+id/txtToShortParcelDetails"
                     style="@style/text_large"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -150,9 +156,11 @@
 
 
                 <TextView
+                    android:id="@+id/txtToLongParcelDetails"
                     style="@style/text_small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:singleLine="true"
                     android:text="Delhi" />
 
 
@@ -169,6 +177,7 @@
                         android:src="@mipmap/blackcalender" />
 
                     <TextView
+                        android:id="@+id/txtToDateParcelDetails"
                         style="@style/text_small"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -228,6 +237,7 @@
                     android:text="@string/parcel_id" />
 
                 <TextView
+                    android:id="@+id/txtParcelIdParcelDetails"
                     style="@style/text_large"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -252,6 +262,7 @@
 
 
                 <TextView
+                    android:id="@+id/txtParcelWeightParcelDetails"
                     style="@style/text_large"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -273,6 +284,7 @@
                     android:text="@string/type" />
 
                 <TextView
+                    android:id="@+id/txtParcelTypeParcelDetails"
                     style="@style/text_large"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -291,143 +303,40 @@
             android:weightSum="2">
 
             <TextView
+                android:id="@+id/txtSelectorTransDetails"
                 style="@style/text_medium"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/rect_left_corners_pink_bg"
+                android:gravity="center"
                 android:padding="@dimen/dim_8"
                 android:text="@string/trasporter_details"
                 android:textColor="@color/white" />
 
             <TextView
+                android:id="@+id/txtSelectorReceiverDetails"
                 style="@style/text_medium"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/rect_right_corners_pink_border_grey_bg"
+                android:gravity="center"
                 android:padding="@dimen/dim_8"
-                android:text="@string/trasporter_details"
+                android:text="@string/receiver_details"
                 android:textColor="@color/colorPrimary" />
 
         </LinearLayout>
 
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/llTranOrReceiverContainer"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                style="@style/text_medium"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Hitesh Kumawat" />
-
-            <TextView
-                style="@style/text_medium"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dim_3"
-                android:background="@drawable/rectangle_bottom_line_white_bg"
-                android:text="hitesh.kumawat@byteclues.com" />
-
 
         </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dim_8"
-            android:background="@drawable/rounded_white_bg"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:weightSum="3">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-
-                <TextView
-                    style="@style/text_medium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/flight_no" />
-
-                <TextView
-                    style="@style/text_large"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="P11786" />
-
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-
-                <TextView
-                    style="@style/text_medium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/departure" />
-
-
-                <TextView
-                    style="@style/text_small"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="17 JULY,2016"
-                    android:textStyle="bold" />
-
-                <TextView
-                    style="@style/text_small"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="9:30 AM"
-                    android:textStyle="bold" />
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    style="@style/text_medium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/arrival" />
-
-                <TextView
-                    style="@style/text_small"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="18 JULY,2016"
-                    android:textStyle="bold" />
-
-                <TextView
-                    style="@style/text_small"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="9:30 AM"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-        </LinearLayout>
-
     </LinearLayout>
 
 

@@ -5,5 +5,7 @@ package com.app.mcb.dao;
  */
 public class AddParcelData
 {
+    public String status;
+    public String errorMessage;
     public ParcelDetailsData response;
 }

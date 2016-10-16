@@ -140,6 +140,14 @@
     <string name="box">Box</string>
     <string name="envelope">Envelope</string>
     <string name="parcel">Parcel</string>
+    <string name="packet">Packet</string>
+    <string name="filter_validation">Please enter at list one filter.</string>
+    <string name="no_receiver_found">No receiver found.</string>
+    <string name="can_not_be_empty">Can\'t be empty</string>
+    <string name="payment">Payment</string>
+    <string name="no_trans_found">No Transporter found.</string>
+    <string name="parcel_id_created">Parcel ID Created</string>
+
 
 
 

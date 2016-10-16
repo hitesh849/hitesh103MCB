@@ -5,7 +5,8 @@ package com.app.mcb.Utility;
  */
 public class Constants
 {
-    public static String BASE_URL ="https://mycourierbuddy.com/apis/index.php/api";
+    //public static String BASE_URL ="https://mycourierbuddy.com/apis/index.php/api";
+    public static String BASE_URL ="http://webservice.mycourierbuddy.com/apis/index.php/api";
     public static final String RESPONSE_SUCCESS_MSG = "success";
     public static final String RESPONSE_ERROR_MSG = "error";
     public static final String KEY_SENDER = "Sender";
@@ -14,5 +15,6 @@ public class Constants
     public static final String BEGIN_WITH_USER_ID = "MCB";
     public static final String ENVELOPE = "Envelope";
     public static final String BOX = "Box";
+    public static final String PACKET = "Packet";
 }
 

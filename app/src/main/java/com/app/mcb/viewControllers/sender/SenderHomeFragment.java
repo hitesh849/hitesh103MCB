@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.app.mcb.R;
 import com.app.mcb.Utility.Util;
+import com.app.mcb.dao.TripTransporterData;
 
 import org.byteclues.lib.model.BasicModel;
 import org.byteclues.lib.view.AbstractFragment;
@@ -34,7 +35,14 @@ public class SenderHomeFragment extends AbstractFragment implements View.OnClick
     protected View onCreateViewPost(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.sender_home_fragment, container, false);
         init(view);
-        Util.addFragment(getActivity(), R.id.fmContainerSenderHomeMain, new ParcelsListFragment());
+        Bundle bundle = getArguments();
+        AbstractFragment abstractFragment = new ParcelsListFragment();
+        if (bundle != null) {
+            abstractFragment = new AddParcelFragment();
+            abstractFragment.setArguments(bundle);
+            backgroundChange(llAddParcelSenderHome);
+        }
+        Util.addFragment(getActivity(), R.id.fmContainerSenderHomeMain, abstractFragment);
         return view;
     }
 

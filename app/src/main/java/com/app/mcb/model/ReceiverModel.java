@@ -4,6 +4,7 @@ import com.app.mcb.Utility.Constants;
 import com.app.mcb.dao.ParcelListData;
 import com.app.mcb.dao.ReceiverData;
 import com.app.mcb.retrointerface.RestInterface;
+import com.app.mcb.sharedPreferences.Config;
 
 import org.byteclues.lib.model.BasicModel;
 
@@ -21,7 +22,7 @@ public class ReceiverModel extends BasicModel {
 
     public void getReceiverData() {
         try {
-            restInterface.getReceiverData("11334", new Callback<ReceiverData>() {
+            restInterface.getReceiverData(Config.getUserId(), new Callback<ReceiverData>() {
                 @Override
                 public void success(ReceiverData receiverData, Response response) {
                     notifyObservers(receiverData);

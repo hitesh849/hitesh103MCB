@@ -3,6 +3,7 @@ package com.app.mcb.model;
 import com.app.mcb.Utility.Constants;
 import com.app.mcb.dao.MyTripsData;
 import com.app.mcb.retrointerface.RestInterface;
+import com.app.mcb.sharedPreferences.Config;
 
 import org.byteclues.lib.model.BasicModel;
 
@@ -19,7 +20,7 @@ public class MyTripsModel extends BasicModel {
     RestInterface restInterface = adapter.create(RestInterface.class);
 
     public void getUserTripList() {
-        restInterface.getUserTripList("11334", new Callback<MyTripsData>() {
+        restInterface.getUserTripList(Config.getUserId(), new Callback<MyTripsData>() {
             @Override
             public void success(MyTripsData responesData, Response response) {
                 notifyObservers(responesData);

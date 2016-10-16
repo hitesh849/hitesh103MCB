@@ -9,4 +9,7 @@ public class FilterData {
     public String fromLocation;
     public String toLocation;
     public String type;
+    public String parcelId;
+    public String tillDate;
+    public String parcelStatus;
 }

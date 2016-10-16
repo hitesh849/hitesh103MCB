@@ -69,18 +69,18 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/txtReceiverNameAddParcel"
                     style="@style/text_medium"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Hitesh Kumawat" />
+                    android:layout_height="wrap_content" />
 
                 <TextView
+                    android:id="@+id/txtReceiverEmailAddParcel"
                     style="@style/text_semi_medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dim_3"
-                    android:background="@drawable/rectangle_bottom_line_white_bg"
-                    android:text="hitesh.kumawat@byteclues.com" />
+                    android:background="@drawable/rectangle_bottom_line_white_bg" />
 
 
             </LinearLayout>
@@ -93,24 +93,29 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/txtReceiverMobileAddParcel"
                     style="@style/text_medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="9782218212" />
+                    android:inputType="number"
+                    android:maxLength="10"
+                    android:text="" />
 
                 <TextView
+                    android:id="@+id/txtReceiverIdAddParcel"
                     style="@style/text_medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dim_3"
                     android:background="@drawable/rectangle_bottom_line_white_bg"
-                    android:text="MCB110002" />
+                     />
 
 
             </LinearLayout>
 
 
             <LinearLayout
+                android:id="@+id/llEditReceiverInfoAddParcel"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="vertical">

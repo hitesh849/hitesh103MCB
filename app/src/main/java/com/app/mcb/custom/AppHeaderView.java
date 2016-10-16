@@ -33,16 +33,28 @@ public class AppHeaderView extends RelativeLayout {
     public AppHeaderView(Context context) {
         super(context);
         init(context);
+        if (Config.getLoginStatus())
+            rlLogoutHeader.setVisibility(VISIBLE);
+        else
+            rlLogoutHeader.setVisibility(GONE);
     }
 
     public AppHeaderView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
+        if (Config.getLoginStatus())
+            rlLogoutHeader.setVisibility(VISIBLE);
+        else
+            rlLogoutHeader.setVisibility(GONE);
     }
 
     public AppHeaderView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init(context);
+        if (Config.getLoginStatus())
+            rlLogoutHeader.setVisibility(VISIBLE);
+        else
+            rlLogoutHeader.setVisibility(GONE);
     }
 
     private void init(final Context context) {
@@ -56,8 +68,7 @@ public class AppHeaderView extends RelativeLayout {
         this.llBackHeader.setOnClickListener((OnClickListener) Env.currentActivity);
 
 
-        if(!(Env.currentActivity instanceof MainActivity))
-        {
+        if (!(Env.currentActivity instanceof MainActivity)) {
             this.llBackHeader.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -76,8 +87,10 @@ public class AppHeaderView extends RelativeLayout {
             @Override
             public void onClick(View view) {
                 Config.clearPreferences();
-                Env.currentActivity.startActivity(new Intent(Env.currentActivity,MainActivity.class));
+                Env.currentActivity.startActivity(new Intent(Env.currentActivity, MainActivity.class));
                 ((AbstractFragmentActivity) Env.currentActivity).finish();
+                rlLogoutHeader.setVisibility(GONE);
+
             }
         });
     }

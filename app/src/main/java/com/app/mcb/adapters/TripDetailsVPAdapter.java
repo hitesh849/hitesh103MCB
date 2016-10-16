@@ -102,111 +102,30 @@ public class TripDetailsVPAdapter extends PagerAdapter {
         }
         int listPosition = position * 2;
         TripTransporterData tripTransporterData1 = tripTransporterDataList.get(listPosition);
-
-        if (tripTransporterData1.id != null)
-            txtTransporterId1TD.setText(Constants.BEGIN_WITH_TRANSPORTER_ID + tripTransporterData1.id);
-        else
-            txtTransporterId1TD.setText("");
-
-        if (tripTransporterData1.capacity != null)
-            txtWeight1TD.setText(tripTransporterData1.capacity);
-        else
-            txtWeight1TD.setText("");
-
-        if (tripTransporterData1.source != null)
-            txtFromShort1TD.setText(Util.getFirstName(tripTransporterData1.source));
-        else
-            txtFromShort1TD.setText("");
-
-        if (tripTransporterData1.source != null)
-            txtFromLong1TD.setText("(" + tripTransporterData1.source + ")");
-        else
-            txtFromLong1TD.setText("");
-
-        if (tripTransporterData1.destination != null)
-            txtToShort1TD.setText(Util.getFirstName(tripTransporterData1.destination));
-        else
-            txtToShort1TD.setText("");
-
-        if (tripTransporterData1.destination != null)
-            txtToLong1TD.setText("(" + tripTransporterData1.destination + ")");
-        else
-            txtToLong1TD.setText("");
-
-        if (tripTransporterData1.arrival_time != null)
-            txtDateFrom1TD.setText(Util.getDateFromDateTimeFormat(tripTransporterData1.arrival_time));
-        else
-            txtDateFrom1TD.setText("");
-
-        if (tripTransporterData1.dep_time != null)
-            txtDateTo1TD.setText(Util.getDateFromDateTimeFormat(tripTransporterData1.dep_time));
-        else
-            txtDateTo1TD.setText("");
-
-
-        if (tripTransporterData1.arrival_time != null)
-            txtTimeFrom1TD.setText(Util.getTimeFromDateTimeFormat(tripTransporterData1.arrival_time));
-        else
-            txtTimeFrom1TD.setText("");
-
-
-        if (tripTransporterData1.dep_time != null)
-            txtTimeTo1TD.setText(Util.getTimeFromDateTimeFormat(tripTransporterData1.dep_time));
-        else
-            txtTimeTo1TD.setText("");
-
+        llBookNoewTripDetailsRow1.setTag(tripTransporterData1);
+        txtTransporterId1TD.setText(Constants.BEGIN_WITH_TRANSPORTER_ID + tripTransporterData1.id);
+        txtWeight1TD.setText(tripTransporterData1.capacity);
+        txtFromShort1TD.setText(Util.getFirstName(tripTransporterData1.source));
+        txtFromLong1TD.setText("(" + tripTransporterData1.source + ")");
+        txtToShort1TD.setText(Util.getFirstName(tripTransporterData1.destination));
+        txtToLong1TD.setText("(" + tripTransporterData1.destination + ")");
+        txtDateFrom1TD.setText(Util.getDateFromDateTimeFormat(tripTransporterData1.arrival_time));
+        txtDateTo1TD.setText(Util.getDateFromDateTimeFormat(tripTransporterData1.dep_time));
+        txtTimeFrom1TD.setText(Util.getTimeFromDateTimeFormat(tripTransporterData1.arrival_time));
+        txtTimeTo1TD.setText(Util.getTimeFromDateTimeFormat(tripTransporterData1.dep_time));
 
         if (llSecondRawTripDetal.getVisibility() == View.VISIBLE) {
             TripTransporterData tripTransporterData2 = tripTransporterDataList.get(listPosition + 1);
-            if (tripTransporterData1.id != null)
-                txtTransporterId2TD.setText(Constants.BEGIN_WITH_TRANSPORTER_ID + tripTransporterData2.id);
-            else
-                txtTransporterId1TD.setText("");
-
-            if (tripTransporterData1.id != null)
-                txtTransporterId2TD.setText(Constants.BEGIN_WITH_TRANSPORTER_ID + tripTransporterData2.id);
-            else
-                txtTransporterId1TD.setText("");
-
-            if (tripTransporterData2.source != null)
-                txtFromShort2TD.setText(Util.getFirstName(tripTransporterData2.source));
-            else
-                txtFromShort2TD.setText("");
-
-            if (tripTransporterData2.source != null)
-                txtFromLong2TD.setText("(" + tripTransporterData2.source + ")");
-            else
-                txtFromLong2TD.setText("");
-
-            if (tripTransporterData2.destination != null)
-                txtToShort2TD.setText(Util.getFirstName(tripTransporterData2.destination));
-            else
-                txtToShort2TD.setText("");
-
-            if (tripTransporterData2.destination != null)
-                txtToLong2TD.setText("(" + tripTransporterData2.destination + ")");
-            else
-                txtToLong2TD.setText("");
-
-            if (tripTransporterData2.arrival_time != null)
-                txtDateFrom2TD.setText(Util.getDateFromDateTimeFormat(tripTransporterData2.arrival_time));
-            else
-                txtDateFrom2TD.setText("");
-
-            if (tripTransporterData2.dep_time != null)
-                txtDateTo2TD.setText(Util.getDateFromDateTimeFormat(tripTransporterData2.dep_time));
-            else
-                txtDateTo2TD.setText("");
-
-            if (tripTransporterData2.arrival_time != null)
-                txtTimeFrom2TD.setText(Util.getTimeFromDateTimeFormat(tripTransporterData2.arrival_time));
-            else
-                txtTimeFrom2TD.setText("");
-
-            if (tripTransporterData2.dep_time != null)
-                txtTimeTo2TD.setText(Util.getTimeFromDateTimeFormat(tripTransporterData2.dep_time));
-            else
-                txtTimeTo2TD.setText("");
+            llBookNoewTripDetailsRow2.setTag(tripTransporterData2);
+            txtTransporterId2TD.setText(Constants.BEGIN_WITH_TRANSPORTER_ID + tripTransporterData2.id);
+            txtFromShort2TD.setText(Util.getFirstName(tripTransporterData2.source));
+            txtFromLong2TD.setText("(" + tripTransporterData2.source + ")");
+            txtToShort2TD.setText(Util.getFirstName(tripTransporterData2.destination));
+            txtToLong2TD.setText("(" + tripTransporterData2.destination + ")");
+            txtDateFrom2TD.setText(Util.getDateFromDateTimeFormat(tripTransporterData2.arrival_time));
+            txtDateTo2TD.setText(Util.getDateFromDateTimeFormat(tripTransporterData2.dep_time));
+            txtTimeFrom2TD.setText(Util.getTimeFromDateTimeFormat(tripTransporterData2.arrival_time));
+            txtTimeTo2TD.setText(Util.getTimeFromDateTimeFormat(tripTransporterData2.dep_time));
         }
 
     }

@@ -42,6 +42,7 @@ public class UserInfoData
     public String password;
     public String errorMessage;
     public String message;
+    public String userType;
     public ArrayList<UserInfoData>response;
 
 }

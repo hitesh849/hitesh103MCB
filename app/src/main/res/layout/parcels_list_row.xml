@@ -54,7 +54,7 @@
                                 style="@style/text_large"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="JPR" />
+                               />
 
                             <TextView
                                 android:id="@+id/txtFromCityLongPl"
@@ -62,8 +62,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/dim_4"
-                                android:singleLine="true"
-                                android:text="(Jaipur)" />
+                                android:singleLine="true"/>
                         </LinearLayout>
 
                         <LinearLayout
@@ -82,8 +81,7 @@
                                 style="@style/text_small"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/dim_4"
-                                android:text="17 July, 2016" />
+                                android:layout_marginLeft="@dimen/dim_4" />
                         </LinearLayout>
 
 
@@ -91,6 +89,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
+                            android:visibility="gone"
                             android:orientation="horizontal">
 
                             <ImageView
@@ -103,8 +102,7 @@
                                 style="@style/text_small"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/dim_4"
-                                android:text="9:30 AM" />
+                                android:layout_marginLeft="@dimen/dim_4" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -131,7 +129,7 @@
                                 style="@style/text_large"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="DEL" />
+                                />
 
                             <TextView
                                 android:id="@+id/txtToCityLongPl"
@@ -139,8 +137,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/dim_4"
-                                android:singleLine="true"
-                                android:text="(New Delhi)" />
+                                android:singleLine="true" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -159,14 +156,14 @@
                                 style="@style/text_small"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/dim_4"
-                                android:text="18 July, 2016" />
+                                android:layout_marginLeft="@dimen/dim_4" />
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
+                            android:visibility="gone"
                             android:orientation="horizontal">
 
                             <ImageView
@@ -179,8 +176,7 @@
                                 style="@style/text_small"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/dim_4"
-                                android:text="12:30 PM" />
+                                android:layout_marginLeft="@dimen/dim_4" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -235,8 +231,7 @@
                     android:id="@+id/txtParcelIdPL"
                     style="@style/text_large"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="P11786" />
+                    android:layout_height="wrap_content" />
 
 
             </LinearLayout>
@@ -258,8 +253,7 @@
                     android:id="@+id/txtPrcelTypePL"
                     style="@style/text_large"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Envlope" />
+                    android:layout_height="wrap_content" />
 
             </LinearLayout>
 
@@ -282,8 +276,7 @@
                     android:id="@+id/txtPrcelWeightPL"
                     style="@style/text_large"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="10 kg" />
+                    android:layout_height="wrap_content"/>
 
 
             </LinearLayout>
@@ -313,9 +306,10 @@
                 <TextView
                     android:id="@+id/txtTransporterIdPL"
                     style="@style/text_large"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="MCB11786" />
+                    android:gravity="center"
+                    android:text="-"/>
 
 
             </LinearLayout>
@@ -339,8 +333,7 @@
                     android:id="@+id/txtReceiverIdPL"
                     style="@style/text_large"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="MCB111DB" />
+                    android:layout_height="wrap_content"/>
 
             </LinearLayout>
 
@@ -363,8 +356,7 @@
                     android:id="@+id/txtBookedPL"
                     style="@style/text_medium"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Booked" />
+                    android:layout_height="wrap_content" />
 
 
             </LinearLayout>

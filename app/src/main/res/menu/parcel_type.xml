@@ -9,6 +9,6 @@
         android:title="@string/envelope" />
 
     <item
-        android:id="@+id/action_parcel_parcel"
-        android:title="@string/parcel" />
+        android:id="@+id/action_parcel_packet"
+        android:title="@string/packet" />
 </menu>

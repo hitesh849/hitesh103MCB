@@ -4,8 +4,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.PopupMenu;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -19,12 +21,19 @@ import android.widget.TextView;
 
 import com.app.mcb.MainActivity;
 import com.app.mcb.R;
+import com.app.mcb.Utility.Constants;
 import com.app.mcb.Utility.Util;
-import com.app.mcb.adapters.TripDetailsVPAdapter;
 import com.app.mcb.dao.AddParcelData;
 import com.app.mcb.dao.AirportData;
+import com.app.mcb.dao.FilterData;
+import com.app.mcb.dao.ParcelDetailsData;
+import com.app.mcb.dao.ParcelListData;
 import com.app.mcb.dao.TripTransporterData;
+import com.app.mcb.dao.UserInfoData;
 import com.app.mcb.database.DatabaseMgr;
+import com.app.mcb.filters.ParcelFilter;
+import com.app.mcb.filters.TransporterFilter;
+import com.app.mcb.filters.TripListener;
 import com.app.mcb.model.AddParcelModel;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
@@ -41,13 +50,13 @@ import retrofit.RetrofitError;
 /**
  * Created by Hitesh kumawat on 18-09-2016.
  */
-public class AddParcelFragment extends AbstractFragment implements View.OnClickListener {
+public class AddParcelFragment extends AbstractFragment implements View.OnClickListener, TripListener {
 
     private ViewPager vpParcelList;
     private LinearLayout llReceiverContainerMain;
     private AutoCompleteTextView autoCompFromAddParcel;
     private AutoCompleteTextView autoCompToAddParcel;
-    private LinearLayout llSearchReciver;
+    private LinearLayout llSearchReceiver;
     private TextView txtSubmitAddParcel;
     private TextView txtNewReceiverAddParcel;
     private TextView txtExistingReceiverAddParcel;
@@ -58,17 +67,51 @@ public class AddParcelFragment extends AbstractFragment implements View.OnClickL
     private EditText etDeliveryTillAddParcel;
     private ImageView imgCalenderAddParcel;
     private ImageView imgSelectParcelAddParcel;
-    private AddParcelModel addParcelModel=new AddParcelModel();
+    private EditText etMobileNumberExist;
+    private EditText etEmailExistUser;
+    private LinearLayout llAddParcelMain;
+    private TextView txtReceiverIdAddParcel;
+    private TextView txtReceiverMobileAddParcel;
+    private TextView txtReceiverEmailAddParcel;
+    private TextView txtReceiverNameAddParcel;
+    private LinearLayout llEditReceiverInfoAddParcel;
+    private EditText etNewReceiverName;
+    private EditText etNewReceiverEmail;
+    private EditText etNewReceiverMobile;
+    private EditText etNewReceiverMessage;
+    private TextView txtNewReceiverSendInvitation;
+    private EditText etParcelTypeAddParcelType;
+    private AddParcelModel addParcelModel = new AddParcelModel();
+    private ParcelDetailsData parcelDetailsData = new ParcelDetailsData();
+    private TripTransporterData tripTransporterData;
+    private String parcelMode = "new";
+    private String listType;
 
     @Override
     protected View onCreateViewPost(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.add_parcel, container, false);
         init(view);
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            parcelDetailsData = (ParcelDetailsData) bundle.getSerializable("data");
+            tripTransporterData = (TripTransporterData) bundle.getSerializable("tripData");
+            if (parcelDetailsData != null) {
+                parcelMode = "edit";
+                listType = bundle.getString("listType");
+                setValuesInEditMode();
+            }
+            if (tripTransporterData != null) {
+                setValueByTrip();
+            }
+
+        }
         setAdapter();
         return view;
     }
 
+
     private void init(View view) {
+        llAddParcelMain = (LinearLayout) view.findViewById(R.id.llAddParcelMain);
         llReceiverContainerMain = (LinearLayout) view.findViewById(R.id.llReceiverContainerMain);
         autoCompFromAddParcel = (AutoCompleteTextView) view.findViewById(R.id.autoCompFromAddParcel);
         autoCompToAddParcel = (AutoCompleteTextView) view.findViewById(R.id.autoCompToAddParcel);
@@ -77,22 +120,50 @@ public class AddParcelFragment extends AbstractFragment implements View.OnClickL
         etParcelSizeAddParcel = (EditText) view.findViewById(R.id.etParcelSizeAddParcel);
         etDescriptionAddParcel = (EditText) view.findViewById(R.id.etDescriptionAddParcel);
         etDeliveryTillAddParcel = (EditText) view.findViewById(R.id.etDeliveryTillAddParcel);
+        etEmailExistUser = (EditText) view.findViewById(R.id.etEmailExistUser);
+        etParcelTypeAddParcelType = (EditText) view.findViewById(R.id.etParcelTypeAddParcelType);
         imgCalenderAddParcel = (ImageView) view.findViewById(R.id.imgCalenderAddParcel);
         imgSelectParcelAddParcel = (ImageView) view.findViewById(R.id.imgSelectParcelAddParcel);
         addViewInRelayout(R.layout.add_parcel_receiverinfo_search);
-        llSearchReciver = (LinearLayout) view.findViewById(R.id.llSearchReciver);
-        llSearchReciver.setOnClickListener(this);
+        TransporterFilter.addFilterView(getActivity(), view, this);
+        initExistUserView(view);
+        ((MainActivity) getActivity()).setHeader(getResources().getString(R.string.add_parcels));
         rlParcelTypeAddParcel.setOnClickListener(this);
         imgCalenderAddParcel.setOnClickListener(this);
         imgSelectParcelAddParcel.setOnClickListener(this);
-        ((MainActivity) getActivity()).setHeader(getResources().getString(R.string.add_parcels));
+        setAutoCmpAdapter();
 
+    }
 
+    private void setValuesInEditMode() {
+        autoCompFromAddParcel.setText(parcelDetailsData.source);
+        autoCompToAddParcel.setText(parcelDetailsData.destination);
+        etParcelTypeAddParcelType.setText(Util.getParcelType(parcelDetailsData.type));
+        etParcelSizeAddParcel.setText(parcelDetailsData.weight);
+        etDeliveryTillAddParcel.setText(Util.getDDMMYYYYFormat(parcelDetailsData.till_date, "yyyy-MM-dd"));
+        parcelDetailsData.till_date = parcelDetailsData.till_date.replace("-", "/");
+        etDescriptionAddParcel.setText(parcelDetailsData.description);
+        initShowReceiverInfo(addViewInRelayout(R.layout.add_parcel_receiverinfo_submit), null, parcelDetailsData);
+    }
+
+    private void setValueByTrip() {
+        if (parcelDetailsData == null)
+            parcelDetailsData = new ParcelDetailsData();
+        autoCompFromAddParcel.setText(tripTransporterData.source);
+        autoCompToAddParcel.setText(tripTransporterData.destination);
+        etDeliveryTillAddParcel.setText(Util.getDateFromDateTimeFormat(tripTransporterData.dep_time));
+        parcelDetailsData.source = tripTransporterData.source;
+        parcelDetailsData.destination = tripTransporterData.destination;
+        parcelDetailsData.till_date = tripTransporterData.dep_time;
+    }
+
+    private void setAutoCmpAdapter() {
         autoCompFromAddParcel.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
                 AirportData airportData = ((AirportData) parent.getItemAtPosition(position));
                 autoCompFromAddParcel.setText(airportData.location);
+                AddParcelFragment.this.parcelDetailsData.source = airportData.location;
             }
         });
         autoCompToAddParcel.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -100,9 +171,47 @@ public class AddParcelFragment extends AbstractFragment implements View.OnClickL
             public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
                 AirportData airportData = ((AirportData) parent.getItemAtPosition(position));
                 autoCompToAddParcel.setText(airportData.location);
+                AddParcelFragment.this.parcelDetailsData.destination = airportData.location;
             }
         });
+    }
 
+    private void initExistUserView(View view) {
+        etMobileNumberExist = (EditText) view.findViewById(R.id.etMobileNumberExist);
+        etEmailExistUser = (EditText) view.findViewById(R.id.etEmailExistUser);
+        llSearchReceiver = (LinearLayout) view.findViewById(R.id.llSearchReceiver);
+        llSearchReceiver.setOnClickListener(this);
+    }
+
+    private void initShowReceiverInfo(View view, UserInfoData userInfoData, ParcelDetailsData parcelDetailsData) {
+        txtReceiverIdAddParcel = (TextView) view.findViewById(R.id.txtReceiverIdAddParcel);
+        txtReceiverMobileAddParcel = (TextView) view.findViewById(R.id.txtReceiverMobileAddParcel);
+        txtReceiverEmailAddParcel = (TextView) view.findViewById(R.id.txtReceiverEmailAddParcel);
+        txtReceiverNameAddParcel = (TextView) view.findViewById(R.id.txtReceiverNameAddParcel);
+        llEditReceiverInfoAddParcel = (LinearLayout) view.findViewById(R.id.llEditReceiverInfoAddParcel);
+        llEditReceiverInfoAddParcel.setOnClickListener(this);
+
+        if (userInfoData != null) {
+            txtReceiverIdAddParcel.setText(userInfoData.UserID);
+            txtReceiverMobileAddParcel.setText(userInfoData.mobile);
+            txtReceiverEmailAddParcel.setText(userInfoData.username);
+            txtReceiverNameAddParcel.setText(userInfoData.name + " " + userInfoData.l_name);
+        }
+        if (parcelDetailsData != null) {
+            txtReceiverIdAddParcel.setText(parcelDetailsData.MCBreceiverID);
+            txtReceiverMobileAddParcel.setText("");
+            txtReceiverEmailAddParcel.setText(parcelDetailsData.receiveremail);
+            txtReceiverNameAddParcel.setText(parcelDetailsData.recv_name);
+        }
+    }
+
+    private void initNewReceiverUserView(View view) {
+        etNewReceiverName = (EditText) view.findViewById(R.id.etNewReceiverName);
+        etNewReceiverEmail = (EditText) view.findViewById(R.id.etNewReceiverEmail);
+        etNewReceiverMobile = (EditText) view.findViewById(R.id.etNewReceiverMobile);
+        etNewReceiverMessage = (EditText) view.findViewById(R.id.etNewReceiverMessage);
+        txtNewReceiverSendInvitation = (TextView) view.findViewById(R.id.txtNewReceiverSendInvitation);
+        txtNewReceiverSendInvitation.setOnClickListener(this);
     }
 
     private void setAdapter() {
@@ -114,20 +223,19 @@ public class AddParcelFragment extends AbstractFragment implements View.OnClickL
         autoCompToAddParcel.setAdapter(arrayAdapter);
     }
 
-    private void addViewInRelayout(int layout) {
+    private LinearLayout addViewInRelayout(int layout) {
         llReceiverContainerMain.removeAllViews();
         LayoutInflater inflater = LayoutInflater.from(getActivity());
         LinearLayout llLayout = (LinearLayout) inflater.inflate(layout, null, false);
         llReceiverContainerMain.addView(llLayout);
-
         txtNewReceiverAddParcel = (TextView) llLayout.findViewById(R.id.txtNewReceiverAddParcel);
-        txtNewReceiverAddParcel.setOnClickListener(this);
         txtExistingReceiverAddParcel = (TextView) llLayout.findViewById(R.id.txtExistingReceiverAddParcel);
-        txtExistingReceiverAddParcel.setOnClickListener(this);
-
         txtSubmitAddParcel = (TextView) llLayout.findViewById(R.id.txtSubmitAddParcel);
+        txtNewReceiverAddParcel.setOnClickListener(this);
+        txtExistingReceiverAddParcel.setOnClickListener(this);
         if (txtSubmitAddParcel != null)
             txtSubmitAddParcel.setOnClickListener(this);
+        return llLayout;
     }
 
     @Override
@@ -138,31 +246,143 @@ public class AddParcelFragment extends AbstractFragment implements View.OnClickL
     @Override
     public void update(Observable observable, Object data) {
         Util.dimissProDialog();
+        try {
+            if (data != null && data instanceof UserInfoData) {
+                UserInfoData userInfoData = (UserInfoData) data;
+                if ("success".equals(userInfoData.status)) {
+                    if (userInfoData.response != null) {
+                        if ("E".equals(userInfoData.userType)) {
+                            if (userInfoData.response.size() > 0) {
+                                UserInfoData userInfo = userInfoData.response.get(0);
+                                parcelDetailsData.receiverInfoData = userInfo;
+                                initShowReceiverInfo(addViewInRelayout(R.layout.add_parcel_receiverinfo_submit), userInfo, null);
+                            } else {
+                                Util.showSnakBar(llAddParcelMain, getResources().getString(R.string.no_receiver_found));
+                            }
+                        } else if ("N".equals(userInfoData.userType)) {
+                            if (userInfoData.response.size() > 0) {
+                                UserInfoData userInfo = userInfoData.response.get(0);
+                                parcelDetailsData.receiverInfoData = userInfo;
+                                initShowReceiverInfo(addViewInRelayout(R.layout.add_parcel_receiverinfo_submit), userInfo, null);
+                            }
+                        }
+                    }
+                }
+            } else if (data instanceof ParcelDetailsData) {
+                ParcelDetailsData parcelDetailsData = (ParcelDetailsData) data;
+                ConfirmParcelFragment confirmParcelFragment = new ConfirmParcelFragment();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("data", parcelDetailsData);
+                confirmParcelFragment.setArguments(bundle);
+                Util.replaceFragment(getActivity(), R.id.fmContainerSenderHomeMain, confirmParcelFragment);
+
+            } else if (data instanceof AddParcelData) {
+                AddParcelData addParcelData = (AddParcelData) data;
+                if ("success".equals(addParcelData.status)) {
+                    ParcelsListFragment parcelsListFragment = new ParcelsListFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("DATA", listType);
+                    parcelsListFragment.setArguments(bundle);
+                    Util.replaceFragment(getActivity(), R.id.fmContainerSenderHomeMain, parcelsListFragment);
+                }
+            } else if (data != null && data instanceof RetrofitError) {
+                Util.showOKSnakBar(llAddParcelMain, getResources().getString(R.string.pls_try_again));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
 
     }
 
     @Override
     public void onClick(View view) {
-
         int id = view.getId();
-        if (id == R.id.llSearchReciver) {
-            addViewInRelayout(R.layout.add_parcel_receiverinfo_submit);
+        if (id == R.id.llSearchReceiver) {
+            String mobileNum = etMobileNumberExist.getText().toString();
+            String emailId = etEmailExistUser.getText().toString();
+            if (TextUtils.isEmpty(mobileNum) && TextUtils.isEmpty(emailId)) {
+                Util.showSnakBar(llAddParcelMain, getResources().getString(R.string.filter_validation));
+                return;
+            } else {
+                searchReceiver(mobileNum, emailId);
+            }
         } else if (id == R.id.txtNewReceiverAddParcel) {
-            addViewInRelayout(R.layout.add_parcel_receiverinfo_new_user);
-
+            initNewReceiverUserView(addViewInRelayout(R.layout.add_parcel_receiverinfo_new_user));
         } else if (id == R.id.txtExistingReceiverAddParcel) {
-            addViewInRelayout(R.layout.add_parcel_receiverinfo_search);
+            initExistUserView(addViewInRelayout(R.layout.add_parcel_receiverinfo_search));
         } else if (id == R.id.txtSubmitAddParcel) {
-            Util.replaceFragment(getActivity(), R.id.fmContainerSenderHomeMain, new ConfirmParcelFragment());
+            parcelDetailsData.weight = etParcelSizeAddParcel.getText().toString();
+            parcelDetailsData.description = etDescriptionAddParcel.getText().toString();
+            if (addParcelValidation()) {
+                if (parcelMode.equals("new"))
+                    calculateAmount();
+                else if (parcelMode.equals("edit"))
+                    updateParcels();
+
+            }
         } else if (id == R.id.imgSelectParcelAddParcel) {
             PopupMenu popup = new PopupMenu(getActivity(), rlParcelTypeAddParcel);
             MenuInflater inflater = popup.getMenuInflater();
             inflater.inflate(R.menu.parcel_type, popup.getMenu());
             popup.show();
+            popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    int id = item.getItemId();
+                    if (id == R.id.action_parcel_box) {
+                        parcelDetailsData.type = "B";
+                        etParcelTypeAddParcelType.setText(Constants.BOX);
+                    } else if (id == R.id.action_parcel_packet) {
+                        parcelDetailsData.type = "P";
+                        etParcelTypeAddParcelType.setText(Constants.PACKET);
+                    } else if (id == R.id.action_parcel_envelope) {
+                        parcelDetailsData.type = "E";
+                        etParcelTypeAddParcelType.setText(Constants.ENVELOPE);
+                    }
+                    return false;
+                }
+            });
         } else if (id == R.id.imgCalenderAddParcel) {
             showCalendar();
+        } else if (id == R.id.llEditReceiverInfoAddParcel) {
+            initExistUserView(addViewInRelayout(R.layout.add_parcel_receiverinfo_search));
+        } else if (id == R.id.txtNewReceiverSendInvitation) {
+            UserInfoData userInfoData = new UserInfoData();
+            userInfoData.name = etNewReceiverName.getText().toString();
+            userInfoData.email = etNewReceiverEmail.getText().toString();
+            userInfoData.mobile = etNewReceiverMobile.getText().toString();
+            userInfoData.message = etNewReceiverMessage.getText().toString();
+            if (newUserValidation(userInfoData)) {
+                sendInvitation(userInfoData);
+            }
         }
 
+    }
+
+    private boolean addParcelValidation() {
+
+        if (TextUtils.isEmpty(parcelDetailsData.source)) {
+            autoCompFromAddParcel.setError(getResources().getString(R.string.can_not_be_empty));
+            return false;
+        }
+        if (TextUtils.isEmpty(parcelDetailsData.destination)) {
+            autoCompToAddParcel.setError(getResources().getString(R.string.can_not_be_empty));
+            return false;
+        }
+        if (TextUtils.isEmpty(parcelDetailsData.type)) {
+            etParcelTypeAddParcelType.setError(getResources().getString(R.string.can_not_be_empty));
+            return false;
+        }
+        if (TextUtils.isEmpty(parcelDetailsData.weight)) {
+            etParcelSizeAddParcel.setError(getResources().getString(R.string.can_not_be_empty));
+            return false;
+        }
+        if (TextUtils.isEmpty(parcelDetailsData.description)) {
+            etDescriptionAddParcel.setError(getResources().getString(R.string.can_not_be_empty));
+            return false;
+        }
+        return true;
     }
 
     private void showCalendar() {
@@ -175,6 +395,7 @@ public class AddParcelFragment extends AbstractFragment implements View.OnClickL
                                                                              @Override
                                                                              public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
                                                                                  etDeliveryTillAddParcel.setText(Util.getDDMMYYYYFormat(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year, "dd/MM/yyyy"));
+                                                                                 AddParcelFragment.this.parcelDetailsData.till_date = year + "/" + (monthOfYear + 1) + "/" + dayOfMonth;
                                                                              }
                                                                          }
                 , mYear, mMonth, mDay
@@ -182,5 +403,85 @@ public class AddParcelFragment extends AbstractFragment implements View.OnClickL
         datePickerDialog.setAccentColor(getActivity().getResources().getColor(R.color.primary_blue));
         datePickerDialog.show(((AbstractFragmentActivity) getActivity()).getFragmentManager(), "DatePickerDialog");
         ;
+    }
+
+    private void searchReceiver(String mobile, String email) {
+        try {
+            if (Util.isDeviceOnline()) {
+                Util.showProDialog(getActivity());
+                addParcelModel.searchReceiver(mobile, email);
+            } else {
+                Util.showAlertDialog(null, getResources().getString(R.string.noInternetMsg));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private void sendInvitation(UserInfoData userInfoData) {
+        try {
+            if (Util.isDeviceOnline()) {
+                Util.showProDialog(getActivity());
+                addParcelModel.sendInvitation(userInfoData);
+            } else {
+                Util.showAlertDialog(null, getResources().getString(R.string.noInternetMsg));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private void calculateAmount() {
+        try {
+            if (Util.isDeviceOnline()) {
+                Util.showProDialog(getActivity());
+                addParcelModel.calculateAmount(parcelDetailsData);
+            } else {
+                Util.showAlertDialog(null, getResources().getString(R.string.noInternetMsg));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private void updateParcels() {
+        try {
+            if (Util.isDeviceOnline()) {
+                Util.showProDialog(getActivity());
+                addParcelModel.updateParcels(parcelDetailsData);
+            } else {
+                Util.showAlertDialog(null, getResources().getString(R.string.noInternetMsg));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    boolean newUserValidation(UserInfoData userInfoData) {
+
+        if (TextUtils.isEmpty(userInfoData.name)) {
+            etNewReceiverName.setError(getResources().getString(R.string.can_not_be_empty));
+            return false;
+        }
+
+        if (TextUtils.isEmpty(userInfoData.email)) {
+            etNewReceiverEmail.setError(getResources().getString(R.string.can_not_be_empty));
+            return false;
+        }
+        if (TextUtils.isEmpty(userInfoData.mobile)) {
+            etNewReceiverMobile.setError(getResources().getString(R.string.can_not_be_empty));
+            return false;
+        }
+        if (TextUtils.isEmpty(userInfoData.message)) {
+            etNewReceiverMessage.setError(getResources().getString(R.string.can_not_be_empty));
+            return false;
+        }
+        return true;
+    }
+
+
+    @Override
+    public void filterData(FilterData filterData) {
+
     }
 }

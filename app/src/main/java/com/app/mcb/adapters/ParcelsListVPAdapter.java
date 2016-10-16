@@ -64,7 +64,6 @@ public class ParcelsListVPAdapter extends PagerAdapter {
         return layout;
     }
 
-
     private void init(ViewGroup viewGroup) {
         imgSettingsPLR = (ImageView) viewGroup.findViewById(R.id.imgSettingsPLR);
         txtFromCityShortPl = (TextView) viewGroup.findViewById(R.id.txtFromCityShortPl);
@@ -86,6 +85,8 @@ public class ParcelsListVPAdapter extends PagerAdapter {
         imgCancelPLR = (ImageView) viewGroup.findViewById(R.id.imgCancelPLR);
         imgViewPLR.setOnClickListener(onClickListener);
         imgSettingsPLR.setOnClickListener(onClickListener);
+        imgCancelPLR.setOnClickListener(onClickListener);
+        imgEditPLR.setOnClickListener(onClickListener);
     }
 
     private void setValues(int position) {
@@ -94,9 +95,13 @@ public class ParcelsListVPAdapter extends PagerAdapter {
         txtFromCityLongPl.setText(parcelListData.source);
         txtToCityShortPl.setText(Util.getFirstName(parcelListData.destination));
         txtToCityLongPl.setText(parcelListData.destination);
+        txtParcelIdPL.setText(parcelListData.ParcelID);
         txtFromDatePl.setText(Util.getDateFromDateTimeFormat(parcelListData.created));
         txtFromTimePl.setText(Util.getTimeFromDateTimeFormat(parcelListData.created));
-        txtToDatePl.setText(Util.getDateDDMMYY(parcelListData.till_date));
+        txtToDatePl.setText(Util.getDDMMYYYYFormat(parcelListData.till_date,"yyyy-MM-dd"));
+        imgViewPLR.setTag(parcelListData);
+        imgEditPLR.setTag(parcelListData);
+        imgCancelPLR.setTag(parcelListData);
         if ("E".equals(parcelListData.type))
             txtPrcelTypePL.setText(Constants.ENVELOPE);
         else if ("B".equals(parcelListData.type))
@@ -107,22 +112,20 @@ public class ParcelsListVPAdapter extends PagerAdapter {
         else
             txtPrcelWeightPL.setText("");
 
-        if (!TextUtils.isEmpty(parcelListData.trans_id))
+        if ((!TextUtils.isEmpty(parcelListData.trans_id)) && (!parcelListData.trans_id.equals("0")))
             txtTransporterIdPL.setText(Constants.BEGIN_WITH_TRANSPORTER_ID + parcelListData.trans_id);
         else
-            txtTransporterIdPL.setText("");
+            txtTransporterIdPL.setText("-");
 
         if (!TextUtils.isEmpty(parcelListData.recv_id))
             txtReceiverIdPL.setText(Constants.BEGIN_WITH_USER_ID + parcelListData.recv_id);
         else
-            txtReceiverIdPL.setText("");
+            txtReceiverIdPL.setText("-");
 
         if (!TextUtils.isEmpty(parcelListData.statusdescription))
             txtBookedPL.setText(parcelListData.statusdescription);
         else
             txtBookedPL.setText("");
-
-
     }
 
     @Override
@@ -137,7 +140,6 @@ public class ParcelsListVPAdapter extends PagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-
         return null;
     }
 

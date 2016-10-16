@@ -4,6 +4,7 @@ import com.app.mcb.Utility.Constants;
 import com.app.mcb.dao.MyWalletData;
 import com.app.mcb.dao.UserInfoData;
 import com.app.mcb.retrointerface.RestInterface;
+import com.app.mcb.sharedPreferences.Config;
 
 import org.byteclues.lib.model.BasicModel;
 
@@ -21,7 +22,7 @@ public class MyWalletModel extends BasicModel {
 
     public void getMyWalletDetails() {
         try {
-            restInterface.getMyWalletDetails("11334", new Callback<MyWalletData>() {
+            restInterface.getMyWalletDetails(Config.getUserId(), new Callback<MyWalletData>() {
                 @Override
                 public void success(MyWalletData myWalletData, Response response) {
                     notifyObservers(myWalletData);

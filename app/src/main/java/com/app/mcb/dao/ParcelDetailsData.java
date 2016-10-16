@@ -12,13 +12,13 @@ public class ParcelDetailsData implements Serializable {
     public String destination;
     public String till_date;
     public String type;
-    public String height;
-    public String width;
-    public String length;
+    public String height="0";
+    public String width="0";
+    public String length="0";
     public String weight;
     public String created;
     public String description;
-    public String status;
+    public String status="0";
     public String recv_id;
     public String recv_email;
     public String recv_mobile;
@@ -37,5 +37,7 @@ public class ParcelDetailsData implements Serializable {
     public String channelid;
     public String Isactive;
     public String transemail;
+    public String price;
     public String MCBTransporterID;
+    public UserInfoData receiverInfoData;
 }

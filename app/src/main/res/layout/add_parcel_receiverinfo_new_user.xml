@@ -73,6 +73,7 @@
                     android:textColorHint="@color/dark_grey">
 
                     <EditText
+                        android:id="@+id/etNewReceiverName"
                         style="@style/editxt_small"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -90,6 +91,7 @@
                     android:textColorHint="@color/dark_grey">
 
                     <EditText
+                        android:id="@+id/etNewReceiverEmail"
                         style="@style/editxt_small"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -124,11 +126,14 @@
                     android:textColorHint="@color/dark_grey">
 
                     <EditText
+                        android:id="@+id/etNewReceiverMobile"
                         style="@style/editxt_small"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/dark_grey"
                         android:hint="@string/mobile_number"
+                        android:inputType="number"
+                        android:maxLength="10"
                         android:textColorHint="@color/dark_grey" />
 
                 </android.support.design.widget.TextInputLayout>
@@ -141,6 +146,7 @@
                     android:textColorHint="@color/dark_grey">
 
                     <EditText
+                        android:id="@+id/etNewReceiverMessage"
                         style="@style/editxt_small"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -160,6 +166,7 @@
 
 
     <LinearLayout
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/dim_8"
@@ -167,10 +174,11 @@
         android:weightSum="3">
 
         <TextView
+            android:id="@+id/txtNewReceiverSendInvitation"
             style="@style/button_blue"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1.5"
+            android:layout_weight="1.2"
             android:text="@string/send_invite" />
     </LinearLayout>
 

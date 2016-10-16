@@ -1,6 +1,5 @@
 package com.app.mcb.viewControllers.sender;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
@@ -16,13 +15,18 @@ import com.app.mcb.MainActivity;
 import com.app.mcb.R;
 import com.app.mcb.Utility.Util;
 import com.app.mcb.adapters.ParcelsListVPAdapter;
+import com.app.mcb.dao.FilterData;
+import com.app.mcb.dao.ParcelDetailsData;
 import com.app.mcb.dao.ParcelListData;
-import com.app.mcb.dao.UserInfoData;
+import com.app.mcb.filters.ParcelFilter;
+import com.app.mcb.filters.ParcelFilterListener;
+import com.app.mcb.filters.TripFilter;
 import com.app.mcb.model.ParcelListModel;
 
 import org.byteclues.lib.model.BasicModel;
 import org.byteclues.lib.view.AbstractFragment;
 
+import java.util.ArrayList;
 import java.util.Observable;
 
 import retrofit.RetrofitError;
@@ -30,12 +34,14 @@ import retrofit.RetrofitError;
 /**
  * Created by Hitesh kumawat on 18-09-2016.
  */
-public class ParcelsListFragment extends AbstractFragment implements View.OnClickListener {
+public class ParcelsListFragment extends AbstractFragment implements View.OnClickListener, ParcelFilterListener {
 
     private ViewPager vpParcelList;
     private LinearLayout llCountDotsMain;
     private LinearLayout llParcelListMain;
     private ParcelListModel parcelListModel = new ParcelListModel();
+    private String listType;
+    private ArrayList<ParcelDetailsData> parcelListMain;
 
 
     @Override
@@ -52,6 +58,7 @@ public class ParcelsListFragment extends AbstractFragment implements View.OnClic
         llParcelListMain = (LinearLayout) view.findViewById(R.id.llParcelListMain);
         vpParcelList = (ViewPager) view.findViewById(R.id.vpParcelList);
         llCountDotsMain = (LinearLayout) view.findViewById(R.id.llCountDotsMain);
+        ParcelFilter.addFilterView(getActivity(), view, this);
         drawPageSelectionIndicators(0);
         viewPagerChangeListener();
     }
@@ -69,7 +76,8 @@ public class ParcelsListFragment extends AbstractFragment implements View.OnClic
                 ParcelListData parcelListData = (ParcelListData) data;
                 if (parcelListData.status.equals("success")) {
                     if (parcelListData.response != null) {
-                        vpParcelList.setAdapter(new ParcelsListVPAdapter(getActivity(), parcelListData.response, this));
+                        parcelListMain = parcelListData.response;
+                        vpParcelList.setAdapter(new ParcelsListVPAdapter(getActivity(), parcelListMain, this));
                     }
                 } else if (parcelListData.status.equals("Error")) {
                     Util.showOKSnakBar(llCountDotsMain, parcelListData.errorMessage);
@@ -87,13 +95,30 @@ public class ParcelsListFragment extends AbstractFragment implements View.OnClic
 
         int id = view.getId();
         if (id == R.id.imgViewPLR) {
-            Util.replaceFragment(getActivity(), R.id.fmContainerSenderHomeMain, new ParcelDetailsFragment());
+            ParcelDetailsData parcelDetailsData = (ParcelDetailsData) view.getTag();
+            ParcelDetailsFragment parcelDetailsFragment = new ParcelDetailsFragment();
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("data", parcelDetailsData);
+            parcelDetailsFragment.setArguments(bundle);
+            Util.replaceFragment(getActivity(), R.id.fmContainerSenderHomeMain, parcelDetailsFragment);
         } else if (id == R.id.imgSettingsPLR) {
             ((ImageView) view).setBackgroundResource(R.mipmap.action_setting_hover);
             PopupMenu popup = new PopupMenu(getActivity(), view);
             MenuInflater inflater = popup.getMenuInflater();
-            inflater.inflate(R.menu.main, popup.getMenu());
+            inflater.inflate(R.menu.status_menu, popup.getMenu());
             popup.show();
+        } else if (id == R.id.imgEditPLR) {
+            ParcelDetailsData parcelDetailsData = (ParcelDetailsData) view.getTag();
+            AddParcelFragment addParcelFragment = new AddParcelFragment();
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("data", parcelDetailsData);
+            bundle.putString("listType", listType);
+            addParcelFragment.setArguments(bundle);
+            Util.replaceFragment(getActivity(), R.id.fmContainerSenderHomeMain, addParcelFragment);
+
+        } else if (id == R.id.imgCancelPLR) {
+            ParcelDetailsData parcelDetailsData = (ParcelDetailsData) view.getTag();
+            cancelParcel(parcelDetailsData);
         }
     }
 
@@ -148,7 +173,7 @@ public class ParcelsListFragment extends AbstractFragment implements View.OnClic
 
     private void getParcelList() {
         Bundle bundle = getArguments();
-        String listType = "Active";
+        listType = "Active";
         if (bundle != null) {
             listType = getArguments().getString("DATA");
         }
@@ -185,4 +210,27 @@ public class ParcelsListFragment extends AbstractFragment implements View.OnClic
         }
     }
 
+    private void cancelParcel(ParcelDetailsData parcelDetailsData) {
+        try {
+            if (Util.isDeviceOnline()) {
+                Util.showProDialog(getActivity());
+                parcelListModel.cancelParcel(parcelDetailsData);
+            } else {
+                Util.showAlertDialog(null, getResources().getString(R.string.noInternetMsg));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    @Override
+    public void filterData(FilterData filterData) {
+        ArrayList<ParcelDetailsData> filterList = new ArrayList<ParcelDetailsData>();
+        for (ParcelDetailsData parcelDetailsData : parcelListMain) {
+            if (parcelDetailsData.ParcelID.equals(filterData.parcelId) || parcelDetailsData.till_date.equals(filterData.tillDate)) {
+                filterList.add(parcelDetailsData);
+            }
+        }
+        vpParcelList.setAdapter(new ParcelsListVPAdapter(getActivity(), filterList, this));
+    }
 }

@@ -6,6 +6,7 @@ import com.app.mcb.dao.ChangePasswordData;
 import com.app.mcb.dao.ForgetPasswordData;
 import com.app.mcb.dao.MyTripsData;
 import com.app.mcb.dao.MyWalletData;
+import com.app.mcb.dao.ParcelDetailsData;
 import com.app.mcb.dao.ParcelListData;
 import com.app.mcb.dao.ReceiverData;
 import com.app.mcb.dao.TripTransporterData;
@@ -55,7 +56,7 @@ public interface RestInterface {
 
     @Headers({"Content-Type:application/json"})
     @POST("/addparcel")
-    public void addParcel(@Body HashMap<String, String> request, Callback<AddParcelData> cb);
+    public void addParcel(@Body HashMap<String, Object> request, Callback<AddParcelData> cb);
 
     @Headers({"Content-Type:application/json"})
     @GET("/parcellist/{userId}")
@@ -82,10 +83,22 @@ public interface RestInterface {
     public void getUserTripList(@Path("userId") String userId, Callback<MyTripsData> cb);
 
     @Headers({"Content-Type:application/json"})
-    @GET("/sendinvite")
+    @POST("/sendinvite")
     public void sendInvitation(@Body HashMap<String, String> request, Callback<UserInfoData> cb);
 
     @Headers({"Content-Type:application/json"})
-    @GET("/searchuser")
-    public void searchReceiver(@Body HashMap<String, String> request, Callback<UserInfoData> cb);
+    @POST("/searchuser")
+    public void searchReceiver(@Body HashMap<String, Object> request, Callback<UserInfoData> cb);
+
+    @Headers({"Content-Type:application/json"})
+    @POST("/calculateamount")
+    public void calculateAmount(@Body HashMap<String, Object> request, Callback<ParcelDetailsData> cb);
+
+    @Headers({"Content-Type:application/json"})
+    @POST("/usrupdateParceltatus")
+    public void cancelParcel(@Body HashMap<String, Object> request, Callback<JsonElement> cb);
+
+    @Headers({"Content-Type:application/json"})
+    @POST("/updateparcel")
+    public void updateParcels(@Body HashMap<String, Object> request, Callback<AddParcelData> cb);
 }

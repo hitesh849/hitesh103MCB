@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 
 import com.app.mcb.MainActivity;
 import com.app.mcb.R;
+import com.app.mcb.dao.AddParcelData;
+import com.app.mcb.dao.ParcelDetailsData;
 
 import org.byteclues.lib.model.BasicModel;
 import org.byteclues.lib.view.AbstractFragment;
@@ -21,11 +23,15 @@ import java.util.Observable;
 public class FeedBackFragment extends AbstractFragment implements View.OnClickListener {
 
     private ViewPager vpParcelList;
+    private ParcelDetailsData parcelDetailsData;
 
     @Override
     protected View onCreateViewPost(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.feedback_fragment, container, false);
         init(view);
+        Bundle bundle = getArguments();
+        if (bundle != null)
+            parcelDetailsData = (ParcelDetailsData) bundle.getSerializable("data");
         return view;
     }
 

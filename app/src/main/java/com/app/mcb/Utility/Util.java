@@ -210,6 +210,25 @@ public class Util {
 
     }
 
+    public static void showSnakBar(android.view.View view, String msg) {
+        try {
+            if (view != null && msg != null) {
+                retrySnackbar = Snackbar
+                        .make(view, msg, Snackbar.LENGTH_LONG);
+                ViewGroup group = (ViewGroup) retrySnackbar.getView();
+                group.setBackgroundColor(Env.appContext.getResources().getColor(R.color.trans_blue));
+                View sbView = retrySnackbar.getView();
+                TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+
+                textView.setTextColor(Env.appContext.getResources().getColor(R.color.primary_blue));
+                retrySnackbar.show();
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+    }
+
     public static String getCurrentDate() {
         DateTime now = new DateTime();
         LocalDate today = now.toLocalDate();
@@ -277,4 +296,13 @@ public class Util {
         return null;
     }
 
+    public static String getParcelType(String type) {
+        if ("E".equals(type))
+            return Constants.ENVELOPE;
+        else if ("B".equals(type))
+            return Constants.BOX;
+        else if ("P".equals(type))
+            return Constants.PACKET;
+        return null;
+    }
 }

@@ -128,7 +128,8 @@ public class TripFilter implements View.OnClickListener {
         datePickerDialog = DatePickerDialog.newInstance(new DatePickerDialog.OnDateSetListener() {
                                                             @Override
                                                             public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
-                                                                etTillDateTripFilter.setText(dayOfMonth + "/" + monthOfYear + "/" + year);
+                                                                etTillDateTripFilter.setText(Util.getDDMMYYYYFormat(dayOfMonth + "/" + (monthOfYear+1) + "/" + year, "dd/MM/yyyy"));
+
                                                             }
                                                         }
                 , mYear, mMonth, mDay

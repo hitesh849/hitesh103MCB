@@ -23,8 +23,10 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/dark_grey"
                 android:hint="@string/enter_parcel_id"
-                android:textColorHint="@color/dark_grey"
-                android:textColor="@color/white" />
+                android:maxLines="1"
+                android:textColor="@color/white"
+                style="@style/text_medium"
+                android:textColorHint="@color/dark_grey" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -47,8 +49,10 @@
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/dark_grey"
                     android:hint="@string/till_date"
-                    android:textColorHint="@color/dark_grey"
-                    android:textColor="@color/white" />
+                    android:maxLines="1"
+                    android:textColor="@color/white"
+                    style="@style/text_medium"
+                    android:textColorHint="@color/dark_grey" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -69,7 +73,8 @@
             android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight=".8"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="vertical">
@@ -79,8 +84,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/select"
-                    android:visibility="gone"
-                    android:textColor="@color/dark_grey" />
+                    android:textColor="@color/dark_grey"
+                    android:visibility="gone" />
 
                 <LinearLayout
                     android:id="@+id/llStatusFilter"
@@ -91,9 +96,11 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/txtStatusFilter"
                         style="@style/text_medium"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:maxLines="1"
                         android:text="@string/status"
                         android:textColor="@color/dark_grey" />
 

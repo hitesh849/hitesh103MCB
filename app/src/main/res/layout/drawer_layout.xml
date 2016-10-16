@@ -3,222 +3,224 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primary_blue"
-    android:paddingTop="@dimen/dim_12"
     android:paddingLeft="@dimen/dim_12"
-    >
-   <LinearLayout
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:orientation="vertical"
-       >
+    android:paddingTop="@dimen/dim_12">
 
-       <LinearLayout
-           android:id="@+id/llDashboardMain"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:layout_marginTop="@dimen/dim_16"
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-           >
-           <TextView
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:text="@string/dashboard"
-               android:textColor="@color/white"
-               style="@style/text_large"
-               android:paddingRight="@dimen/dim_36"
-               android:background="@drawable/rect_bottom_line_blue_bg"
-               />
+        <LinearLayout
+            android:id="@+id/llDashBoardDrawer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-       </LinearLayout>
+            <LinearLayout
+                android:id="@+id/llDashboardMain"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dim_16"
 
-       <LinearLayout
-           android:id="@+id/llProfileMain"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:paddingLeft="@dimen/dim_8"
-           android:paddingTop="@dimen/dim_12"
-           >
-           <TextView
+                >
 
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:text="@string/profile"
-               android:textColor="@color/white"
-               style="@style/text_medium"
-               android:paddingBottom="@dimen/dim_6"
-               android:background="@drawable/rect_bottom_line_blue_bg_point_5dp"
-               />
+                <TextView
+                    style="@style/text_large"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rect_bottom_line_blue_bg"
+                    android:paddingRight="@dimen/dim_36"
+                    android:text="@string/dashboard"
+                    android:textColor="@color/white" />
 
-       </LinearLayout>
-       <LinearLayout
-           android:id="@+id/llMyParcelsMain"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:paddingLeft="@dimen/dim_8"
-           android:paddingTop="@dimen/dim_12"
-           >
-           <TextView
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:text="@string/my_parcels"
-               android:textColor="@color/white"
-               style="@style/text_medium"
+            </LinearLayout>
 
-               android:paddingBottom="@dimen/dim_6"
-               android:background="@drawable/rect_bottom_line_blue_bg_point_5dp"
-               />
+            <LinearLayout
+                android:id="@+id/llProfileMain"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/dim_8"
+                android:paddingTop="@dimen/dim_12">
 
-       </LinearLayout>
-       <LinearLayout
-           android:id="@+id/llMyTripMain"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:paddingLeft="@dimen/dim_8"
-           android:paddingTop="@dimen/dim_12"
-           >
-           <TextView
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:text="@string/my_trips"
-               android:textColor="@color/white"
-               style="@style/text_medium"
+                <TextView
 
-               android:paddingBottom="@dimen/dim_6"
-               android:background="@drawable/rect_bottom_line_blue_bg_point_5dp"
-               />
+                    style="@style/text_medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rect_bottom_line_blue_bg_point_5dp"
+                    android:paddingBottom="@dimen/dim_6"
+                    android:text="@string/profile"
+                    android:textColor="@color/white" />
 
-       </LinearLayout>
-       <LinearLayout
-           android:id="@+id/llMyRecivingMain"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:paddingLeft="@dimen/dim_8"
-           android:paddingTop="@dimen/dim_12"
-           >
-           <TextView
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:text="@string/my_receivings"
-               android:textColor="@color/white"
-               style="@style/text_medium"
+            </LinearLayout>
 
-               android:paddingBottom="@dimen/dim_6"
-               android:background="@drawable/rect_bottom_line_blue_bg_point_5dp"
-               />
+            <LinearLayout
+                android:id="@+id/llMyParcelsMain"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/dim_8"
+                android:paddingTop="@dimen/dim_12">
 
-       </LinearLayout>
+                <TextView
+                    style="@style/text_medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rect_bottom_line_blue_bg_point_5dp"
+                    android:paddingBottom="@dimen/dim_6"
 
-       <LinearLayout
-           android:id="@+id/llWalletMain"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:paddingLeft="@dimen/dim_8"
-           android:paddingTop="@dimen/dim_12"
-           >
-           <TextView
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:text="@string/wallet"
-               android:textColor="@color/white"
-               style="@style/text_medium"
+                    android:text="@string/my_parcels"
+                    android:textColor="@color/white" />
 
-               android:paddingBottom="@dimen/dim_6"
-               android:background="@drawable/rect_bottom_line_blue_bg_point_5dp"
-               />
+            </LinearLayout>
 
-       </LinearLayout>
+            <LinearLayout
+                android:id="@+id/llMyTripMain"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/dim_8"
+                android:paddingTop="@dimen/dim_12">
 
-       <LinearLayout
-           android:id="@+id/llWithDrawMain"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:paddingLeft="@dimen/dim_8"
-           android:paddingTop="@dimen/dim_12"
-           >
-           <TextView
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:text="@string/withdraw"
-               android:textColor="@color/white"
-               style="@style/text_medium"
+                <TextView
+                    style="@style/text_medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rect_bottom_line_blue_bg_point_5dp"
+                    android:paddingBottom="@dimen/dim_6"
 
-               android:paddingBottom="@dimen/dim_6"
-               android:background="@drawable/rect_bottom_line_blue_bg_point_5dp"
-               />
+                    android:text="@string/my_trips"
+                    android:textColor="@color/white" />
 
-       </LinearLayout>
+            </LinearLayout>
 
-       <LinearLayout
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:layout_marginTop="@dimen/dim_16"
-           >
-           <TextView
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:text="@string/general"
-               android:textColor="@color/white"
-               style="@style/text_large"
-               android:background="@drawable/rect_bottom_line_blue_bg"
-               />
+            <LinearLayout
+                android:id="@+id/llMyRecivingMain"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/dim_8"
+                android:paddingTop="@dimen/dim_12">
 
-       </LinearLayout>
+                <TextView
+                    style="@style/text_medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rect_bottom_line_blue_bg_point_5dp"
+                    android:paddingBottom="@dimen/dim_6"
 
-       <LinearLayout
-           android:id="@+id/llSettingsMain"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:paddingLeft="@dimen/dim_8"
-           android:paddingTop="@dimen/dim_12"
-           >
-           <TextView
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:text="@string/settings"
-               android:textColor="@color/white"
-               style="@style/text_medium"
+                    android:text="@string/my_receivings"
+                    android:textColor="@color/white" />
 
-               android:paddingBottom="@dimen/dim_6"
-               android:background="@drawable/rect_bottom_line_blue_bg_point_5dp"
-               />
+            </LinearLayout>
 
-       </LinearLayout>
-       <LinearLayout
-           android:id="@+id/llTandCMain"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:paddingLeft="@dimen/dim_8"
-           android:paddingTop="@dimen/dim_12"
-           >
-           <TextView
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:text="@string/terms_conditions"
-               android:textColor="@color/white"
-               style="@style/text_medium"
-               android:paddingBottom="@dimen/dim_6"
-               android:background="@drawable/rect_bottom_line_blue_bg_point_5dp"
-               />
+            <LinearLayout
+                android:id="@+id/llWalletMain"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/dim_8"
+                android:paddingTop="@dimen/dim_12">
 
-       </LinearLayout>
-       <LinearLayout
-           android:id="@+id/llPrivacyPolicyMain"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:paddingLeft="@dimen/dim_8"
-           android:paddingTop="@dimen/dim_12"
-           >
-           <TextView
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:text="@string/privacy_policy"
-               android:textColor="@color/white"
-               style="@style/text_medium"
-               android:paddingBottom="@dimen/dim_6"
-               android:background="@drawable/rect_bottom_line_blue_bg_point_5dp"
-               />
+                <TextView
+                    style="@style/text_medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rect_bottom_line_blue_bg_point_5dp"
+                    android:paddingBottom="@dimen/dim_6"
 
-       </LinearLayout>
-   </LinearLayout>
+                    android:text="@string/wallet"
+                    android:textColor="@color/white" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llWithDrawMain"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/dim_8"
+                android:paddingTop="@dimen/dim_12">
+
+                <TextView
+                    style="@style/text_medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rect_bottom_line_blue_bg_point_5dp"
+                    android:paddingBottom="@dimen/dim_6"
+
+                    android:text="@string/withdraw"
+                    android:textColor="@color/white" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dim_16">
+
+            <TextView
+                style="@style/text_large"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rect_bottom_line_blue_bg"
+                android:text="@string/general"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/llSettingsMain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/dim_8"
+            android:paddingTop="@dimen/dim_12">
+
+            <TextView
+                style="@style/text_medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rect_bottom_line_blue_bg_point_5dp"
+                android:paddingBottom="@dimen/dim_6"
+
+                android:text="@string/settings"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llTandCMain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/dim_8"
+            android:paddingTop="@dimen/dim_12">
+
+            <TextView
+                style="@style/text_medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rect_bottom_line_blue_bg_point_5dp"
+                android:paddingBottom="@dimen/dim_6"
+                android:text="@string/terms_conditions"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llPrivacyPolicyMain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/dim_8"
+            android:paddingTop="@dimen/dim_12">
+
+            <TextView
+                style="@style/text_medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rect_bottom_line_blue_bg_point_5dp"
+                android:paddingBottom="@dimen/dim_6"
+                android:text="@string/privacy_policy"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+    </LinearLayout>
 
 </ScrollView>
