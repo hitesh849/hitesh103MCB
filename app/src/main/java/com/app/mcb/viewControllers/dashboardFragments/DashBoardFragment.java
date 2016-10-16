@@ -33,8 +33,7 @@ public class DashBoardFragment extends AbstractFragment implements View.OnClickL
     private LinearLayout llTotalWithDrawerDashBoard;
 
     @Override
-    protected View onCreateViewPost(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
+    protected View onCreateViewPost(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dashboard, container, false);
         init(view);
         return view;
@@ -63,29 +62,23 @@ public class DashBoardFragment extends AbstractFragment implements View.OnClickL
 
     @Override
     public void update(Observable observable, Object o) {
-
     }
 
     @Override
     public void onClick(View view) {
-
         int id = view.getId();
         if (id == R.id.llAboutProfileDashBoard) {
-            Util.replaceFragment(getActivity(),R.id.fmHomeContainer,new MyProfileFragment());
+            Util.replaceFragment(getActivity(), R.id.fmHomeContainer, new MyProfileFragment());
         } else if (id == R.id.llMyWalletDashBoard) {
-            Util.replaceFragment(getActivity(),R.id.fmHomeContainer,new MyWalletFragment());
+            Util.replaceFragment(getActivity(), R.id.fmHomeContainer, new MyWalletFragment());
         } else if (id == R.id.llSenderDetailsDashBoard) {
-            Util.replaceFragment(getActivity(),R.id.fmHomeContainer,new SenderHomeFragment());
+            Util.replaceFragment(getActivity(), R.id.fmHomeContainer, new SenderHomeFragment());
         } else if (id == R.id.llDetailsOfTransDashBoard) {
-            Util.replaceFragment(getActivity(),R.id.fmHomeContainer,new TransporterHomeFragment());
+            Util.replaceFragment(getActivity(), R.id.fmHomeContainer, new TransporterHomeFragment());
         } else if (id == R.id.llTotalReceiverDashBoard) {
-            Util.replaceFragment(getActivity(),R.id.fmHomeContainer,new ReceiverListFragment());
+            Util.replaceFragment(getActivity(), R.id.fmHomeContainer, new ReceiverListFragment());
         } else if (id == R.id.llTotalWithDrawerDashBoard) {
-            Util.replaceFragment(getActivity(),R.id.fmHomeContainer,new WithDrawFragment());
+            Util.replaceFragment(getActivity(), R.id.fmHomeContainer, new WithDrawFragment());
         }
-    }
-
-    public void addFragment(Fragment fragment) {
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fmHomeContainer, fragment).commit();
     }
 }

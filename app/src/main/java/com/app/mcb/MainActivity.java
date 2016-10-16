@@ -1,5 +1,6 @@
 package com.app.mcb;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -8,9 +9,11 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.app.mcb.Utility.Util;
 import com.app.mcb.custom.AppHeaderView;
 import com.app.mcb.dao.TripTransporterData;
 import com.app.mcb.sharedPreferences.Config;
+import com.app.mcb.viewControllers.LoginActivity;
 import com.app.mcb.viewControllers.TripListWithAllStateFragment;
 import com.app.mcb.viewControllers.dashboardFragments.DashBoardFragment;
 import com.app.mcb.viewControllers.dashboardFragments.MyProfileFragment;
@@ -30,6 +33,7 @@ import java.util.Observable;
 public class MainActivity extends AbstractFragmentActivity implements View.OnClickListener {
     private DrawerLayout drawer;
     private AppHeaderView appHeaderView;
+    private LinearLayout llLoginMain;
     private LinearLayout llDashboardMain;
     private LinearLayout llDashBoardDrawer;
     private LinearLayout llProfileMain;
@@ -52,6 +56,7 @@ public class MainActivity extends AbstractFragmentActivity implements View.OnCli
         AbstractFragment abstractFragment;
         if (Config.getLoginStatus()) {
             llDashBoardDrawer.setVisibility(View.VISIBLE);
+            llLoginMain.setVisibility(View.GONE);
             abstractFragment = new DashBoardFragment();
             TripTransporterData tripTransporterData = (TripTransporterData) getIntent().getSerializableExtra("data");
             if (tripTransporterData != null) {
@@ -62,6 +67,7 @@ public class MainActivity extends AbstractFragmentActivity implements View.OnCli
             }
         } else {
             llDashBoardDrawer.setVisibility(View.GONE);
+            llLoginMain.setVisibility(View.VISIBLE);
             abstractFragment = new TripListWithAllStateFragment();
         }
         getSupportFragmentManager().beginTransaction().add(R.id.fmHomeContainer, abstractFragment, "HomeFragment").commit();
@@ -83,6 +89,7 @@ public class MainActivity extends AbstractFragmentActivity implements View.OnCli
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         appHeaderView = (AppHeaderView) findViewById(R.id.appHeaderView);
+        llLoginMain = (LinearLayout) findViewById(R.id.llLoginMain);
         llDashboardMain = (LinearLayout) findViewById(R.id.llDashboardMain);
         llDashBoardDrawer = (LinearLayout) findViewById(R.id.llDashBoardDrawer);
         llProfileMain = (LinearLayout) findViewById(R.id.llProfileMain);
@@ -105,6 +112,7 @@ public class MainActivity extends AbstractFragmentActivity implements View.OnCli
         llSettingsMain.setOnClickListener(this);
         llTandCMain.setOnClickListener(this);
         llPrivacyPolicyMain.setOnClickListener(this);
+        llLoginMain.setOnClickListener(this);
 
     }
 
@@ -148,6 +156,8 @@ public class MainActivity extends AbstractFragmentActivity implements View.OnCli
 
         } else if (id == R.id.llPrivacyPolicyMain) {
 
+        } else if (id == R.id.llLoginMain) {
+            startActivity(new Intent(this,LoginActivity.class));
         }
     }
 

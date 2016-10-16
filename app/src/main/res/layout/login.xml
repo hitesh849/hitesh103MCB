@@ -104,6 +104,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/dim_16"
                 android:gravity="center"
+                android:visibility="gone"
                 android:text="@string/forgot_password" />
 
         </LinearLayout>

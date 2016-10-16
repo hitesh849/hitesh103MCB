@@ -11,6 +11,7 @@ import com.app.mcb.dao.ParcelListData;
 import com.app.mcb.dao.ReceiverData;
 import com.app.mcb.dao.TripTransporterData;
 import com.app.mcb.dao.UserInfoData;
+import com.app.mcb.dao.WithDrawData;
 import com.google.gson.JsonElement;
 
 import java.util.HashMap;
@@ -101,4 +102,13 @@ public interface RestInterface {
     @Headers({"Content-Type:application/json"})
     @POST("/updateparcel")
     public void updateParcels(@Body HashMap<String, Object> request, Callback<AddParcelData> cb);
+
+    @Headers({"Content-Type:application/json"})
+    @POST("/updateuserdetails")
+    public void updateProfile(@Body HashMap<String, String> request, Callback<UserInfoData> cb);
+
+
+    @Headers({"Content-Type:application/json"})
+    @POST("/paymentrequestlist/{userId}")
+    public void withDrawStatusList(@Path("userId") String userId, Callback<WithDrawData> cb);
 }

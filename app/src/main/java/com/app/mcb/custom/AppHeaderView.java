@@ -89,8 +89,6 @@ public class AppHeaderView extends RelativeLayout {
                 Config.clearPreferences();
                 Env.currentActivity.startActivity(new Intent(Env.currentActivity, MainActivity.class));
                 ((AbstractFragmentActivity) Env.currentActivity).finish();
-                rlLogoutHeader.setVisibility(GONE);
-
             }
         });
     }
