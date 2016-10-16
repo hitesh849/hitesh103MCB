@@ -1,9 +1,7 @@
 package com.app.mcb.model;
 
 import com.app.mcb.Utility.Constants;
-import com.app.mcb.dao.MyTripsData;
 import com.app.mcb.retrointerface.RestInterface;
-import com.app.mcb.sharedPreferences.Config;
 import com.google.gson.JsonElement;
 
 import org.byteclues.lib.model.BasicModel;
@@ -16,28 +14,14 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 /**
- * Created by Admin on 10/12/2016.
+ * Created by Admin on 10/17/2016.
  */
-public class MyTripsModel extends BasicModel {
+public class AddTripModel extends BasicModel {
     RestAdapter adapter = new RestAdapter.Builder().setEndpoint(Constants.BASE_URL).build();
     RestInterface restInterface = adapter.create(RestInterface.class);
 
-    public void getUserTripList() {
-        restInterface.getUserTripList(Config.getUserId(), new Callback<MyTripsData>() {
-            @Override
-            public void success(MyTripsData responesData, Response response) {
-                notifyObservers(responesData);
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                notifyObservers(error);
-            }
-        });
-    }
-
-    public void cancelTrip(HashMap<String,Object> requestData) {
-        restInterface.cancelTrip(requestData, new Callback<JsonElement>() {
+    public void addTrip(HashMap<String, Object> requestData) {
+        restInterface.addTrip(requestData, new Callback<JsonElement>() {
             @Override
             public void success(JsonElement jsonElement, Response response) {
                 notifyObservers(jsonElement);

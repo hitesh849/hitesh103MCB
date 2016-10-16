@@ -17,7 +17,7 @@ import java.util.ArrayList;
 /**
  * Created by Hitesh kumawat on 19-09-2016.
  */
-public class MyTripListVPAdapter extends PagerAdapter {
+public class CancelledTripsAdapter extends PagerAdapter {
 
     private Context mContext;
     private View.OnClickListener onClickListener;
@@ -34,21 +34,19 @@ public class MyTripListVPAdapter extends PagerAdapter {
     private TextView txtDestinationTimeMyTripsRow;
     private TextView txtDestinationCityMyTripsListRow;
     private TextView txtSourceCityMyTripsListRow;
-    private ImageView imgCancelTrip;
-    private ImageView imgEditTrip;
-    private ArrayList<MyTripsData> myTripsList;
+    private ArrayList<MyTripsData> cancelledTripsList;
 
-    public MyTripListVPAdapter(Context context, View.OnClickListener onClickListener, ArrayList<MyTripsData> tripsList) {
+    public CancelledTripsAdapter(Context context, View.OnClickListener onClickListener, ArrayList<MyTripsData> tripsList) {
         mContext = context;
         this.onClickListener = onClickListener;
-        this.myTripsList = tripsList;
+        this.cancelledTripsList = tripsList;
     }
 
     @Override
     public Object instantiateItem(ViewGroup collection, int position) {
-        MyTripsData myTripsData = myTripsList.get(position);
+        MyTripsData myTripsData = cancelledTripsList.get(position);
         LayoutInflater inflater = LayoutInflater.from(mContext);
-        ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.my_trip_list_row, collection, false);
+        ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.cancelled_trip_list_row, collection, false);
         init(layout, myTripsData);
         collection.addView(layout);
         return layout;
@@ -68,10 +66,6 @@ public class MyTripListVPAdapter extends PagerAdapter {
         txtDestinationTimeMyTripsRow = (TextView) viewGroup.findViewById(R.id.txtDestinationTimeMyTripsRow);
         txtDestinationCityMyTripsListRow = (TextView) viewGroup.findViewById(R.id.txtDestinationCityMyTripsListRow);
         txtSourceCityMyTripsListRow = (TextView) viewGroup.findViewById(R.id.txtSourceCityMyTripsListRow);
-        imgCancelTrip = (ImageView) viewGroup.findViewById(R.id.imgCancelTrip);
-        imgEditTrip = (ImageView) viewGroup.findViewById(R.id.imgEditTrip);
-        imgCancelTrip.setTag(myTripsData);
-        imgEditTrip.setTag(myTripsData);
         txtCapacityMyTripListRow.setText("Total " + myTripsData.capacity + " Kg");
         txtPnrMyTripListRow.setText(myTripsData.pnr);
         txtTripIdMyTripListRow.setText(myTripsData.TripID);
@@ -85,13 +79,11 @@ public class MyTripListVPAdapter extends PagerAdapter {
         txtSourceTimeMyTripsListRow.setText(Util.getTimeFromDateTimeFormat(myTripsData.dep_time));
         txtDestinationTimeMyTripsRow.setText(Util.getTimeFromDateTimeFormat(myTripsData.arrival_time));
         imgViewParcelListRow.setOnClickListener(onClickListener);
-        imgCancelTrip.setOnClickListener(onClickListener);
-        imgEditTrip.setOnClickListener(onClickListener);
     }
 
     @Override
     public int getCount() {
-        return myTripsList.size();
+        return cancelledTripsList.size();
     }
 
     @Override

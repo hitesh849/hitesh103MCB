@@ -319,43 +319,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dim_8"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:weightSum="10">
 
                 <TextView
                     style="@style/text_large"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="10"
                     android:text="@string/status" />
-
-                <ImageView
-                    android:id="@+id/imgViewParcelListRow"
-                    android:layout_width="@dimen/dim_46"
-                    android:layout_height="@dimen/dim_46"
-                    android:src="@mipmap/process" />
-
-                <ImageView
-                    android:id="@+id/imgEditTrip"
-                    android:layout_width="@dimen/dim_46"
-                    android:layout_height="@dimen/dim_46"
-                    android:layout_marginLeft="@dimen/dim_6"
-                    android:layout_marginRight="@dimen/dim_6"
-                    android:src="@mipmap/action_edit" />
-
-                <ImageView
-                    android:id="@+id/imgCancelTrip"
-                    android:layout_width="@dimen/dim_46"
-                    android:layout_height="@dimen/dim_46"
-                    android:layout_marginLeft="@dimen/dim_6"
-                    android:layout_marginRight="@dimen/dim_6"
-                    android:src="@mipmap/cancel" />
-
-                <ImageView
-                    android:layout_width="@dimen/dim_46"
-                    android:layout_height="@dimen/dim_46"
-                    android:src="@mipmap/upload" />
-
-
             </LinearLayout>
 
         </LinearLayout>

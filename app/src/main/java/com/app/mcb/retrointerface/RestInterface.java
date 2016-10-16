@@ -83,6 +83,10 @@ public interface RestInterface {
     public void getUserTripList(@Path("userId") String userId, Callback<MyTripsData> cb);
 
     @Headers({"Content-Type:application/json"})
+    @GET("/canceltripslist/{userId}")
+    public void getCancelledTripList(@Path("userId") String userId, Callback<MyTripsData> cb);
+
+    @Headers({"Content-Type:application/json"})
     @POST("/sendinvite")
     public void sendInvitation(@Body HashMap<String, String> request, Callback<UserInfoData> cb);
 
@@ -99,6 +103,15 @@ public interface RestInterface {
     public void cancelParcel(@Body HashMap<String, Object> request, Callback<JsonElement> cb);
 
     @Headers({"Content-Type:application/json"})
+    @POST("/usrupdatetripstatus")
+    public void cancelTrip(@Body HashMap<String, Object> request, Callback<JsonElement> cb);
+
+    @Headers({"Content-Type:application/json"})
     @POST("/updateparcel")
     public void updateParcels(@Body HashMap<String, Object> request, Callback<AddParcelData> cb);
+
+    @Headers({"Content-Type:application/json"})
+    @POST("/addtrip")
+    public void addTrip(@Body HashMap<String, Object> request, Callback<JsonElement> cb);
+
 }

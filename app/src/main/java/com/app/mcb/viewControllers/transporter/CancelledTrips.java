@@ -13,16 +13,13 @@ import com.app.mcb.MainActivity;
 import com.app.mcb.R;
 import com.app.mcb.Utility.Constants;
 import com.app.mcb.Utility.Util;
-import com.app.mcb.adapters.MyTripListVPAdapter;
-import com.app.mcb.dao.CommonResponseData;
+import com.app.mcb.adapters.CancelledTripsAdapter;
 import com.app.mcb.dao.MyTripsData;
-import com.app.mcb.model.MyTripsModel;
-import com.app.mcb.sharedPreferences.Config;
+import com.app.mcb.model.CancelledTripsModel;
 
 import org.byteclues.lib.model.BasicModel;
 import org.byteclues.lib.view.AbstractFragment;
 
-import java.util.HashMap;
 import java.util.Observable;
 
 import retrofit.RetrofitError;
@@ -30,33 +27,32 @@ import retrofit.RetrofitError;
 /**
  * Created by Hitesh kumawat on 19-09-2016.
  */
-public class MyTripList extends AbstractFragment implements View.OnClickListener {
-
-    private ViewPager vpMyList;
+public class CancelledTrips extends AbstractFragment implements View.OnClickListener {
+    private ViewPager vpCancelledTripsList;
     private LinearLayout llCountDotsMain;
-    private MyTripsModel myTripsModel = new MyTripsModel();
-    private MyTripListVPAdapter myTripListVPAdapter;
+    private CancelledTripsModel cancelledTripsModel = new CancelledTripsModel();
+    private CancelledTripsAdapter cancelledTripsAdapter;
 
 
     @Override
     protected View onCreateViewPost(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.my_trip_list_fragment, container, false);
+        View view = inflater.inflate(R.layout.cancelled_trips_layout, container, false);
         init(view);
         return view;
     }
 
     private void init(View view) {
         ((MainActivity) getActivity()).setHeader(getResources().getString(R.string.my_trip));
-        vpMyList = (ViewPager) view.findViewById(R.id.vpMyList);
+        vpCancelledTripsList = (ViewPager) view.findViewById(R.id.vpCancelledTripsList);
         llCountDotsMain = (LinearLayout) view.findViewById(R.id.llCountDotsMain);
         viewPagerChangeListener();
         drawPageSelectionIndicators(0);
-        getMyTripsList();
+        getCancelledTripsList();
     }
 
     @Override
     protected BasicModel getModel() {
-        return myTripsModel;
+        return cancelledTripsModel;
     }
 
     @Override
@@ -65,24 +61,18 @@ public class MyTripList extends AbstractFragment implements View.OnClickListener
         if (o instanceof MyTripsData) {
             MyTripsData myTripsData = ((MyTripsData) o);
             if (Constants.RESPONSE_SUCCESS_MSG.equals(myTripsData.status)) {
-                myTripListVPAdapter = new MyTripListVPAdapter(getActivity(), this, myTripsData.response);
-                vpMyList.setAdapter(myTripListVPAdapter);
-            }
-        } else if (o instanceof CommonResponseData) {
-            CommonResponseData responseData = ((CommonResponseData) o);
-            if (Constants.RESPONSE_SUCCESS_MSG.equals(responseData.status)) {
-                getMyTripsList();
+                cancelledTripsAdapter = new CancelledTripsAdapter(getActivity(), this, myTripsData.response);
+                vpCancelledTripsList.setAdapter(cancelledTripsAdapter);
             }
         } else if (o instanceof RetrofitError) {
-
         }
 
     }
 
-    private void getMyTripsList() {
+    private void getCancelledTripsList() {
         if (Util.isDeviceOnline()) {
             Util.showProDialog(getActivity());
-            myTripsModel.getUserTripList();
+            cancelledTripsModel.getCancelledTrip();
         } else {
             Util.showAlertDialog(null, getResources().getString(R.string.noInternetMsg));
         }
@@ -91,30 +81,10 @@ public class MyTripList extends AbstractFragment implements View.OnClickListener
     @Override
     public void onClick(View view) {
         int id = view.getId();
-        if (id == R.id.imgCancelTrip) {
-            MyTripsData myTripsData = ((MyTripsData) view.getTag());
-            if (myTripsData != null) {
-                HashMap<String, Object> requestData = new HashMap<>();
-                requestData.put("id", myTripsData.id);
-                requestData.put("status", "4");
-                requestData.put("process_by", Config.getUserId());
-                requestData.put("reason", "");
-                cancelTrip(requestData);
-            }
-        }
-    }
-
-    private void cancelTrip(HashMap<String, Object> requestData) {
-        if (Util.isDeviceOnline()) {
-            Util.showProDialog(getActivity());
-            myTripsModel.cancelTrip(requestData);
-        } else {
-            Util.showAlertDialog(null, getResources().getString(R.string.noInternetMsg));
-        }
     }
 
     private void viewPagerChangeListener() {
-        vpMyList.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        vpCancelledTripsList.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 

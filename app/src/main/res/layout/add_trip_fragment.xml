@@ -1,208 +1,413 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dim_5"
-        android:background="@drawable/rounded_white_bg"
-        android:orientation="vertical"
-        android:padding="@dimen/dim_5">
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dim_5"
-            android:orientation="horizontal">
+            android:background="@drawable/rounded_white_bg"
+            android:orientation="vertical"
+            android:padding="@dimen/dim_5">
 
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="0dp"
-                android:layout_height="@dimen/dim_52"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dim_5"
-                android:layout_weight="1"
-                android:textColorHint="@color/black">
+                android:orientation="horizontal">
 
-                <AutoCompleteTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="bottom"
-                    android:background="@null"
-                    android:gravity="bottom"
-                    android:hint="Select From"
-                    android:singleLine="true"
-                    android:textColorHint="@color/black"
-                    android:textSize="@dimen/text_medium_14sp" />
-            </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dim_52"
+                    android:layout_margin="@dimen/dim_5"
+                    android:layout_weight="1"
+                    android:textColorHint="@color/black">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/txtAutoCompleteSource"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="bottom"
+                        android:background="@null"
+                        android:gravity="bottom"
+                        android:hint="Select From"
+                        android:singleLine="true"
+                        android:textColorHint="@color/black"
+                        android:textSize="@dimen/text_medium_14sp" />
+                </android.support.design.widget.TextInputLayout>
 
 
-            <ImageView
-                android:layout_width="@dimen/dim_52"
-                android:layout_height="@dimen/dim_52"
-                android:src="@mipmap/takeoff" />
+                <ImageView
+                    android:layout_width="@dimen/dim_52"
+                    android:layout_height="@dimen/dim_52"
+                    android:src="@mipmap/takeoff" />
 
-        </LinearLayout>
+            </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dim_1"
-            android:background="@color/grey" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dim_1"
+                android:background="@color/grey" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dim_5"
-            android:orientation="horizontal">
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="0dp"
-                android:layout_height="@dimen/dim_52"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dim_5"
-                android:layout_weight="1"
-                android:textColorHint="@color/black">
+                android:orientation="horizontal">
 
-                <AutoCompleteTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dim_52"
+                    android:layout_margin="@dimen/dim_5"
+                    android:layout_weight="1"
+                    android:textColorHint="@color/black">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/txtAutoCompleteDestination"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="bottom"
+                        android:background="@null"
+                        android:gravity="bottom"
+                        android:hint="Select To"
+                        android:singleLine="true"
+                        android:textColorHint="@color/black"
+                        android:textSize="@dimen/text_medium_14sp" />
+                </android.support.design.widget.TextInputLayout>
+
+
+                <ImageView
+                    android:layout_width="@dimen/dim_52"
+                    android:layout_height="@dimen/dim_52"
+                    android:src="@mipmap/destination" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dim_1"
+                android:background="@color/grey" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dim_5"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
-                    android:background="@null"
-                    android:gravity="bottom"
-                    android:hint="Select To"
+                    android:layout_weight="1"
                     android:singleLine="true"
-                    android:textColorHint="@color/black"
+                    android:text="Upload Ticket"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/text_medium_14sp" />
-            </android.support.design.widget.TextInputLayout>
 
+                <ImageView
+                    android:id="@+id/imgUploadTicket"
+                    android:layout_width="@dimen/dim_52"
+                    android:layout_height="@dimen/dim_52"
+                    android:src="@mipmap/uploadticket" />
 
-            <ImageView
-                android:layout_width="@dimen/dim_52"
-                android:layout_height="@dimen/dim_52"
-                android:src="@mipmap/destination" />
+            </LinearLayout>
 
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dim_1"
-            android:background="@color/grey" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dim_5"
-            android:orientation="horizontal">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dim_1"
+                android:background="@color/grey" />
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
-                android:layout_weight="1"
+                android:layout_marginTop="@dimen/dim_5"
                 android:singleLine="true"
-                android:text="Upload Ticket"
-                android:textColor="@color/black"
+                android:text="(Upload files of .jpg)"
+                android:textColor="@color/grey"
                 android:textSize="@dimen/text_medium_14sp" />
 
-            <ImageView
-                android:layout_width="@dimen/dim_52"
-                android:layout_height="@dimen/dim_52"
-                android:src="@mipmap/uploadticket" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dim_5"
+                android:orientation="horizontal">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/dim_5"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+
+                        <TextView
+                            android:id="@+id/txtDateDeparture"
+                            style="@style/text_small"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dim_4"
+                            android:hint="@string/departure"
+                            android:textColorHint="@color/black" />
+
+                        <ImageView
+                            android:id="@+id/imgCalendarDeparture"
+                            android:layout_width="@dimen/dim_24"
+                            android:layout_height="@dimen/dim_24"
+                            android:src="@mipmap/blackcalender" />
+
+
+                        <TextView
+                            android:id="@+id/txtTimeDeparture"
+                            style="@style/text_small"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dim_4"
+                            android:hint="9:30 AM"
+                            android:textColorHint="@color/black" />
+
+                        <ImageView
+                            android:id="@+id/imgClockDeparture"
+                            android:layout_width="@dimen/dim_24"
+                            android:layout_height="@dimen/dim_24"
+                            android:src="@mipmap/clock" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dim_1"
+                        android:background="@color/grey" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/dim_5"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+
+                        <TextView
+                            android:id="@+id/txtDateArrival"
+                            style="@style/text_small"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dim_4"
+                            android:text="@string/arrival"
+                            android:textColorHint="@color/black" />
+
+                        <ImageView
+                            android:id="@+id/imgCalendarArrival"
+                            android:layout_width="@dimen/dim_24"
+                            android:layout_height="@dimen/dim_24"
+                            android:src="@mipmap/blackcalender" />
+
+
+                        <TextView
+                            android:id="@+id/txtTimeArrival"
+                            style="@style/text_small"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dim_4"
+                            android:hint="9:30 AM"
+                            android:textColorHint="@color/black" />
+
+                        <ImageView
+                            android:id="@+id/imgClockArrival"
+                            android:layout_width="@dimen/dim_24"
+                            android:layout_height="@dimen/dim_24"
+                            android:src="@mipmap/clock" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dim_1"
+                        android:background="@color/grey" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dim_5"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/dim_5"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dim_52"
+                        android:layout_marginRight="@dimen/dim_5"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:orientation="vertical"
+                        android:textColorHint="@color/black">
+
+                        <EditText
+                            android:id="@+id/etxtFlightNo"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="bottom"
+                            android:background="@null"
+                            android:gravity="bottom"
+                            android:hint="@string/flight_no"
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/black"
+                            android:textSize="@dimen/text_medium_14sp" />
+                    </android.support.design.widget.TextInputLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dim_1"
+                        android:background="@color/grey" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dim_5"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dim_52"
+                        android:layout_weight="1"
+                        android:textColorHint="@color/black">
+
+                        <EditText
+                            android:id="@+id/etxtPnrBookingRef"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="bottom"
+                            android:background="@null"
+                            android:gravity="bottom"
+                            android:hint="@string/pnr_booking_ref"
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/black"
+                            android:textSize="@dimen/text_medium_14sp" />
+                    </android.support.design.widget.TextInputLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dim_1"
+                        android:background="@color/grey" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dim_52"
+                android:layout_margin="@dimen/dim_5"
+                android:textColorHint="@color/black">
+
+                <EditText
+                    android:id="@+id/etxtCapacity"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="bottom"
+                    android:background="@null"
+                    android:gravity="bottom"
+                    android:hint="@string/capacity"
+                    android:inputType="numberDecimal"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black"
+                    android:textSize="@dimen/text_medium_14sp" />
+
+            </android.support.design.widget.TextInputLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dim_1"
+                android:background="@color/grey" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginTop="@dimen/dim_5"
+                android:singleLine="true"
+                android:text="(Amount of weight in kg you can carry easily)"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/text_medium_14sp" />
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dim_52"
+                android:layout_margin="@dimen/dim_5"
+                android:textColorHint="@color/black">
+
+                <EditText
+                    android:id="@+id/etxtComment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="bottom"
+                    android:background="@null"
+                    android:gravity="bottom"
+                    android:hint="@string/add_comment"
+                    android:maxLines="3"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black"
+                    android:textSize="@dimen/text_medium_14sp" />
+
+            </android.support.design.widget.TextInputLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dim_1"
+                android:background="@color/grey" />
         </LinearLayout>
 
-        <View
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dim_1"
-            android:background="@color/grey" />
-
-        <TextView
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_marginTop="@dimen/dim_5"
-            android:singleLine="true"
-            android:text="(Upload files of .jpg)"
-            android:textColor="@color/grey"
-            android:textSize="@dimen/text_medium_14sp" />
+            android:gravity="center"
+            android:padding="@dimen/dim_8"
+            android:weightSum="3">
 
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dim_52"
-            android:layout_margin="@dimen/dim_5"
-            android:textColorHint="@color/black">
+            <TextView
+                android:id="@+id/txtAddButton"
+                style="@style/button_blue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:text="Add" />
+        </LinearLayout>
 
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="bottom"
-                android:background="@null"
-                android:gravity="bottom"
-                android:hint="Capacity"
-                android:inputType="numberDecimal"
-                android:singleLine="true"
-                android:textColor="@color/black"
-                android:textColorHint="@color/black"
-                android:textSize="@dimen/text_medium_14sp" />
-
-        </android.support.design.widget.TextInputLayout>
-
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dim_1"
-            android:background="@color/grey" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_marginTop="@dimen/dim_5"
-            android:singleLine="true"
-            android:text="(Amount of weight in kg you can carry easily)"
-            android:textColor="@color/grey"
-            android:textSize="@dimen/text_medium_14sp" />
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dim_52"
-            android:layout_margin="@dimen/dim_5"
-            android:textColorHint="@color/black">
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="bottom"
-                android:background="@null"
-                android:gravity="bottom"
-                android:hint="Add Comment"
-                android:maxLines="3"
-                android:textColor="@color/black"
-                android:textColorHint="@color/black"
-                android:textSize="@dimen/text_medium_14sp" />
-
-        </android.support.design.widget.TextInputLayout>
-
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dim_1"
-            android:background="@color/grey" />
     </LinearLayout>
+</ScrollView>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="@dimen/dim_8"
-        android:weightSum="3">
-
-        <TextView
-            style="@style/button_blue"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.5"
-            android:text="Add" />
-    </LinearLayout>
-
-</LinearLayout>

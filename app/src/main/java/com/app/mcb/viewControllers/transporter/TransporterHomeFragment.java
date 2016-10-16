@@ -6,15 +6,12 @@ import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.app.mcb.R;
 import com.app.mcb.Utility.Util;
-import com.app.mcb.viewControllers.sender.AddParcelFragment;
-import com.app.mcb.viewControllers.sender.ParcelsListFragment;
 
 import org.byteclues.lib.model.BasicModel;
 import org.byteclues.lib.view.AbstractFragment;
@@ -26,29 +23,26 @@ import java.util.Observable;
  */
 public class TransporterHomeFragment extends AbstractFragment implements View.OnClickListener {
 
-    private LinearLayout llActiveTripTransporterHome;
+    public LinearLayout llActiveTripTransporterHome;
     private LinearLayout llAddTripTransporterHome;
-    private LinearLayout llAllTripTransporterHome;
+    public LinearLayout llCancelledTripTransporterHome;
     private LinearLayout llLastSelectedTransPorterHome;
-    private FrameLayout fmContainerTransporterHomeMain;
 
     @Override
     protected View onCreateViewPost(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.transporter_home_screen, container, false);
         init(view);
-        Util.addFragment(getActivity(), R.id.fmContainerTransporterHomeMain, new MyTripList());
         return view;
     }
 
     private void init(View view) {
         llActiveTripTransporterHome = (LinearLayout) view.findViewById(R.id.llActiveTripTransporterHome);
         llAddTripTransporterHome = (LinearLayout) view.findViewById(R.id.llAddTripTransporterHome);
-        llAllTripTransporterHome = (LinearLayout) view.findViewById(R.id.llAllTripTransporterHome);
-        fmContainerTransporterHomeMain = (FrameLayout) view.findViewById(R.id.fmContainerTransporterHomeMain);
+        llCancelledTripTransporterHome = (LinearLayout) view.findViewById(R.id.llCancelledTripTransporterHome);
         llActiveTripTransporterHome.setOnClickListener(this);
         llAddTripTransporterHome.setOnClickListener(this);
-        llAllTripTransporterHome.setOnClickListener(this);
-        backgroundChange(llActiveTripTransporterHome);
+        llCancelledTripTransporterHome.setOnClickListener(this);
+        onClick(llActiveTripTransporterHome);
     }
 
     @Override
@@ -65,19 +59,20 @@ public class TransporterHomeFragment extends AbstractFragment implements View.On
     public void onClick(View view) {
         int id = view.getId();
         if (id == R.id.llActiveTripTransporterHome) {
-            Util.replaceFragment(getActivity(),R.id.fmContainerTransporterHomeMain,new MyTripList());
+            Util.replaceFragment(getActivity(), R.id.fmContainerTransporterHomeMain, new MyTripList());
             backgroundChange(llActiveTripTransporterHome);
         } else if (id == R.id.llAddTripTransporterHome) {
-            Util.replaceFragment(getActivity(),R.id.fmContainerTransporterHomeMain,new AddTripFragment());
+            Util.replaceFragment(getActivity(), R.id.fmContainerTransporterHomeMain, new AddTripFragment());
             backgroundChange(llAddTripTransporterHome);
-        } else if (id == R.id.llAllTripTransporterHome) {
-            Util.replaceFragment(getActivity(),R.id.fmContainerTransporterHomeMain,new MyTripList());
-            backgroundChange(llAllTripTransporterHome);
+        } else if (id == R.id.llCancelledTripTransporterHome) {
+            Util.replaceFragment(getActivity(), R.id.fmContainerTransporterHomeMain, new CancelledTrips());
+            backgroundChange(llCancelledTripTransporterHome);
         }
     }
 
     public void backgroundChange(LinearLayout currentLayout) {
         if (llLastSelectedTransPorterHome != null) {
+            llLastSelectedTransPorterHome.setSelected(false);
             for (int i = 0; i < llLastSelectedTransPorterHome.getChildCount(); i++) {
                 View view = llLastSelectedTransPorterHome.getChildAt(i);
                 if (view instanceof ImageView) {
@@ -97,5 +92,6 @@ public class TransporterHomeFragment extends AbstractFragment implements View.On
             }
         }
         llLastSelectedTransPorterHome = currentLayout;
+        llLastSelectedTransPorterHome.setSelected(true);
     }
 }

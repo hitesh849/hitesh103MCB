@@ -105,6 +105,7 @@
     <string name="recwiver_id">Receiver ID</string>
     <string name="trip_summary">Trip summary</string>
     <string name="leave_a_comment">Leave a comment</string>
+    <string name="add_comment">Add Comment</string>
     <string name="become_a">Become a</string>
     <string name="find_a">Find a</string>
     <string name="active_parcels">Activity parcels</string>
@@ -147,8 +148,6 @@
     <string name="payment">Payment</string>
     <string name="no_trans_found">No Transporter found.</string>
     <string name="parcel_id_created">Parcel ID Created</string>
-
-
 
 
 </resources>
