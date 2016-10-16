@@ -4,17 +4,21 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.app.mcb.MainActivity;
 import com.app.mcb.R;
 import com.app.mcb.Utility.Util;
+import com.app.mcb.adapters.WithDrawVPAdapter;
 import com.app.mcb.dao.UserInfoData;
 import com.app.mcb.dao.WithDrawData;
 import com.app.mcb.model.WithDrawModel;
@@ -48,6 +52,8 @@ public class WithDrawFragment extends AbstractFragment implements View.OnClickLi
     private EditText etSwiftNumNewWithDraw;
     private TextView txtSubmitWithDraw;
     private UserInfoData userInfoData;
+    private ViewPager vpWithDrawStatus;
+    private LinearLayout llCountDotsMain;
     private WithDrawModel withDrawModel = new WithDrawModel();
 
     @Override
@@ -64,17 +70,15 @@ public class WithDrawFragment extends AbstractFragment implements View.OnClickLi
         txtNewUserWithDraw = (TextView) view.findViewById(R.id.txtNewUserWithDraw);
         txtWithDrawStatus.setOnClickListener(this);
         txtNewUserWithDraw.setOnClickListener(this);
-        addViewInRelayout(R.layout.withdraw_status);
+        onClick(txtWithDrawStatus);
         ((MainActivity) getActivity()).setHeader(getResources().getString(R.string.withdraw));
     }
 
     private void withDrawStatusInit(View view) {
-
-        txtBankNameWithDraw = (TextView) view.findViewById(R.id.txtBankNameWithDraw);
-        txtAmountWithDraw = (TextView) view.findViewById(R.id.txtAmountWithDraw);
-        txtIFSCCodeWithDraw = (TextView) view.findViewById(R.id.txtIFSCCodeWithDraw);
-        txtStatusWithDraw = (TextView) view.findViewById(R.id.txtStatusWithDraw);
-        txtProcessingDateWithDraw = (TextView) view.findViewById(R.id.txtProcessingDateWithDraw);
+        vpWithDrawStatus = (ViewPager) view.findViewById(R.id.vpWithDrawStatus);
+        llCountDotsMain = (LinearLayout) view.findViewById(R.id.llCountDotsMain);
+        viewPagerChangeListener();
+        drawPageSelectionIndicators(0);
     }
 
     private void withDrawCreateNewInit(View view) {
@@ -120,6 +124,13 @@ public class WithDrawFragment extends AbstractFragment implements View.OnClickLi
                 } else if ("Error".equals(userInfoData.status)) {
                     Util.showOKSnakBar(rlWithDrawMain, userInfoData.errorMessage);
                 }
+            } else if (data != null && data instanceof WithDrawData) {
+                WithDrawData withDrawData = (WithDrawData) data;
+                if ("success".equals(withDrawData.status)) {
+                    vpWithDrawStatus.setAdapter(new WithDrawVPAdapter(getActivity(), withDrawData.response));
+                } else if ("Error".equals(userInfoData.status)) {
+                    Util.showOKSnakBar(rlWithDrawMain, userInfoData.errorMessage);
+                }
             } else if (data != null && data instanceof RetrofitError) {
                 Util.showOKSnakBar(rlWithDrawMain, getResources().getString(R.string.pls_try_again));
             }
@@ -142,6 +153,19 @@ public class WithDrawFragment extends AbstractFragment implements View.OnClickLi
         }
     }
 
+    private void withDrawStatusList() {
+        try {
+            if (Util.isDeviceOnline()) {
+                Util.showProDialog(getActivity());
+                withDrawModel.withDrawStatusList();
+            } else {
+                Util.showAlertDialog(null, getResources().getString(R.string.noInternetMsg));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
     @Override
     public void onClick(View v) {
 
@@ -150,6 +174,7 @@ public class WithDrawFragment extends AbstractFragment implements View.OnClickLi
             addViewInRelayout(R.layout.withdraw_status);
             unSelectTextView();
             selectLeftTextView();
+            withDrawStatusList();
         } else if (id == R.id.txtNewUserWithDraw) {
             addViewInRelayout(R.layout.create_new_withdraw);
             unSelectTextView();
@@ -162,44 +187,46 @@ public class WithDrawFragment extends AbstractFragment implements View.OnClickLi
 
     private boolean validation(WithDrawData withDrawData) {
         if (TextUtils.isEmpty(withDrawData.amount)) {
-            etAmountNewWithDraw.setFocusable(true);
-            etAmountNewWithDraw.setError("Can't be Empty");
+
+            etAmountNewWithDraw.setError(getString(R.string.can_not_be_empty));
+            etAmountNewWithDraw.requestFocus();
             return false;
         }
         if (TextUtils.isEmpty(withDrawData.acct_no)) {
 
-            etAccountNumNewWithDraw.setError("Can't be Empty");
-            etAccountNumNewWithDraw.setFocusable(true);
+            etAccountNumNewWithDraw.setError(getString(R.string.can_not_be_empty));
+            etAccountNumNewWithDraw.requestFocus();
             return false;
         }
         if (TextUtils.isEmpty(withDrawData.re_acct_no)) {
-            etReAccountNumNewWithDraw.setFocusable(true);
-            etReAccountNumNewWithDraw.setError("Can't be Empty");
+            etReAccountNumNewWithDraw.setError(getString(R.string.can_not_be_empty));
+            etReAccountNumNewWithDraw.requestFocus();
             return false;
         }
         if (!withDrawData.acct_no.equals(withDrawData.re_acct_no)) {
             etReAccountNumNewWithDraw.setError(getResources().getString(R.string.pass_do_not_match_error_msg));
+            etReAccountNumNewWithDraw.requestFocus();
             return false;
         }
         if (TextUtils.isEmpty(withDrawData.act_name)) {
-            etAccHolderNameWithDraw.setFocusable(true);
-            etAccHolderNameWithDraw.setError("Can't be Empty");
+            etAccHolderNameWithDraw.setError(getString(R.string.can_not_be_empty));
+            etAccHolderNameWithDraw.requestFocus();
             return false;
         }
 
         if (TextUtils.isEmpty(withDrawData.bank_name)) {
-            etBankNameNewWithDraw.setFocusable(true);
-            etBankNameNewWithDraw.setError("Can't be Empty");
+            etBankNameNewWithDraw.setError(getString(R.string.can_not_be_empty));
+            etBankNameNewWithDraw.requestFocus();
             return false;
         }
         if (TextUtils.isEmpty(withDrawData.ifsc)) {
-            etIFSCNewWithDraw.setFocusable(true);
-            etIFSCNewWithDraw.setError("Can't be Empty");
+            etIFSCNewWithDraw.setError(getString(R.string.can_not_be_empty));
+            etIFSCNewWithDraw.requestFocus();
             return false;
         }
         if (TextUtils.isEmpty(withDrawData.swift_code)) {
-            etSwiftNumNewWithDraw.setFocusable(true);
-            etSwiftNumNewWithDraw.setError("Can't be Empty");
+            etSwiftNumNewWithDraw.setError(getString(R.string.can_not_be_empty));
+            etSwiftNumNewWithDraw.requestFocus();
             return false;
         }
         return true;
@@ -247,6 +274,55 @@ public class WithDrawFragment extends AbstractFragment implements View.OnClickLi
         txtNewUserWithDraw.setTextColor(ContextCompat.getColor(getActivity(), R.color.white));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             txtNewUserWithDraw.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.rect_right_corners_pink_bg));
+        }
+    }
+
+    private void viewPagerChangeListener() {
+        vpWithDrawStatus.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                drawPageSelectionIndicators(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+    }
+
+    private void drawPageSelectionIndicators(int mPosition) {
+        if (llCountDotsMain != null) {
+            llCountDotsMain.removeAllViews();
+        }
+
+        ImageView[] dots = new ImageView[3];
+
+        if (mPosition > 2) {
+            mPosition = (mPosition % 3);
+        }
+        for (int i = 0; i < 3; i++) {
+
+
+            dots[i] = new ImageView(getActivity());
+            if (i == mPosition)
+                dots[i].setImageDrawable(getResources().getDrawable(R.drawable.item_selected));
+            else
+                dots[i].setImageDrawable(getResources().getDrawable(R.drawable.vp_item_unselected));
+
+
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+            );
+
+            params.setMargins(5, 0, 5, 0);
+            llCountDotsMain.addView(dots[i], params);
         }
     }
 }

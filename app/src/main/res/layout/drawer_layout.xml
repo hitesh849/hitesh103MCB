@@ -152,6 +152,22 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/llLoginMain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dim_16">
+
+            <TextView
+                style="@style/text_large"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rect_bottom_line_blue_bg"
+                android:text="@string/login"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dim_16">

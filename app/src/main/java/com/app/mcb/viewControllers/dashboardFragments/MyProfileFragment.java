@@ -37,7 +37,7 @@ public class MyProfileFragment extends AbstractFragment implements View.OnClickL
     private TextView txtEditProfile;
 
     @Override
-    protected View onCreateViewPost(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    protected View onCreateViewPost(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.my_profile, container, false);
         init(view);
         setValues();
@@ -103,24 +103,29 @@ public class MyProfileFragment extends AbstractFragment implements View.OnClickL
     private boolean validation(UserInfoData userInfoData) {
 
         if (TextUtils.isEmpty(userInfoData.name)) {
-            etNameMyProfile.setError("Can't be Empty");
+            etNameMyProfile.setError(getResources().getString(R.string.can_not_be_empty));
+            etNameMyProfile.requestFocus();
             return false;
         }
         if (TextUtils.isEmpty(userInfoData.mobile)) {
-            etMobileNumberMyProfile.setError("Can't be Empty");
+            etMobileNumberMyProfile.setError(getResources().getString(R.string.can_not_be_empty));
+            etMobileNumberMyProfile.requestFocus();
             return false;
         }
 
         if (TextUtils.isEmpty(userInfoData.phone)) {
-            etLandLineMyProfile.setError("Can't be Empty");
+            etLandLineMyProfile.setError(getResources().getString(R.string.can_not_be_empty));
+            etLandLineMyProfile.requestFocus();
             return false;
         }
         if (TextUtils.isEmpty(userInfoData.passportno)) {
-            etCardNumberMyProfile.setError("Can't be Empty");
+            etCardNumberMyProfile.setError(getResources().getString(R.string.can_not_be_empty));
+            etCardNumberMyProfile.requestFocus();
             return false;
         }
         if (TextUtils.isEmpty(userInfoData.address)) {
-            etAddressMyProfile.setError("Can't be Empty");
+            etAddressMyProfile.setError(getResources().getString(R.string.can_not_be_empty));
+            etAddressMyProfile.requestFocus();
             return false;
         }
 

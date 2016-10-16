@@ -77,32 +77,39 @@ public class SignUpActivity extends AbstractFragmentActivity implements View.OnC
 
 
         if (TextUtils.isEmpty(userInfoData.firstName)) {
-            etextFirstName.setError("Can't be Empty");
+            etextFirstName.setError(getString(R.string.can_not_be_empty));
+            etextFirstName.requestFocus();
             return false;
         }
         if (TextUtils.isEmpty(userInfoData.lastName)) {
-            etextLastName.setError("Can't be Empty");
+            etextLastName.setError(getString(R.string.can_not_be_empty));
+            etextLastName.requestFocus();
             return false;
         }
         if (TextUtils.isEmpty(userInfoData.email)) {
-            etextEmail.setError("Can't be Empty");
+            etextEmail.setError(getString(R.string.can_not_be_empty));
+            etextEmail.requestFocus();
             return false;
         }
         if (TextUtils.isEmpty(userInfoData.mobile)) {
-            etextPassword.setError("Can't be Empty");
+            etextPassword.setError(getString(R.string.can_not_be_empty));
+            etextPassword.requestFocus();
             return false;
         }
         if (TextUtils.isEmpty(userInfoData.password)) {
-            etextPassword.setError("Can't be Empty");
+            etextPassword.setError(getString(R.string.can_not_be_empty));
+            etextPassword.requestFocus();
             return false;
         }
 
         if (TextUtils.isEmpty(etextConfirmPassword.getText().toString())) {
-            etextConfirmPassword.setError("Can't be Empty");
+            etextConfirmPassword.setError(getString(R.string.can_not_be_empty));
+            etextConfirmPassword.requestFocus();
             return false;
         }
         if (!userInfoData.password.equals(etextConfirmPassword.getText().toString())) {
             etextConfirmPassword.setError(getResources().getString(R.string.pass_do_not_match_error_msg));
+            etextConfirmPassword.requestFocus();
             return false;
         }
         return true;

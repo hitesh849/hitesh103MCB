@@ -27,7 +27,6 @@
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="@dimen/dim_6"
             android:gravity="center"
-
             android:orientation="horizontal" />
     </RelativeLayout>
 </LinearLayout>

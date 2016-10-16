@@ -143,14 +143,17 @@ public class TripFilter implements View.OnClickListener {
 
         if (TextUtils.isEmpty(filterData.fromLocation)) {
             autoCompFromTripFilter.setError("Can't be Empty");
+            autoCompFromTripFilter.requestFocus();
             return false;
         }
         if (TextUtils.isEmpty(filterData.toLocation)) {
             autoCompToTripFilter.setError("Can't be Empty");
+            autoCompToTripFilter.requestFocus();
             return false;
         }
         if (TextUtils.isEmpty(filterData.toDate)) {
             etTillDateTripFilter.setError("Can't be Empty");
+            etTillDateTripFilter.requestFocus();
             return false;
         }
         return true;

@@ -43,7 +43,7 @@ public class LoginActivity extends AbstractFragmentActivity implements View.OnCl
     protected void onCreatePost(Bundle savedInstanceState) {
         setContentView(R.layout.login);
         init();
-        tripTransporterData =(TripTransporterData)getIntent().getSerializableExtra("data");
+        tripTransporterData = (TripTransporterData) getIntent().getSerializableExtra("data");
     }
 
     private void init() {
@@ -54,7 +54,7 @@ public class LoginActivity extends AbstractFragmentActivity implements View.OnCl
         etEmailLogin = (EditText) findViewById(R.id.etEmailLogin);
         etPasswordLogin = (EditText) findViewById(R.id.etPasswordLogin);
         etEmailLogin.setText("lalit.sharma@byteclues.com");
-        txtForgetPasswordLogin.setText("123456");
+        etPasswordLogin.setText("123456");
         txtLogin.setOnClickListener(this);
         txtSignUp.setOnClickListener(this);
         txtForgetPasswordLogin.setOnClickListener(this);
@@ -77,7 +77,7 @@ public class LoginActivity extends AbstractFragmentActivity implements View.OnCl
                         saveUserData(userInfoData);
                         Intent intent = new Intent(this, MainActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        intent.putExtra("data",tripTransporterData);
+                        intent.putExtra("data", tripTransporterData);
                         startActivity(intent);
                     }
                 } else if (userInfoData.status.equals("Error")) {
@@ -162,13 +162,14 @@ public class LoginActivity extends AbstractFragmentActivity implements View.OnCl
 
     public boolean validation(String email, String password) {
         if (TextUtils.isEmpty(email)) {
-            etPasswordLogin.requestFocus();
-            etEmailLogin.setError("Can't be Empty");
+
+            etEmailLogin.setError(getString(R.string.can_not_be_empty));
+            etEmailLogin.requestFocus();
             return false;
         }
         if (TextUtils.isEmpty(password)) {
+            etPasswordLogin.setError(getString(R.string.can_not_be_empty));
             etPasswordLogin.requestFocus();
-            etPasswordLogin.setError("Can't be Empty");
             return false;
         }
         return true;

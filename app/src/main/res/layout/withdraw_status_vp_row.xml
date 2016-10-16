@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dim_8"
+        android:background="@drawable/rounded_white_bg"
+        android:orientation="vertical"
+        android:padding="@dimen/dim_8">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/rectangle_bottom_line_white_bg"
+            android:orientation="vertical"
+            android:padding="@dimen/dim_8">
+
+            <TextView
+                style="@style/text_semi_medium"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="@string/bank_name" />
+
+
+            <TextView
+                android:id="@+id/txtBankNameWithDraw"
+                style="@style/text_large"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="HDFC" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/rectangle_bottom_line_white_bg"
+            android:orientation="vertical"
+            android:padding="@dimen/dim_8">
+
+            <TextView
+                style="@style/text_semi_medium"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="@string/amount" />
+
+
+            <TextView
+                android:id="@+id/txtAmountWithDraw"
+                style="@style/text_large"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="30005" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/rectangle_bottom_line_white_bg"
+            android:orientation="vertical"
+            android:padding="@dimen/dim_8">
+
+            <TextView
+                style="@style/text_semi_medium"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="@string/ifsc_code" />
+
+
+            <TextView
+                android:id="@+id/txtIFSCCodeWithDraw"
+                style="@style/text_large"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="HDFC10005TC" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/rectangle_bottom_line_white_bg"
+            android:orientation="vertical"
+            android:padding="@dimen/dim_8">
+
+            <TextView
+                style="@style/text_semi_medium"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="@string/status" />
+
+
+            <TextView
+                android:id="@+id/txtStatusWithDraw"
+                style="@style/text_large"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="Request Sent" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/dim_50"
+            android:layout_weight="1"
+            android:background="@drawable/rectangle_bottom_line_white_bg"
+            android:orientation="vertical"
+            android:padding="@dimen/dim_8">
+
+            <TextView
+                style="@style/text_semi_medium"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="@string/processing_date" />
+
+
+            <TextView
+                android:id="@+id/txtProcessingDateWithDraw"
+                style="@style/text_large"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="24 JULY   |  12:35 AM" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>
