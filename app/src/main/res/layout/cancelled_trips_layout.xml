@@ -5,7 +5,7 @@
     android:background="@color/screen_bg"
     android:orientation="vertical">
 
-    <include layout="@layout/existing_parcel_search_filter" />
+    <include layout="@layout/existing_trip_search_filter" />
 
     <RelativeLayout
         android:layout_width="match_parent"

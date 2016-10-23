@@ -12,7 +12,9 @@ public class TripData implements Serializable {
     public String source;
     public String destination;
     public String dep_time;
+    public String d_time;
     public String arrival_time;
+    public String a_time;
     public String image;
     public String flight_no;
     public String pnr;

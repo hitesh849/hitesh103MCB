@@ -2,7 +2,6 @@ package com.app.mcb.viewControllers;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -15,11 +14,10 @@ import com.app.mcb.adapters.TripListStateWiseAdapter;
 import com.app.mcb.custom.AppHeaderView;
 import com.app.mcb.dao.AirportData;
 import com.app.mcb.dao.FilterData;
-import com.app.mcb.dao.TripData;
 import com.app.mcb.dao.TripTransporterData;
 import com.app.mcb.database.DatabaseMgr;
-import com.app.mcb.filters.TripFilter;
-import com.app.mcb.filters.TripListener;
+import com.app.mcb.filters.HomeFilter;
+import com.app.mcb.filters.CommonListener;
 import com.app.mcb.model.TripModel;
 
 import org.byteclues.lib.model.BasicModel;
@@ -32,7 +30,7 @@ import retrofit.RetrofitError;
 /**
  * Created by u on 9/15/2016.
  */
-public class TripListWithStateActivity extends AbstractFragmentActivity implements View.OnClickListener, TripListener {
+public class CommonListWithStateActivity extends AbstractFragmentActivity implements View.OnClickListener, CommonListener {
 
     private AppHeaderView appHeaderView;
     private RecyclerView rvTripHome;
@@ -50,7 +48,7 @@ public class TripListWithStateActivity extends AbstractFragmentActivity implemen
     private void init() {
         llTripListWithState = (LinearLayout) findViewById(R.id.llTripListWithState);
         appHeaderView = (AppHeaderView) findViewById(R.id.appHeaderView);
-        TripFilter.addFilterView(this, llTripListWithState, this);
+        HomeFilter.addFilterView(this, llTripListWithState, this);
         appHeaderView.imgBackHeaderArrow.setImageResource(R.mipmap.back);
         rvTripHome = (RecyclerView) findViewById(R.id.rvTripHome);
         llBecomeTransporter = (LinearLayout) findViewById(R.id.llBecomeTransporter);
@@ -98,7 +96,7 @@ public class TripListWithStateActivity extends AbstractFragmentActivity implemen
         if (id == R.id.llBackHeader) {
             onBackPressed();
         } else if (id == R.id.llHomeRowMain) {
-            Intent intent = new Intent(this, TripDetailsActivity.class);
+            Intent intent = new Intent(this, CommonDetailsActivity.class);
             Bundle bundle = new Bundle();
             bundle.putSerializable("KEY_DATA", tripTransporterData);
             intent.putExtra("KEY_BUNDLE", bundle);

@@ -9,18 +9,16 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.app.mcb.Utility.Util;
 import com.app.mcb.custom.AppHeaderView;
 import com.app.mcb.dao.TripTransporterData;
 import com.app.mcb.sharedPreferences.Config;
 import com.app.mcb.viewControllers.LoginActivity;
-import com.app.mcb.viewControllers.TripListWithAllStateFragment;
+import com.app.mcb.viewControllers.CommonListWithAllStateFragment;
 import com.app.mcb.viewControllers.dashboardFragments.DashBoardFragment;
 import com.app.mcb.viewControllers.dashboardFragments.MyProfileFragment;
 import com.app.mcb.viewControllers.dashboardFragments.MyWalletFragment;
 import com.app.mcb.viewControllers.dashboardFragments.ReceiverListFragment;
 import com.app.mcb.viewControllers.dashboardFragments.WithDrawFragment;
-import com.app.mcb.viewControllers.sender.AddParcelFragment;
 import com.app.mcb.viewControllers.sender.SenderHomeFragment;
 import com.app.mcb.viewControllers.transporter.TransporterHomeFragment;
 
@@ -68,7 +66,7 @@ public class MainActivity extends AbstractFragmentActivity implements View.OnCli
         } else {
             llDashBoardDrawer.setVisibility(View.GONE);
             llLoginMain.setVisibility(View.VISIBLE);
-            abstractFragment = new TripListWithAllStateFragment();
+            abstractFragment = new CommonListWithAllStateFragment();
         }
         getSupportFragmentManager().beginTransaction().add(R.id.fmHomeContainer, abstractFragment, "HomeFragment").commit();
 

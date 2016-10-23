@@ -17,11 +17,10 @@ import com.app.mcb.Utility.Constants;
 import com.app.mcb.Utility.Util;
 import com.app.mcb.adapters.TripListCommonAdapter;
 import com.app.mcb.adapters.TripListStateWiseAdapter;
-import com.app.mcb.custom.ProgressDialog;
 import com.app.mcb.dao.FilterData;
 import com.app.mcb.dao.TripTransporterData;
-import com.app.mcb.filters.TripFilter;
-import com.app.mcb.filters.TripListener;
+import com.app.mcb.filters.HomeFilter;
+import com.app.mcb.filters.CommonListener;
 import com.app.mcb.model.TripModel;
 
 import org.byteclues.lib.model.BasicModel;
@@ -34,7 +33,7 @@ import retrofit.RetrofitError;
 /**
  * Created by Hitesh kumawat on 14-09-2016.
  */
-public  class TripListWithAllStateFragment extends AbstractFragment implements View.OnClickListener,TripListener {
+public  class CommonListWithAllStateFragment extends AbstractFragment implements View.OnClickListener,CommonListener {
 
     private RecyclerView rvTripHome;
     private LinearLayout llBecomeTransporter;
@@ -60,7 +59,7 @@ public  class TripListWithAllStateFragment extends AbstractFragment implements V
         llBecomeTransporter = (LinearLayout) rootView.findViewById(R.id.llBecomeTransporter);
         llHomeFragmentMain = (LinearLayout) rootView.findViewById(R.id.llHomeFragmentMain);
         llBecomeTransporter.setOnClickListener(this);
-        TripFilter.addFilterView(getActivity(),rootView,this);
+        HomeFilter.addFilterView(getActivity(),rootView,this);
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         rvTripHome.setLayoutManager(llm);
@@ -108,7 +107,7 @@ public  class TripListWithAllStateFragment extends AbstractFragment implements V
     public void onClick(View view) {
         int id = view.getId();
         if (id == R.id.txtViewAllStateRow) {
-            Intent intent = new Intent(getActivity(), TripListWithStateActivity.class);
+            Intent intent = new Intent(getActivity(), CommonListWithStateActivity.class);
             startActivity(intent);
         } else if (id == R.id.llBecomeTransporter) {
             Intent intent = new Intent(getActivity(), SignUpActivity.class);
@@ -116,7 +115,7 @@ public  class TripListWithAllStateFragment extends AbstractFragment implements V
         }
         else if (id == R.id.llHomeRowMain) {
 
-            startActivity(new Intent(getActivity(), TripDetailsActivity.class));
+            startActivity(new Intent(getActivity(), CommonDetailsActivity.class));
         }
     }
 

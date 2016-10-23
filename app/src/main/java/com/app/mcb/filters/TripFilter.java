@@ -1,11 +1,10 @@
 package com.app.mcb.filters;
 
 import android.content.Context;
-import android.support.design.widget.TextInputLayout;
-import android.text.TextUtils;
+import android.support.v7.widget.PopupMenu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -13,109 +12,112 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.app.mcb.R;
+import com.app.mcb.Utility.Constants;
 import com.app.mcb.Utility.Util;
-import com.app.mcb.dao.AirportData;
 import com.app.mcb.dao.FilterData;
-import com.app.mcb.database.DatabaseMgr;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import org.byteclues.lib.view.AbstractFragmentActivity;
 
 import java.util.Calendar;
-import java.util.List;
 
 /**
- * Created by Hitesh Kumawat on 9/21/2016.
+ * Created by Hitesh on 11-10-2016.
  */
 public class TripFilter implements View.OnClickListener {
-    private AutoCompleteTextView autoCompFromTripFilter;
-    private AutoCompleteTextView autoCompToTripFilter;
-    private TextInputLayout textInputLaytToTripFilter;
-    private EditText etTillDateTripFilter;
-    private ImageView imgCalenderTripFilter;
-    private LinearLayout llSearchTripFilter;
-    private TextView txtToTripFilter;
-    private TextView txtFromTripFilter;
-    private TripListener tripListener;
+
+    private CommonListener commonListener;
     private Context context;
+    private EditText etDepartureDateFilter;
+    private AutoCompleteTextView autoCompTripIdFilter;
+    private ImageView imgSearchTripFilter;
+    private LinearLayout llStatusFilter;
+    private ImageView imgCalenderTripFilter;
     private DatePickerDialog datePickerDialog;
+    private TextView txtStatusFilter;
+    private FilterData filterData = new FilterData();
 
-
-    public static TripFilter addFilterView(Context context, View view, TripListener tripListener) {
-        return new TripFilter(context, view, tripListener);
+    public static TripFilter addFilterView(Context context, View view, CommonListener commonListener) {
+        return new TripFilter(context, view, commonListener);
     }
 
-    public TripFilter(Context context, View view, TripListener tripListener) {
-        this.tripListener = tripListener;
+    public TripFilter(Context context, View view, CommonListener commonListener) {
+        this.commonListener = commonListener;
         this.context = context;
         init(view);
-        setAdapter();
     }
 
     private void init(View view) {
-        autoCompFromTripFilter = (AutoCompleteTextView) view.findViewById(R.id.autoCompFromTripFilter);
-        autoCompToTripFilter = (AutoCompleteTextView) view.findViewById(R.id.autoCompToTripFilter);
-        textInputLaytToTripFilter = (TextInputLayout) view.findViewById(R.id.textInputLaytToTripFilter);
-        etTillDateTripFilter = (EditText) view.findViewById(R.id.etTillDateTripFilter);
+        etDepartureDateFilter = (EditText) view.findViewById(R.id.etDepartureDateFilter);
+        autoCompTripIdFilter = (AutoCompleteTextView) view.findViewById(R.id.autoCompTripIdFilter);
+        imgSearchTripFilter = (ImageView) view.findViewById(R.id.imgSearchTripFilter);
+        llStatusFilter = (LinearLayout) view.findViewById(R.id.llStatusFilter);
         imgCalenderTripFilter = (ImageView) view.findViewById(R.id.imgCalenderTripFilter);
-        llSearchTripFilter = (LinearLayout) view.findViewById(R.id.llSearchTripFilter);
-        txtToTripFilter = (TextView) view.findViewById(R.id.txtToTripFilter);
-        txtFromTripFilter = (TextView) view.findViewById(R.id.txtFromTripFilter);
-        llSearchTripFilter.setOnClickListener(this);
+        txtStatusFilter = (TextView) view.findViewById(R.id.txtStatusFilter);
+        llStatusFilter.setOnClickListener(this);
         imgCalenderTripFilter.setOnClickListener(this);
-
-        autoCompFromTripFilter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
-                AirportData airportData = ((AirportData) parent.getItemAtPosition(position));
-                txtFromTripFilter.setText(airportData.location);
-                if (airportData.code != null && airportData.code.length() > 0)
-                    autoCompFromTripFilter.setText(airportData.code);
-                else {
-                    String code[] = airportData.location.split(" ");
-                    autoCompFromTripFilter.setText(code[0]);
-                }
-            }
-        });
-
-        autoCompToTripFilter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
-                AirportData airportData = ((AirportData) parent.getItemAtPosition(position));
-                txtToTripFilter.setText(airportData.location);
-                if (airportData.code != null && airportData.code.length() > 0)
-                    autoCompToTripFilter.setText(airportData.code);
-                else {
-                    String code[] = airportData.location.split(" ");
-                    autoCompToTripFilter.setText(code[0]);
-                }
-            }
-        });
-    }
-
-    private void setAdapter() {
-        List<AirportData> airportDatas = DatabaseMgr.getInstance(context).getAirportList();
-        ArrayAdapter arrayAdapter = new ArrayAdapter(context, android.R.layout.simple_list_item_1, airportDatas);
-        autoCompFromTripFilter.setDropDownWidth((int) (context.getResources().getDisplayMetrics().widthPixels / 1.5));
-        autoCompToTripFilter.setDropDownWidth((int) (context.getResources().getDisplayMetrics().widthPixels / 1.5));
-        autoCompFromTripFilter.setAdapter(arrayAdapter);
-        autoCompToTripFilter.setAdapter(arrayAdapter);
+        imgSearchTripFilter.setOnClickListener(this);
     }
 
     @Override
-    public void onClick(View v) {
-        int id = v.getId();
-        if (id == R.id.llSearchTripFilter) {
-            FilterData filterData = new FilterData();
-            filterData.fromLocation = txtFromTripFilter.getText().toString();
-            filterData.toLocation = txtToTripFilter.getText().toString();
-            filterData.toDate = etTillDateTripFilter.getText().toString();
-            filterData.fromDate = Util.getCurrentDate();
-            if (filterValidation(filterData)) {
-                tripListener.filterData(filterData);
-            }
-        } else if (id == R.id.imgCalenderTripFilter) {
+    public void onClick(View view) {
+        int id = view.getId();
+        if (id == R.id.imgCalenderTripFilter) {
             showCalendar();
+        } else if (id == R.id.llStatusFilter) {
+            PopupMenu popup = new PopupMenu(context, view);
+            MenuInflater inflater = popup.getMenuInflater();
+            inflater.inflate(R.menu.trip_status, popup.getMenu());
+            popup.show();
+            popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    int id = item.getItemId();
+                    switch (id) {
+                        case R.id.action_trip_pending:
+                            txtStatusFilter.setText(context.getResources().getString(R.string.pending));
+                            txtStatusFilter.setTag(Constants.TripPending);
+                            break;
+
+                        case R.id.action_trip_approved:
+                            txtStatusFilter.setText(context.getResources().getString(R.string.approved));
+                            txtStatusFilter.setTag(Constants.TripApproved);
+                            break;
+                        case R.id.request_sent:
+                            txtStatusFilter.setText(context.getResources().getString(R.string.booking_request_sent));
+                            txtStatusFilter.setTag(Constants.TripRequestSent);
+                            break;
+                        case R.id.action_trip_booked:
+                            txtStatusFilter.setText(context.getResources().getString(R.string.booked));
+                            txtStatusFilter.setTag(Constants.TripBooked);
+                            break;
+
+                        case R.id.action_trip_rejected:
+                            txtStatusFilter.setText(context.getResources().getString(R.string.rejected));
+                            txtStatusFilter.setTag(Constants.TripRejected);
+                            break;
+                        case R.id.action_trip_delivered:
+                            txtStatusFilter.setText(context.getResources().getString(R.string.delivered));
+                            txtStatusFilter.setTag(Constants.TripDelivered);
+                            break;
+                        case R.id.action_trip_complete:
+                            txtStatusFilter.setText(context.getResources().getString(R.string.complete));
+                            txtStatusFilter.setTag(Constants.TripComplete);
+                            break;
+                        case R.id.action_trip_on_hold:
+                            txtStatusFilter.setText(context.getResources().getString(R.string.on_hold));
+                            txtStatusFilter.setTag(Constants.TripHold);
+                            break;
+                    }
+                    return false;
+                }
+            });
+        } else if (id == R.id.imgSearchTripFilter) {
+
+            filterData.tripId = autoCompTripIdFilter.getText().toString();
+            filterData.tripStatus = (String) txtStatusFilter.getTag();
+            commonListener.filterData(filterData);
+
         }
     }
 
@@ -128,8 +130,10 @@ public class TripFilter implements View.OnClickListener {
         datePickerDialog = DatePickerDialog.newInstance(new DatePickerDialog.OnDateSetListener() {
                                                             @Override
                                                             public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
-                                                                etTillDateTripFilter.setText(Util.getDDMMYYYYFormat(dayOfMonth + "/" + (monthOfYear+1) + "/" + year, "dd/MM/yyyy"));
 
+                                                                String date = Util.getDDMMYYYYFormat(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year, "dd/MM/yyyy");
+                                                                etDepartureDateFilter.setText(date);
+                                                                filterData.departure_date = date;
                                                             }
                                                         }
                 , mYear, mMonth, mDay
@@ -139,23 +143,4 @@ public class TripFilter implements View.OnClickListener {
         ;
     }
 
-    private boolean filterValidation(FilterData filterData) {
-
-        if (TextUtils.isEmpty(filterData.fromLocation)) {
-            autoCompFromTripFilter.setError("Can't be Empty");
-            autoCompFromTripFilter.requestFocus();
-            return false;
-        }
-        if (TextUtils.isEmpty(filterData.toLocation)) {
-            autoCompToTripFilter.setError("Can't be Empty");
-            autoCompToTripFilter.requestFocus();
-            return false;
-        }
-        if (TextUtils.isEmpty(filterData.toDate)) {
-            etTillDateTripFilter.setError("Can't be Empty");
-            etTillDateTripFilter.requestFocus();
-            return false;
-        }
-        return true;
-    }
 }

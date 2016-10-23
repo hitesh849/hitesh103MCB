@@ -8,20 +8,29 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.app.mcb.MainActivity;
 import com.app.mcb.R;
 import com.app.mcb.Utility.Constants;
 import com.app.mcb.Utility.Util;
 import com.app.mcb.adapters.MyTripListVPAdapter;
+import com.app.mcb.adapters.ParcelsListVPAdapter;
 import com.app.mcb.dao.CommonResponseData;
+import com.app.mcb.dao.FilterData;
 import com.app.mcb.dao.MyTripsData;
+import com.app.mcb.dao.ParcelDetailsData;
+import com.app.mcb.dao.TripData;
+import com.app.mcb.filters.CommonListener;
+import com.app.mcb.filters.TripFilter;
 import com.app.mcb.model.MyTripsModel;
 import com.app.mcb.sharedPreferences.Config;
+import com.app.mcb.viewControllers.sender.AddParcelFragment;
 
 import org.byteclues.lib.model.BasicModel;
 import org.byteclues.lib.view.AbstractFragment;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Observable;
 
@@ -30,13 +39,14 @@ import retrofit.RetrofitError;
 /**
  * Created by Hitesh kumawat on 19-09-2016.
  */
-public class MyTripList extends AbstractFragment implements View.OnClickListener {
+public class MyTripList extends AbstractFragment implements View.OnClickListener, CommonListener {
 
     private ViewPager vpMyList;
     private LinearLayout llCountDotsMain;
     private MyTripsModel myTripsModel = new MyTripsModel();
     private MyTripListVPAdapter myTripListVPAdapter;
-
+    private RelativeLayout rlMyTripMain;
+    ArrayList<MyTripsData> tripListMain = new ArrayList<MyTripsData>();
 
     @Override
     protected View onCreateViewPost(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -47,8 +57,10 @@ public class MyTripList extends AbstractFragment implements View.OnClickListener
 
     private void init(View view) {
         ((MainActivity) getActivity()).setHeader(getResources().getString(R.string.my_trip));
+        rlMyTripMain = (RelativeLayout) view.findViewById(R.id.rlMyTripMain);
         vpMyList = (ViewPager) view.findViewById(R.id.vpMyList);
         llCountDotsMain = (LinearLayout) view.findViewById(R.id.llCountDotsMain);
+        TripFilter.addFilterView(getActivity(), view, this);
         viewPagerChangeListener();
         drawPageSelectionIndicators(0);
         getMyTripsList();
@@ -65,7 +77,8 @@ public class MyTripList extends AbstractFragment implements View.OnClickListener
         if (o instanceof MyTripsData) {
             MyTripsData myTripsData = ((MyTripsData) o);
             if (Constants.RESPONSE_SUCCESS_MSG.equals(myTripsData.status)) {
-                myTripListVPAdapter = new MyTripListVPAdapter(getActivity(), this, myTripsData.response);
+                tripListMain = myTripsData.response;
+                myTripListVPAdapter = new MyTripListVPAdapter(getActivity(), this, tripListMain);
                 vpMyList.setAdapter(myTripListVPAdapter);
             }
         } else if (o instanceof CommonResponseData) {
@@ -74,7 +87,7 @@ public class MyTripList extends AbstractFragment implements View.OnClickListener
                 getMyTripsList();
             }
         } else if (o instanceof RetrofitError) {
-
+            Util.showOKSnakBar(rlMyTripMain, getResources().getString(R.string.pls_try_again));
         }
 
     }
@@ -101,6 +114,14 @@ public class MyTripList extends AbstractFragment implements View.OnClickListener
                 requestData.put("reason", "");
                 cancelTrip(requestData);
             }
+        } else if (id == R.id.imgEditTrip) {
+            MyTripsData myTripsData = (MyTripsData) view.getTag();
+            AddTripFragment addTripFragment = new AddTripFragment();
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("tripData", myTripsData);
+            addTripFragment.setArguments(bundle);
+
+            Util.replaceFragment(getActivity(), R.id.fmContainerTransporterHomeMain, addTripFragment);
         }
     }
 
@@ -159,5 +180,16 @@ public class MyTripList extends AbstractFragment implements View.OnClickListener
             params.setMargins(5, 0, 5, 0);
             llCountDotsMain.addView(dots[i], params);
         }
+    }
+
+    @Override
+    public void filterData(FilterData filterData) {
+        ArrayList<MyTripsData> filterList = new ArrayList<MyTripsData>();
+        for (MyTripsData myTripsData : tripListMain) {
+            if (myTripsData.TripID.equalsIgnoreCase(filterData.tripId) || Util.getDateFromDateTimeFormat(myTripsData.dep_time).equalsIgnoreCase(filterData.departure_date) || myTripsData.status.equalsIgnoreCase(filterData.tripStatus)) {
+                filterList.add(myTripsData);
+            }
+        }
+        vpMyList.setAdapter(new MyTripListVPAdapter(getActivity(), this, filterList));
     }
 }

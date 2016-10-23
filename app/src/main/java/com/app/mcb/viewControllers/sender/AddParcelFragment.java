@@ -25,15 +25,14 @@ import com.app.mcb.Utility.Constants;
 import com.app.mcb.Utility.Util;
 import com.app.mcb.dao.AddParcelData;
 import com.app.mcb.dao.AirportData;
+import com.app.mcb.dao.CommonResponseData;
 import com.app.mcb.dao.FilterData;
 import com.app.mcb.dao.ParcelDetailsData;
-import com.app.mcb.dao.ParcelListData;
 import com.app.mcb.dao.TripTransporterData;
 import com.app.mcb.dao.UserInfoData;
 import com.app.mcb.database.DatabaseMgr;
-import com.app.mcb.filters.ParcelFilter;
 import com.app.mcb.filters.TransporterFilter;
-import com.app.mcb.filters.TripListener;
+import com.app.mcb.filters.CommonListener;
 import com.app.mcb.model.AddParcelModel;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
@@ -50,7 +49,7 @@ import retrofit.RetrofitError;
 /**
  * Created by Hitesh kumawat on 18-09-2016.
  */
-public class AddParcelFragment extends AbstractFragment implements View.OnClickListener, TripListener {
+public class AddParcelFragment extends AbstractFragment implements View.OnClickListener, CommonListener {
 
     private ViewPager vpParcelList;
     private LinearLayout llReceiverContainerMain;
@@ -285,7 +284,7 @@ public class AddParcelFragment extends AbstractFragment implements View.OnClickL
                     parcelsListFragment.setArguments(bundle);
                     Util.replaceFragment(getActivity(), R.id.fmContainerSenderHomeMain, parcelsListFragment);
                 }
-            } else if (data != null && data instanceof RetrofitError) {
+            }else if (data != null && data instanceof RetrofitError) {
                 Util.showOKSnakBar(llAddParcelMain, getResources().getString(R.string.pls_try_again));
             }
         } catch (Exception ex) {

@@ -10,7 +10,7 @@
         android:title="@string/approved" />
 
     <item
-        android:id="@+id/action_trip_booking_request_sent"
+        android:id="@+id/request_sent"
         android:title="@string/booking_request_sent" />
 
     <item

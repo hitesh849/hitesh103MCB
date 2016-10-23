@@ -14,12 +14,17 @@ import com.app.mcb.R;
 import com.app.mcb.Utility.Constants;
 import com.app.mcb.Utility.Util;
 import com.app.mcb.adapters.CancelledTripsAdapter;
+import com.app.mcb.adapters.MyTripListVPAdapter;
+import com.app.mcb.dao.FilterData;
 import com.app.mcb.dao.MyTripsData;
+import com.app.mcb.filters.CommonListener;
+import com.app.mcb.filters.TripFilter;
 import com.app.mcb.model.CancelledTripsModel;
 
 import org.byteclues.lib.model.BasicModel;
 import org.byteclues.lib.view.AbstractFragment;
 
+import java.util.ArrayList;
 import java.util.Observable;
 
 import retrofit.RetrofitError;
@@ -27,12 +32,12 @@ import retrofit.RetrofitError;
 /**
  * Created by Hitesh kumawat on 19-09-2016.
  */
-public class CancelledTrips extends AbstractFragment implements View.OnClickListener {
+public class CancelledTrips extends AbstractFragment implements View.OnClickListener, CommonListener {
     private ViewPager vpCancelledTripsList;
     private LinearLayout llCountDotsMain;
     private CancelledTripsModel cancelledTripsModel = new CancelledTripsModel();
     private CancelledTripsAdapter cancelledTripsAdapter;
-
+    private ArrayList<MyTripsData> tripListMain = new ArrayList<MyTripsData>();
 
     @Override
     protected View onCreateViewPost(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -45,6 +50,7 @@ public class CancelledTrips extends AbstractFragment implements View.OnClickList
         ((MainActivity) getActivity()).setHeader(getResources().getString(R.string.my_trip));
         vpCancelledTripsList = (ViewPager) view.findViewById(R.id.vpCancelledTripsList);
         llCountDotsMain = (LinearLayout) view.findViewById(R.id.llCountDotsMain);
+        TripFilter.addFilterView(getActivity(), view, this);
         viewPagerChangeListener();
         drawPageSelectionIndicators(0);
         getCancelledTripsList();
@@ -61,7 +67,8 @@ public class CancelledTrips extends AbstractFragment implements View.OnClickList
         if (o instanceof MyTripsData) {
             MyTripsData myTripsData = ((MyTripsData) o);
             if (Constants.RESPONSE_SUCCESS_MSG.equals(myTripsData.status)) {
-                cancelledTripsAdapter = new CancelledTripsAdapter(getActivity(), this, myTripsData.response);
+                tripListMain = myTripsData.response;
+                cancelledTripsAdapter = new CancelledTripsAdapter(getActivity(), this, tripListMain);
                 vpCancelledTripsList.setAdapter(cancelledTripsAdapter);
             }
         } else if (o instanceof RetrofitError) {
@@ -87,7 +94,6 @@ public class CancelledTrips extends AbstractFragment implements View.OnClickList
         vpCancelledTripsList.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
             }
 
             @Override
@@ -113,7 +119,6 @@ public class CancelledTrips extends AbstractFragment implements View.OnClickList
         }
         for (int i = 0; i < 3; i++) {
 
-
             dots[i] = new ImageView(getActivity());
             if (i == mPosition)
                 dots[i].setImageDrawable(getResources().getDrawable(R.drawable.item_selected));
@@ -129,5 +134,16 @@ public class CancelledTrips extends AbstractFragment implements View.OnClickList
             params.setMargins(5, 0, 5, 0);
             llCountDotsMain.addView(dots[i], params);
         }
+    }
+
+    @Override
+    public void filterData(FilterData filterData) {
+        ArrayList<MyTripsData> filterList = new ArrayList<MyTripsData>();
+        for (MyTripsData myTripsData : tripListMain) {
+            if (myTripsData.TripID.equalsIgnoreCase(filterData.tripId) || Util.getDateFromDateTimeFormat(myTripsData.dep_time).equalsIgnoreCase(filterData.departure_date) || myTripsData.status.equalsIgnoreCase(filterData.tripStatus)) {
+                filterList.add(myTripsData);
+            }
+        }
+        vpCancelledTripsList.setAdapter(new MyTripListVPAdapter(getActivity(), this, filterList));
     }
 }

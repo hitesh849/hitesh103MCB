@@ -1,8 +1,10 @@
 package com.app.mcb.retrointerface;
 
 import com.app.mcb.dao.AddParcelData;
+import com.app.mcb.dao.AddTrip;
 import com.app.mcb.dao.AirportData;
 import com.app.mcb.dao.ChangePasswordData;
+import com.app.mcb.dao.CommonResponseData;
 import com.app.mcb.dao.ForgetPasswordData;
 import com.app.mcb.dao.MyTripsData;
 import com.app.mcb.dao.MyWalletData;
@@ -122,6 +124,11 @@ public interface RestInterface {
 
     @Headers({"Content-Type:application/json"})
     @POST("/addtrip")
-    public void addTrip(@Body HashMap<String, Object> request, Callback<JsonElement> cb);
+    public void addTrip(@Body HashMap<String, String> request, Callback<CommonResponseData> cb);
+
+
+    @Headers({"Content-Type:application/json"})
+    @POST("/updatetrip")
+    public void updateTrip(@Body HashMap<String, String> request, Callback<AddTrip> cb);
 
 }

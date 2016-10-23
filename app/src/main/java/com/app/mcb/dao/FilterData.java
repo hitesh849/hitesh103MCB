@@ -10,6 +10,9 @@ public class FilterData {
     public String toLocation;
     public String type;
     public String parcelId;
+    public String tripId;
     public String tillDate;
+    public String departure_date;
     public String parcelStatus;
+    public String tripStatus;
 }

@@ -74,6 +74,7 @@
     <string name="receiver_details">Receiver Details</string>
     <string name="flight_no">Flight No.</string>
     <string name="departure">Departure</string>
+    <string name="departure_date">Departure Date</string>
     <string name="arrival">Arrival</string>
     <string name="type">Type</string>
     <string name="select_from">Select From</string>
@@ -150,12 +151,15 @@
     <string name="parcel_id_created">Parcel ID Created</string>
     <string name="pending">Pending</string>
     <string name="approved">Approved</string>
-    <string name="booking_request_sent">Booking request sent</string>
+    <string name="booking_request_sent">Request Sent</string>
     <string name="booked">Booked</string>
     <string name="rejected">Rejected</string>
     <string name="delivered">Delivered</string>
     <string name="complete">Complete</string>
     <string name="on_hold">On hold</string>
-
-
+    <string name="departure_date_can_not_empty">Departure date can\'t be empty.</string>
+    <string name="departure_time_can_not_empty">Departure time can\'t be empty.</string>
+    <string name="arrival_date_can_not_empty">Arrival date can\'t be empty.</string>
+    <string name="arrival_time_can_not_empty">Arrival time can\'t be empty.</string>
+    <string name="trip_add_success">Trip Created Successfully Sent for admin Approval.</string>
 </resources>

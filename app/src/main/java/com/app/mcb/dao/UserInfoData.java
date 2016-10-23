@@ -1,11 +1,12 @@
 package com.app.mcb.dao;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by Hitesh on 28-09-2016.
  */
-public class UserInfoData
+public class UserInfoData implements Serializable
 {
     public String id;
     public String username;
@@ -43,6 +44,6 @@ public class UserInfoData
     public String errorMessage;
     public String message;
     public String userType;
-    public ArrayList<UserInfoData>response;
+    public ArrayList<UserInfoData> response;
 
 }

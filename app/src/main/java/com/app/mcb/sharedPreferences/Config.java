@@ -70,7 +70,7 @@ public class Config {
     }
 
     public static String getUserId() {
-        return preferences.getString(USER_ID, "11354");
+        return preferences.getString(USER_ID, null);
     }
 
     public static void setUserName(String userName) {

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.PopupMenu;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.View;
@@ -20,7 +21,6 @@ import com.app.mcb.dao.ParcelDetailsData;
 import com.app.mcb.dao.ParcelListData;
 import com.app.mcb.filters.ParcelFilter;
 import com.app.mcb.filters.ParcelFilterListener;
-import com.app.mcb.filters.TripFilter;
 import com.app.mcb.model.ParcelListModel;
 
 import org.byteclues.lib.model.BasicModel;
@@ -51,7 +51,6 @@ public class ParcelsListFragment extends AbstractFragment implements View.OnClic
         getParcelList();
         return view;
     }
-
 
     private void init(View view) {
         ((MainActivity) getActivity()).setHeader(getResources().getString(R.string.list_of_parcels));
@@ -225,12 +224,17 @@ public class ParcelsListFragment extends AbstractFragment implements View.OnClic
 
     @Override
     public void filterData(FilterData filterData) {
-        ArrayList<ParcelDetailsData> filterList = new ArrayList<ParcelDetailsData>();
-        for (ParcelDetailsData parcelDetailsData : parcelListMain) {
-            if (parcelDetailsData.ParcelID.equals(filterData.parcelId) || parcelDetailsData.till_date.equals(filterData.tillDate)) {
-                filterList.add(parcelDetailsData);
+
+        if (TextUtils.isEmpty(filterData.parcelId) && TextUtils.isEmpty(filterData.tillDate) && TextUtils.isEmpty(filterData.parcelStatus)) {
+            Util.showSnakBar(llParcelListMain, getResources().getString(R.string.filter_validation));
+        } else {
+            ArrayList<ParcelDetailsData> filterList = new ArrayList<ParcelDetailsData>();
+            for (ParcelDetailsData parcelDetailsData : parcelListMain) {
+                if (parcelDetailsData.ParcelID.equalsIgnoreCase(filterData.parcelId) || parcelDetailsData.till_date.equalsIgnoreCase(filterData.tillDate) || parcelDetailsData.status.equalsIgnoreCase(filterData.parcelStatus)) {
+                    filterList.add(parcelDetailsData);
+                }
             }
+            vpParcelList.setAdapter(new ParcelsListVPAdapter(getActivity(), filterList, this));
         }
-        vpParcelList.setAdapter(new ParcelsListVPAdapter(getActivity(), filterList, this));
     }
 }

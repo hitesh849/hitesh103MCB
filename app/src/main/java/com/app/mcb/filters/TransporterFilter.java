@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -26,7 +25,7 @@ import java.util.List;
  */
 public class TransporterFilter implements View.OnClickListener {
 
-    private TripListener tripListener;
+    private CommonListener commonListener;
     private Context context;
     private DatePickerDialog datePickerDialog;
     private ImageView imgToCalenderTransporterFilter;
@@ -38,12 +37,12 @@ public class TransporterFilter implements View.OnClickListener {
     private LinearLayout llSearchTransporterFilter;
     private FilterData filterData = new FilterData();
 
-    public static TransporterFilter addFilterView(Context context, View view, TripListener tripListener) {
-        return new TransporterFilter(context, view, tripListener);
+    public static TransporterFilter addFilterView(Context context, View view, CommonListener commonListener) {
+        return new TransporterFilter(context, view, commonListener);
     }
 
-    public TransporterFilter(Context context, View view, TripListener tripListener) {
-        this.tripListener = tripListener;
+    public TransporterFilter(Context context, View view, CommonListener commonListener) {
+        this.commonListener = commonListener;
         this.context = context;
         init(view);
         setAdapter();

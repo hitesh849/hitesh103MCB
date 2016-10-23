@@ -5,6 +5,7 @@
     android:fillViewport="true">
 
     <LinearLayout
+        android:id="@+id/llAddTripMain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -21,11 +22,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dim_5"
+                android:gravity="bottom"
                 android:orientation="horizontal">
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/dim_52"
+                    android:layout_height="wrap_content"
                     android:layout_margin="@dimen/dim_5"
                     android:layout_weight="1"
                     android:textColorHint="@color/black">
@@ -45,8 +47,8 @@
 
 
                 <ImageView
-                    android:layout_width="@dimen/dim_52"
-                    android:layout_height="@dimen/dim_52"
+                    android:layout_width="@dimen/dim_42"
+                    android:layout_height="@dimen/dim_42"
                     android:src="@mipmap/takeoff" />
 
             </LinearLayout>
@@ -60,11 +62,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dim_5"
+                android:gravity="bottom"
                 android:orientation="horizontal">
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/dim_52"
+                    android:layout_height="wrap_content"
                     android:layout_margin="@dimen/dim_5"
                     android:layout_weight="1"
                     android:textColorHint="@color/black">
@@ -84,8 +87,8 @@
 
 
                 <ImageView
-                    android:layout_width="@dimen/dim_52"
-                    android:layout_height="@dimen/dim_52"
+                    android:layout_width="@dimen/dim_42"
+                    android:layout_height="@dimen/dim_42"
                     android:src="@mipmap/destination" />
 
             </LinearLayout>
@@ -113,8 +116,8 @@
 
                 <ImageView
                     android:id="@+id/imgUploadTicket"
-                    android:layout_width="@dimen/dim_52"
-                    android:layout_height="@dimen/dim_52"
+                    android:layout_width="@dimen/dim_42"
+                    android:layout_height="@dimen/dim_42"
                     android:src="@mipmap/uploadticket" />
 
             </LinearLayout>
@@ -157,9 +160,11 @@
                         <TextView
                             android:id="@+id/txtDateDeparture"
                             style="@style/text_small"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/dim_4"
+                            android:layout_weight="1"
+                            android:gravity="center"
                             android:hint="@string/departure"
                             android:textColorHint="@color/black" />
 
@@ -173,9 +178,11 @@
                         <TextView
                             android:id="@+id/txtTimeDeparture"
                             style="@style/text_small"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/dim_4"
+                            android:layout_weight=".8"
+                            android:gravity="center"
                             android:hint="9:30 AM"
                             android:textColorHint="@color/black" />
 
@@ -209,9 +216,11 @@
                         <TextView
                             android:id="@+id/txtDateArrival"
                             style="@style/text_small"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/dim_4"
+                            android:layout_weight="1"
+                            android:gravity="center"
                             android:text="@string/arrival"
                             android:textColorHint="@color/black" />
 
@@ -225,9 +234,11 @@
                         <TextView
                             android:id="@+id/txtTimeArrival"
                             style="@style/text_small"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/dim_4"
+                            android:layout_weight=".8"
+                            android:gravity="center"
                             android:hint="9:30 AM"
                             android:textColorHint="@color/black" />
 
@@ -262,10 +273,10 @@
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/dim_52"
-                        android:layout_marginRight="@dimen/dim_5"
+                        android:layout_height="@dimen/dim_42"
                         android:layout_weight="1"
                         android:background="@null"
+                        android:padding="@dimen/dim_5"
                         android:orientation="vertical"
                         android:textColorHint="@color/black">
 
@@ -298,8 +309,9 @@
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/dim_52"
+                        android:layout_height="@dimen/dim_42"
                         android:layout_weight="1"
+                        android:padding="@dimen/dim_5"
                         android:textColorHint="@color/black">
 
                         <EditText
@@ -328,8 +340,8 @@
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dim_52"
-                android:layout_margin="@dimen/dim_5"
+                android:layout_height="@dimen/dim_42"
+                android:padding="@dimen/dim_5"
                 android:textColorHint="@color/black">
 
                 <EditText
@@ -366,7 +378,7 @@
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dim_52"
+                android:layout_height="@dimen/dim_42"
                 android:layout_margin="@dimen/dim_5"
                 android:textColorHint="@color/black">
 

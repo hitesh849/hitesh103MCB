@@ -214,7 +214,7 @@ public class Util {
         try {
             if (view != null && msg != null) {
                 retrySnackbar = Snackbar
-                        .make(view, msg, Snackbar.LENGTH_LONG);
+                        .make(view, msg, Snackbar.LENGTH_SHORT);
                 ViewGroup group = (ViewGroup) retrySnackbar.getView();
                 group.setBackgroundColor(Env.appContext.getResources().getColor(R.color.trans_blue));
                 View sbView = retrySnackbar.getView();

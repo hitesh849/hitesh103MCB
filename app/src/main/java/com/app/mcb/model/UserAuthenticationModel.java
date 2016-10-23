@@ -1,6 +1,7 @@
 package com.app.mcb.model;
 
 import android.content.Context;
+import android.webkit.JsPromptResult;
 
 import com.app.mcb.Utility.Constants;
 import com.app.mcb.dao.AirportData;
@@ -9,8 +10,10 @@ import com.app.mcb.dao.ForgetPasswordData;
 import com.app.mcb.dao.UserInfoData;
 import com.app.mcb.database.DatabaseMgr;
 import com.app.mcb.retrointerface.RestInterface;
+import com.google.gson.JsonElement;
 
 import org.byteclues.lib.model.BasicModel;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 
@@ -55,8 +58,9 @@ public class UserAuthenticationModel extends BasicModel {
             response.put("email", userInfoData.email);
             response.put("countrycode", userInfoData.country_code);
             response.put("mobilenumber", userInfoData.mobile);
-            response.put("password", userInfoData.passportno);
+            response.put("password", userInfoData.password);
             response.put("passwordRepeat", userInfoData.password);
+            response.toString();
             restInterface.registerUser(response, new Callback<UserInfoData>() {
                 @Override
                 public void success(UserInfoData userInfoData, Response response) {

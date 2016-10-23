@@ -78,6 +78,7 @@ public class CancelledTripsAdapter extends PagerAdapter {
         txtDestinationDateMyTripsRow.setText(Util.getDDMMYYYYFormat(myTripsData.arrival_time, "yyyy-MM-dd HH:mm:ss"));
         txtSourceTimeMyTripsListRow.setText(Util.getTimeFromDateTimeFormat(myTripsData.dep_time));
         txtDestinationTimeMyTripsRow.setText(Util.getTimeFromDateTimeFormat(myTripsData.arrival_time));
+        if(imgViewParcelListRow!=null)
         imgViewParcelListRow.setOnClickListener(onClickListener);
     }
 

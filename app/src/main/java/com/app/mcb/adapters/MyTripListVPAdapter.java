@@ -84,6 +84,7 @@ public class MyTripListVPAdapter extends PagerAdapter {
         txtDestinationDateMyTripsRow.setText(Util.getDDMMYYYYFormat(myTripsData.arrival_time, "yyyy-MM-dd HH:mm:ss"));
         txtSourceTimeMyTripsListRow.setText(Util.getTimeFromDateTimeFormat(myTripsData.dep_time));
         txtDestinationTimeMyTripsRow.setText(Util.getTimeFromDateTimeFormat(myTripsData.arrival_time));
+        imgEditTrip.setTag(myTripsData);
         imgViewParcelListRow.setOnClickListener(onClickListener);
         imgCancelTrip.setOnClickListener(onClickListener);
         imgEditTrip.setOnClickListener(onClickListener);

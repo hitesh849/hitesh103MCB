@@ -11,12 +11,11 @@ import com.app.mcb.R;
 import com.app.mcb.Utility.Constants;
 import com.app.mcb.Utility.Util;
 import com.app.mcb.adapters.TripDetailsVPAdapter;
-import com.app.mcb.adapters.TripListStateWiseAdapter;
 import com.app.mcb.custom.AppHeaderView;
 import com.app.mcb.dao.FilterData;
 import com.app.mcb.dao.TripTransporterData;
-import com.app.mcb.filters.TripFilter;
-import com.app.mcb.filters.TripListener;
+import com.app.mcb.filters.HomeFilter;
+import com.app.mcb.filters.CommonListener;
 import com.app.mcb.model.TripModel;
 
 import org.byteclues.lib.model.BasicModel;
@@ -29,7 +28,7 @@ import retrofit.RetrofitError;
 /**
  * Created by Hitesh on 9/16/2016.
  */
-public class TripDetailsActivity extends AbstractFragmentActivity implements View.OnClickListener, TripListener {
+public class CommonDetailsActivity extends AbstractFragmentActivity implements View.OnClickListener, CommonListener {
 
     private ViewPager vpTripDetails;
     private LinearLayout llCountDotsMain;
@@ -52,7 +51,7 @@ public class TripDetailsActivity extends AbstractFragmentActivity implements Vie
 
     private void init() {
         llTripDetailsMain = (LinearLayout) findViewById(R.id.llTripDetailsMain);
-        TripFilter.addFilterView(this, llTripDetailsMain, this);
+        HomeFilter.addFilterView(this, llTripDetailsMain, this);
         vpTripDetails = (ViewPager) findViewById(R.id.vpTripDetails);
         appHeaderView = (AppHeaderView) findViewById(R.id.appHeaderView);
         appHeaderView.txtHeaderNamecenter.setText(getResources().getString(R.string.trip_details));

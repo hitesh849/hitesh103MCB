@@ -77,38 +77,47 @@ public class ParcelFilter implements View.OnClickListener {
                     switch (id) {
                         case R.id.action_parcel_created:
                             txtStatusFilter.setText(context.getResources().getString(R.string.parcel_id_created));
+                            txtStatusFilter.setTag(Constants.ParcelIdCreated);
                             break;
 
                         case R.id.action_payment_due:
                             txtStatusFilter.setText(context.getResources().getString(R.string.created_payment_due));
+                            txtStatusFilter.setTag(Constants.ParcelPaymentDue);
                             break;
                         case R.id.action_booking_with_tr:
                             txtStatusFilter.setText(context.getResources().getString(R.string.booking_with_tr));
+                            txtStatusFilter.setTag(Constants.ParcelBookedWithTR);
                             break;
                         case R.id.action_parcel_collected:
                             txtStatusFilter.setText(context.getResources().getString(R.string.parcel_collected));
+                            txtStatusFilter.setTag(Constants.ParcelCollected);
+
                             break;
 
                         case R.id.action_parcel_delivered:
                             txtStatusFilter.setText(context.getResources().getString(R.string.parcel_delivered));
+                            txtStatusFilter.setTag(Constants.ParcelDelivered);
                             break;
                         case R.id.action_parcel_del_completed:
                             txtStatusFilter.setText(context.getResources().getString(R.string.delivery_completed));
+                            txtStatusFilter.setTag(Constants.ParcelDeliveryComplete);
                             break;
                         case R.id.action_parcel_cancelled:
                             txtStatusFilter.setText(context.getResources().getString(R.string.cancelled));
+                            txtStatusFilter.setTag(Constants.ParcelCancelled);
                             break;
                         case R.id.action_parcel_rejected_by_tr:
                             txtStatusFilter.setText(context.getResources().getString(R.string.rejected_by_tr));
+                            txtStatusFilter.setTag(Constants.ParcelRejectedByTr);
                             break;
                     }
                     return false;
                 }
             });
-        } else if (id == R.id.llSearchTripFilter) {
+        } else if (id == R.id.imgSearchParcelFilter) {
 
             filterData.parcelId = autoCompParcelIdFilter.getText().toString();
-            filterData.parcelStatus = txtStatusFilter.getText().toString();
+            filterData.parcelStatus = (String) txtStatusFilter.getTag();
             parcelListener.filterData(filterData);
 
         }

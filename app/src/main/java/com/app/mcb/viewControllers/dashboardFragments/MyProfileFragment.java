@@ -1,5 +1,6 @@
 package com.app.mcb.viewControllers.dashboardFragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -12,14 +13,19 @@ import android.widget.TextView;
 
 import com.app.mcb.MainActivity;
 import com.app.mcb.R;
+import com.app.mcb.Utility.Util;
 import com.app.mcb.dao.UserInfoData;
+import com.app.mcb.model.UserProfileModel;
 import com.app.mcb.sharedPreferences.Config;
+import com.app.mcb.viewControllers.LoginActivity;
 
 import org.byteclues.lib.model.BasicModel;
 import org.byteclues.lib.view.AbstractFragment;
 import org.byteclues.lib.view.AbstractFragmentActivity;
 
 import java.util.Observable;
+
+import retrofit.RetrofitError;
 
 /**
  * Created by u on 9/15/2016.
@@ -34,7 +40,9 @@ public class MyProfileFragment extends AbstractFragment implements View.OnClickL
     private EditText etCardNumberMyProfile;
     private EditText etAddressMyProfile;
     private LinearLayout llEditProfile;
+    private LinearLayout llMyProfileMain;
     private TextView txtEditProfile;
+    private UserProfileModel userProfileModel = new UserProfileModel();
 
     @Override
     protected View onCreateViewPost(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -47,6 +55,7 @@ public class MyProfileFragment extends AbstractFragment implements View.OnClickL
 
     private void init(View view) {
         ((MainActivity) getActivity()).setHeader(getResources().getString(R.string.my_profile));
+        llMyProfileMain = (LinearLayout) view.findViewById(R.id.llMyProfileMain);
         txtEditProfile = (TextView) view.findViewById(R.id.txtEditProfile);
         etNameMyProfile = (EditText) view.findViewById(R.id.etNameMyProfile);
         etMemberIdMyProfile = (EditText) view.findViewById(R.id.etMemberIdMyProfile);
@@ -61,6 +70,7 @@ public class MyProfileFragment extends AbstractFragment implements View.OnClickL
     private void setValues() {
         etNameMyProfile.setText(Config.getUserFirstName() + " " + Config.getUserLastName());
         etMemberIdMyProfile.setText(Config.getUserId());
+        etEmailIdMyProfile.setText(Config.getUserName());
         etMobileNumberMyProfile.setText(Config.getUserMobile());
         etLandLineMyProfile.setText(Config.getUserPhone());
         etCardNumberMyProfile.setText(Config.getUserPassportNumber());
@@ -72,6 +82,7 @@ public class MyProfileFragment extends AbstractFragment implements View.OnClickL
         etLandLineMyProfile.setFocusable(false);
         etCardNumberMyProfile.setFocusable(false);
         etAddressMyProfile.setFocusable(false);
+        etEmailIdMyProfile.setFocusable(false);
 
     }
 
@@ -93,6 +104,7 @@ public class MyProfileFragment extends AbstractFragment implements View.OnClickL
         UserInfoData userInfoData = new UserInfoData();
         userInfoData.name = etNameMyProfile.getText().toString();
         userInfoData.id = etMemberIdMyProfile.getText().toString();
+        userInfoData.email = etEmailIdMyProfile.getText().toString();
         userInfoData.mobile = etMobileNumberMyProfile.getText().toString();
         userInfoData.phone = etLandLineMyProfile.getText().toString();
         userInfoData.passportno = etCardNumberMyProfile.getText().toString();
@@ -134,12 +146,30 @@ public class MyProfileFragment extends AbstractFragment implements View.OnClickL
 
     @Override
     protected BasicModel getModel() {
-        return null;
+        return userProfileModel;
     }
 
     @Override
-    public void update(Observable o, Object arg) {
-
+    public void update(Observable o, Object data) {
+        try {
+            Util.dimissProDialog();
+            if (data != null && data instanceof UserInfoData) {
+                UserInfoData userInfoData = (UserInfoData) data;
+                if (userInfoData.status.equals("success")) {
+                    if (userInfoData.response != null) {
+                        userInfoData = userInfoData.response.get(0);
+                        LoginActivity.saveUserData(userInfoData);
+                        Util.replaceFragment(getActivity(), R.id.fmHomeContainer, new MyProfileFragment());
+                    }
+                } else if (userInfoData.status.equals("Error")) {
+                    Util.showOKSnakBar(llMyProfileMain, userInfoData.errorMessage);
+                }
+            } else if (data != null && data instanceof RetrofitError) {
+                Util.showOKSnakBar(llMyProfileMain, getResources().getString(R.string.pls_try_again));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Override
@@ -152,11 +182,24 @@ public class MyProfileFragment extends AbstractFragment implements View.OnClickL
                 setFocus();
             } else if (getResources().getString(R.string.update).equals(txtEditProfile.getText())) {
                 txtEditProfile.setText(getResources().getString(R.string.edit));
-                if (validation(getValue())) {
-
+                UserInfoData userInfoData = getValue();
+                if (validation(userInfoData)) {
+                    updateProfile(userInfoData);
                 }
             }
+        }
+    }
 
+    private void updateProfile(UserInfoData userInfoData) {
+        try {
+            if (Util.isDeviceOnline()) {
+                Util.showProDialog(getActivity());
+                userProfileModel.updateProfile(userInfoData);
+            } else {
+                Util.showAlertDialog(null, getResources().getString(R.string.noInternetMsg));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 }

@@ -1,11 +1,12 @@
 package com.app.mcb.dao;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by user on 13/10/16.
  */
-public class MyTripsData {
+public class MyTripsData implements Serializable {
     public String id;
     public String source;
     public String destination;

@@ -22,13 +22,25 @@ public class UserProfileModel extends BasicModel {
     RestInterface restInterface = adapter.create(RestInterface.class);
 
 
-
     public void updateProfile(UserInfoData userInfoData) {
         try {
 
-            HashMap<String,String> request=new HashMap<String,String>();
-            request.put("id",userInfoData.id);
-            restInterface.updateProfile(request,new Callback<UserInfoData>() {
+            HashMap<String, String> request = new HashMap<String, String>();
+            request.put("id", Config.getUserId());
+            request.put("username", userInfoData.email);
+            request.put("mobile", userInfoData.mobile);
+            request.put("phone", userInfoData.phone);
+            request.put("passportno", userInfoData.passportno);
+            request.put("address", userInfoData.address);
+            if (userInfoData.name.trim().contains(" ")) {
+                String name[] = userInfoData.name.split(" ");
+                request.put("name", name[0]);
+                request.put("l_name", name[1]);
+            } else {
+                request.put("name", userInfoData.name);
+            }
+
+            restInterface.updateProfile(request, new Callback<UserInfoData>() {
                 @Override
                 public void success(UserInfoData userInfoData, Response response) {
                     notifyObservers(userInfoData);
