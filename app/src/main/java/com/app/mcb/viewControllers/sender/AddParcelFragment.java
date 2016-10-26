@@ -25,14 +25,14 @@ import com.app.mcb.Utility.Constants;
 import com.app.mcb.Utility.Util;
 import com.app.mcb.dao.AddParcelData;
 import com.app.mcb.dao.AirportData;
-import com.app.mcb.dao.CommonResponseData;
 import com.app.mcb.dao.FilterData;
 import com.app.mcb.dao.ParcelDetailsData;
+import com.app.mcb.dao.SearchReceiverData;
 import com.app.mcb.dao.TripTransporterData;
 import com.app.mcb.dao.UserInfoData;
 import com.app.mcb.database.DatabaseMgr;
-import com.app.mcb.filters.TransporterFilter;
 import com.app.mcb.filters.CommonListener;
+import com.app.mcb.filters.TransporterFilter;
 import com.app.mcb.model.AddParcelModel;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
@@ -64,6 +64,9 @@ public class AddParcelFragment extends AbstractFragment implements View.OnClickL
     private EditText etParcelSizeAddParcel;
     private EditText etDescriptionAddParcel;
     private EditText etDeliveryTillAddParcel;
+    private EditText etHeightAddParcel;
+    private EditText etWidthAddParcel;
+    private EditText etLengthAddParcel;
     private ImageView imgCalenderAddParcel;
     private ImageView imgSelectParcelAddParcel;
     private EditText etMobileNumberExist;
@@ -80,6 +83,7 @@ public class AddParcelFragment extends AbstractFragment implements View.OnClickL
     private EditText etNewReceiverMessage;
     private TextView txtNewReceiverSendInvitation;
     private EditText etParcelTypeAddParcelType;
+    private LinearLayout llBoxAddParcel;
     private AddParcelModel addParcelModel = new AddParcelModel();
     private ParcelDetailsData parcelDetailsData = new ParcelDetailsData();
     private TripTransporterData tripTransporterData;
@@ -112,6 +116,7 @@ public class AddParcelFragment extends AbstractFragment implements View.OnClickL
     private void init(View view) {
         llAddParcelMain = (LinearLayout) view.findViewById(R.id.llAddParcelMain);
         llReceiverContainerMain = (LinearLayout) view.findViewById(R.id.llReceiverContainerMain);
+        llBoxAddParcel = (LinearLayout) view.findViewById(R.id.llBoxAddParcel);
         autoCompFromAddParcel = (AutoCompleteTextView) view.findViewById(R.id.autoCompFromAddParcel);
         autoCompToAddParcel = (AutoCompleteTextView) view.findViewById(R.id.autoCompToAddParcel);
         rlParcelTypeAddParcel = (RelativeLayout) view.findViewById(R.id.rlParcelTypeAddParcel);
@@ -119,7 +124,10 @@ public class AddParcelFragment extends AbstractFragment implements View.OnClickL
         etParcelSizeAddParcel = (EditText) view.findViewById(R.id.etParcelSizeAddParcel);
         etDescriptionAddParcel = (EditText) view.findViewById(R.id.etDescriptionAddParcel);
         etDeliveryTillAddParcel = (EditText) view.findViewById(R.id.etDeliveryTillAddParcel);
+        etHeightAddParcel = (EditText) view.findViewById(R.id.etHeightAddParcel);
+        etWidthAddParcel = (EditText) view.findViewById(R.id.etWidthAddParcel);
         etEmailExistUser = (EditText) view.findViewById(R.id.etEmailExistUser);
+        etLengthAddParcel = (EditText) view.findViewById(R.id.etLengthAddParcel);
         etParcelTypeAddParcelType = (EditText) view.findViewById(R.id.etParcelTypeAddParcelType);
         imgCalenderAddParcel = (ImageView) view.findViewById(R.id.imgCalenderAddParcel);
         imgSelectParcelAddParcel = (ImageView) view.findViewById(R.id.imgSelectParcelAddParcel);
@@ -246,8 +254,8 @@ public class AddParcelFragment extends AbstractFragment implements View.OnClickL
     public void update(Observable observable, Object data) {
         Util.dimissProDialog();
         try {
-            if (data != null && data instanceof UserInfoData) {
-                UserInfoData userInfoData = (UserInfoData) data;
+            if (data != null && data instanceof SearchReceiverData) {
+                SearchReceiverData userInfoData = (SearchReceiverData) data;
                 if ("success".equals(userInfoData.status)) {
                     if (userInfoData.response != null) {
                         if ("E".equals(userInfoData.userType)) {
@@ -267,6 +275,21 @@ public class AddParcelFragment extends AbstractFragment implements View.OnClickL
                         }
                     }
                 }
+            } else if (data instanceof UserInfoData) {
+                UserInfoData userInfoData = ((UserInfoData) data);
+                if ("success".equals(userInfoData.status)) {
+                    {
+                        UserInfoData obj = userInfoData.response.get(0);
+                        if ("Y".equals(obj.status)) {
+                            calculateAmount();
+                        } else if ("N".equals(obj.status)) {
+                            Util.showAlertDialog(null, getString(R.string.user_authorization_on_add_parcel));
+                        }
+                    }
+                } else {
+                    Util.showAlertDialog(null, userInfoData.errorMessage);
+                }
+
             } else if (data instanceof ParcelDetailsData) {
                 ParcelDetailsData parcelDetailsData = (ParcelDetailsData) data;
                 ConfirmParcelFragment confirmParcelFragment = new ConfirmParcelFragment();
@@ -284,7 +307,7 @@ public class AddParcelFragment extends AbstractFragment implements View.OnClickL
                     parcelsListFragment.setArguments(bundle);
                     Util.replaceFragment(getActivity(), R.id.fmContainerSenderHomeMain, parcelsListFragment);
                 }
-            }else if (data != null && data instanceof RetrofitError) {
+            } else if (data != null && data instanceof RetrofitError) {
                 Util.showOKSnakBar(llAddParcelMain, getResources().getString(R.string.pls_try_again));
             }
         } catch (Exception ex) {
@@ -315,7 +338,7 @@ public class AddParcelFragment extends AbstractFragment implements View.OnClickL
             parcelDetailsData.description = etDescriptionAddParcel.getText().toString();
             if (addParcelValidation()) {
                 if (parcelMode.equals("new"))
-                    calculateAmount();
+                    getUserDetails();
                 else if (parcelMode.equals("edit"))
                     updateParcels();
 
@@ -332,12 +355,15 @@ public class AddParcelFragment extends AbstractFragment implements View.OnClickL
                     if (id == R.id.action_parcel_box) {
                         parcelDetailsData.type = "B";
                         etParcelTypeAddParcelType.setText(Constants.BOX);
+                        llBoxAddParcel.setVisibility(View.VISIBLE);
                     } else if (id == R.id.action_parcel_packet) {
                         parcelDetailsData.type = "P";
                         etParcelTypeAddParcelType.setText(Constants.PACKET);
+                        llBoxAddParcel.setVisibility(View.GONE);
                     } else if (id == R.id.action_parcel_envelope) {
                         parcelDetailsData.type = "E";
                         etParcelTypeAddParcelType.setText(Constants.ENVELOPE);
+                        llBoxAddParcel.setVisibility(View.GONE);
                     }
                     return false;
                 }
@@ -372,6 +398,11 @@ public class AddParcelFragment extends AbstractFragment implements View.OnClickL
         if (TextUtils.isEmpty(parcelDetailsData.type)) {
             etParcelTypeAddParcelType.setError(getResources().getString(R.string.can_not_be_empty));
             return false;
+        }
+
+        if("B".equals(parcelDetailsData.type))
+        {
+
         }
         if (TextUtils.isEmpty(parcelDetailsData.weight)) {
             etParcelSizeAddParcel.setError(getResources().getString(R.string.can_not_be_empty));
@@ -442,6 +473,20 @@ public class AddParcelFragment extends AbstractFragment implements View.OnClickL
             ex.printStackTrace();
         }
     }
+
+    private void getUserDetails() {
+        try {
+            if (Util.isDeviceOnline()) {
+                Util.showProDialog(getActivity());
+                addParcelModel.getUserDetails();
+            } else {
+                Util.showAlertDialog(null, getResources().getString(R.string.noInternetMsg));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
 
     private void updateParcels() {
         try {

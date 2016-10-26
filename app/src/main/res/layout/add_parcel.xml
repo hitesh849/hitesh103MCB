@@ -134,6 +134,69 @@
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:id="@+id/llBoxAddParcel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColorHint="@color/dark_grey">
+
+                        <EditText
+                            android:id="@+id/etHeightAddParcel"
+                            style="@style/editxt_small"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/dark_grey"
+                            android:hint="@string/height"
+                            android:inputType="number"
+                            android:textColorHint="@color/dark_grey" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColorHint="@color/dark_grey">
+
+                        <EditText
+                            android:id="@+id/etWidthAddParcel"
+                            style="@style/editxt_small"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/dark_grey"
+                            android:hint="@string/width"
+                            android:inputType="number"
+                            android:textColorHint="@color/dark_grey" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColorHint="@color/dark_grey">
+
+                        <EditText
+                            android:id="@+id/etLengthAddParcel"
+                            style="@style/editxt_small"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/dark_grey"
+                            android:hint="@string/length"
+                            android:inputType="number"
+                            android:textColorHint="@color/dark_grey" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"

@@ -53,8 +53,8 @@ public class LoginActivity extends AbstractFragmentActivity implements View.OnCl
         txtForgetPasswordLogin = (TextView) findViewById(R.id.txtForgetPasswordLogin);
         etEmailLogin = (EditText) findViewById(R.id.etEmailLogin);
         etPasswordLogin = (EditText) findViewById(R.id.etPasswordLogin);
-        /*etEmailLogin.setText("lalit.sharma@byteclues.com");
-        etPasswordLogin.setText("123456");*/
+        etEmailLogin.setText("lalit.sharma@byteclues.com");
+        etPasswordLogin.setText("123456");
         txtLogin.setOnClickListener(this);
         txtSignUp.setOnClickListener(this);
         txtForgetPasswordLogin.setOnClickListener(this);

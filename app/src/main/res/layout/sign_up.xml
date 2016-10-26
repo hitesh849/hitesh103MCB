@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
@@ -78,9 +79,9 @@
                     style="@style/et_signup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxLength="10"
+                    android:hint="@string/mobile_number"
                     android:inputType="number"
-                    android:hint="@string/mobile_number" />
+                    android:maxLength="10" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -120,18 +121,20 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:visibility="gone"
                 android:padding="@dimen/dim_16">
 
 
-                <com.app.mcb.custom.RoundedImageView
-                    android:layout_width="@dimen/dim_48"
-                    android:layout_height="@dimen/dim_48"
-                    android:background="@color/dark_grey"
-                    android:src="@mipmap/profile_dummy" />
-
+                <com.mikhaellopez.circularimageview.CircularImageView
+                    android:id="@+id/imgEditProfileRegister"
+                    android:layout_width="@dimen/dim_74"
+                    android:layout_height="@dimen/dim_74"
+                    app:civ_border_color="@color/colorPrimary"
+                    android:src="@mipmap/user"
+                    app:civ_border_width="1dp"
+                    />
 
                 <ImageView
+                    android:id="@+id/imgCameraRegister"
                     android:layout_width="@dimen/dim_54"
                     android:layout_height="@dimen/dim_54"
                     android:layout_marginLeft="@dimen/dim_8"

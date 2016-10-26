@@ -1,31 +1,42 @@
 package com.app.mcb.viewControllers;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.app.mcb.R;
+import com.app.mcb.Utility.Constants;
 import com.app.mcb.Utility.Util;
-import com.app.mcb.adapters.TripListStateWiseAdapter;
 import com.app.mcb.custom.AppHeaderView;
-import com.app.mcb.dao.TripData;
 import com.app.mcb.dao.UserInfoData;
 import com.app.mcb.model.UserAuthenticationModel;
+import com.mikhaellopez.circularimageview.CircularImageView;
 
 import org.byteclues.lib.model.BasicModel;
 import org.byteclues.lib.view.AbstractFragmentActivity;
 
-import java.net.Authenticator;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.Observable;
 
 import retrofit.RetrofitError;
 
 /**
- * Created by u on 9/16/2016.
+ * Created by Hitesh on 9/16/2016.
  */
 public class SignUpActivity extends AbstractFragmentActivity implements View.OnClickListener {
 
@@ -38,6 +49,9 @@ public class SignUpActivity extends AbstractFragmentActivity implements View.OnC
     private EditText etextPassword;
     private EditText etextMobile;
     private EditText etextConfirmPassword;
+    private CircularImageView imgEditProfileRegister;
+    private Uri captured_image_uri;
+    private Dialog attachmentDialog;
     private UserInfoData userInfoData = new UserInfoData();
     private UserAuthenticationModel userAuthenticationModel = new UserAuthenticationModel();
 
@@ -57,9 +71,12 @@ public class SignUpActivity extends AbstractFragmentActivity implements View.OnC
         etextEmail = (EditText) findViewById(R.id.etextEmail);
         etextMobile = (EditText) findViewById(R.id.etextMobile);
         etextPassword = (EditText) findViewById(R.id.etextPassword);
+        imgEditProfileRegister = (CircularImageView) findViewById(R.id.imgEditProfileRegister);
+        ImageView imgCameraRegister = (ImageView) findViewById(R.id.imgCameraRegister);
         etextConfirmPassword = (EditText) findViewById(R.id.etextConfirmPassword);
         appHeaderView.txtHeaderNamecenter.setText(getResources().getString(R.string.sign_up));
         txtRagisterSignUp.setOnClickListener(this);
+        imgCameraRegister.setOnClickListener(this);
     }
 
     @Override
@@ -74,7 +91,6 @@ public class SignUpActivity extends AbstractFragmentActivity implements View.OnC
         userInfoData.email = etextEmail.getText().toString();
         userInfoData.password = etextPassword.getText().toString();
         userInfoData.mobile = etextMobile.getText().toString();
-
 
         if (TextUtils.isEmpty(userInfoData.firstName)) {
             etextFirstName.setError(getString(R.string.can_not_be_empty));
@@ -124,6 +140,33 @@ public class SignUpActivity extends AbstractFragmentActivity implements View.OnC
             }
         } else if (id == R.id.llBackHeader) {
             onBackPressed();
+        } else if (id == R.id.imgCameraRegister) {
+            attachmentDialog = Util.showAttachmentDialog(this, this);
+        } else if (id == R.id.txtCameraAttachment) {
+            attachmentDialog.dismiss();
+            captureImage();
+        } else if (id == R.id.txtAttachmentsDialog) {
+            attachmentDialog.dismiss();
+            Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(intent, Constants.PICK_Existing_Image_REQCODE);
+        }
+    }
+
+    public void captureImage() {
+        try {
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            String path = Environment.getExternalStorageDirectory() + File.separator + Constants.APP_FOLDER_NAME + File.separator + Constants.ATTACHMENTS_FOLDER_NAME;
+            File mediapath = new File(path);
+            if (!mediapath.exists()) {
+                mediapath.mkdirs();
+            }
+            captured_image_uri = Uri.fromFile(new File(mediapath.getPath(), "Image" + System.currentTimeMillis() + ".jpg"));
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, captured_image_uri);
+            startActivityForResult(intent, Constants.PICK_FILE_FROM_CAMERA);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -161,5 +204,53 @@ public class SignUpActivity extends AbstractFragmentActivity implements View.OnC
             ex.printStackTrace();
         }
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        try {
+            if (requestCode == Constants.PICK_FILE_FROM_CAMERA && resultCode == RESULT_OK) {
+                try {
+
+                    if (captured_image_uri != null) {
+                        ExifInterface exifInterface = new ExifInterface(captured_image_uri.getPath());
+                        int orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, 1);
+                        Matrix matrix = new Matrix();
+                        switch (orientation) {
+                            case ExifInterface.ORIENTATION_ROTATE_90: {
+                                matrix.postRotate(90);
+                                break;
+                            }
+                            case ExifInterface.ORIENTATION_ROTATE_180: {
+                                matrix.postRotate(180);
+                                break;
+                            }
+                            case ExifInterface.ORIENTATION_ROTATE_270: {
+                                matrix.postRotate(270);
+                                break;
+                            }
+                        }
+                        FileInputStream fis = new FileInputStream(captured_image_uri.getPath());
+                        Bitmap bmp = BitmapFactory.decodeStream(fis);
+                        Bitmap rotated = Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(), matrix, true);
+                        FileOutputStream fos = new FileOutputStream(captured_image_uri.getPath());
+                        rotated.compress(Bitmap.CompressFormat.JPEG, 85, fos);
+                        imgEditProfileRegister.setImageBitmap(bmp);
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            } else if (requestCode == Constants.PICK_Existing_Image_REQCODE && resultCode == RESULT_OK && null != data) {
+                Uri pickedImage = data.getData();
+                String imagePath = Util.getPath(this, pickedImage);
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), pickedImage);
+                imgEditProfileRegister.setImageBitmap(bitmap);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 }

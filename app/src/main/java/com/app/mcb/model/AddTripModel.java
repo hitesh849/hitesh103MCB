@@ -6,7 +6,6 @@ import com.app.mcb.dao.CommonResponseData;
 import com.app.mcb.dao.TripData;
 import com.app.mcb.retrointerface.RestInterface;
 import com.app.mcb.sharedPreferences.Config;
-import com.google.gson.JsonElement;
 
 import org.byteclues.lib.model.BasicModel;
 
@@ -36,7 +35,7 @@ public class AddTripModel extends BasicModel {
         requestData.put("capacity", tripData.capacity);
         requestData.put("comment", tripData.comment);
         requestData.put("t_id", Config.getUserId());
-        requestData.put("ticket", "");
+        requestData.put("ticket", tripData.image);
         restInterface.addTrip(requestData, new Callback<CommonResponseData>() {
             @Override
             public void success(CommonResponseData jsonElement, Response response) {

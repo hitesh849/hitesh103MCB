@@ -31,6 +31,10 @@ public class Constants {
     public static final String ParcelDeliveryComplete = "5";
     public static final String ParcelCancelled = "6";
     public static final String ParcelRejectedByTr = "9";
+    public static final String APP_FOLDER_NAME = "MCB";
+    public static final String ATTACHMENTS_FOLDER_NAME = "attachments";
+    public static int PICK_FILE_FROM_CAMERA = 422;
+    public static int PICK_Existing_Image_REQCODE = 423;
 
 }
 

@@ -3,6 +3,7 @@ package com.app.mcb.model;
 import com.app.mcb.Utility.Constants;
 import com.app.mcb.dao.AddParcelData;
 import com.app.mcb.dao.ParcelDetailsData;
+import com.app.mcb.dao.SearchReceiverData;
 import com.app.mcb.dao.UserInfoData;
 import com.app.mcb.retrointerface.RestInterface;
 import com.app.mcb.sharedPreferences.Config;
@@ -54,9 +55,9 @@ public class AddParcelModel extends BasicModel {
         subRequest.put("email", email);
         subRequest.put("mobile", mobile);
         request.put("params", subRequest);
-        restInterface.searchReceiver(request, new Callback<UserInfoData>() {
+        restInterface.searchReceiver(request, new Callback<SearchReceiverData>() {
             @Override
-            public void success(UserInfoData userInfoData, Response response) {
+            public void success(SearchReceiverData userInfoData, Response response) {
                 userInfoData.userType = "E";
                 notifyObservers(userInfoData);
             }
@@ -66,6 +67,25 @@ public class AddParcelModel extends BasicModel {
                 notifyObservers(error);
             }
         });
+    }
+
+    public void getUserDetails() {
+        try {
+
+            restInterface.getUserDetails(Config.getUserId(), new Callback<UserInfoData>() {
+                @Override
+                public void success(UserInfoData userInfoData, Response response) {
+                    notifyObservers(userInfoData);
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    notifyObservers(error);
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 

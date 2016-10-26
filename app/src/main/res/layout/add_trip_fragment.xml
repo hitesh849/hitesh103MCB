@@ -105,6 +105,7 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/txtUploadStatusAddTrip"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
@@ -183,7 +184,7 @@
                             android:layout_marginLeft="@dimen/dim_4"
                             android:layout_weight=".8"
                             android:gravity="center"
-                            android:hint="9:30 AM"
+                            android:hint="@string/time"
                             android:textColorHint="@color/black" />
 
                         <ImageView
@@ -239,7 +240,7 @@
                             android:layout_marginLeft="@dimen/dim_4"
                             android:layout_weight=".8"
                             android:gravity="center"
-                            android:hint="9:30 AM"
+                            android:hint="@string/time"
                             android:textColorHint="@color/black" />
 
                         <ImageView

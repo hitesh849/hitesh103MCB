@@ -11,6 +11,7 @@ import com.app.mcb.dao.MyWalletData;
 import com.app.mcb.dao.ParcelDetailsData;
 import com.app.mcb.dao.ParcelListData;
 import com.app.mcb.dao.ReceiverData;
+import com.app.mcb.dao.SearchReceiverData;
 import com.app.mcb.dao.TripTransporterData;
 import com.app.mcb.dao.UserInfoData;
 import com.app.mcb.dao.WithDrawData;
@@ -95,7 +96,7 @@ public interface RestInterface {
 
     @Headers({"Content-Type:application/json"})
     @POST("/searchuser")
-    public void searchReceiver(@Body HashMap<String, Object> request, Callback<UserInfoData> cb);
+    public void searchReceiver(@Body HashMap<String, Object> request, Callback<SearchReceiverData> cb);
 
     @Headers({"Content-Type:application/json"})
     @POST("/calculateamount")

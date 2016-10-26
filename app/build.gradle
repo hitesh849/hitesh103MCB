@@ -30,6 +30,7 @@ dependencies {
     compile 'com.android.support:multidex:1.0.0'
     compile 'com.android.support:cardview-v7:24.2.0'
     compile 'com.wdullaer:materialdatetimepicker:2.3.0'
+    compile 'com.mikhaellopez:circularimageview:3.0.2'
     compile 'joda-time:joda-time:2.8.1'
     compile project(':byteclueslib')
 }
