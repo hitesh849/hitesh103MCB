@@ -1,8 +1,6 @@
 package com.app.mcb.viewControllers.dashboardFragments;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +9,10 @@ import android.widget.LinearLayout;
 import com.app.mcb.MainActivity;
 import com.app.mcb.R;
 import com.app.mcb.Utility.Util;
-import com.app.mcb.custom.AppHeaderView;
+import com.app.mcb.sharedPreferences.Config;
 import com.app.mcb.viewControllers.sender.SenderHomeFragment;
 import com.app.mcb.viewControllers.transporter.TransporterHomeFragment;
+import com.mikhaellopez.circularimageview.CircularImageView;
 
 import org.byteclues.lib.model.BasicModel;
 import org.byteclues.lib.view.AbstractFragment;
@@ -31,9 +30,10 @@ public class DashBoardFragment extends AbstractFragment implements View.OnClickL
     private LinearLayout llDetailsOfTransDashBoard;
     private LinearLayout llTotalReceiverDashBoard;
     private LinearLayout llTotalWithDrawerDashBoard;
+    private CircularImageView imgProfileDashBoard;
 
     @Override
-    protected View onCreateViewPost(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+    protected View onCreateViewPost(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dashboard, container, false);
         init(view);
         return view;
@@ -46,6 +46,10 @@ public class DashBoardFragment extends AbstractFragment implements View.OnClickL
         llDetailsOfTransDashBoard = (LinearLayout) view.findViewById(R.id.llDetailsOfTransDashBoard);
         llTotalReceiverDashBoard = (LinearLayout) view.findViewById(R.id.llTotalReceiverDashBoard);
         llTotalWithDrawerDashBoard = (LinearLayout) view.findViewById(R.id.llTotalWithDrawerDashBoard);
+        imgProfileDashBoard = (CircularImageView) view.findViewById(R.id.imgProfileDashBoard);
+        if (Config.getUserImageURl() != null) {
+            imgProfileDashBoard.setImageBitmap(Util.getDecode64ImageStringFromBitmap(Config.getUserImageURl()));
+        }
         llAboutProfileDashBoard.setOnClickListener(this);
         llMyWalletDashBoard.setOnClickListener(this);
         llSenderDetailsDashBoard.setOnClickListener(this);

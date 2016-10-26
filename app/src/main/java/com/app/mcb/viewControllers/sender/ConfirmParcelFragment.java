@@ -60,11 +60,11 @@ public class ConfirmParcelFragment extends AbstractFragment implements View.OnCl
         txtFromShortConfirmParcel.setText(Util.getFirstName(parcelDetailsData.source));
         txtToShortConfirmParcel.setText(Util.getFirstName(parcelDetailsData.destination));
         txtParcelTypeConfirmParcel.setText(Util.getParcelType(parcelDetailsData.type));
-        txtStatusConfirmParcel.setText(parcelDetailsData.status);
+        txtStatusConfirmParcel.setText(Util.getParcelStatus(Integer.parseInt(parcelDetailsData.status),getActivity()));
         txtReceiverEmailConfirmParcel.setText(parcelDetailsData.receiverInfoData.username);
         txtReceiverMobileConfirmParcel.setText(parcelDetailsData.receiverInfoData.mobile);
         txtReceiverIdConfirmParcel.setText(parcelDetailsData.receiverInfoData.UserID);
-        txtPaymentConfirmParcel.setText(parcelDetailsData.payment);
+        txtPaymentConfirmParcel.setText(parcelDetailsData.price);
         txtReceiverNameConfirmParcel.setText(parcelDetailsData.receiverInfoData.name+" "+parcelDetailsData.receiverInfoData.l_name);
         txtFromLongConfirmParcel.setText("("+parcelDetailsData.source+")");
         txtToLongConfirmParcel.setText("("+parcelDetailsData.destination+")");

@@ -12,13 +12,11 @@ import com.app.mcb.Utility.Constants;
 import com.app.mcb.Utility.Util;
 import com.app.mcb.adapters.TripListStateWiseAdapter;
 import com.app.mcb.custom.AppHeaderView;
-import com.app.mcb.dao.AirportData;
 import com.app.mcb.dao.FilterData;
 import com.app.mcb.dao.TripTransporterData;
-import com.app.mcb.database.DatabaseMgr;
-import com.app.mcb.filters.HomeFilter;
 import com.app.mcb.filters.CommonListener;
-import com.app.mcb.model.TripModel;
+import com.app.mcb.filters.HomeFilter;
+import com.app.mcb.model.HomeTripModel;
 
 import org.byteclues.lib.model.BasicModel;
 import org.byteclues.lib.view.AbstractFragmentActivity;
@@ -36,13 +34,21 @@ public class CommonListWithStateActivity extends AbstractFragmentActivity implem
     private RecyclerView rvTripHome;
     private LinearLayout llBecomeTransporter;
     private LinearLayout llTripListWithState;
-    TripModel tripModel = new TripModel();
+    HomeTripModel homeTripModel = new HomeTripModel();
     private TripTransporterData tripTransporterData;
 
     @Override
     protected void onCreatePost(Bundle savedInstanceState) {
         setContentView(R.layout.trip_list_specific_state);
         init();
+        Bundle bundle = getIntent().getBundleExtra("KEY_BUNDLE");
+        if (bundle != null) {
+            tripTransporterData = (TripTransporterData) bundle.getSerializable("KEY_DATA");
+            FilterData filterData = new FilterData();
+            filterData.fromLocation = tripTransporterData.source;
+            filterData.type=Constants.TRANSPORTER;
+            getTripByFilter(filterData);
+        }
     }
 
     private void init() {
@@ -57,13 +63,12 @@ public class CommonListWithStateActivity extends AbstractFragmentActivity implem
         rvTripHome.setLayoutManager(llm);
         llBecomeTransporter.setOnClickListener(this);
         appHeaderView.txtHeaderNamecenter.setText("Welcome");
-        if (DatabaseMgr.getInstance(this).getNoOfRecords(AirportData.TABLE_NAME) <= 0)
-            getAirportList();
+
     }
 
     @Override
     protected BasicModel getModel() {
-        return tripModel;
+        return homeTripModel;
     }
 
     @Override
@@ -76,7 +81,6 @@ public class CommonListWithStateActivity extends AbstractFragmentActivity implem
                 if (tripTransporterData.status.equals("success")) {
                     if (tripTransporterData.response != null)
                         rvTripHome.setAdapter(new TripListStateWiseAdapter(this, this, tripTransporterData.response));
-
                     if (tripTransporterData.response.size() <= 0)
                         Util.showOKSnakBar(llTripListWithState, getResources().getString(R.string.trip_unavailable));
                 }
@@ -111,7 +115,7 @@ public class CommonListWithStateActivity extends AbstractFragmentActivity implem
         try {
             if (Util.isDeviceOnline()) {
                 Util.showProDialog(this);
-                tripModel.getAirportData(this);
+                homeTripModel.getAirportData(this);
             } else {
                 Util.showAlertDialog(null, getResources().getString(R.string.noInternetMsg));
             }
@@ -124,7 +128,7 @@ public class CommonListWithStateActivity extends AbstractFragmentActivity implem
         try {
             if (Util.isDeviceOnline()) {
                 Util.showProDialog(this);
-                tripModel.getTripListByFilter(filterData);
+                homeTripModel.getTripListByFilter(filterData);
             } else {
                 Util.showAlertDialog(null, getResources().getString(R.string.noInternetMsg));
             }

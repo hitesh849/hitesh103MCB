@@ -150,10 +150,11 @@
                     android:text="@string/arrival_colon" />
 
                 <TextView
+                    android:id="@+id/txtArrivalCityTripList"
                     style="@style/text_extra_small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="New Delhi" />
+                    android:maxLines="1" />
             </LinearLayout>
 
             <LinearLayout
@@ -173,6 +174,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dim_2"
+                    android:visibility="gone"
                     android:text="(GMT +5)" />
 
             </LinearLayout>

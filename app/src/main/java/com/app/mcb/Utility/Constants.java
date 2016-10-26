@@ -35,6 +35,9 @@ public class Constants {
     public static final String ATTACHMENTS_FOLDER_NAME = "attachments";
     public static int PICK_FILE_FROM_CAMERA = 422;
     public static int PICK_Existing_Image_REQCODE = 423;
+    public static int MAX_WEIGHT = 30;
+    public static String TRANSPORTER = "Transporter";
+    public static String SENDER = "Sender";
 
 }
 

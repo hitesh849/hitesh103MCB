@@ -550,4 +550,72 @@ public class Util {
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
         return decodedByte;
     }
+
+
+    public static String getTripStatus(int status, Context context) {
+        String statusStr = "-";
+        switch (status) {
+            case 0:
+                statusStr = context.getResources().getString(R.string.pending);
+                break;
+            case 1:
+                statusStr = context.getResources().getString(R.string.approved);
+                break;
+            case 2:
+                statusStr = context.getResources().getString(R.string.booking_request_sent);
+                break;
+            case 3:
+                statusStr = context.getResources().getString(R.string.booked);
+                break;
+            case 5:
+                statusStr = context.getResources().getString(R.string.rejected);
+                break;
+            case 6:
+                statusStr = context.getResources().getString(R.string.delivered);
+                break;
+            case 7:
+                statusStr = context.getResources().getString(R.string.complete);
+                break;
+            case 9:
+                statusStr = context.getResources().getString(R.string.on_hold);
+                break;
+        }
+        return statusStr;
+    }
+
+    public static String getParcelStatus(int status, Context context) {
+        String statusStr = "-";
+        switch (status) {
+            case 0:
+                statusStr = context.getResources().getString(R.string.parcel_idcreated);
+                break;
+
+            case 1:
+                statusStr = context.getResources().getString(R.string.created_payment_due);
+                break;
+
+            case 2:
+                statusStr = context.getResources().getString(R.string.booking_with_tr);
+                break;
+
+            case 3:
+                statusStr = context.getResources().getString(R.string.parcel_collected);
+                break;
+            case 4:
+                statusStr = context.getResources().getString(R.string.parcel_delivered);
+                break;
+            case 5:
+                statusStr = context.getResources().getString(R.string.delivery_completed);
+                break;
+            case 6:
+                statusStr = context.getResources().getString(R.string.cancelled);
+                break;
+
+            case 9:
+                statusStr = context.getResources().getString(R.string.rejected_by_tr);
+                break;
+        }
+        return statusStr;
+    }
+
 }

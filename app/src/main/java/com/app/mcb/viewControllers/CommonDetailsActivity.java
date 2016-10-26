@@ -16,7 +16,7 @@ import com.app.mcb.dao.FilterData;
 import com.app.mcb.dao.TripTransporterData;
 import com.app.mcb.filters.HomeFilter;
 import com.app.mcb.filters.CommonListener;
-import com.app.mcb.model.TripModel;
+import com.app.mcb.model.HomeTripModel;
 
 import org.byteclues.lib.model.BasicModel;
 import org.byteclues.lib.view.AbstractFragmentActivity;
@@ -34,7 +34,7 @@ public class CommonDetailsActivity extends AbstractFragmentActivity implements V
     private LinearLayout llCountDotsMain;
     private AppHeaderView appHeaderView;
     private LinearLayout llTripDetailsMain;
-    private TripModel tripModel = new TripModel();
+    private HomeTripModel homeTripModel = new HomeTripModel();
     private TripTransporterData tripTransporterData;
 
     @Override
@@ -79,7 +79,7 @@ public class CommonDetailsActivity extends AbstractFragmentActivity implements V
 
     @Override
     protected BasicModel getModel() {
-        return tripModel;
+        return homeTripModel;
     }
 
     @Override
@@ -157,7 +157,7 @@ public class CommonDetailsActivity extends AbstractFragmentActivity implements V
         try {
             if (Util.isDeviceOnline()) {
                 Util.showProDialog(this);
-                tripModel.getTripListByFilter(filterData);
+                homeTripModel.getTripListByFilter(filterData);
             } else {
                 Util.showAlertDialog(null, getResources().getString(R.string.noInternetMsg));
             }

@@ -82,6 +82,7 @@
     <string name="parcel_type">Parcel Type</string>
     <string name="delivery_till">Delivery Till</string>
     <string name="size">Size</string>
+    <string name="size_kg">Size(kg)</string>
     <string name="Parcel_description">Parcel Description</string>
     <string name="existing_user">Existing User</string>
     <string name="new_user">New User</string>
@@ -171,4 +172,5 @@
     <string name="height">Height</string>
     <string name="width">Width</string>
     <string name="length">Length</string>
+    <string name="max_weight">Max  %1$s  %2$s.</string>
 </resources>

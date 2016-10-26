@@ -5,6 +5,7 @@
     android:background="@color/screen_bg"
     android:orientation="vertical"
     android:fillViewport="true"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="@dimen/dim_12">
 
     <LinearLayout
@@ -27,12 +28,17 @@
                 android:layout_weight="1"
                 android:background="@drawable/rounded_white_bg"
                 android:gravity="center"
+                android:padding="@dimen/dim_16"
                 android:orientation="vertical">
 
-                <ImageView
+                <com.mikhaellopez.circularimageview.CircularImageView
+                    android:id="@+id/imgProfileDashBoard"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    app:civ_border_color="@color/colorPrimary"
+                    app:civ_border_width="2dp"
                     android:src="@mipmap/aboutprofile" />
+
 
                 <TextView
                     style="@style/text_medium"

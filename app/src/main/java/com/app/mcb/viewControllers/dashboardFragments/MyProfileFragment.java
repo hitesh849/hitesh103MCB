@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -91,6 +92,7 @@ public class MyProfileFragment extends AbstractFragment implements View.OnClickL
         etLandLineMyProfile.setText(Config.getUserPhone());
         etCardNumberMyProfile.setText(Config.getUserPassportNumber());
         etAddressMyProfile.setText(Config.getUserAddress());
+        imgEditUserProfile.setImageBitmap(Util.getDecode64ImageStringFromBitmap(Config.getUserImageURl()));
         etNameMyProfile.setFocusable(false);
         etMemberIdMyProfile.setFocusable(false);
         etMobileNumberMyProfile.setFocusable(false);
@@ -98,7 +100,7 @@ public class MyProfileFragment extends AbstractFragment implements View.OnClickL
         etCardNumberMyProfile.setFocusable(false);
         etAddressMyProfile.setFocusable(false);
         etEmailIdMyProfile.setFocusable(false);
-
+        imgEditUserProfile.setClickable(false);
     }
 
     private void setFocus() {
@@ -112,6 +114,7 @@ public class MyProfileFragment extends AbstractFragment implements View.OnClickL
         etCardNumberMyProfile.setFocusable(true);
         etAddressMyProfile.setFocusableInTouchMode(true);
         etAddressMyProfile.setFocusable(true);
+        imgEditUserProfile.setClickable(true);
 
     }
 
@@ -124,6 +127,8 @@ public class MyProfileFragment extends AbstractFragment implements View.OnClickL
         userInfoData.phone = etLandLineMyProfile.getText().toString();
         userInfoData.passportno = etCardNumberMyProfile.getText().toString();
         userInfoData.address = etAddressMyProfile.getText().toString();
+        Bitmap bitmap = ((BitmapDrawable) imgEditUserProfile.getDrawable()).getBitmap();
+        userInfoData.photo = Util.getEncoded64ImageStringFromBitmap(bitmap);
         return userInfoData;
     }
 
@@ -277,6 +282,7 @@ public class MyProfileFragment extends AbstractFragment implements View.OnClickL
                         FileOutputStream fos = new FileOutputStream(captured_image_uri.getPath());
                         rotated.compress(Bitmap.CompressFormat.JPEG, 85, fos);
                         imgEditUserProfile.setImageBitmap(bmp);
+
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

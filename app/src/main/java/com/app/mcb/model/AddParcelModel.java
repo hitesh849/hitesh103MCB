@@ -105,7 +105,8 @@ public class AddParcelModel extends BasicModel {
         request.put("recv_id", parcelDetailsData.receiverInfoData.id);
         request.put("status", parcelDetailsData.status);
         request.put("description", parcelDetailsData.description);
-        request.put("payment", "9200");
+        request.put("payment", parcelDetailsData.price);
+
         restInterface.addParcel(request, new Callback<AddParcelData>() {
             @Override
             public void success(AddParcelData addParcelData, Response response) {

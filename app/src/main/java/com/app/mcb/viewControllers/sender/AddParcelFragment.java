@@ -117,6 +117,7 @@ public class AddParcelFragment extends AbstractFragment implements View.OnClickL
         llAddParcelMain = (LinearLayout) view.findViewById(R.id.llAddParcelMain);
         llReceiverContainerMain = (LinearLayout) view.findViewById(R.id.llReceiverContainerMain);
         llBoxAddParcel = (LinearLayout) view.findViewById(R.id.llBoxAddParcel);
+        llBoxAddParcel.setVisibility(View.GONE);
         autoCompFromAddParcel = (AutoCompleteTextView) view.findViewById(R.id.autoCompFromAddParcel);
         autoCompToAddParcel = (AutoCompleteTextView) view.findViewById(R.id.autoCompToAddParcel);
         rlParcelTypeAddParcel = (RelativeLayout) view.findViewById(R.id.rlParcelTypeAddParcel);
@@ -336,10 +337,15 @@ public class AddParcelFragment extends AbstractFragment implements View.OnClickL
         } else if (id == R.id.txtSubmitAddParcel) {
             parcelDetailsData.weight = etParcelSizeAddParcel.getText().toString();
             parcelDetailsData.description = etDescriptionAddParcel.getText().toString();
+            if ("B".equals(parcelDetailsData.type)) {
+                parcelDetailsData.height = etHeightAddParcel.getText().toString();
+                parcelDetailsData.width = etWidthAddParcel.getText().toString();
+                parcelDetailsData.length = etLengthAddParcel.getText().toString();
+            }
             if (addParcelValidation()) {
-                if (parcelMode.equals("new"))
+                if ("new".equals(parcelMode))
                     getUserDetails();
-                else if (parcelMode.equals("edit"))
+                else if ("edit".equals(parcelMode))
                     updateParcels();
 
             }
@@ -389,27 +395,53 @@ public class AddParcelFragment extends AbstractFragment implements View.OnClickL
 
         if (TextUtils.isEmpty(parcelDetailsData.source)) {
             autoCompFromAddParcel.setError(getResources().getString(R.string.can_not_be_empty));
+            autoCompFromAddParcel.requestFocus();
             return false;
         }
         if (TextUtils.isEmpty(parcelDetailsData.destination)) {
             autoCompToAddParcel.setError(getResources().getString(R.string.can_not_be_empty));
+            autoCompFromAddParcel.requestFocus();
             return false;
         }
         if (TextUtils.isEmpty(parcelDetailsData.type)) {
             etParcelTypeAddParcelType.setError(getResources().getString(R.string.can_not_be_empty));
+            etParcelTypeAddParcelType.requestFocus();
             return false;
         }
 
-        if("B".equals(parcelDetailsData.type))
-        {
+        if ("B".equals(parcelDetailsData.type)) {
+            if (TextUtils.isEmpty(parcelDetailsData.height)) {
+                etHeightAddParcel.setError(getResources().getString(R.string.can_not_be_empty));
+                etHeightAddParcel.requestFocus();
+                return false;
+            }
 
+            if (TextUtils.isEmpty(parcelDetailsData.width)) {
+                etWidthAddParcel.setError(getResources().getString(R.string.can_not_be_empty));
+                etWidthAddParcel.requestFocus();
+                return false;
+            }
+            if (TextUtils.isEmpty(parcelDetailsData.length)) {
+                etLengthAddParcel.setError(getResources().getString(R.string.can_not_be_empty));
+                etLengthAddParcel.requestFocus();
+                return false;
+            }
         }
         if (TextUtils.isEmpty(parcelDetailsData.weight)) {
             etParcelSizeAddParcel.setError(getResources().getString(R.string.can_not_be_empty));
+            etParcelSizeAddParcel.requestFocus();
             return false;
         }
+
+        if (Integer.parseInt(parcelDetailsData.weight) > 30) {
+            etParcelSizeAddParcel.setError(String.format(getString(R.string.max_weight), Constants.MAX_WEIGHT, "kg"));
+            etParcelSizeAddParcel.requestFocus();
+            return false;
+        }
+
         if (TextUtils.isEmpty(parcelDetailsData.description)) {
             etDescriptionAddParcel.setError(getResources().getString(R.string.can_not_be_empty));
+            etDescriptionAddParcel.requestFocus();
             return false;
         }
         return true;

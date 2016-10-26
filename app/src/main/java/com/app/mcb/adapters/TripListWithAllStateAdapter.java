@@ -16,13 +16,13 @@ import com.app.mcb.dao.TripTransporterData;
 import java.util.ArrayList;
 
 /**
- * Created by u on 9/15/2016.
+ * Created by u on 10/26/2016.
  */
-public class TripListStateWiseAdapter extends RecyclerView.Adapter<TripListStateWiseAdapter.ViewHolder> {
+public class TripListWithAllStateAdapter extends RecyclerView.Adapter<TripListWithAllStateAdapter.ViewHolder> {
     private View.OnClickListener onClickListener;
     private ArrayList<TripTransporterData> tripDatas;
 
-    public TripListStateWiseAdapter(Context context, View.OnClickListener onClickListener, ArrayList<TripTransporterData> tripDatas) {
+    public TripListWithAllStateAdapter(Context context, View.OnClickListener onClickListener, ArrayList<TripTransporterData> tripDatas) {
         this.onClickListener = onClickListener;
         this.tripDatas = tripDatas;
     }
@@ -44,20 +44,22 @@ public class TripListStateWiseAdapter extends RecyclerView.Adapter<TripListState
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-
         TripTransporterData tripDataTransporter = (TripTransporterData) tripDatas.get(position);
         holder.llHomeRowMain.setOnClickListener(onClickListener);
-
-        holder.llRowHeaderMain.setVisibility(View.GONE);
+        holder.txtViewAllStateRow.setOnClickListener(onClickListener);
+        holder.llHomeRowMain.setTag(tripDataTransporter);
+        holder.txtViewAllStateRow.setTag(tripDataTransporter);
+        holder.llRowHeaderMain.setVisibility(View.VISIBLE);
+        holder.txtFromStateRowTripList.setText(tripDataTransporter.city);
         holder.txtTripIDTripList.setText(Constants.BEGIN_WITH_TRANSPORTER_ID + tripDataTransporter.id);
         holder.txtUserIdTripList.setText(Constants.BEGIN_WITH_USER_ID + tripDataTransporter.t_id);
         holder.txtFlightIdTripList.setText(tripDataTransporter.flight_no);
+        holder.txtArrivalTripList.setText(tripDataTransporter.flight_no);
         holder.txtFlightDateTripList.setText(Util.getDateFromDateTimeFormat(tripDataTransporter.arrival_time));
         holder.txtArrivalTimeTripList.setText(Util.getTimeFromDateTimeFormat(tripDataTransporter.arrival_time));
         holder.txtWeightTripList.setText(tripDataTransporter.capacity);
-        holder.txtArrivalTripList.setText(Util.getFirstName(tripDataTransporter.destination));
         holder.txtArrivalCityTripList.setText(tripDataTransporter.destination);
-
+        holder.txtArrivalTripList.setText(Util.getFirstName(tripDataTransporter.destination));
     }
 
     @Override

@@ -1,15 +1,20 @@
 package com.app.mcb.model;
 
 import android.content.Context;
+import android.text.TextUtils;
+import android.util.Log;
 
 import com.app.mcb.Utility.Constants;
 import com.app.mcb.dao.AirportData;
 import com.app.mcb.dao.FilterData;
-import com.app.mcb.dao.TripData;
 import com.app.mcb.dao.TripTransporterData;
 import com.app.mcb.database.DatabaseMgr;
+import com.app.mcb.retrointerface.RestInterface;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 import org.byteclues.lib.model.BasicModel;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 
@@ -18,13 +23,10 @@ import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-import com.app.mcb.retrointerface.RestInterface;
-import com.google.gson.JsonElement;
-
 /**
  * Created by Hitesh on 28-09-2016.
  */
-public class TripModel extends BasicModel {
+public class HomeTripModel extends BasicModel {
     RestAdapter adapter = new RestAdapter.Builder().setEndpoint(Constants.BASE_URL).build();
     RestInterface restInterface = adapter.create(RestInterface.class);
 
@@ -52,16 +54,52 @@ public class TripModel extends BasicModel {
 
     public void getTripListByFilter(FilterData filterData) {
         try {
-            HashMap<String, HashMap> request = new HashMap<String, HashMap>();
-            HashMap<String, String> subrequest = new HashMap<String, String>();
-            subrequest.put("dateFrom", filterData.fromDate);
-            subrequest.put("dateTo", filterData.toDate);
-            subrequest.put("locationfrom", filterData.fromLocation);
-            subrequest.put("locationto", filterData.toLocation);
+            HashMap<String,Object> request = new HashMap<String,Object>();
+            HashMap<String,String> subrequest = new HashMap<String,String>();
+            String blank = " ";
+            if (!TextUtils.isEmpty(filterData.fromDate))
+                subrequest.put("dateFrom", filterData.fromDate);
+            else
+                subrequest.put("dateFrom", blank);
+
+            if (!TextUtils.isEmpty(filterData.toDate))
+                subrequest.put("dateTo", filterData.toDate);
+            else
+                subrequest.put("dateTo", blank);
+
+
+            if (!TextUtils.isEmpty(filterData.fromLocation))
+                subrequest.put("locationfrom", filterData.fromLocation);
+            else
+                subrequest.put("locationfrom", blank);
+
+            if (!TextUtils.isEmpty(filterData.toLocation))
+                subrequest.put("locationto", filterData.toLocation);
+            else
+                subrequest.put("locationto", blank);
+
             subrequest.put("type", filterData.type);
             request.put("params", subrequest);
-
+            Log.d("test", request.toString());
             restInterface.getTripListByFilter(request, new Callback<TripTransporterData>() {
+                @Override
+                public void success(TripTransporterData tripData, Response response) {
+                    notifyObservers(tripData);
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    notifyObservers(error);
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void getTopForCityInHome() {
+        try {
+            restInterface.getTopForCityInHome(new Callback<TripTransporterData>() {
                 @Override
                 public void success(TripTransporterData tripData, Response response) {
                     notifyObservers(tripData);

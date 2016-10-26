@@ -104,7 +104,7 @@ public class ParcelsListFragment extends AbstractFragment implements View.OnClic
             ((ImageView) view).setBackgroundResource(R.mipmap.action_setting_hover);
             PopupMenu popup = new PopupMenu(getActivity(), view);
             MenuInflater inflater = popup.getMenuInflater();
-            inflater.inflate(R.menu.status_menu, popup.getMenu());
+            inflater.inflate(R.menu.parcel_status, popup.getMenu());
             popup.show();
         } else if (id == R.id.imgEditPLR) {
             ParcelDetailsData parcelDetailsData = (ParcelDetailsData) view.getTag();

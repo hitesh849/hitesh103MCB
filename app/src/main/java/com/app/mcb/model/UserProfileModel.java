@@ -32,6 +32,7 @@ public class UserProfileModel extends BasicModel {
             request.put("phone", userInfoData.phone);
             request.put("passportno", userInfoData.passportno);
             request.put("address", userInfoData.address);
+            request.put("photo", userInfoData.photo);
             if (userInfoData.name.trim().contains(" ")) {
                 String name[] = userInfoData.name.split(" ");
                 request.put("name", name[0]);

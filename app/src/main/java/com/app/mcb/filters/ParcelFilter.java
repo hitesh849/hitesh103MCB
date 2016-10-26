@@ -68,7 +68,7 @@ public class ParcelFilter implements View.OnClickListener {
         } else if (id == R.id.llStatusFilter) {
             PopupMenu popup = new PopupMenu(context, view);
             MenuInflater inflater = popup.getMenuInflater();
-            inflater.inflate(R.menu.status_menu, popup.getMenu());
+            inflater.inflate(R.menu.parcel_status, popup.getMenu());
             popup.show();
             popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                 @Override

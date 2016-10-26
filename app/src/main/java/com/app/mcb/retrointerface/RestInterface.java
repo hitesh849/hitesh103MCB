@@ -17,6 +17,8 @@ import com.app.mcb.dao.UserInfoData;
 import com.app.mcb.dao.WithDrawData;
 import com.google.gson.JsonElement;
 
+import org.json.JSONObject;
+
 import java.util.HashMap;
 
 import retrofit.Callback;
@@ -36,7 +38,11 @@ public interface RestInterface {
 
     @Headers({"Content-Type:application/json"})
     @POST("/searchhome")
-    public void getTripListByFilter(@Body HashMap<String, HashMap> request, Callback<TripTransporterData> cb);
+    public void getTripListByFilter(@Body HashMap<String,Object> request, Callback<TripTransporterData> cb);
+
+    @Headers({"Content-Type:application/json"})
+    @POST("/gettopcountrytrips")
+    public void getTopForCityInHome(Callback<TripTransporterData> cb);
 
     @Headers({"Content-Type:application/json"})
     @POST("/forgetpassword")

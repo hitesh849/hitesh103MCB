@@ -32,7 +32,7 @@
                     android:inputType="textNoSuggestions"
                     android:textColor="@color/white"
                     android:textColorHint="@color/dark_grey"
-                    android:textSize="@dimen/text_dim_14"  />
+                    android:textSize="@dimen/text_dim_14" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -46,9 +46,9 @@
                 <TextView
                     android:id="@+id/txtFromDateTransporterFilter"
                     style="@style/text_extra_small"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="27 July 2016"
+                    android:layout_weight="1"
                     android:textColor="@color/white" />
 
                 <ImageView
@@ -79,11 +79,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/dark_grey"
-                    android:hint="@string/from"
+                    android:hint="@string/to"
                     android:inputType="textNoSuggestions"
                     android:textColor="@color/white"
                     android:textColorHint="@color/dark_grey"
-                    android:textSize="@dimen/text_dim_14"  />
+                    android:textSize="@dimen/text_dim_14" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -92,15 +92,14 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingLeft="@dimen/dim_6"
-                >
+                android:paddingLeft="@dimen/dim_6">
 
                 <TextView
                     android:id="@+id/txtFromToTransporterFilter"
                     style="@style/text_extra_small"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="27 July 2016"
+                    android:layout_weight="1"
                     android:textColor="@color/white" />
 
                 <ImageView
