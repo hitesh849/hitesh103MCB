@@ -38,6 +38,5 @@ public class Constants {
     public static int MAX_WEIGHT = 30;
     public static String TRANSPORTER = "Transporter";
     public static String SENDER = "Sender";
-
 }
 

@@ -6,6 +6,7 @@ import com.app.mcb.dao.AirportData;
 import com.app.mcb.dao.ChangePasswordData;
 import com.app.mcb.dao.CommonResponseData;
 import com.app.mcb.dao.ForgetPasswordData;
+import com.app.mcb.dao.MyTripDetailsData;
 import com.app.mcb.dao.MyTripsData;
 import com.app.mcb.dao.MyWalletData;
 import com.app.mcb.dao.ParcelDetailsData;
@@ -141,5 +142,9 @@ public interface RestInterface {
     @Headers({"Content-Type:application/json"})
     @POST("/updatetrip")
     public void updateTrip(@Body HashMap<String, String> request, Callback<AddTrip> cb);
+
+    @Headers({"Content-Type:application/json"})
+    @POST("/gettransporterdetail/{tripId}")
+    public void getMyTripDetails(@Path("tripId") String tripId,Callback<MyTripDetailsData> cb);
 
 }

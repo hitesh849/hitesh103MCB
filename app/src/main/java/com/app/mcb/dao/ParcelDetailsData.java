@@ -39,5 +39,8 @@ public class ParcelDetailsData implements Serializable {
     public String transemail;
     public String price;
     public String MCBTransporterID;
+    public String BookingID;
+    public String senderemail;
+    public String sendername;
     public UserInfoData receiverInfoData;
 }
