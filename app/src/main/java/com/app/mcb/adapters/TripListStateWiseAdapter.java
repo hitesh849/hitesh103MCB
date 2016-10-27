@@ -16,7 +16,7 @@ import com.app.mcb.dao.TripTransporterData;
 import java.util.ArrayList;
 
 /**
- * Created by u on 9/15/2016.
+ * Created by Hitesh on 9/15/2016.
  */
 public class TripListStateWiseAdapter extends RecyclerView.Adapter<TripListStateWiseAdapter.ViewHolder> {
     private View.OnClickListener onClickListener;
@@ -44,10 +44,8 @@ public class TripListStateWiseAdapter extends RecyclerView.Adapter<TripListState
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-
         TripTransporterData tripDataTransporter = (TripTransporterData) tripDatas.get(position);
         holder.llHomeRowMain.setOnClickListener(onClickListener);
-
         holder.llRowHeaderMain.setVisibility(View.GONE);
         holder.txtTripIDTripList.setText(Constants.BEGIN_WITH_TRANSPORTER_ID + tripDataTransporter.id);
         holder.txtUserIdTripList.setText(Constants.BEGIN_WITH_USER_ID + tripDataTransporter.t_id);

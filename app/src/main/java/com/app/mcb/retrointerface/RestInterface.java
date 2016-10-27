@@ -41,6 +41,10 @@ public interface RestInterface {
     public void getTripListByFilter(@Body HashMap<String,Object> request, Callback<TripTransporterData> cb);
 
     @Headers({"Content-Type:application/json"})
+    @POST("/searchhome")
+    public void getParcelsListByFilter(@Body HashMap<String,Object> request, Callback<ParcelListData> cb);
+
+    @Headers({"Content-Type:application/json"})
     @POST("/gettopcountrytrips")
     public void getTopForCityInHome(Callback<TripTransporterData> cb);
 

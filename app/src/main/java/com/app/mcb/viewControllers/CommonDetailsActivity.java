@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.app.mcb.MainActivity;
 import com.app.mcb.R;
 import com.app.mcb.Utility.Constants;
 import com.app.mcb.Utility.Util;
@@ -14,9 +15,10 @@ import com.app.mcb.adapters.TripDetailsVPAdapter;
 import com.app.mcb.custom.AppHeaderView;
 import com.app.mcb.dao.FilterData;
 import com.app.mcb.dao.TripTransporterData;
-import com.app.mcb.filters.HomeFilter;
 import com.app.mcb.filters.CommonListener;
+import com.app.mcb.filters.HomeFilter;
 import com.app.mcb.model.HomeTripModel;
+import com.app.mcb.sharedPreferences.Config;
 
 import org.byteclues.lib.model.BasicModel;
 import org.byteclues.lib.view.AbstractFragmentActivity;
@@ -102,21 +104,20 @@ public class CommonDetailsActivity extends AbstractFragmentActivity implements V
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-
     }
 
     @Override
     public void onClick(View v) {
-
         int id = v.getId();
         if (id == R.id.llBookNoewTripDetailsRow1 || id == R.id.llBookNoewTripDetailsRow2) {
-
-            TripTransporterData tripTransporterData=(TripTransporterData)v.getTag();
-            Intent intent=new Intent(this, LoginActivity.class);
-            intent.putExtra("data",tripTransporterData);
-            /*Bundle bundle=new Bundle();
-            bundle.putSerializable();
-            intent.putExtra("bundle",bundle);*/
+            Intent intent = null;
+            if (Config.getLoginStatus()) {
+                intent = new Intent(this, MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            } else {
+                intent = new Intent(this, LoginActivity.class);
+            }
+            intent.putExtra("data", ((TripTransporterData) v.getTag()));
             startActivity(intent);
         }
     }

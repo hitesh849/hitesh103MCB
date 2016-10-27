@@ -10,9 +10,11 @@ import android.widget.LinearLayout;
 import com.app.mcb.R;
 import com.app.mcb.Utility.Constants;
 import com.app.mcb.Utility.Util;
+import com.app.mcb.adapters.ParcelListHomeAdapter;
 import com.app.mcb.adapters.TripListStateWiseAdapter;
 import com.app.mcb.custom.AppHeaderView;
 import com.app.mcb.dao.FilterData;
+import com.app.mcb.dao.ParcelListData;
 import com.app.mcb.dao.TripTransporterData;
 import com.app.mcb.filters.CommonListener;
 import com.app.mcb.filters.TransporterFilter;
@@ -26,29 +28,30 @@ import java.util.Observable;
 import retrofit.RetrofitError;
 
 /**
- * Created by u on 9/15/2016.
+ * Created by u on 10/27/2016.
  */
-public class CommonListWithStateActivity extends AbstractFragmentActivity implements View.OnClickListener, CommonListener {
+public class ParcelsForSenderActivity extends AbstractFragmentActivity implements View.OnClickListener, CommonListener {
 
     private AppHeaderView appHeaderView;
     private RecyclerView rvTripHome;
     private LinearLayout llBecomeTransporter;
     private LinearLayout llTripListWithState;
     HomeTripModel homeTripModel = new HomeTripModel();
-    private TripTransporterData tripTransporterData;
+    private ParcelListData parcelListData;
+    FilterData filterData = new FilterData();
 
     @Override
     protected void onCreatePost(Bundle savedInstanceState) {
         setContentView(R.layout.trip_list_specific_state);
         init();
+        filterData.type = Constants.SENDER;
         Bundle bundle = getIntent().getBundleExtra("KEY_BUNDLE");
         if (bundle != null) {
-            tripTransporterData = (TripTransporterData) bundle.getSerializable("KEY_DATA");
+            parcelListData = (ParcelListData) bundle.getSerializable("KEY_DATA");
             String flag = bundle.getString("FLAG");
-            FilterData filterData = new FilterData();
-            filterData.type = Constants.TRANSPORTER;
-            if ("All".equals(flag)) {
-                filterData.fromLocation = tripTransporterData.source;
+        }
+            /*if ("All".equals(flag)) {
+                filterData.fromLocation = parcelListData.source;
             } else {
 
                 filterData.fromLocation = tripTransporterData.source;
@@ -56,8 +59,11 @@ public class CommonListWithStateActivity extends AbstractFragmentActivity implem
                 filterData.fromDate = tripTransporterData.arrival_time;
                 filterData.toDate = tripTransporterData.dep_time;
             }
-            getTripByFilter(filterData);
-        }
+        } else {*/
+            filterData.fromDate = Util.getCurrentDate();
+            filterData.toDate = Util.getNextDays(5);
+        //}
+        getParcelsListByFilter(filterData);
     }
 
     private void init() {
@@ -85,12 +91,12 @@ public class CommonListWithStateActivity extends AbstractFragmentActivity implem
         Util.dimissProDialog();
 
         try {
-            if (data != null && data instanceof TripTransporterData) {
-                tripTransporterData = (TripTransporterData) data;
-                if (tripTransporterData.status.equals("success")) {
-                    if (tripTransporterData.response != null)
-                        rvTripHome.setAdapter(new TripListStateWiseAdapter(this, this, tripTransporterData.response));
-                    if (tripTransporterData.response.size() <= 0)
+            if (data != null && data instanceof ParcelListData) {
+                parcelListData = (ParcelListData) data;
+                if (parcelListData.status.equals("success")) {
+                    if (parcelListData.response != null)
+                        rvTripHome.setAdapter(new ParcelListHomeAdapter(this, this, parcelListData.response));
+                    if (parcelListData.response.size() <= 0)
                         Util.showOKSnakBar(llTripListWithState, getResources().getString(R.string.trip_unavailable));
                 }
             } else if (data != null && data instanceof RetrofitError) {
@@ -108,10 +114,10 @@ public class CommonListWithStateActivity extends AbstractFragmentActivity implem
         int id = v.getId();
         if (id == R.id.llBackHeader) {
             onBackPressed();
-        } else if (id == R.id.llHomeRowMain) {
-            Intent intent = new Intent(this, CommonDetailsActivity.class);
+        } else if (id == R.id.llSenderHomeRowMain) {
+            Intent intent = new Intent(this, ParcelsDetailsForSenderHome.class);
             Bundle bundle = new Bundle();
-            bundle.putSerializable("KEY_DATA", tripTransporterData);
+            bundle.putSerializable("KEY_DATA", parcelListData);
             intent.putExtra("KEY_BUNDLE", bundle);
             startActivity(intent);
         } else if (id == R.id.llBecomeTransporter) {
@@ -133,11 +139,11 @@ public class CommonListWithStateActivity extends AbstractFragmentActivity implem
         }
     }
 
-    private void getTripByFilter(FilterData filterData) {
+    private void getParcelsListByFilter(FilterData filterData) {
         try {
             if (Util.isDeviceOnline()) {
                 Util.showProDialog(this);
-                homeTripModel.getTripListByFilter(filterData);
+                homeTripModel.getParcelsListByFilter(filterData);
             } else {
                 Util.showAlertDialog(null, getResources().getString(R.string.noInternetMsg));
             }
@@ -148,7 +154,7 @@ public class CommonListWithStateActivity extends AbstractFragmentActivity implem
 
     @Override
     public void filterData(FilterData filterData) {
-        filterData.type = Constants.KEY_TRANSPORTER;
-        getTripByFilter(filterData);
+        filterData.type = Constants.SENDER;
+        getParcelsListByFilter(filterData);
     }
 }

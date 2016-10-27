@@ -33,7 +33,7 @@ public class TransporterFilter implements View.OnClickListener {
     private AutoCompleteTextView autoCompToTransporterFilter;
     private TextView txtFromDateTransporterFilter;
     private ImageView imgFromCalenderTransporterFilter;
-    private TextView txtFromToTransporterFilter;
+    private TextView txtToDateTransporterFilter;
     private LinearLayout llSearchTransporterFilter;
     private FilterData filterData = new FilterData();
 
@@ -46,6 +46,17 @@ public class TransporterFilter implements View.OnClickListener {
         this.context = context;
         init(view);
         setAdapter();
+        setDate();
+    }
+
+    private void setDate() {
+        filterData.fromDate = Util.getCurrentDate();
+        filterData.toDate = Util.getNextDays(5);
+        txtFromDateTransporterFilter.setText(Util.getDDMMYYYYFormat(filterData.fromDate, "yyyy/MM/dd"));
+        txtToDateTransporterFilter.setText(Util.getDDMMYYYYFormat(filterData.toDate, "yyyy/MM/dd"));
+        txtFromDateTransporterFilter.setTag(filterData.fromDate);
+        txtToDateTransporterFilter.setTag(filterData.toDate);
+
     }
 
     private void init(View view) {
@@ -54,10 +65,11 @@ public class TransporterFilter implements View.OnClickListener {
         txtFromDateTransporterFilter = (TextView) view.findViewById(R.id.txtFromDateTransporterFilter);
         imgFromCalenderTransporterFilter = (ImageView) view.findViewById(R.id.imgFromCalenderTransporterFilter);
         imgToCalenderTransporterFilter = (ImageView) view.findViewById(R.id.imgToCalenderTransporterFilter);
-        txtFromToTransporterFilter = (TextView) view.findViewById(R.id.txtFromToTransporterFilter);
+        txtToDateTransporterFilter = (TextView) view.findViewById(R.id.txtToDateTransporterFilter);
         llSearchTransporterFilter = (LinearLayout) view.findViewById(R.id.llSearchTransporterFilter);
         imgFromCalenderTransporterFilter.setOnClickListener(this);
         imgToCalenderTransporterFilter.setOnClickListener(this);
+        llSearchTransporterFilter.setOnClickListener(this);
 
     }
 
@@ -76,7 +88,14 @@ public class TransporterFilter implements View.OnClickListener {
         if (id == R.id.imgFromCalenderTransporterFilter) {
             showCalendar(txtFromDateTransporterFilter);
         } else if (id == R.id.imgToCalenderTransporterFilter) {
-            showCalendar(txtFromToTransporterFilter);
+            showCalendar(txtToDateTransporterFilter);
+        } else if (id == R.id.llSearchTransporterFilter) {
+            FilterData filterData = new FilterData();
+            filterData.fromLocation = autoCompFromTransporterFilter.getText().toString();
+            filterData.toLocation = autoCompToTransporterFilter.getText().toString();
+            filterData.toDate = ((String) txtToDateTransporterFilter.getTag());
+            filterData.fromDate = ((String) txtFromDateTransporterFilter.getTag());
+            commonListener.filterData(filterData);
         }
     }
 
@@ -89,14 +108,16 @@ public class TransporterFilter implements View.OnClickListener {
         datePickerDialog = DatePickerDialog.newInstance(new DatePickerDialog.OnDateSetListener() {
                                                             @Override
                                                             public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
-                                                                textView.setText(Util.getDDMMYYYYFormat(dayOfMonth + "/" + (monthOfYear+1) + "/" + year, "dd/MM/yyyy"));
-                                                                textView.setTag("");
+                                                                textView.setText(Util.getDDMMYYYYFormat(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year, "dd/MM/yyyy"));
+                                                                textView.setTag((year + "/" + (monthOfYear + 1) + "/" + dayOfMonth));
                                                             }
                                                         }
                 , mYear, mMonth, mDay
         );
         datePickerDialog.setAccentColor(context.getResources().getColor(R.color.primary_blue));
         datePickerDialog.show(((AbstractFragmentActivity) context).getFragmentManager(), "Datepickerdialog");
-        ;
+        Calendar calendar = Calendar.getInstance();
+        datePickerDialog.setMinDate(calendar);
     }
+
 }

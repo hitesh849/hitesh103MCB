@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/llHomeFragmentMain"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/screen_bg"
-    android:id="@+id/llHomeFragmentMain"
     android:orientation="vertical">
 
-    <include layout="@layout/trip_filter" />
+    <include layout="@layout/transporter_search_filter" />
 
     <TextView
         style="@style/text_medium"
@@ -27,8 +27,8 @@
             android:id="@+id/rvTripHome"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:overScrollMode="never"
-            android:layout_above="@+id/llFooter" />
+            android:layout_above="@+id/llFooter"
+            android:overScrollMode="never" />
 
         <LinearLayout
             android:id="@+id/llFooter"

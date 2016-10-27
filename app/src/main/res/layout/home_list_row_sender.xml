@@ -4,55 +4,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/dim_8">
-
-        <LinearLayout
-            android:id="@+id/llRowHeaderMain"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/txtFromRow"
-                style="@style/text_semi_medium"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/dim_8"
-                android:text="@string/from" />
-
-            <TextView
-                android:id="@+id/txtFromStateRowTripList"
-                style="@style/text_medium"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/txtFromRow" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="bottom|right">
-
-                <TextView
-                    android:id="@+id/txtViewAllStateRow"
-                    style="@style/text_small"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/txtFromRow"
-                    android:text="@string/view_all" />
-
-            </LinearLayout>
-        </LinearLayout>
-    </RelativeLayout>
 
     <LinearLayout
-        android:id="@+id/llHomeRowMain"
+        android:id="@+id/llSenderHomeRowMain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dim_8"
-        android:layout_marginRight="@dimen/dim_8"
+        android:layout_margin="@dimen/dim_8"
         android:background="@drawable/rounded_white_bg"
         android:orientation="horizontal"
         android:paddingBottom="@dimen/dim_10"
@@ -81,19 +38,21 @@
                 style="@style/text_extra_small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/trip_id" />
+                android:text="@string/parcel_id" />
 
             <TextView
-                android:id="@+id/txtTripIDTripList"
+                android:id="@+id/txtParcelIDParcelList"
                 style="@style/text_medium"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="asdasd" />
 
             <TextView
-                android:id="@+id/txtUserIdTripList"
+                android:id="@+id/txtUserIdParcelListHome"
                 style="@style/text_semi_medium"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="Ujidjl" />
 
         </LinearLayout>
 
@@ -109,19 +68,28 @@
                 style="@style/text_extra_small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/flight_details" />
+                android:text="@string/from" />
 
             <TextView
-                android:id="@+id/txtFlightIdTripList"
+                android:id="@+id/txtFromParcelList"
                 style="@style/text_medium"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="Jaipur" />
 
             <TextView
-                android:id="@+id/txtFlightDateTripList"
+                android:id="@+id/txtFromCityLongParcelList"
+                style="@style/text_extra_small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Jaipur" />
+
+            <TextView
+                android:id="@+id/txtFromDateParcelListHome"
                 style="@style/text_semi_medium"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="18 Oct 2016" />
 
         </LinearLayout>
 
@@ -142,7 +110,7 @@
                     style="@style/text_extra_small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/arrival_colon" />
+                    android:text="@string/to" />
 
                 <TextView
                     android:id="@+id/txtArrivalCityTripList"
@@ -158,26 +126,26 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/txtArrivalTripList"
+                    android:id="@+id/txtToParcelListHome"
                     style="@style/text_medium"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    style="@style/text_extra_small"
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dim_2"
-                    android:text="(GMT +5)"
-                    android:visibility="gone" />
+                    android:text="Mumbai" />
+
 
             </LinearLayout>
-
             <TextView
-                android:id="@+id/txtArrivalTimeTripList"
+                android:id="@+id/txtToCityLongParcelList"
+                style="@style/text_extra_small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Jaipur" />
+            <TextView
+                android:id="@+id/txtToDateParcelListHome"
                 style="@style/text_semi_medium"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="18 Oct 2016" />
 
         </LinearLayout>
 
@@ -201,18 +169,12 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/txtWeightTripList"
+                    android:id="@+id/txtWeightParcelListHome"
                     style="@style/text_medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="" />
 
-                <TextView
-                    style="@style/text_extra_small"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dim_2"
-                    android:text="KG" />
 
             </LinearLayout>
 

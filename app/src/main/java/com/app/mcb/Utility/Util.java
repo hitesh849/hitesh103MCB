@@ -62,8 +62,10 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.channels.FileChannel;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -258,6 +260,14 @@ public class Util {
         DateTime now = new DateTime();
         LocalDate today = now.toLocalDate();
         return today.toString().replaceAll("-", "/");
+    }
+
+    public static String getNextDays(int days) {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, days);
+        System.out.println(dateFormat.format(cal.getTime()));
+        return dateFormat.format(cal.getTime());
     }
 
     public static String getDateFromDateTimeFormat(String dateTime) {

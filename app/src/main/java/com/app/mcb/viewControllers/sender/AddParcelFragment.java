@@ -1,5 +1,6 @@
 package com.app.mcb.viewControllers.sender;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
@@ -34,6 +35,7 @@ import com.app.mcb.database.DatabaseMgr;
 import com.app.mcb.filters.CommonListener;
 import com.app.mcb.filters.TransporterFilter;
 import com.app.mcb.model.AddParcelModel;
+import com.app.mcb.viewControllers.CommonListWithStateActivity;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import org.byteclues.lib.model.BasicModel;
@@ -555,9 +557,19 @@ public class AddParcelFragment extends AbstractFragment implements View.OnClickL
         return true;
     }
 
-
     @Override
     public void filterData(FilterData filterData) {
+        filterData.type = Constants.KEY_TRANSPORTER;
+        TripTransporterData tripTransporterData = new TripTransporterData();
+        tripTransporterData.arrival_time = filterData.fromDate;
+        tripTransporterData.dep_time = filterData.toDate;
+        tripTransporterData.source = filterData.fromLocation;
+        tripTransporterData.destination = filterData.toLocation;
+        Intent intent = new Intent(getActivity(), CommonListWithStateActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("KEY_DATA", tripTransporterData);
+        intent.putExtra("KEY_BUNDLE", bundle);
+        startActivity(intent);
 
     }
 }

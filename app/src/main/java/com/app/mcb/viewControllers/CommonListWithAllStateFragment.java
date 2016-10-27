@@ -22,7 +22,7 @@ import com.app.mcb.dao.FilterData;
 import com.app.mcb.dao.TripTransporterData;
 import com.app.mcb.database.DatabaseMgr;
 import com.app.mcb.filters.CommonListener;
-import com.app.mcb.filters.HomeFilter;
+import com.app.mcb.filters.TransporterFilter;
 import com.app.mcb.model.HomeTripModel;
 
 import org.byteclues.lib.model.BasicModel;
@@ -42,6 +42,7 @@ public class CommonListWithAllStateFragment extends AbstractFragment implements 
     private HomeTripModel homeTripModel = new HomeTripModel();
     private TripTransporterData tripTransporterData;
     private LinearLayout llHomeFragmentMain;
+    private LinearLayout llFindSenderTransporter;
 
     @Override
     protected View onCreateViewPost(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -65,8 +66,10 @@ public class CommonListWithAllStateFragment extends AbstractFragment implements 
         rvTripHome = (RecyclerView) rootView.findViewById(R.id.rvTripHome);
         llBecomeTransporter = (LinearLayout) rootView.findViewById(R.id.llBecomeTransporter);
         llHomeFragmentMain = (LinearLayout) rootView.findViewById(R.id.llHomeFragmentMain);
+        llFindSenderTransporter = (LinearLayout) rootView.findViewById(R.id.llFindSenderTransporter);
         llBecomeTransporter.setOnClickListener(this);
-        HomeFilter.addFilterView(getActivity(), rootView, this);
+        llFindSenderTransporter.setOnClickListener(this);
+        TransporterFilter.addFilterView(getActivity(), rootView, this);
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         rvTripHome.setLayoutManager(llm);
@@ -121,10 +124,14 @@ public class CommonListWithAllStateFragment extends AbstractFragment implements 
             Bundle bundle = new Bundle();
             TripTransporterData tripTransporterData = (TripTransporterData) v.getTag();
             bundle.putSerializable("KEY_DATA", tripTransporterData);
+            bundle.putString("FLAG", "All");
             intent.putExtra("KEY_BUNDLE", bundle);
             startActivity(intent);
         } else if (id == R.id.llBecomeTransporter) {
             Intent intent = new Intent(getActivity(), SignUpActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.llFindSenderTransporter) {
+            Intent intent = new Intent(getActivity(), ParcelsForSenderActivity.class);
             startActivity(intent);
         }
     }

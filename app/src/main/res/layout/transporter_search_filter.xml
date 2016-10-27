@@ -95,7 +95,7 @@
                 android:paddingLeft="@dimen/dim_6">
 
                 <TextView
-                    android:id="@+id/txtFromToTransporterFilter"
+                    android:id="@+id/txtToDateTransporterFilter"
                     style="@style/text_extra_small"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
