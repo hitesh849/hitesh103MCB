@@ -8,11 +8,13 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.app.mcb.R;
+import com.app.mcb.Utility.Constants;
 import com.app.mcb.Utility.Util;
 import com.app.mcb.adapters.MyTripDetailsVPAdapter;
 import com.app.mcb.adapters.TripDetailsVPAdapter;
 import com.app.mcb.dao.FilterData;
 import com.app.mcb.dao.MyTripDetailsData;
+import com.app.mcb.dao.MyTripsData;
 import com.app.mcb.dao.TripData;
 import com.app.mcb.dao.TripTransporterData;
 import com.app.mcb.model.MyTripParcelListModel;
@@ -32,7 +34,7 @@ public class MyTripParcelActivity extends AbstractFragmentActivity implements Vi
     private ViewPager vpMyTripParcelList;
     private LinearLayout llCountDotsMain;
     private RelativeLayout rlMyTripParcelListMain;
-    String TripId;
+    MyTripsData myTripsData;
     private MyTripParcelListModel myTripParcelListModel=new MyTripParcelListModel();
     @Override
     protected void onCreatePost(Bundle savedInstanceState) {
@@ -40,8 +42,11 @@ public class MyTripParcelActivity extends AbstractFragmentActivity implements Vi
         rlMyTripParcelListMain = (RelativeLayout) findViewById(R.id.rlMyTripParcelListMain);
         vpMyTripParcelList = (ViewPager) findViewById(R.id.vpMyTripParcelList);
         llCountDotsMain = (LinearLayout) findViewById(R.id.llCountDotsMain);
-        TripId=(String)getIntent().getStringExtra("TripId");
-        getMyTripDetails(TripId);
+        Bundle bundle = getIntent().getBundleExtra("KEY_BUNDLE");
+        if (bundle != null) {
+            myTripsData = (MyTripsData) bundle.getSerializable("KEY_DATA");
+        }
+        getMyTripDetails(myTripsData.id);
         viewPagerChangeListener();
         drawPageSelectionIndicators(0);
     }
@@ -112,12 +117,13 @@ public class MyTripParcelActivity extends AbstractFragmentActivity implements Vi
     public void update(Observable observable, Object data) {
 
         Util.dimissProDialog();
-
         try {
             if (data != null && data instanceof MyTripDetailsData) {
                 MyTripDetailsData myTripDetailsData = (MyTripDetailsData) data;
                 if (myTripDetailsData.status.equals("success")) {
-                    if (myTripDetailsData.parcel != null)
+
+                    if(Constants.TripPending.equals(myTripsData.status))
+
                         vpMyTripParcelList.setAdapter(new MyTripDetailsVPAdapter(this,this, myTripDetailsData.parcel));
 
                     if (myTripDetailsData.response.size() <= 0)

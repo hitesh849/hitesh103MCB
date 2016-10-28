@@ -5,6 +5,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+
+
+    <include
+        android:id="@+id/productHeader"
+        layout="@layout/app_header_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <RelativeLayout
         android:id="@+id/rlMyTripParcelListMain"
         android:layout_width="match_parent"

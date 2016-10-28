@@ -144,7 +144,7 @@ public interface RestInterface {
     public void updateTrip(@Body HashMap<String, String> request, Callback<AddTrip> cb);
 
     @Headers({"Content-Type:application/json"})
-    @POST("/gettransporterdetail/{tripId}")
+    @GET("/gettransporterdetail/{tripId}")
     public void getMyTripDetails(@Path("tripId") String tripId,Callback<MyTripDetailsData> cb);
 
 }

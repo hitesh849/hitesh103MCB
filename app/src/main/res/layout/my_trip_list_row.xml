@@ -286,7 +286,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dim_6"
                     android:layout_marginRight="@dimen/dim_6"
-                    android:layout_weight="1"
+                    android:layout_weight=".5"
                     android:orientation="vertical">
 
                     <TextView
@@ -302,12 +302,85 @@
                         android:layout_height="wrap_content"
                         android:text="" />
 
-                </LinearLayout>
+                    <TextView
+                        android:id="@+id/txtRemainingCapacityMyTripListRow"
+                        style="@style/text_large"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="" />
 
+                </LinearLayout>
 
             </LinearLayout>
 
             <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="@dimen/dim_8"
+                android:layout_marginTop="@dimen/dim_8"
+                android:background="@color/black" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dim_8"
+                android:background="@drawable/rounded_white_bg"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+
+
+
+                <LinearLayout
+                    android:id="@+id/llFindParcelsMyTripList"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dim_6"
+                    android:layout_marginRight="@dimen/dim_6"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/text_medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/find" />
+
+                    <ImageView
+                        android:id="@+id/imgFindParcels"
+                        style="@style/text_large"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/allparcel_select"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llBookedParcelsMyTripList"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dim_6"
+                    android:layout_marginRight="@dimen/dim_6"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/text_medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/booked" />
+
+                    <ImageView
+                        style="@style/text_large"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/allparcel_select"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+ <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginBottom="@dimen/dim_8"
@@ -326,7 +399,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/status" />
+                    android:text="@string/action" />
 
                 <ImageView
                     android:id="@+id/imgViewParcelListRow"
@@ -357,7 +430,12 @@
 
 
             </LinearLayout>
-
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="@dimen/dim_8"
+                android:layout_marginTop="@dimen/dim_8"
+                android:background="@color/black" />
         </LinearLayout>
     </ScrollView>
 

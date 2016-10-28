@@ -175,4 +175,6 @@
     <string name="width">Width</string>
     <string name="length">Length</string>
     <string name="max_weight">Max  %1$s  %2$s.</string>
+    <string name="find">Find</string>
+    <string name="remaining_capacity">(Remaining Capacity: %1$s)</string>
 </resources>

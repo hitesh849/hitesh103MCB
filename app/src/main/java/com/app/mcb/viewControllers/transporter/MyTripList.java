@@ -1,5 +1,6 @@
 package com.app.mcb.viewControllers.transporter;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
@@ -15,17 +16,13 @@ import com.app.mcb.R;
 import com.app.mcb.Utility.Constants;
 import com.app.mcb.Utility.Util;
 import com.app.mcb.adapters.MyTripListVPAdapter;
-import com.app.mcb.adapters.ParcelsListVPAdapter;
 import com.app.mcb.dao.CommonResponseData;
 import com.app.mcb.dao.FilterData;
 import com.app.mcb.dao.MyTripsData;
-import com.app.mcb.dao.ParcelDetailsData;
-import com.app.mcb.dao.TripData;
 import com.app.mcb.filters.CommonListener;
 import com.app.mcb.filters.TripFilter;
 import com.app.mcb.model.MyTripsModel;
 import com.app.mcb.sharedPreferences.Config;
-import com.app.mcb.viewControllers.sender.AddParcelFragment;
 
 import org.byteclues.lib.model.BasicModel;
 import org.byteclues.lib.view.AbstractFragment;
@@ -122,6 +119,13 @@ public class MyTripList extends AbstractFragment implements View.OnClickListener
             addTripFragment.setArguments(bundle);
 
             Util.replaceFragment(getActivity(), R.id.fmContainerTransporterHomeMain, addTripFragment);
+        } else if (id == R.id.llBookedParcelsMyTripList || id == R.id.llFindParcelsMyTripList) {
+            MyTripsData myTripsData = (MyTripsData) view.getTag();
+            Intent intent = new Intent(getActivity(), MyTripParcelActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("KEY_DATA", myTripsData);
+            intent.putExtra("KEY_BUNDLE", bundle);
+            startActivity(intent);
         }
     }
 

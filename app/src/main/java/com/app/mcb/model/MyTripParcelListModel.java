@@ -5,6 +5,7 @@ import android.content.Context;
 import com.app.mcb.Utility.Constants;
 import com.app.mcb.dao.MyTripDetailsData;
 import com.app.mcb.retrointerface.RestInterface;
+import com.google.gson.JsonElement;
 
 import org.byteclues.lib.model.BasicModel;
 
@@ -30,7 +31,7 @@ public class MyTripParcelListModel extends BasicModel{
 
                 @Override
                 public void failure(RetrofitError error) {
-
+                    notifyObservers(error);
                 }
             });
         } catch (Exception ex) {
