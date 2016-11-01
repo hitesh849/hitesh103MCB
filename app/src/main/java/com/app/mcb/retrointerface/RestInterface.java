@@ -7,6 +7,7 @@ import com.app.mcb.dao.BookingRequestData;
 import com.app.mcb.dao.ChangePasswordData;
 import com.app.mcb.dao.CommonResponseData;
 import com.app.mcb.dao.ForgetPasswordData;
+import com.app.mcb.dao.ForgotPasswordData;
 import com.app.mcb.dao.MyTripDetailsData;
 import com.app.mcb.dao.MyTripsData;
 import com.app.mcb.dao.MyWalletData;
@@ -64,6 +65,10 @@ public interface RestInterface {
     @Headers({"Content-Type:application/json"})
     @POST("/getloginuser")
     public void getLoginUser(@Body HashMap<String, String> request, Callback<UserInfoData> cb);
+
+    @Headers({"Content-Type:application/json"})
+    @POST("/forgetpassword")
+    public void forgotPassword(@Body HashMap<String, String> request, Callback<ForgotPasswordData> cb);
 
     @Headers({"Content-Type:application/json"})
     @POST("/searchuser")

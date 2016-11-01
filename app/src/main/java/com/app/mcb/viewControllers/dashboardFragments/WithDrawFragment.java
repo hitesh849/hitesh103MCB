@@ -128,6 +128,10 @@ public class WithDrawFragment extends AbstractFragment implements View.OnClickLi
                 WithDrawData withDrawData = (WithDrawData) data;
                 if ("success".equals(withDrawData.status)) {
                     vpWithDrawStatus.setAdapter(new WithDrawVPAdapter(getActivity(), withDrawData.response));
+
+                    if (withDrawData.response.size() == 0) {
+                        Util.showOKSnakBar(rlWithDrawMain, getString(R.string.no_pending_request_available));
+                    }
                 } else if ("Error".equals(userInfoData.status)) {
                     Util.showOKSnakBar(rlWithDrawMain, userInfoData.errorMessage);
                 }

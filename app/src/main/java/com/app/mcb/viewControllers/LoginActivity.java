@@ -12,6 +12,7 @@ import com.app.mcb.MainActivity;
 import com.app.mcb.R;
 import com.app.mcb.Utility.Constants;
 import com.app.mcb.Utility.Util;
+import com.app.mcb.dao.ForgetPasswordData;
 import com.app.mcb.dao.TripTransporterData;
 import com.app.mcb.dao.UserInfoData;
 import com.app.mcb.model.UserAuthenticationModel;
@@ -200,7 +201,7 @@ public class LoginActivity extends AbstractFragmentActivity implements View.OnCl
         } else if (id == R.id.txtSignUpLogin) {
             startActivity(new Intent(this, SignUpActivity.class));
         } else if (id == R.id.txtForgetPasswordLogin) {
-
+            startActivity(new Intent(this, ForgotPasswordActivity.class));
         }
     }
 }

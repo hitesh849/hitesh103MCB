@@ -179,4 +179,5 @@
     <string name="find">Find</string>
     <string name="remaining_capacity">(Remaining Capacity: %1$s)</string>
     <string name="collected">Collected</string>
+    <string name="no_pending_request_available">No Pending Requests Available</string>
 </resources>

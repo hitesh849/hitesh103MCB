@@ -75,6 +75,10 @@ public class MyWalletFragment extends AbstractFragment implements View.OnClickLi
                 if ("success".equals(myWalletData.status)) {
                     if (myWalletData.response != null) {
                         rvTripListMyWallet.setAdapter(new MyWalletAdapter(getActivity(), myWalletData.response));
+                        if(myWalletData.response.size()==0)
+                        {
+                            //Util.showOKSnakBar(llMyWalletMain,);
+                        }
                     }
                 } else if ("Error".equals(myWalletData.status)) {
                     Util.showOKSnakBar(llMyWalletMain, myWalletData.errorMessage);

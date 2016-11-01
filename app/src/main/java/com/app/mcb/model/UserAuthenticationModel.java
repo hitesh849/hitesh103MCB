@@ -6,7 +6,9 @@ import android.webkit.JsPromptResult;
 import com.app.mcb.Utility.Constants;
 import com.app.mcb.dao.AirportData;
 import com.app.mcb.dao.ChangePasswordData;
+import com.app.mcb.dao.CommonResponseData;
 import com.app.mcb.dao.ForgetPasswordData;
+import com.app.mcb.dao.ForgotPasswordData;
 import com.app.mcb.dao.UserInfoData;
 import com.app.mcb.database.DatabaseMgr;
 import com.app.mcb.retrointerface.RestInterface;
@@ -111,6 +113,27 @@ public class UserAuthenticationModel extends BasicModel {
                 @Override
                 public void success(UserInfoData changePasswordData, Response response) {
                     notifyObservers(changePasswordData);
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    notifyObservers(error);
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void forgotPassword(String email) {
+        try {
+
+            HashMap<String, String> response = new HashMap<String, String>();
+            response.put("userName", email);
+            restInterface.forgotPassword(response, new Callback<ForgotPasswordData>() {
+                @Override
+                public void success(ForgotPasswordData forgotPasswordData, Response response) {
+                    notifyObservers(forgotPasswordData);
                 }
 
                 @Override
