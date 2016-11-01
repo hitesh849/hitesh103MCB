@@ -16,93 +16,221 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+
+            >
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-
-                >
+                android:orientation="horizontal"
+                android:weightSum="2">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="3">
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        style="@style/text_semi_medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/from" />
 
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="2"
                         android:orientation="vertical">
 
-
                         <TextView
-                            style="@style/text_semi_medium"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/booking_id" />
-
-
-                        <TextView
-                            android:id="@+id/txtBookingId"
+                            android:id="@+id/txtFromCityShortMyTripParcel"
                             style="@style/text_large"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="fsddsf" />
-
+                            android:layout_height="wrap_content" />
 
                         <TextView
-                            style="@style/text_semi_medium"
+                            android:id="@+id/txtFromCityLongMyTripParcel"
+                            style="@style/text_small"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/dim_6"
-                            android:text="@string/sender_email_id" />
-
-
-                        <TextView
-                            android:id="@+id/txtSenderEmailId"
-                            style="@style/text_medium"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="fsddsf" />
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:visibility="gone">
-
-                            <ImageView
-                                android:layout_width="@dimen/dim_24"
-                                android:layout_height="@dimen/dim_24"
-                                android:src="@mipmap/clock" />
-
-                            <TextView
-                                android:id="@+id/txtFromTimePl"
-                                style="@style/text_small"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/dim_4" />
-                        </LinearLayout>
+                            android:layout_marginLeft="@dimen/dim_4"
+                            android:singleLine="true" />
                     </LinearLayout>
-
 
                     <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical">
-
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
                         <ImageView
-                            android:layout_width="@dimen/dim_52"
-                            android:layout_height="@dimen/dim_52"
-                            android:src="@mipmap/chat" />
+                            android:layout_width="@dimen/dim_24"
+                            android:layout_height="@dimen/dim_24"
+                            android:src="@mipmap/blackcalender" />
 
+                        <TextView
+                            android:id="@+id/txtFromDateMyTripParcel"
+                            style="@style/text_small"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dim_4" />
                     </LinearLayout>
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/text_semi_medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/to" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txtToCityShortMyTripParcel"
+                            style="@style/text_large"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:id="@+id/txtToCityLongMyTripParcel"
+                            style="@style/text_small"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dim_4"
+                            android:singleLine="true" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="@dimen/dim_24"
+                            android:layout_height="@dimen/dim_24"
+                            android:src="@mipmap/blackcalender" />
+
+                        <TextView
+                            android:id="@+id/txtToDateMyTripParcel"
+                            style="@style/text_small"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dim_4" />
+                    </LinearLayout>
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llBookingInfoMyTripParcel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+
+            >
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="@dimen/dim_8"
+                android:layout_marginTop="@dimen/dim_8"
+                android:background="@color/black" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        style="@style/text_semi_medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/booking_id" />
+
+
+                    <TextView
+                        android:id="@+id/txtBookingId"
+                        style="@style/text_large"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="fsddsf" />
+
+
+                    <TextView
+                        style="@style/text_semi_medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dim_6"
+                        android:text="@string/sender_email_id" />
+
+
+                    <TextView
+                        android:id="@+id/txtSenderEmailId"
+                        style="@style/text_medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="fsddsf" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+
+                        <ImageView
+                            android:layout_width="@dimen/dim_24"
+                            android:layout_height="@dimen/dim_24"
+                            android:src="@mipmap/clock" />
+
+                        <TextView
+                            android:id="@+id/txtFromTimePl"
+                            style="@style/text_small"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dim_4" />
+                    </LinearLayout>
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical">
+
+
+                    <ImageView
+                        android:id="@+id/imgChatMyTripParcel"
+                        android:layout_width="@dimen/dim_52"
+                        android:layout_height="@dimen/dim_52"
+                        android:src="@mipmap/chat" />
+
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
@@ -358,21 +486,47 @@
             android:background="@color/black" />
 
         <LinearLayout
+            android:id="@+id/llActionMyTripParcel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dim_8"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:weightSum="10">
+            android:weightSum="3">
 
             <TextView
                 style="@style/text_large"
                 android:layout_width="0dp"
+                android:layout_weight="2"
                 android:layout_height="wrap_content"
-                android:layout_weight="10"
                 android:text="@string/action" />
 
 
+            <ImageView
+                android:id="@+id/imgBookNowMyTripParcel"
+                android:layout_width="@dimen/dim_48"
+                android:layout_height="@dimen/dim_48"
+                android:src="@mipmap/book_now"/>
+
+            <TextView
+                android:id="@+id/txtCollectedMyTripParcel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/collected"
+                style="@style/text_medium"
+                android:padding="@dimen/dim_8"
+                android:layout_marginLeft="@dimen/dim_8"
+                android:background="@drawable/rect_black_border_rounded"/>
+
+            <TextView
+                android:id="@+id/txtDeliveredMyTripParcel"
+                style="@style/text_medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dim_8"
+                android:background="@drawable/rect_black_border_rounded"
+                android:padding="@dimen/dim_8"
+                android:text="@string/delivered" />
         </LinearLayout>
 
     </LinearLayout>

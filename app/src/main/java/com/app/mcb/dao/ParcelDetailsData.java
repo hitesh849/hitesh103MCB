@@ -1,6 +1,7 @@
 package com.app.mcb.dao;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * Created by Hitesh on 03-10-2016.
@@ -43,4 +44,7 @@ public class ParcelDetailsData implements Serializable {
     public String senderemail;
     public String sendername;
     public UserInfoData receiverInfoData;
+    public ArrayList<MyTripsData> tripsmatch;
+    public ArrayList<MyTripsData> trip;
+    public ArrayList<ParcelDetailsData> response;
 }

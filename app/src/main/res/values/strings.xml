@@ -135,6 +135,7 @@
     <string name="feedback">Feedback</string>
     <string name="pls_try_again">Please try again.</string>
     <string name="trip_unavailable">Trip unavailable.</string>
+    <string name="parcel_unavailable">Parcel unavailable.</string>
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
     <string name="email_adrress">Email Address</string>
@@ -177,4 +178,5 @@
     <string name="max_weight">Max  %1$s  %2$s.</string>
     <string name="find">Find</string>
     <string name="remaining_capacity">(Remaining Capacity: %1$s)</string>
+    <string name="collected">Collected</string>
 </resources>

@@ -29,5 +29,8 @@ public class MyTripsData implements Serializable {
     public String awailableweight;
     public String statusdescription;
     public String airlinelink;
+    public String myClickOn;
+    public String transportername;
+    public String transporteremail;
     public ArrayList<MyTripsData> response;
 }

@@ -1,6 +1,7 @@
 package com.app.mcb.adapters;
 
 import android.content.Context;
+import android.media.Image;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,17 +14,17 @@ import com.app.mcb.R;
 import com.app.mcb.Utility.Constants;
 import com.app.mcb.Utility.Util;
 import com.app.mcb.dao.MyTripsData;
+import com.app.mcb.dao.ParcelDetailsData;
 
 import java.util.ArrayList;
 
 /**
- * Created by Hitesh kumawat on 19-09-2016.
+ * Created by Hitesh on 01-11-2016.
  */
-public class MyTripListVPAdapter extends PagerAdapter {
+public class MatchingTripVPAdaptor extends PagerAdapter {
 
     private Context mContext;
     private View.OnClickListener onClickListener;
-    private ImageView imgViewParcelListRow;
     private TextView txtCapacityMyTripListRow;
     private TextView txtPnrMyTripListRow;
     private TextView txtTripIdMyTripListRow;
@@ -37,13 +38,10 @@ public class MyTripListVPAdapter extends PagerAdapter {
     private TextView txtDestinationCityMyTripsListRow;
     private TextView txtSourceCityMyTripsListRow;
     private TextView txtRemainingCapacityMyTripListRow;
-    private LinearLayout llFindParcelsMyTripList;
-    private LinearLayout llBookedParcelsMyTripList;
-    private ImageView imgCancelTrip;
-    private ImageView imgEditTrip;
+    private ImageView imgBookNowParcelMatchingTrip;
     private ArrayList<MyTripsData> myTripsList;
 
-    public MyTripListVPAdapter(Context context, View.OnClickListener onClickListener, ArrayList<MyTripsData> tripsList) {
+    public MatchingTripVPAdaptor(Context context, View.OnClickListener onClickListener, ArrayList<MyTripsData> tripsList) {
         mContext = context;
         this.onClickListener = onClickListener;
         this.myTripsList = tripsList;
@@ -53,18 +51,13 @@ public class MyTripListVPAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup collection, int position) {
         MyTripsData myTripsData = myTripsList.get(position);
         LayoutInflater inflater = LayoutInflater.from(mContext);
-        ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.my_trip_list_row, collection, false);
+        ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.parcel_matching_trip_row, collection, false);
         init(layout, myTripsData);
-        if (!(Constants.ParcelIdCreated.equals(myTripsData.status) || Constants.ParcelPaymentDue.equals(myTripsData.status)))
-            llBookedParcelsMyTripList.setVisibility(View.VISIBLE);
-        else
-            llBookedParcelsMyTripList.setVisibility(View.GONE);
         collection.addView(layout);
         return layout;
     }
 
     private void init(ViewGroup viewGroup, MyTripsData myTripsData) {
-        imgViewParcelListRow = (ImageView) viewGroup.findViewById(R.id.imgViewParcelListRow);
         txtCapacityMyTripListRow = (TextView) viewGroup.findViewById(R.id.txtCapacityMyTripListRow);
         txtPnrMyTripListRow = (TextView) viewGroup.findViewById(R.id.txtPnrMyTripListRow);
         txtTripIdMyTripListRow = (TextView) viewGroup.findViewById(R.id.txtTripIdMyTripListRow);
@@ -78,13 +71,8 @@ public class MyTripListVPAdapter extends PagerAdapter {
         txtDestinationCityMyTripsListRow = (TextView) viewGroup.findViewById(R.id.txtDestinationCityMyTripsListRow);
         txtSourceCityMyTripsListRow = (TextView) viewGroup.findViewById(R.id.txtSourceCityMyTripsListRow);
         txtRemainingCapacityMyTripListRow = (TextView) viewGroup.findViewById(R.id.txtRemainingCapacityMyTripListRow);
-        llFindParcelsMyTripList = (LinearLayout) viewGroup.findViewById(R.id.llFindParcelsMyTripList);
-        llBookedParcelsMyTripList = (LinearLayout) viewGroup.findViewById(R.id.llBookedParcelsMyTripList);
-        imgCancelTrip = (ImageView) viewGroup.findViewById(R.id.imgCancelTrip);
-        imgEditTrip = (ImageView) viewGroup.findViewById(R.id.imgEditTrip);
-        imgCancelTrip.setTag(myTripsData);
-        imgViewParcelListRow.setTag(myTripsData);
-        imgEditTrip.setTag(myTripsData);
+        imgBookNowParcelMatchingTrip = (ImageView) viewGroup.findViewById(R.id.imgBookNowParcelMatchingTrip);
+
         txtCapacityMyTripListRow.setText("Total " + myTripsData.capacity + " Kg");
         txtPnrMyTripListRow.setText(myTripsData.pnr);
         txtTripIdMyTripListRow.setText(myTripsData.TripID);
@@ -97,14 +85,21 @@ public class MyTripListVPAdapter extends PagerAdapter {
         txtDestinationDateMyTripsRow.setText(Util.getDDMMYYYYFormat(myTripsData.arrival_time, "yyyy-MM-dd HH:mm:ss"));
         txtSourceTimeMyTripsListRow.setText(Util.getTimeFromDateTimeFormat(myTripsData.dep_time));
         txtDestinationTimeMyTripsRow.setText(Util.getTimeFromDateTimeFormat(myTripsData.arrival_time));
-        imgEditTrip.setTag(myTripsData);
-        llFindParcelsMyTripList.setTag(myTripsData);
-        llBookedParcelsMyTripList.setTag(myTripsData);
-        imgViewParcelListRow.setOnClickListener(onClickListener);
-        imgCancelTrip.setOnClickListener(onClickListener);
-        imgEditTrip.setOnClickListener(onClickListener);
-        llFindParcelsMyTripList.setOnClickListener(onClickListener);
-        llBookedParcelsMyTripList.setOnClickListener(onClickListener);
+        manageStatus(myTripsData);
+    }
+
+    private void manageStatus(MyTripsData myTripsData) {
+        viewVisible();
+        switch (myTripsData.status) {
+            case Constants.TripApproved:
+                break;
+        }
+
+
+    }
+
+    private void viewVisible() {
+        imgBookNowParcelMatchingTrip.setVisibility(View.VISIBLE);
     }
 
     @Override

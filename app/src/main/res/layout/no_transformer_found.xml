@@ -1,16 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
     <TextView
         android:id="@+id/txtTransporterEmailParcelDetails"
         style="@style/text_medium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dim_3"
-        android:textStyle="bold"
         android:gravity="center"
         android:padding="@dimen/dim_8"
+        android:text="@string/no_trans_found"
         android:textSize="@dimen/text_dim_16"
-        android:text="@string/no_trans_found" />
+        android:textStyle="bold" />
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="@dimen/dim_8"
+        android:layout_marginLeft="@dimen/dim_16"
+        android:layout_marginRight="@dimen/dim_16"
+        android:background="@color/black" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dim_16"
+        android:orientation="horizontal"
+        android:padding="@dimen/dim_8"
+        android:weightSum="2">
+
+
+        <LinearLayout
+            android:id="@+id/llFindParcelsMyParcel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dim_6"
+            android:layout_marginRight="@dimen/dim_6"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/text_medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/find" />
+
+            <ImageView
+                android:id="@+id/imgFindParcels"
+                style="@style/text_large"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/plane"
+                android:tint="@color/colorPrimary" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 </LinearLayout>

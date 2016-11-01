@@ -123,6 +123,7 @@ public class MyTripList extends AbstractFragment implements View.OnClickListener
             MyTripsData myTripsData = (MyTripsData) view.getTag();
             Intent intent = new Intent(getActivity(), MyTripParcelActivity.class);
             Bundle bundle = new Bundle();
+            myTripsData.myClickOn=(id == R.id.llBookedParcelsMyTripList?"Booked":"Find");
             bundle.putSerializable("KEY_DATA", myTripsData);
             intent.putExtra("KEY_BUNDLE", bundle);
             startActivity(intent);

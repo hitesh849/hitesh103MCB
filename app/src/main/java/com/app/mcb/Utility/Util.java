@@ -552,6 +552,7 @@ public class Util {
         bitmap.compress(Bitmap.CompressFormat.JPEG, 70, stream);
         byte[] byteFormat = stream.toByteArray();
         String imgString = Base64.encodeToString(byteFormat, Base64.NO_WRAP);
+
         return imgString;
     }
 
@@ -563,6 +564,7 @@ public class Util {
 
 
     public static String getTripStatus(int status, Context context) {
+
         String statusStr = "-";
         switch (status) {
             case 0:

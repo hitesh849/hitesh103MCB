@@ -3,12 +3,14 @@ package com.app.mcb.retrointerface;
 import com.app.mcb.dao.AddParcelData;
 import com.app.mcb.dao.AddTrip;
 import com.app.mcb.dao.AirportData;
+import com.app.mcb.dao.BookingRequestData;
 import com.app.mcb.dao.ChangePasswordData;
 import com.app.mcb.dao.CommonResponseData;
 import com.app.mcb.dao.ForgetPasswordData;
 import com.app.mcb.dao.MyTripDetailsData;
 import com.app.mcb.dao.MyTripsData;
 import com.app.mcb.dao.MyWalletData;
+import com.app.mcb.dao.ParcelBookingChangeStatusData;
 import com.app.mcb.dao.ParcelDetailsData;
 import com.app.mcb.dao.ParcelListData;
 import com.app.mcb.dao.ReceiverData;
@@ -17,8 +19,6 @@ import com.app.mcb.dao.TripTransporterData;
 import com.app.mcb.dao.UserInfoData;
 import com.app.mcb.dao.WithDrawData;
 import com.google.gson.JsonElement;
-
-import org.json.JSONObject;
 
 import java.util.HashMap;
 
@@ -39,11 +39,11 @@ public interface RestInterface {
 
     @Headers({"Content-Type:application/json"})
     @POST("/searchhome")
-    public void getTripListByFilter(@Body HashMap<String,Object> request, Callback<TripTransporterData> cb);
+    public void getTripListByFilter(@Body HashMap<String, Object> request, Callback<TripTransporterData> cb);
 
     @Headers({"Content-Type:application/json"})
     @POST("/searchhome")
-    public void getParcelsListByFilter(@Body HashMap<String,Object> request, Callback<ParcelListData> cb);
+    public void getParcelsListByFilter(@Body HashMap<String, Object> request, Callback<ParcelListData> cb);
 
     @Headers({"Content-Type:application/json"})
     @POST("/gettopcountrytrips")
@@ -80,6 +80,10 @@ public interface RestInterface {
     @Headers({"Content-Type:application/json"})
     @GET("/cancelparcellist/{userId}")
     public void getAllParcels(@Path("userId") String userId, Callback<ParcelListData> cb);
+
+    @Headers({"Content-Type:application/json"})
+    @GET("/getparceldetail/{parcel_id}")
+    public void getParcelDetails(@Path("parcel_id") String parcel_id, Callback<ParcelDetailsData> cb);
 
     @Headers({"Content-Type:application/json"})
     @GET("/getwalletstatement/{userId}")
@@ -145,6 +149,18 @@ public interface RestInterface {
 
     @Headers({"Content-Type:application/json"})
     @GET("/gettransporterdetail/{tripId}")
-    public void getMyTripDetails(@Path("tripId") String tripId,Callback<MyTripDetailsData> cb);
+    public void getMyTripDetails(@Path("tripId") String tripId, Callback<MyTripDetailsData> cb);
+
+    @Headers({"Content-Type:application/json"})
+    @GET("/senderbookingrequest/{parcel_id}/{trans_id}")
+    public void bookingRequest(@Path("parcel_id") String parcel_id, @Path("trans_id") String trans_id, Callback<BookingRequestData> cb);
+
+    @Headers({"Content-Type:application/json"})
+    @POST("/cancelparcelbytransporter")
+    public void parcelRejectRequest(@Body HashMap<String, String> request, Callback<ParcelBookingChangeStatusData> cb);
+
+    @Headers({"Content-Type:application/json"})
+    @POST("/usrupdatetripstatus")
+    public void usrUpdateTripStatus(@Body HashMap<String, String> request, Callback<ParcelBookingChangeStatusData> cb);
 
 }

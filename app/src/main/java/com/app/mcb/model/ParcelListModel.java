@@ -62,6 +62,26 @@ public class ParcelListModel extends BasicModel {
         }
     }
 
+    public void getParcelDetails(String parcelId) {
+        try {
+
+            restInterface.getParcelDetails(parcelId ,new Callback<ParcelDetailsData>() {
+                @Override
+                public void success(ParcelDetailsData parcelDetailsData, Response response) {
+                    notifyObservers(parcelDetailsData);
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    notifyObservers(error);
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
     public void cancelParcel(ParcelDetailsData parcelDetailsData) {
 
         HashMap<String, Object> request = new HashMap<String, Object>();

@@ -11,11 +11,23 @@
         android:orientation="vertical">
 
         <TextView
+            style="@style/text_medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/name" />
+
+        <TextView
             android:id="@+id/txtTransporterNameParcelDetails"
             style="@style/text_medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="" />
+
+        <TextView
+            style="@style/text_medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/email_address" />
 
         <TextView
             android:id="@+id/txtTransporterEmailParcelDetails"
@@ -37,12 +49,12 @@
         android:background="@drawable/rounded_white_bg"
         android:gravity="center"
         android:orientation="horizontal"
-        android:weightSum="3">
+        android:weightSum="4">
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:orientation="vertical">
 
 
@@ -57,7 +69,7 @@
                 style="@style/text_large"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:gravity="left"
                 android:text="" />
         </LinearLayout>
 
@@ -74,12 +86,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/departure" />
+
             <TextView
                 android:id="@+id/txtDepartureDateParcelDetails"
                 style="@style/text_small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=""
                 android:textStyle="bold" />
 
             <TextView
