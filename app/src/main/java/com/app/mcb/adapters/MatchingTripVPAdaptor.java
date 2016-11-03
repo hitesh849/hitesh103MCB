@@ -72,7 +72,8 @@ public class MatchingTripVPAdaptor extends PagerAdapter {
         txtSourceCityMyTripsListRow = (TextView) viewGroup.findViewById(R.id.txtSourceCityMyTripsListRow);
         txtRemainingCapacityMyTripListRow = (TextView) viewGroup.findViewById(R.id.txtRemainingCapacityMyTripListRow);
         imgBookNowParcelMatchingTrip = (ImageView) viewGroup.findViewById(R.id.imgBookNowParcelMatchingTrip);
-
+        imgBookNowParcelMatchingTrip.setOnClickListener(onClickListener);
+        imgBookNowParcelMatchingTrip.setTag(myTripsData);
         txtCapacityMyTripListRow.setText("Total " + myTripsData.capacity + " Kg");
         txtPnrMyTripListRow.setText(myTripsData.pnr);
         txtTripIdMyTripListRow.setText(myTripsData.TripID);

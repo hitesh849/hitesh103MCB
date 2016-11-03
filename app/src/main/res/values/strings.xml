@@ -180,4 +180,6 @@
     <string name="remaining_capacity">(Remaining Capacity: %1$s)</string>
     <string name="collected">Collected</string>
     <string name="no_pending_request_available">No Pending Requests Available</string>
+    <string name="use_mcb_available_amount">Use MCB Wallet available Amount</string>
+    <string name="pay_now">PayNow</string>
 </resources>

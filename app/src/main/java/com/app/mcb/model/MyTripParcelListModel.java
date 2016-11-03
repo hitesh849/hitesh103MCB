@@ -5,6 +5,7 @@ import com.app.mcb.dao.BookingRequestData;
 import com.app.mcb.dao.MyTripDetailsData;
 import com.app.mcb.dao.ParcelBookingChangeStatusData;
 import com.app.mcb.dao.ParcelDetailsData;
+import com.app.mcb.dao.PayNowParcelDetailData;
 import com.app.mcb.retrointerface.RestInterface;
 import com.app.mcb.sharedPreferences.Config;
 
@@ -41,6 +42,7 @@ public class MyTripParcelListModel extends BasicModel{
             ex.printStackTrace();
         }
     }
+
 
     public void bookingRequest(String tripId,String trans_id) {
         try {

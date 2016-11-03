@@ -1,28 +1,22 @@
 package com.app.mcb.viewControllers.sender;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
-import com.app.mcb.MainActivity;
 import com.app.mcb.R;
 import com.app.mcb.Utility.Util;
 import com.app.mcb.adapters.MatchingTripVPAdaptor;
 import com.app.mcb.adapters.MyTripListVPAdapter;
 import com.app.mcb.custom.AppHeaderView;
+import com.app.mcb.dao.MyTripsData;
 import com.app.mcb.dao.ParcelDetailsData;
-import com.app.mcb.filters.TripFilter;
 import com.app.mcb.model.MatchingTripModel;
-import com.app.mcb.model.MyTripsModel;
 
 import org.byteclues.lib.model.BasicModel;
-import org.byteclues.lib.view.AbstractFragment;
 import org.byteclues.lib.view.AbstractFragmentActivity;
 
 import java.util.Observable;
@@ -41,6 +35,7 @@ public class MatchingTripListActivity extends AbstractFragmentActivity implement
     private MyTripListVPAdapter myTripListVPAdapter;
     private String parcelId;
     private AppHeaderView appHeaderView;
+    private ParcelDetailsData parcelDetailsData;
     private MatchingTripModel matchingTripModel = new MatchingTripModel();
 
     private void init() {
@@ -51,7 +46,8 @@ public class MatchingTripListActivity extends AbstractFragmentActivity implement
         llCountDotsMain = (LinearLayout) findViewById(R.id.llCountDotsMain);
         viewPagerChangeListener();
         drawPageSelectionIndicators(0);
-        getParcelDetails(getIntent().getExtras().getString("parcelId"));
+        parcelDetailsData = (ParcelDetailsData) getIntent().getExtras().getSerializable("data");
+        getParcelDetails(parcelDetailsData.id);
     }
 
     private void viewPagerChangeListener() {
@@ -129,9 +125,11 @@ public class MatchingTripListActivity extends AbstractFragmentActivity implement
             Util.dimissProDialog();
             if (data != null && data instanceof ParcelDetailsData) {
                 ParcelDetailsData parcelDetailsData = (ParcelDetailsData) data;
+                this.parcelDetailsData = parcelDetailsData.response.get(0);
                 if ("success".equals(parcelDetailsData.status)) {
-                    vpMyList.setAdapter(new MatchingTripVPAdaptor(this, this, parcelDetailsData.tripsmatch));
-                    if (parcelDetailsData.tripsmatch.size() == 0) {
+                    if (parcelDetailsData.tripsmatch != null)
+                        vpMyList.setAdapter(new MatchingTripVPAdaptor(this, this, parcelDetailsData.tripsmatch));
+                    if (parcelDetailsData.tripsmatch == null || parcelDetailsData.tripsmatch.size() == 0) {
                         Util.showOKSnakBar(llMatchingTripMain, getResources().getString(R.string.trip_unavailable));
                     }
                 }
@@ -145,6 +143,12 @@ public class MatchingTripListActivity extends AbstractFragmentActivity implement
 
     @Override
     public void onClick(View view) {
-
+        int id = view.getId();
+        if (id == R.id.imgBookNowParcelMatchingTrip) {
+            MyTripsData myTripsData = ((MyTripsData) view.getTag());
+            Intent intent = new Intent(this, ParcelPayNowActivity.class);
+            intent.putExtra("parcelId", myTripsData.id);
+            startActivity(intent);
+        }
     }
 }

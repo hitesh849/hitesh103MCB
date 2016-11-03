@@ -2,36 +2,36 @@ package com.app.mcb.viewControllers.sender;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.app.mcb.MainActivity;
 import com.app.mcb.R;
-import com.app.mcb.Utility.Constants;
 import com.app.mcb.Utility.Util;
 import com.app.mcb.dao.FilterData;
-import com.app.mcb.dao.MyTripsData;
+import com.app.mcb.dao.GenerateOrderData;
+import com.app.mcb.dao.MyTripDetailsData;
 import com.app.mcb.dao.ParcelDetailsData;
+import com.app.mcb.dao.TripData;
+import com.app.mcb.dao.UserInfoData;
 import com.app.mcb.filters.CommonListener;
-import com.app.mcb.filters.TransporterFilter;
-import com.app.mcb.model.MatchingTripModel;
+import com.app.mcb.model.PayNowModel;
 
 import org.byteclues.lib.model.BasicModel;
-import org.byteclues.lib.view.AbstractFragment;
+import org.byteclues.lib.view.AbstractFragmentActivity;
 
 import java.util.Observable;
 
 import retrofit.RetrofitError;
 
 /**
- * Created by Hitesh kumawat on 18-09-2016.
+ * Created by u on 11/3/2016.
  */
-public class ParcelDetailsFragment extends AbstractFragment implements View.OnClickListener, CommonListener {
+public class ParcelPayNowActivity extends AbstractFragmentActivity implements View.OnClickListener, CommonListener {
 
     private ViewPager vpParcelList;
     private TextView txtFromShortParcelDetails;
@@ -46,6 +46,7 @@ public class ParcelDetailsFragment extends AbstractFragment implements View.OnCl
     private TextView txtSelectorTransDetails;
     private TextView txtSelectorReceiverDetails;
     private ParcelDetailsData parcelDetailsData;
+    private UserInfoData userInfoData;
     private LinearLayout llTranOrReceiverContainer;
     private TextView txtReceiverIdParcelDetails;
     private TextView txtReceiverMobileParcelDetails;
@@ -60,21 +61,22 @@ public class ParcelDetailsFragment extends AbstractFragment implements View.OnCl
     private TextView txtArrivalTimeParcelDetails;
     private LinearLayout llFindParcelsMyParcel;
     private LinearLayout llParcelDetailsMain;
-    private MyTripsData myTripsData;
-    private MatchingTripModel matchingTripModel = new MatchingTripModel();
+    private TextView txtPayNowParcelPayment;
+    private TextView txtConfirmParcelPayment;
+    private CheckBox chkUseWallet;
+    private TripData myTripsData;
+    private boolean isWalletUse;
+    private PayNowModel payNowModel = new PayNowModel();
+
 
     @Override
-    protected View onCreateViewPost(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.parcel_details, container, false);
-        init(view);
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-            parcelDetailsData = (ParcelDetailsData) bundle.getSerializable("data");
-        }
+    protected void onCreatePost(Bundle savedInstanceState) {
 
-        getParcelDetails(parcelDetailsData.id);
-        return view;
+        setContentView(R.layout.parcel_paynow_activity);
+        init();
+        getParcelDetails(((String) getIntent().getSerializableExtra("parcelId")));
     }
+
 
     private void setValues(ParcelDetailsData parcelDetailsData) {
         txtFromShortParcelDetails.setText(Util.getFirstName(parcelDetailsData.source));
@@ -88,53 +90,95 @@ public class ParcelDetailsFragment extends AbstractFragment implements View.OnCl
         txtParcelTypeParcelDetails.setText(Util.getParcelType(parcelDetailsData.type));
     }
 
-    private void init(View view) {
-        ((MainActivity) getActivity()).setHeader(getResources().getString(R.string.parcel_details));
-        TransporterFilter.addFilterView(getActivity(), view, this);
-        llParcelDetailsMain = (LinearLayout) view.findViewById(R.id.llParcelDetailsMain);
-        txtFromShortParcelDetails = (TextView) view.findViewById(R.id.txtFromShortParcelDetails);
-        txtToShortParcelDetails = (TextView) view.findViewById(R.id.txtToShortParcelDetails);
-        txtFromLongParcelDetails = (TextView) view.findViewById(R.id.txtFromLongParcelDetails);
-        txtToLongParcelDetails = (TextView) view.findViewById(R.id.txtToLongParcelDetails);
-        txtFromDateParcelDetails = (TextView) view.findViewById(R.id.txtFromDateParcelDetails);
-        txtToDateParcelDetails = (TextView) view.findViewById(R.id.txtToDateParcelDetails);
-        txtParcelIdParcelDetails = (TextView) view.findViewById(R.id.txtParcelIdParcelDetails);
-        txtParcelWeightParcelDetails = (TextView) view.findViewById(R.id.txtParcelWeightParcelDetails);
-        txtParcelTypeParcelDetails = (TextView) view.findViewById(R.id.txtParcelTypeParcelDetails);
-        txtSelectorTransDetails = (TextView) view.findViewById(R.id.txtSelectorTransDetails);
-        txtSelectorReceiverDetails = (TextView) view.findViewById(R.id.txtSelectorReceiverDetails);
-        llTranOrReceiverContainer = (LinearLayout) view.findViewById(R.id.llTranOrReceiverContainer);
+    private void init() {
+
+        llParcelDetailsMain = (LinearLayout) findViewById(R.id.llParcelDetailsMain);
+        txtFromShortParcelDetails = (TextView) findViewById(R.id.txtFromShortParcelDetails);
+        txtToShortParcelDetails = (TextView) findViewById(R.id.txtToShortParcelDetails);
+        txtFromLongParcelDetails = (TextView) findViewById(R.id.txtFromLongParcelDetails);
+        txtToLongParcelDetails = (TextView) findViewById(R.id.txtToLongParcelDetails);
+        txtFromDateParcelDetails = (TextView) findViewById(R.id.txtFromDateParcelDetails);
+        txtToDateParcelDetails = (TextView) findViewById(R.id.txtToDateParcelDetails);
+        txtParcelIdParcelDetails = (TextView) findViewById(R.id.txtParcelIdParcelDetails);
+        txtParcelWeightParcelDetails = (TextView) findViewById(R.id.txtParcelWeightParcelDetails);
+        txtParcelTypeParcelDetails = (TextView) findViewById(R.id.txtParcelTypeParcelDetails);
+        txtSelectorTransDetails = (TextView) findViewById(R.id.txtSelectorTransDetails);
+        txtSelectorReceiverDetails = (TextView) findViewById(R.id.txtSelectorReceiverDetails);
+        txtPayNowParcelPayment = (TextView) findViewById(R.id.txtPayNowParcelPayment);
+        txtConfirmParcelPayment = (TextView) findViewById(R.id.txtConfirmParcelPayment);
+        llTranOrReceiverContainer = (LinearLayout) findViewById(R.id.llTranOrReceiverContainer);
+        chkUseWallet = (CheckBox) findViewById(R.id.chkUseWallet);
         txtSelectorTransDetails.setOnClickListener(this);
         txtSelectorReceiverDetails.setOnClickListener(this);
+        txtPayNowParcelPayment.setOnClickListener(this);
+        txtConfirmParcelPayment.setOnClickListener(this);
+        chkUseWallet.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                isWalletUse = isChecked;
+            }
+        });
     }
 
 
     private void getParcelDetails(String parcelId) {
         if (Util.isDeviceOnline()) {
-            Util.showProDialog(getActivity());
-            matchingTripModel.getParcelDetails(parcelId);
+            Util.showProDialog(this);
+            payNowModel.getMyTripDetails(parcelId);
         } else {
             Util.showAlertDialog(null, getResources().getString(R.string.noInternetMsg));
         }
     }
 
+    private void getUserDetails(String parcelId) {
+        if (Util.isDeviceOnline()) {
+            Util.showProDialog(this);
+            payNowModel.getUserDetails(parcelId);
+        } else {
+            Util.showAlertDialog(null, getResources().getString(R.string.noInternetMsg));
+        }
+    }
+
+    private void generateOrder() {
+        if (Util.isDeviceOnline()) {
+            Util.showProDialog(this);
+            payNowModel.generateOrder(parcelDetailsData, myTripsData, userInfoData, isWalletUse);
+        } else {
+            Util.showAlertDialog(null, getResources().getString(R.string.noInternetMsg));
+        }
+    }
+
+
     @Override
     protected BasicModel getModel() {
-        return matchingTripModel;
+        return payNowModel;
     }
 
     @Override
     public void update(Observable observable, Object data) {
         try {
             Util.dimissProDialog();
-            if (data != null && data instanceof ParcelDetailsData) {
-                ParcelDetailsData parcelDetailsDataMain = (ParcelDetailsData) data;
+            if (data != null && data instanceof MyTripDetailsData) {
+                MyTripDetailsData parcelDetailsDataMain = (MyTripDetailsData) data;
                 if ("success".equals(parcelDetailsDataMain.status)) {
-                    parcelDetailsData = parcelDetailsDataMain.response.get(0);
-                    if (parcelDetailsDataMain.trip != null)
-                        myTripsData = parcelDetailsDataMain.trip.get(0);
+                    parcelDetailsData = parcelDetailsDataMain.parcellist.get(0);
+                    if (parcelDetailsDataMain.parcellist != null)
+                        myTripsData = parcelDetailsDataMain.response.get(0);
                     addTransPorterView();
                     setValues(parcelDetailsData);
+                    getUserDetails(parcelDetailsData.recv_id);
+
+                }
+            } else if (data != null && data instanceof UserInfoData) {
+                UserInfoData userInfoData = (UserInfoData) data;
+                if ("success".equals(userInfoData.status)) {
+                    this.userInfoData = userInfoData.response.get(0);
+                }
+            } else if (data != null && data instanceof GenerateOrderData) {
+                GenerateOrderData generateOrderData = ((GenerateOrderData) data).response.get(0);
+                if ("success".equals(generateOrderData.status)) {
+
+                } else if ("successpayment".equals(generateOrderData.status)) {
 
                 }
             } else if (data != null && data instanceof RetrofitError) {
@@ -163,17 +207,19 @@ public class ParcelDetailsFragment extends AbstractFragment implements View.OnCl
             txtSelectorReceiverDetails.setBackgroundResource(R.drawable.rect_right_corners_pink_bg);
             initReceiverInfoParcelDetails(addViewInRelayout(R.layout.receiver_info_parcel_details));
         } else if (id == R.id.llFindParcelsMyParcel) {
-
-            Intent intent = new Intent(getActivity(), MatchingTripListActivity.class);
+            Intent intent = new Intent(this, MatchingTripListActivity.class);
             intent.putExtra("data", parcelDetailsData);
             startActivity(intent);
+        } else if (id == R.id.txtPayNowParcelPayment) {
+            generateOrder();
+        } else if (id == R.id.txtConfirmParcelPayment) {
 
         }
     }
 
     private LinearLayout addViewInRelayout(int layout) {
         llTranOrReceiverContainer.removeAllViews();
-        LayoutInflater inflater = LayoutInflater.from(getActivity());
+        LayoutInflater inflater = LayoutInflater.from(this);
         LinearLayout llLayout = (LinearLayout) inflater.inflate(layout, null, false);
         llTranOrReceiverContainer.addView(llLayout);
         return llTranOrReceiverContainer;
@@ -184,17 +230,18 @@ public class ParcelDetailsFragment extends AbstractFragment implements View.OnCl
         txtReceiverMobileParcelDetails = (TextView) view.findViewById(R.id.txtReceiverMobileParcelDetails);
         txtReceiverNameParcelDetails = (TextView) view.findViewById(R.id.txtReceiverNameParcelDetails);
         txtReceiverEmailParcelDetails = (TextView) view.findViewById(R.id.txtReceiverEmailParcelDetails);
-        txtReceiverIdParcelDetails.setText(parcelDetailsData.MCBreceiverID);
-        txtReceiverMobileParcelDetails.setText(parcelDetailsData.recv_mobile);
-        txtReceiverNameParcelDetails.setText(parcelDetailsData.recv_name);
-        txtReceiverEmailParcelDetails.setText(parcelDetailsData.receiveremail);
+        if (userInfoData != null) {
+            txtReceiverIdParcelDetails.setText(userInfoData.UserID);
+            txtReceiverMobileParcelDetails.setText(userInfoData.mobile);
+            txtReceiverNameParcelDetails.setText(userInfoData.name);
+            txtReceiverEmailParcelDetails.setText(userInfoData.email);
+        }
+
     }
 
     private void addTransPorterView() {
-        if (parcelDetailsData.status != null && (parcelDetailsData.status.equals(Constants.ParcelIdCreated) || parcelDetailsData.status.equals(Constants.ParcelRejectedByTr)))
-            initFindMatchingParcel(addViewInRelayout(R.layout.no_transformer_found));
-        else
-            initTransporterInfoParcelDetails(addViewInRelayout(R.layout.transporter_info_parcel_details));
+
+        initTransporterInfoParcelDetails(addViewInRelayout(R.layout.transporter_info_parcel_details));
 
     }
 
@@ -211,8 +258,8 @@ public class ParcelDetailsFragment extends AbstractFragment implements View.OnCl
         txtDepartureTimeParcelDetails = (TextView) view.findViewById(R.id.txtDepartureTimeParcelDetails);
         txtArrivalDateParcelDetails = (TextView) view.findViewById(R.id.txtArrivalDateParcelDetails);
         txtArrivalTimeParcelDetails = (TextView) view.findViewById(R.id.txtArrivalTimeParcelDetails);
-        txtTransporterNameParcelDetails.setText(myTripsData.transportername);
-        txtTransporterEmailParcelDetails.setText(myTripsData.transporteremail);
+        // txtTransporterNameParcelDetails.setText(myTripsData.transportername);
+        //txtTransporterEmailParcelDetails.setText(myTripsData.transporteremail);
         txtFlightNumberParcelDetails.setText(myTripsData.flight_no);
         txtDepartureDateParcelDetails.setText(Util.getDDMMYYYYFormat(myTripsData.dep_time, "yyyy-MM-dd HH:mm:ss"));
         txtArrivalDateParcelDetails.setText(Util.getDDMMYYYYFormat(myTripsData.arrival_time, "yyyy-MM-dd HH:mm:ss"));

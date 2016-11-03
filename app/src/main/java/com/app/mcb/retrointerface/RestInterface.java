@@ -8,12 +8,14 @@ import com.app.mcb.dao.ChangePasswordData;
 import com.app.mcb.dao.CommonResponseData;
 import com.app.mcb.dao.ForgetPasswordData;
 import com.app.mcb.dao.ForgotPasswordData;
+import com.app.mcb.dao.GenerateOrderData;
 import com.app.mcb.dao.MyTripDetailsData;
 import com.app.mcb.dao.MyTripsData;
 import com.app.mcb.dao.MyWalletData;
 import com.app.mcb.dao.ParcelBookingChangeStatusData;
 import com.app.mcb.dao.ParcelDetailsData;
 import com.app.mcb.dao.ParcelListData;
+import com.app.mcb.dao.PayNowParcelDetailData;
 import com.app.mcb.dao.ReceiverData;
 import com.app.mcb.dao.SearchReceiverData;
 import com.app.mcb.dao.TripTransporterData;
@@ -156,6 +158,7 @@ public interface RestInterface {
     @GET("/gettransporterdetail/{tripId}")
     public void getMyTripDetails(@Path("tripId") String tripId, Callback<MyTripDetailsData> cb);
 
+
     @Headers({"Content-Type:application/json"})
     @GET("/senderbookingrequest/{parcel_id}/{trans_id}")
     public void bookingRequest(@Path("parcel_id") String parcel_id, @Path("trans_id") String trans_id, Callback<BookingRequestData> cb);
@@ -167,5 +170,13 @@ public interface RestInterface {
     @Headers({"Content-Type:application/json"})
     @POST("/usrupdatetripstatus")
     public void usrUpdateTripStatus(@Body HashMap<String, String> request, Callback<ParcelBookingChangeStatusData> cb);
+
+    @Headers({"Content-Type:application/json"})
+    @POST("/generateordernumber")
+    public void generateOrder(@Body HashMap<String, Object> request, Callback<GenerateOrderData> cb);
+
+    @Headers({"Content-Type:application/json"})
+    @POST("/creatCouerier")
+    public void creatCourierRequest(@Body HashMap<String, String> request, Callback<GenerateOrderData> cb);
 
 }

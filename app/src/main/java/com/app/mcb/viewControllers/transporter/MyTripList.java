@@ -2,7 +2,6 @@ package com.app.mcb.viewControllers.transporter;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-
 import com.app.mcb.MainActivity;
 import com.app.mcb.R;
 import com.app.mcb.Utility.Constants;
@@ -23,10 +21,8 @@ import com.app.mcb.filters.CommonListener;
 import com.app.mcb.filters.TripFilter;
 import com.app.mcb.model.MyTripsModel;
 import com.app.mcb.sharedPreferences.Config;
-
 import org.byteclues.lib.model.BasicModel;
 import org.byteclues.lib.view.AbstractFragment;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Observable;
@@ -46,7 +42,7 @@ public class MyTripList extends AbstractFragment implements View.OnClickListener
     ArrayList<MyTripsData> tripListMain = new ArrayList<MyTripsData>();
 
     @Override
-    protected View onCreateViewPost(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    protected View onCreateViewPost(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.my_trip_list_fragment, container, false);
         init(view);
         return view;
@@ -86,7 +82,6 @@ public class MyTripList extends AbstractFragment implements View.OnClickListener
         } else if (o instanceof RetrofitError) {
             Util.showOKSnakBar(rlMyTripMain, getResources().getString(R.string.pls_try_again));
         }
-
     }
 
     private void getMyTripsList() {
@@ -143,7 +138,6 @@ public class MyTripList extends AbstractFragment implements View.OnClickListener
         vpMyList.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
             }
 
             @Override
@@ -161,15 +155,11 @@ public class MyTripList extends AbstractFragment implements View.OnClickListener
         if (llCountDotsMain != null) {
             llCountDotsMain.removeAllViews();
         }
-
         ImageView[] dots = new ImageView[3];
-
         if (mPosition > 2) {
             mPosition = (mPosition % 3);
         }
         for (int i = 0; i < 3; i++) {
-
-
             dots[i] = new ImageView(getActivity());
             if (i == mPosition)
                 dots[i].setImageDrawable(getResources().getDrawable(R.drawable.item_selected));
