@@ -46,6 +46,7 @@ public class ParcelsListVPAdapter extends PagerAdapter {
     private ImageView imgEditPLR;
     private ImageView imgCancelPLR;
     private ImageView imgSettingsPLR;
+    private ImageView imgChatParcelList;
     private ArrayList<ParcelDetailsData> parcelList;
 
     public ParcelsListVPAdapter(Context context, ArrayList<ParcelDetailsData> parcelList, View.OnClickListener onClickListener) {
@@ -66,6 +67,7 @@ public class ParcelsListVPAdapter extends PagerAdapter {
 
     private void init(ViewGroup viewGroup) {
         imgSettingsPLR = (ImageView) viewGroup.findViewById(R.id.imgSettingsPLR);
+        imgChatParcelList = (ImageView) viewGroup.findViewById(R.id.imgChatParcelList);
         txtFromCityShortPl = (TextView) viewGroup.findViewById(R.id.txtFromCityShortPl);
         txtFromCityLongPl = (TextView) viewGroup.findViewById(R.id.txtFromCityLongPl);
         txtToCityShortPl = (TextView) viewGroup.findViewById(R.id.txtToCityShortPl);
@@ -87,6 +89,7 @@ public class ParcelsListVPAdapter extends PagerAdapter {
         imgSettingsPLR.setOnClickListener(onClickListener);
         imgCancelPLR.setOnClickListener(onClickListener);
         imgEditPLR.setOnClickListener(onClickListener);
+        imgChatParcelList.setOnClickListener(onClickListener);
     }
 
     private void setValues(int position) {
@@ -98,10 +101,12 @@ public class ParcelsListVPAdapter extends PagerAdapter {
         txtParcelIdPL.setText(parcelListData.ParcelID);
         txtFromDatePl.setText(Util.getDateFromDateTimeFormat(parcelListData.created));
         txtFromTimePl.setText(Util.getTimeFromDateTimeFormat(parcelListData.created));
-        txtToDatePl.setText(Util.getDDMMYYYYFormat(parcelListData.till_date,"yyyy-MM-dd"));
+        txtToDatePl.setText(Util.getDDMMYYYYFormat(parcelListData.till_date, "yyyy-MM-dd"));
         imgViewPLR.setTag(parcelListData);
         imgEditPLR.setTag(parcelListData);
         imgCancelPLR.setTag(parcelListData);
+        imgChatParcelList.setTag(parcelListData);
+        imgSettingsPLR.setTag(parcelListData);
         if ("E".equals(parcelListData.type))
             txtPrcelTypePL.setText(Constants.ENVELOPE);
         else if ("B".equals(parcelListData.type))
@@ -126,6 +131,22 @@ public class ParcelsListVPAdapter extends PagerAdapter {
             txtBookedPL.setText(parcelListData.statusdescription);
         else
             txtBookedPL.setText("");
+
+        setViewVisible();
+        switch (parcelListData.status) {
+            case Constants.ParcelIdCreated:
+                imgChatParcelList.setVisibility(View.GONE);
+                imgSettingsPLR.setVisibility(View.GONE);
+                break;
+            case Constants.ParcelPaymentDue:
+                imgChatParcelList.setVisibility(View.GONE);
+                break;
+        }
+    }
+
+    void setViewVisible() {
+        imgChatParcelList.setVisibility(View.VISIBLE);
+        imgSettingsPLR.setVisibility(View.VISIBLE);
     }
 
     @Override

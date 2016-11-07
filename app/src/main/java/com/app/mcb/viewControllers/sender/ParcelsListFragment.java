@@ -1,5 +1,6 @@
 package com.app.mcb.viewControllers.sender;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
@@ -7,6 +8,7 @@ import android.support.v7.widget.PopupMenu;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -14,6 +16,7 @@ import android.widget.LinearLayout;
 
 import com.app.mcb.MainActivity;
 import com.app.mcb.R;
+import com.app.mcb.Utility.Constants;
 import com.app.mcb.Utility.Util;
 import com.app.mcb.adapters.ParcelsListVPAdapter;
 import com.app.mcb.dao.FilterData;
@@ -101,11 +104,41 @@ public class ParcelsListFragment extends AbstractFragment implements View.OnClic
             parcelDetailsFragment.setArguments(bundle);
             Util.replaceFragment(getActivity(), R.id.fmContainerSenderHomeMain, parcelDetailsFragment);
         } else if (id == R.id.imgSettingsPLR) {
+
+            final ParcelDetailsData parcelDetailsData = ((ParcelDetailsData) view.getTag());
             ((ImageView) view).setBackgroundResource(R.mipmap.action_setting_hover);
             PopupMenu popup = new PopupMenu(getActivity(), view);
             MenuInflater inflater = popup.getMenuInflater();
             inflater.inflate(R.menu.parcel_status, popup.getMenu());
             popup.show();
+
+            hideAllPopUPMenuItem(popup);
+
+            switch (parcelDetailsData.status)
+            {
+                case Constants.ParcelPaymentDue:
+                    MenuItem menuItem=popup.getMenu().findItem(R.id.action_payment_due);
+                    menuItem.setVisible(true);
+                    break;
+
+            }
+
+            popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    int id = item.getItemId();
+                    switch (id) {
+                        case R.id.action_payment_due:
+                            Intent intent = new Intent(getActivity(), ParcelPayNowActivity.class);
+                            intent.putExtra("parcelId", parcelDetailsData.trans_id);
+                            intent.putExtra("status", parcelDetailsData.status);
+                            startActivity(intent);
+                            break;
+                    }
+                    return false;
+                }
+            });
+
         } else if (id == R.id.imgEditPLR) {
             ParcelDetailsData parcelDetailsData = (ParcelDetailsData) view.getTag();
             AddParcelFragment addParcelFragment = new AddParcelFragment();
@@ -118,6 +151,12 @@ public class ParcelsListFragment extends AbstractFragment implements View.OnClic
         } else if (id == R.id.imgCancelPLR) {
             ParcelDetailsData parcelDetailsData = (ParcelDetailsData) view.getTag();
             cancelParcel(parcelDetailsData);
+        }
+    }
+
+    private void hideAllPopUPMenuItem(PopupMenu popup) {
+        for (int i = 0; i < popup.getMenu().size(); i++) {
+            popup.getMenu().getItem(i).setVisible(false);
         }
     }
 

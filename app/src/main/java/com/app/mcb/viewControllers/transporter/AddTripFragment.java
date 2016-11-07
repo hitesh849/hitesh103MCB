@@ -50,6 +50,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Observable;
 
+import retrofit.RetrofitError;
+
 /**
  * Created by Hitesh kumawat on 19-09-2016.
  */
@@ -187,6 +189,9 @@ public class AddTripFragment extends AbstractFragment implements View.OnClickLis
                 Util.showOKSnakBar(llAddTripMain, (addTripData.errorMessage != null) ? addTripData.errorMessage : getResources().getString(R.string.trip_add_success));
             }
 
+        }
+        else if (data instanceof RetrofitError) {
+            Util.showOKSnakBar(llAddTripMain, getResources().getString(R.string.pls_try_again));
         }
     }
 

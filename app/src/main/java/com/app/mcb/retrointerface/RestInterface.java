@@ -158,6 +158,10 @@ public interface RestInterface {
     @GET("/gettransporterdetail/{tripId}")
     public void getMyTripDetails(@Path("tripId") String tripId, Callback<MyTripDetailsData> cb);
 
+    @Headers({"Content-Type:application/json"})
+    @GET("/gettransporterdetail/{tripId}")
+    public void getMyTripDetailsWithPaymentDue(@Path("tripId") String tripId, Callback<MyTripsData> cb);
+
 
     @Headers({"Content-Type:application/json"})
     @GET("/senderbookingrequest/{parcel_id}/{trans_id}")
@@ -175,8 +179,9 @@ public interface RestInterface {
     @POST("/generateordernumber")
     public void generateOrder(@Body HashMap<String, Object> request, Callback<GenerateOrderData> cb);
 
+
     @Headers({"Content-Type:application/json"})
-    @POST("/creatCouerier")
-    public void creatCourierRequest(@Body HashMap<String, String> request, Callback<GenerateOrderData> cb);
+    @POST("/payordernumber")
+    public void orderConfirm(@Body HashMap<String, Object> request, Callback<JsonElement> cb);
 
 }

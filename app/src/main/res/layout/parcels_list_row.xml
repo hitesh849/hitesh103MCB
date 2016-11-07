@@ -190,6 +190,7 @@
 
 
                         <ImageView
+                            android:id="@+id/imgChatParcelList"
                             android:layout_width="@dimen/dim_52"
                             android:layout_height="@dimen/dim_52"
                             android:src="@mipmap/chat" />

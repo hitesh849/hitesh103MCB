@@ -10,7 +10,9 @@ import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.app.mcb.MainActivity;
 import com.app.mcb.R;
+import com.app.mcb.Utility.Constants;
 import com.app.mcb.Utility.Util;
 import com.app.mcb.dao.FilterData;
 import com.app.mcb.dao.GenerateOrderData;
@@ -20,6 +22,7 @@ import com.app.mcb.dao.TripData;
 import com.app.mcb.dao.UserInfoData;
 import com.app.mcb.filters.CommonListener;
 import com.app.mcb.model.PayNowModel;
+import com.google.gson.JsonElement;
 
 import org.byteclues.lib.model.BasicModel;
 import org.byteclues.lib.view.AbstractFragmentActivity;
@@ -52,20 +55,22 @@ public class ParcelPayNowActivity extends AbstractFragmentActivity implements Vi
     private TextView txtReceiverMobileParcelDetails;
     private TextView txtReceiverNameParcelDetails;
     private TextView txtReceiverEmailParcelDetails;
-    private TextView txtTransporterNameParcelDetails;
-    private TextView txtTransporterEmailParcelDetails;
     private TextView txtFlightNumberParcelDetails;
     private TextView txtDepartureDateParcelDetails;
     private TextView txtDepartureTimeParcelDetails;
     private TextView txtArrivalDateParcelDetails;
     private TextView txtArrivalTimeParcelDetails;
+    private TextView txtTransporterAmountToPayParcelDetails;
     private LinearLayout llFindParcelsMyParcel;
     private LinearLayout llParcelDetailsMain;
+    private LinearLayout llChkWallet;
     private TextView txtPayNowParcelPayment;
     private TextView txtConfirmParcelPayment;
+    private TextView txtWalletAmount;
     private CheckBox chkUseWallet;
     private TripData myTripsData;
     private boolean isWalletUse;
+    private String parcelStatus;
     private PayNowModel payNowModel = new PayNowModel();
 
 
@@ -74,6 +79,7 @@ public class ParcelPayNowActivity extends AbstractFragmentActivity implements Vi
 
         setContentView(R.layout.parcel_paynow_activity);
         init();
+        parcelStatus = ((String) getIntent().getSerializableExtra("status"));
         getParcelDetails(((String) getIntent().getSerializableExtra("parcelId")));
     }
 
@@ -107,6 +113,8 @@ public class ParcelPayNowActivity extends AbstractFragmentActivity implements Vi
         txtPayNowParcelPayment = (TextView) findViewById(R.id.txtPayNowParcelPayment);
         txtConfirmParcelPayment = (TextView) findViewById(R.id.txtConfirmParcelPayment);
         llTranOrReceiverContainer = (LinearLayout) findViewById(R.id.llTranOrReceiverContainer);
+        llChkWallet = (LinearLayout) findViewById(R.id.llChkWallet);
+        txtWalletAmount = (TextView) findViewById(R.id.txtWalletAmount);
         chkUseWallet = (CheckBox) findViewById(R.id.chkUseWallet);
         txtSelectorTransDetails.setOnClickListener(this);
         txtSelectorReceiverDetails.setOnClickListener(this);
@@ -148,6 +156,15 @@ public class ParcelPayNowActivity extends AbstractFragmentActivity implements Vi
         }
     }
 
+    private void orderConfirm(GenerateOrderData generateOrderData) {
+        if (Util.isDeviceOnline()) {
+            Util.showProDialog(this);
+            payNowModel.orderConfirm(generateOrderData);
+        } else {
+            Util.showAlertDialog(null, getResources().getString(R.string.noInternetMsg));
+        }
+    }
+
 
     @Override
     protected BasicModel getModel() {
@@ -161,7 +178,11 @@ public class ParcelPayNowActivity extends AbstractFragmentActivity implements Vi
             if (data != null && data instanceof MyTripDetailsData) {
                 MyTripDetailsData parcelDetailsDataMain = (MyTripDetailsData) data;
                 if ("success".equals(parcelDetailsDataMain.status)) {
-                    parcelDetailsData = parcelDetailsDataMain.parcellist.get(0);
+
+                    if (Constants.ParcelPaymentDue.equals(parcelStatus) && parcelDetailsDataMain.parcel!=null &&parcelDetailsDataMain.parcel.size() > 0)
+                        parcelDetailsData = parcelDetailsDataMain.parcel.get(0);
+                    if (parcelDetailsDataMain.parcellist.size() > 0)
+                        parcelDetailsData = parcelDetailsDataMain.parcellist.get(0);
                     if (parcelDetailsDataMain.parcellist != null)
                         myTripsData = parcelDetailsDataMain.response.get(0);
                     addTransPorterView();
@@ -173,20 +194,43 @@ public class ParcelPayNowActivity extends AbstractFragmentActivity implements Vi
                 UserInfoData userInfoData = (UserInfoData) data;
                 if ("success".equals(userInfoData.status)) {
                     this.userInfoData = userInfoData.response.get(0);
+                    txtWalletAmount.setText(this.userInfoData.wallet);
                 }
             } else if (data != null && data instanceof GenerateOrderData) {
                 GenerateOrderData generateOrderData = ((GenerateOrderData) data).response.get(0);
-                if ("success".equals(generateOrderData.status)) {
+                if ("success".equals(((GenerateOrderData) data).status)) {
+                    llChkWallet.setVisibility(View.GONE);
+                    if (generateOrderData.Amount > 0) {
+                       txtConfirmParcelPayment.setVisibility(View.VISIBLE);
+                        txtPayNowParcelPayment.setVisibility(View.GONE);
+                        txtConfirmParcelPayment.setTag(generateOrderData);
+                    }
+
+                    /*else {
+                        txtPayNowParcelPayment.setVisibility(View.GONE);
+                        txtConfirmParcelPayment.setVisibility(View.VISIBLE);
+                        txtConfirmParcelPayment.setTag(generateOrderData);
+                    }*/
 
                 } else if ("successpayment".equals(generateOrderData.status)) {
 
+                    goTOHomeActivity();
                 }
+            } else if (data instanceof JsonElement) {
+                goTOHomeActivity();
             } else if (data != null && data instanceof RetrofitError) {
                 Util.showOKSnakBar(llParcelDetailsMain, getResources().getString(R.string.pls_try_again));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+
+    private void goTOHomeActivity() {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
     }
 
     @Override
@@ -213,7 +257,8 @@ public class ParcelPayNowActivity extends AbstractFragmentActivity implements Vi
         } else if (id == R.id.txtPayNowParcelPayment) {
             generateOrder();
         } else if (id == R.id.txtConfirmParcelPayment) {
-
+            GenerateOrderData generateOrderData = ((GenerateOrderData) txtConfirmParcelPayment.getTag());
+            orderConfirm(generateOrderData);
         }
     }
 
@@ -235,13 +280,14 @@ public class ParcelPayNowActivity extends AbstractFragmentActivity implements Vi
             txtReceiverMobileParcelDetails.setText(userInfoData.mobile);
             txtReceiverNameParcelDetails.setText(userInfoData.name);
             txtReceiverEmailParcelDetails.setText(userInfoData.email);
+            txtWalletAmount.setText(userInfoData.wallet);
         }
 
     }
 
     private void addTransPorterView() {
 
-        initTransporterInfoParcelDetails(addViewInRelayout(R.layout.transporter_info_parcel_details));
+        initTransporterInfoParcelDetails(addViewInRelayout(R.layout.transporter_info_payment_side));
 
     }
 
@@ -251,16 +297,14 @@ public class ParcelPayNowActivity extends AbstractFragmentActivity implements Vi
     }
 
     private void initTransporterInfoParcelDetails(View view) {
-        txtTransporterNameParcelDetails = (TextView) view.findViewById(R.id.txtTransporterNameParcelDetails);
-        txtTransporterEmailParcelDetails = (TextView) view.findViewById(R.id.txtTransporterEmailParcelDetails);
         txtFlightNumberParcelDetails = (TextView) view.findViewById(R.id.txtFlightNumberParcelDetails);
         txtDepartureDateParcelDetails = (TextView) view.findViewById(R.id.txtDepartureDateParcelDetails);
         txtDepartureTimeParcelDetails = (TextView) view.findViewById(R.id.txtDepartureTimeParcelDetails);
         txtArrivalDateParcelDetails = (TextView) view.findViewById(R.id.txtArrivalDateParcelDetails);
         txtArrivalTimeParcelDetails = (TextView) view.findViewById(R.id.txtArrivalTimeParcelDetails);
-        // txtTransporterNameParcelDetails.setText(myTripsData.transportername);
-        //txtTransporterEmailParcelDetails.setText(myTripsData.transporteremail);
+        txtTransporterAmountToPayParcelDetails = (TextView) view.findViewById(R.id.txtTransporterAmountToPayParcelDetails);
         txtFlightNumberParcelDetails.setText(myTripsData.flight_no);
+        txtTransporterAmountToPayParcelDetails.setText(parcelDetailsData.payment);
         txtDepartureDateParcelDetails.setText(Util.getDDMMYYYYFormat(myTripsData.dep_time, "yyyy-MM-dd HH:mm:ss"));
         txtArrivalDateParcelDetails.setText(Util.getDDMMYYYYFormat(myTripsData.arrival_time, "yyyy-MM-dd HH:mm:ss"));
         txtDepartureTimeParcelDetails.setText(Util.getTimeFromDateTimeFormat(myTripsData.dep_time));

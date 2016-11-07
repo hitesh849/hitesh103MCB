@@ -26,7 +26,6 @@ public class ParcelListModel extends BasicModel {
 
     public void getActiveParcels() {
         try {
-
             restInterface.getActiveParcels(Config.getUserId(), new Callback<ParcelListData>() {
                 @Override
                 public void success(ParcelListData parcelListData, Response response) {

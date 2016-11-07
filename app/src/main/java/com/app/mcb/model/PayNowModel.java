@@ -8,6 +8,7 @@ import com.app.mcb.dao.TripData;
 import com.app.mcb.dao.UserInfoData;
 import com.app.mcb.retrointerface.RestInterface;
 import com.app.mcb.sharedPreferences.Config;
+import com.google.gson.JsonElement;
 
 import org.byteclues.lib.model.BasicModel;
 
@@ -94,7 +95,26 @@ public class PayNowModel extends BasicModel {
         }
     }
 
-    public void createCourierRequest() {
+    public void orderConfirm(GenerateOrderData generateOrderData) {
+        try {
 
+            HashMap<String, Object> request = new HashMap<String, Object>();
+            request.put("txnid", generateOrderData.ordernumber);
+            request.put("payuMoneyId", "898989898989");
+
+            restInterface.orderConfirm(request, new Callback<JsonElement>() {
+                @Override
+                public void success(JsonElement generateOrderData, Response response) {
+                    notifyObservers(generateOrderData);
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    notifyObservers(error);
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

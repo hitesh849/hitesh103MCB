@@ -2,6 +2,7 @@ package com.app.mcb.model;
 
 import com.app.mcb.Utility.Constants;
 import com.app.mcb.dao.GenerateOrderData;
+import com.app.mcb.dao.MyTripDetailsData;
 import com.app.mcb.dao.MyTripsData;
 import com.app.mcb.dao.ParcelDetailsData;
 import com.app.mcb.dao.UserInfoData;
@@ -43,5 +44,39 @@ public class MatchingTripModel extends BasicModel {
         }
     }
 
+    public void getMyTripDetails(String tripId) {
+        try {
+            restInterface.getMyTripDetailsWithPaymentDue(tripId, new Callback<MyTripsData>() {
+                @Override
+                public void success(MyTripsData myTripDetailsData, Response response) {
+                    notifyObservers(myTripDetailsData);
+                }
 
+                @Override
+                public void failure(RetrofitError error) {
+                    notifyObservers(error);
+                }
+            });
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+    public void getUserDetails(String userId) {
+        try {
+
+            restInterface.getUserDetails(userId, new Callback<UserInfoData>() {
+                @Override
+                public void success(UserInfoData userInfoData, Response response) {
+                    notifyObservers(userInfoData);
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    notifyObservers(error);
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

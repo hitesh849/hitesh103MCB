@@ -14,7 +14,7 @@ public class GenerateOrderData implements Serializable
     public String orderdate;
     public String ParcelID;
     public String TransID;
-    public String Amount;
+    public Double Amount;
     public String Paymentvia;
     public String PaymentTransaction;
     public String Txnid;

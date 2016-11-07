@@ -17,6 +17,7 @@ import com.app.mcb.Utility.Util;
 import com.app.mcb.dao.FilterData;
 import com.app.mcb.dao.MyTripsData;
 import com.app.mcb.dao.ParcelDetailsData;
+import com.app.mcb.dao.UserInfoData;
 import com.app.mcb.filters.CommonListener;
 import com.app.mcb.filters.TransporterFilter;
 import com.app.mcb.model.MatchingTripModel;
@@ -118,6 +119,15 @@ public class ParcelDetailsFragment extends AbstractFragment implements View.OnCl
         }
     }
 
+    private void getMyTripDetails(String tripId) {
+        if (Util.isDeviceOnline()) {
+            Util.showProDialog(getActivity());
+            matchingTripModel.getMyTripDetails(tripId);
+        } else {
+            Util.showAlertDialog(null, getResources().getString(R.string.noInternetMsg));
+        }
+    }
+
     @Override
     protected BasicModel getModel() {
         return matchingTripModel;
@@ -133,15 +143,40 @@ public class ParcelDetailsFragment extends AbstractFragment implements View.OnCl
                     parcelDetailsData = parcelDetailsDataMain.response.get(0);
                     if (parcelDetailsDataMain.trip != null)
                         myTripsData = parcelDetailsDataMain.trip.get(0);
+
+                    if (Constants.ParcelPaymentDue.equals(parcelDetailsData.status))
+                        getMyTripDetails(parcelDetailsData.trans_id);
                     addTransPorterView();
                     setValues(parcelDetailsData);
-
+                }
+            } else if (data != null && data instanceof MyTripsData) {
+                MyTripsData myTripsData = ((MyTripsData) data);
+                this.myTripsData = myTripsData.response.get(0);
+                getUserDetails(this.myTripsData.processed_by);
+                addTransPorterView();
+            } else if (data != null && data instanceof UserInfoData) {
+                UserInfoData userInfoData = (UserInfoData) data;
+                if ("success".equals(userInfoData.status)) {
+                    UserInfoData obj = userInfoData.response.get(0);
+                    myTripsData.transporteremail = obj.username;
+                    String transName = (obj.l_name != null) ? obj.name + " " + obj.l_name : obj.name;
+                    myTripsData.transportername = transName;
+                    addTransPorterView();
                 }
             } else if (data != null && data instanceof RetrofitError) {
                 Util.showOKSnakBar(llParcelDetailsMain, getResources().getString(R.string.pls_try_again));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
+        }
+    }
+
+    private void getUserDetails(String userId) {
+        if (Util.isDeviceOnline()) {
+            Util.showProDialog(getActivity());
+            matchingTripModel.getUserDetails(userId);
+        } else {
+            Util.showAlertDialog(null, getResources().getString(R.string.noInternetMsg));
         }
     }
 
@@ -155,7 +190,6 @@ public class ParcelDetailsFragment extends AbstractFragment implements View.OnCl
             txtSelectorTransDetails.setBackgroundResource(R.drawable.rect_left_corners_pink_bg);
             txtSelectorReceiverDetails.setBackgroundResource(R.drawable.rect_right_corners_pink_border_grey_bg);
             addTransPorterView();
-
         } else if (id == R.id.txtSelectorReceiverDetails) {
             txtSelectorTransDetails.setTextColor(getResources().getColor(R.color.colorPrimary));
             txtSelectorReceiverDetails.setTextColor(getResources().getColor(R.color.white));
@@ -163,11 +197,9 @@ public class ParcelDetailsFragment extends AbstractFragment implements View.OnCl
             txtSelectorReceiverDetails.setBackgroundResource(R.drawable.rect_right_corners_pink_bg);
             initReceiverInfoParcelDetails(addViewInRelayout(R.layout.receiver_info_parcel_details));
         } else if (id == R.id.llFindParcelsMyParcel) {
-
             Intent intent = new Intent(getActivity(), MatchingTripListActivity.class);
             intent.putExtra("data", parcelDetailsData);
             startActivity(intent);
-
         }
     }
 

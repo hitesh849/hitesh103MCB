@@ -23,6 +23,7 @@ public class MyTripListVPAdapter extends PagerAdapter {
 
     private Context mContext;
     private View.OnClickListener onClickListener;
+    private LinearLayout llFindBookedParcel;
     private ImageView imgViewParcelListRow;
     private TextView txtCapacityMyTripListRow;
     private TextView txtPnrMyTripListRow;
@@ -55,16 +56,36 @@ public class MyTripListVPAdapter extends PagerAdapter {
         LayoutInflater inflater = LayoutInflater.from(mContext);
         ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.my_trip_list_row, collection, false);
         init(layout, myTripsData);
-        if (!(Constants.ParcelIdCreated.equals(myTripsData.status) || Constants.ParcelPaymentDue.equals(myTripsData.status)))
-            llBookedParcelsMyTripList.setVisibility(View.VISIBLE);
-        else
-            llBookedParcelsMyTripList.setVisibility(View.GONE);
+        setCondition(myTripsData);
         collection.addView(layout);
         return layout;
     }
 
+    private void setCondition(MyTripsData myTripsData) {
+
+        if (!(Constants.ParcelIdCreated.equals(myTripsData.status) || Constants.ParcelPaymentDue.equals(myTripsData.status)))
+            llBookedParcelsMyTripList.setVisibility(View.VISIBLE);
+        else
+            llBookedParcelsMyTripList.setVisibility(View.GONE);
+        allViewVisible();
+        switch (myTripsData.status) {
+            case Constants.TripPending:
+                llFindBookedParcel.setVisibility(View.GONE);
+                break;
+            case Constants.TripBooked:
+                llFindParcelsMyTripList.setVisibility(View.GONE);
+                break;
+
+        }
+    }
+
+    private void allViewVisible() {
+        llFindParcelsMyTripList.setVisibility(View.VISIBLE);
+    }
+
     private void init(ViewGroup viewGroup, MyTripsData myTripsData) {
         imgViewParcelListRow = (ImageView) viewGroup.findViewById(R.id.imgViewParcelListRow);
+        llFindBookedParcel = (LinearLayout) viewGroup.findViewById(R.id.llFindBookedParcel);
         txtCapacityMyTripListRow = (TextView) viewGroup.findViewById(R.id.txtCapacityMyTripListRow);
         txtPnrMyTripListRow = (TextView) viewGroup.findViewById(R.id.txtPnrMyTripListRow);
         txtTripIdMyTripListRow = (TextView) viewGroup.findViewById(R.id.txtTripIdMyTripListRow);

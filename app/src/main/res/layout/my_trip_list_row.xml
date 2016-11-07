@@ -312,68 +312,75 @@
 
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginBottom="@dimen/dim_8"
-                android:background="@color/black" />
-
-
             <LinearLayout
-                android:layout_width="match_parent"
+                android:id="@+id/llFindBookedParcel"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/rounded_white_bg"
-                android:orientation="horizontal"
-                android:weightSum="2">
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="@dimen/dim_8"
+                    android:background="@color/black" />
 
 
                 <LinearLayout
-                    android:id="@+id/llFindParcelsMyTripList"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dim_6"
-                    android:layout_marginRight="@dimen/dim_6"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:background="@drawable/rounded_white_bg"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
 
-                    <TextView
-                        style="@style/text_medium"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/find" />
 
-                    <ImageView
-                        android:id="@+id/imgFindParcels"
-                        style="@style/text_large"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:id="@+id/llFindParcelsMyTripList"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/allparcel_select" />
+                        android:layout_marginLeft="@dimen/dim_6"
+                        android:layout_marginRight="@dimen/dim_6"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/text_medium"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/find" />
+
+                        <ImageView
+                            android:id="@+id/imgFindParcels"
+                            style="@style/text_large"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/allparcel_select" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llBookedParcelsMyTripList"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dim_6"
+                        android:layout_marginRight="@dimen/dim_6"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/text_medium"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/booked" />
+
+                        <ImageView
+                            style="@style/text_large"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/allparcel_select" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/llBookedParcelsMyTripList"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dim_6"
-                    android:layout_marginRight="@dimen/dim_6"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/text_medium"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/booked" />
-
-                    <ImageView
-                        style="@style/text_large"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/allparcel_select" />
-
-                </LinearLayout>
-
             </LinearLayout>
 
             <View

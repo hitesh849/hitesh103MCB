@@ -1,5 +1,7 @@
 package com.app.mcb.model;
 
+import android.os.Build;
+
 import com.app.mcb.Utility.Constants;
 import com.app.mcb.dao.AddParcelData;
 import com.app.mcb.dao.ParcelDetailsData;
@@ -9,10 +11,16 @@ import com.app.mcb.retrointerface.RestInterface;
 import com.app.mcb.sharedPreferences.Config;
 import com.google.gson.JsonElement;
 
+import org.byteclues.lib.init.Env;
 import org.byteclues.lib.model.BasicModel;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -100,7 +108,7 @@ public class AddParcelModel extends BasicModel {
         request.put("height", parcelDetailsData.height);
         request.put("width", parcelDetailsData.width);
         request.put("length", parcelDetailsData.length);
-        request.put("created", new Date());
+        request.put("created",convertEdtToLocalTime());
         request.put("usr_id", Config.getUserId());
         request.put("recv_id", parcelDetailsData.receiverInfoData.id);
         request.put("status", parcelDetailsData.status);
@@ -119,6 +127,33 @@ public class AddParcelModel extends BasicModel {
                 notifyObservers(error);
             }
         });
+    }
+
+    private static String convertEdtToLocalTime() {
+        //pubDate = 12/19/2012 8:57am EST;
+        String localPubDate = null;
+        try {
+            Date now = new Date();
+            Locale locale;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                locale = Env.appContext.getResources().getConfiguration().getLocales().get(0);
+            } else {
+                locale = Env.appContext.getResources().getConfiguration().locale;
+            }
+            SimpleDateFormat simpleDateFormat=new SimpleDateFormat();
+            DateFormat df = DateFormat.getDateTimeInstance(
+                    DateFormat.DEFAULT, DateFormat.DEFAULT, locale);
+            TimeZone est = TimeZone.getTimeZone("IST");
+            TimeZone mst = TimeZone.getTimeZone("MST");
+
+            df.setTimeZone(est);
+            System.out.println(df.format(now));
+            df.setTimeZone(mst);
+            System.out.println(df.format(now));
+            return df.format(now);
+        } catch (Exception e) {
+        }
+       return localPubDate;
     }
 
     public void calculateAmount(final ParcelDetailsData parcelDetailsData) {
@@ -164,7 +199,6 @@ public class AddParcelModel extends BasicModel {
         request.put("height", parcelDetailsData.height);
         request.put("width", parcelDetailsData.width);
         request.put("length", parcelDetailsData.length);
-        request.put("created", new Date());
         request.put("usr_id", parcelDetailsData.usr_id);
         request.put("trans_id", parcelDetailsData.trans_id);
         request.put("recv_id", parcelDetailsData.recv_id);
