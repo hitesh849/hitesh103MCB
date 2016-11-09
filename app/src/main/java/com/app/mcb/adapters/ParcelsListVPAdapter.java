@@ -141,6 +141,9 @@ public class ParcelsListVPAdapter extends PagerAdapter {
             case Constants.ParcelPaymentDue:
                 imgChatParcelList.setVisibility(View.GONE);
                 break;
+            case Constants.ParcelDeliveryComplete:
+                imgSettingsPLR.setVisibility(View.GONE);
+                break;
         }
     }
 

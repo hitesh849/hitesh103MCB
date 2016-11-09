@@ -2,12 +2,16 @@ package com.app.mcb.model;
 
 import com.app.mcb.Utility.Constants;
 import com.app.mcb.dao.AddTrip;
+import com.app.mcb.dao.AddTripData;
 import com.app.mcb.dao.CommonResponseData;
+import com.app.mcb.dao.MyTripsData;
 import com.app.mcb.dao.TripData;
 import com.app.mcb.retrointerface.RestInterface;
 import com.app.mcb.sharedPreferences.Config;
+import com.google.gson.JsonElement;
 
 import org.byteclues.lib.model.BasicModel;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 
@@ -35,10 +39,13 @@ public class AddTripModel extends BasicModel {
         requestData.put("capacity", tripData.capacity);
         requestData.put("comment", tripData.comment);
         requestData.put("t_id", Config.getUserId());
+        tripData.image = (tripData.image == null) ? "" : tripData.image;
         requestData.put("ticket", tripData.image);
-        restInterface.addTrip(requestData, new Callback<CommonResponseData>() {
+        String str=new JSONObject(requestData).toString();
+        System.out.println(str);
+        restInterface.addTrip(requestData, new Callback<AddTripData>() {
             @Override
-            public void success(CommonResponseData jsonElement, Response response) {
+            public void success(AddTripData jsonElement, Response response) {
                 notifyObservers(jsonElement);
             }
 

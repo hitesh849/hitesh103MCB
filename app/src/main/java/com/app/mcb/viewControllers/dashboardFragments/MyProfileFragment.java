@@ -92,7 +92,8 @@ public class MyProfileFragment extends AbstractFragment implements View.OnClickL
         etLandLineMyProfile.setText(Config.getUserPhone());
         etCardNumberMyProfile.setText(Config.getUserPassportNumber());
         etAddressMyProfile.setText(Config.getUserAddress());
-        imgEditUserProfile.setImageBitmap(Util.getDecode64ImageStringFromBitmap(Config.getUserImageURl()));
+        if (Config.getUserImageURl() != null && !TextUtils.isEmpty(Config.getUserImageURl()))
+            imgEditUserProfile.setImageBitmap(Util.getDecode64ImageStringFromBitmap(Config.getUserImageURl()));
         etNameMyProfile.setFocusable(false);
         etMemberIdMyProfile.setFocusable(false);
         etMobileNumberMyProfile.setFocusable(false);
@@ -144,7 +145,6 @@ public class MyProfileFragment extends AbstractFragment implements View.OnClickL
             etMobileNumberMyProfile.requestFocus();
             return false;
         }
-
         if (TextUtils.isEmpty(userInfoData.phone)) {
             etLandLineMyProfile.setError(getResources().getString(R.string.can_not_be_empty));
             etLandLineMyProfile.requestFocus();
@@ -160,7 +160,6 @@ public class MyProfileFragment extends AbstractFragment implements View.OnClickL
             etAddressMyProfile.requestFocus();
             return false;
         }
-
         return true;
     }
 

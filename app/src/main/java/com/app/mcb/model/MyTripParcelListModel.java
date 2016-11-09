@@ -87,9 +87,9 @@ public class MyTripParcelListModel extends BasicModel{
 
     public void usrUpdateTripStatus(ParcelDetailsData parcelDetailsData,String status,String msg) {
         try {
-            HashMap<String,String> request=new HashMap<String,String>();
+            HashMap<String,Object> request=new HashMap<String,Object>();
             request.put("id", parcelDetailsData.trans_id);
-            request.put("status", status);
+            request.put("status", Integer.parseInt(status));
             request.put("process_by", Config.getUserId());
             request.put("reason", msg);
             request.put("parcelid", parcelDetailsData.id);

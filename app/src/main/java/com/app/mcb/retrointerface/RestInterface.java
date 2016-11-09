@@ -2,6 +2,7 @@ package com.app.mcb.retrointerface;
 
 import com.app.mcb.dao.AddParcelData;
 import com.app.mcb.dao.AddTrip;
+import com.app.mcb.dao.AddTripData;
 import com.app.mcb.dao.AirportData;
 import com.app.mcb.dao.BookingRequestData;
 import com.app.mcb.dao.ChangePasswordData;
@@ -22,6 +23,8 @@ import com.app.mcb.dao.TripTransporterData;
 import com.app.mcb.dao.UserInfoData;
 import com.app.mcb.dao.WithDrawData;
 import com.google.gson.JsonElement;
+
+import org.json.JSONObject;
 
 import java.util.HashMap;
 
@@ -147,7 +150,7 @@ public interface RestInterface {
 
     @Headers({"Content-Type:application/json"})
     @POST("/addtrip")
-    public void addTrip(@Body HashMap<String, String> request, Callback<CommonResponseData> cb);
+    public void addTrip(@Body HashMap<String,String> request, Callback<AddTripData> cb);
 
 
     @Headers({"Content-Type:application/json"})
@@ -173,12 +176,11 @@ public interface RestInterface {
 
     @Headers({"Content-Type:application/json"})
     @POST("/usrupdatetripstatus")
-    public void usrUpdateTripStatus(@Body HashMap<String, String> request, Callback<ParcelBookingChangeStatusData> cb);
+    public void usrUpdateTripStatus(@Body HashMap<String, Object> request, Callback<ParcelBookingChangeStatusData> cb);
 
     @Headers({"Content-Type:application/json"})
     @POST("/generateordernumber")
     public void generateOrder(@Body HashMap<String, Object> request, Callback<GenerateOrderData> cb);
-
 
     @Headers({"Content-Type:application/json"})
     @POST("/payordernumber")

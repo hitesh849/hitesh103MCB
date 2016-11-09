@@ -26,4 +26,9 @@
     <item
         android:id="@+id/action_parcel_rejected_by_tr"
         android:title="@string/rejected_by_tr" />
+    <item
+        android:id="@+id/action_parcel_received"
+        android:title="@string/parcel_received"
+        android:visible="false"
+        />
 </menu>

@@ -1,6 +1,7 @@
 package com.app.mcb.model;
 
 import com.app.mcb.Utility.Constants;
+import com.app.mcb.dao.ParcelBookingChangeStatusData;
 import com.app.mcb.dao.ParcelDetailsData;
 import com.app.mcb.dao.ParcelListData;
 import com.app.mcb.dao.UserInfoData;
@@ -100,5 +101,29 @@ public class ParcelListModel extends BasicModel {
                 notifyObservers(error);
             }
         });
+    }
+
+    public void usrUpdateTripStatus(ParcelDetailsData parcelDetailsData,String status,String msg) {
+        try {
+            HashMap<String,Object> request=new HashMap<String,Object>();
+            request.put("id", parcelDetailsData.trans_id);
+            request.put("status", Integer.parseInt(status));
+            request.put("process_by", Config.getUserId());
+            request.put("reason", msg);
+            request.put("parcelid", parcelDetailsData.id);
+            restInterface.usrUpdateTripStatus(request, new Callback<ParcelBookingChangeStatusData>() {
+                @Override
+                public void success(ParcelBookingChangeStatusData commonResponseData, Response response) {
+                    notifyObservers(commonResponseData);
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    notifyObservers(error);
+                }
+            });
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 }

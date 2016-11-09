@@ -43,6 +43,7 @@ public class CommonListWithAllStateFragment extends AbstractFragment implements 
     private TripTransporterData tripTransporterData;
     private LinearLayout llHomeFragmentMain;
     private LinearLayout llFindSenderTransporter;
+    private TransporterFilter transporterFilter;
 
     @Override
     protected View onCreateViewPost(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -69,7 +70,7 @@ public class CommonListWithAllStateFragment extends AbstractFragment implements 
         llFindSenderTransporter = (LinearLayout) rootView.findViewById(R.id.llFindSenderTransporter);
         llBecomeTransporter.setOnClickListener(this);
         llFindSenderTransporter.setOnClickListener(this);
-        TransporterFilter.addFilterView(getActivity(), rootView, this);
+        transporterFilter = TransporterFilter.addFilterView(getActivity(), rootView, this);
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         rvTripHome.setLayoutManager(llm);
@@ -100,6 +101,7 @@ public class CommonListWithAllStateFragment extends AbstractFragment implements 
 
             } else if (data != null && data instanceof AirportData) {
                 getTopForCityInHome();
+                transporterFilter.setAdapter();
             } else if (data != null && data instanceof RetrofitError) {
                 Util.showOKSnakBar(llHomeFragmentMain, getResources().getString(R.string.pls_try_again));
             }

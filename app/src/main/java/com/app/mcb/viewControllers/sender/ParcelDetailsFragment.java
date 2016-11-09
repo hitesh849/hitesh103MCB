@@ -223,11 +223,11 @@ public class ParcelDetailsFragment extends AbstractFragment implements View.OnCl
     }
 
     private void addTransPorterView() {
+
         if (parcelDetailsData.status != null && (parcelDetailsData.status.equals(Constants.ParcelIdCreated) || parcelDetailsData.status.equals(Constants.ParcelRejectedByTr)))
             initFindMatchingParcel(addViewInRelayout(R.layout.no_transformer_found));
         else
             initTransporterInfoParcelDetails(addViewInRelayout(R.layout.transporter_info_parcel_details));
-
     }
 
     private void initFindMatchingParcel(View view) {
@@ -250,7 +250,6 @@ public class ParcelDetailsFragment extends AbstractFragment implements View.OnCl
         txtArrivalDateParcelDetails.setText(Util.getDDMMYYYYFormat(myTripsData.arrival_time, "yyyy-MM-dd HH:mm:ss"));
         txtDepartureTimeParcelDetails.setText(Util.getTimeFromDateTimeFormat(myTripsData.dep_time));
         txtArrivalTimeParcelDetails.setText(Util.getTimeFromDateTimeFormat(myTripsData.arrival_time));
-
     }
 
     @Override

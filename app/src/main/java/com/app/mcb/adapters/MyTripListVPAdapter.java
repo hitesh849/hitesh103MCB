@@ -67,6 +67,7 @@ public class MyTripListVPAdapter extends PagerAdapter {
             llBookedParcelsMyTripList.setVisibility(View.VISIBLE);
         else
             llBookedParcelsMyTripList.setVisibility(View.GONE);
+
         allViewVisible();
         switch (myTripsData.status) {
             case Constants.TripPending:
@@ -75,7 +76,12 @@ public class MyTripListVPAdapter extends PagerAdapter {
             case Constants.TripBooked:
                 llFindParcelsMyTripList.setVisibility(View.GONE);
                 break;
-
+            case Constants.TripComplete:
+                llFindParcelsMyTripList.setVisibility(View.GONE);
+                break;
+            case Constants.TripDelivered:
+                llFindParcelsMyTripList.setVisibility(View.GONE);
+                break;
         }
     }
 

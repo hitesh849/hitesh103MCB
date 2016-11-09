@@ -73,7 +73,7 @@ public class TransporterFilter implements View.OnClickListener {
 
     }
 
-    private void setAdapter() {
+    public  void setAdapter() {
         List<AirportData> airportDataList = DatabaseMgr.getInstance(context).getAirportList();
         ArrayAdapter arrayAdapter = new ArrayAdapter(context, android.R.layout.simple_list_item_1, airportDataList);
         autoCompFromTransporterFilter.setDropDownWidth((int) (context.getResources().getDisplayMetrics().widthPixels / 1.5));

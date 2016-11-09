@@ -20,6 +20,7 @@ import com.app.mcb.Utility.Constants;
 import com.app.mcb.Utility.Util;
 import com.app.mcb.adapters.ParcelsListVPAdapter;
 import com.app.mcb.dao.FilterData;
+import com.app.mcb.dao.ParcelBookingChangeStatusData;
 import com.app.mcb.dao.ParcelDetailsData;
 import com.app.mcb.dao.ParcelListData;
 import com.app.mcb.filters.ParcelFilter;
@@ -84,6 +85,12 @@ public class ParcelsListFragment extends AbstractFragment implements View.OnClic
                 } else if (parcelListData.status.equals("Error")) {
                     Util.showOKSnakBar(llCountDotsMain, parcelListData.errorMessage);
                 }
+            } else if (data != null && data instanceof ParcelBookingChangeStatusData) {
+                ParcelBookingChangeStatusData parcelBookingRejectedData = ((ParcelBookingChangeStatusData) data);
+                if ("success".equals(parcelBookingRejectedData.status))
+                    getParcelList();
+                else
+                    Util.showOKSnakBar(llCountDotsMain, parcelBookingRejectedData.errorMessage);
             } else if (data != null && data instanceof RetrofitError) {
                 Util.showOKSnakBar(llParcelListMain, getResources().getString(R.string.pls_try_again));
             }
@@ -114,11 +121,14 @@ public class ParcelsListFragment extends AbstractFragment implements View.OnClic
 
             hideAllPopUPMenuItem(popup);
 
-            switch (parcelDetailsData.status)
-            {
+            switch (parcelDetailsData.status) {
                 case Constants.ParcelPaymentDue:
-                    MenuItem menuItem=popup.getMenu().findItem(R.id.action_payment_due);
+                    MenuItem menuItem = popup.getMenu().findItem(R.id.action_payment_due);
                     menuItem.setVisible(true);
+                    break;
+                case Constants.ParcelDelivered:
+                    MenuItem menuItem1 = popup.getMenu().findItem(R.id.action_parcel_received);
+                    menuItem1.setVisible(true);
                     break;
 
             }
@@ -133,6 +143,9 @@ public class ParcelsListFragment extends AbstractFragment implements View.OnClic
                             intent.putExtra("parcelId", parcelDetailsData.trans_id);
                             intent.putExtra("status", parcelDetailsData.status);
                             startActivity(intent);
+                            break;
+                        case R.id.action_parcel_received:
+                            usrUpdateTripStatus(parcelDetailsData);
                             break;
                     }
                     return false;
@@ -219,6 +232,19 @@ public class ParcelsListFragment extends AbstractFragment implements View.OnClic
             getActiveParcels();
         } else if (listType.equals("All")) {
             getAllParcels();
+        }
+    }
+
+    private void usrUpdateTripStatus(ParcelDetailsData parcelDetailsData) {
+        try {
+            if (Util.isDeviceOnline()) {
+                Util.showProDialog(getActivity());
+                parcelListModel.usrUpdateTripStatus(parcelDetailsData, Constants.ParcelDeliveryComplete, "Add Comment");
+            } else {
+                Util.showAlertDialog(null, getResources().getString(R.string.noInternetMsg));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 

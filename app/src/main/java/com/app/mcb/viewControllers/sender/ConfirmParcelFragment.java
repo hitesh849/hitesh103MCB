@@ -1,5 +1,6 @@
 package com.app.mcb.viewControllers.sender;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
@@ -16,6 +17,7 @@ import com.app.mcb.dao.AddParcelData;
 import com.app.mcb.dao.ParcelDetailsData;
 import com.app.mcb.dao.UserInfoData;
 import com.app.mcb.model.AddParcelModel;
+import com.app.mcb.viewControllers.dashboardFragments.DashBoardFragment;
 
 import org.byteclues.lib.model.BasicModel;
 import org.byteclues.lib.view.AbstractFragment;
@@ -60,14 +62,14 @@ public class ConfirmParcelFragment extends AbstractFragment implements View.OnCl
         txtFromShortConfirmParcel.setText(Util.getFirstName(parcelDetailsData.source));
         txtToShortConfirmParcel.setText(Util.getFirstName(parcelDetailsData.destination));
         txtParcelTypeConfirmParcel.setText(Util.getParcelType(parcelDetailsData.type));
-        txtStatusConfirmParcel.setText(Util.getParcelStatus(Integer.parseInt(parcelDetailsData.status),getActivity()));
+        txtStatusConfirmParcel.setText(Util.getParcelStatus(Integer.parseInt(parcelDetailsData.status), getActivity()));
         txtReceiverEmailConfirmParcel.setText(parcelDetailsData.receiverInfoData.username);
         txtReceiverMobileConfirmParcel.setText(parcelDetailsData.receiverInfoData.mobile);
         txtReceiverIdConfirmParcel.setText(parcelDetailsData.receiverInfoData.UserID);
         txtPaymentConfirmParcel.setText(parcelDetailsData.price);
-        txtReceiverNameConfirmParcel.setText(parcelDetailsData.receiverInfoData.name+" "+parcelDetailsData.receiverInfoData.l_name);
-        txtFromLongConfirmParcel.setText("("+parcelDetailsData.source+")");
-        txtToLongConfirmParcel.setText("("+parcelDetailsData.destination+")");
+        txtReceiverNameConfirmParcel.setText(parcelDetailsData.receiverInfoData.name + " " + parcelDetailsData.receiverInfoData.l_name);
+        txtFromLongConfirmParcel.setText("(" + parcelDetailsData.source + ")");
+        txtToLongConfirmParcel.setText("(" + parcelDetailsData.destination + ")");
     }
 
     private void init(View view) {
@@ -100,13 +102,12 @@ public class ConfirmParcelFragment extends AbstractFragment implements View.OnCl
             if (data != null && data instanceof AddParcelData) {
                 AddParcelData addParcelData = (AddParcelData) data;
                 if ("success".equals(addParcelData.status)) {
-                    if (addParcelData.response != null) {
-                        FeedBackFragment feedBackFragment=new FeedBackFragment();
-                        Bundle bundle=new Bundle();
-                        bundle.putSerializable("data",addParcelData.response);
-                        feedBackFragment.setArguments(bundle);
-                        Util.replaceFragment(getActivity(), R.id.fmHomeContainer,feedBackFragment );
-                    }
+                    Util.showAlertDialog(new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            Util.replaceFragment(getActivity(), R.id.fmHomeContainer, new SenderHomeFragment());
+                        }
+                    }, getString(R.string.parcel_create_successfully));
                 }
             } else if (data != null && data instanceof RetrofitError) {
                 Util.showOKSnakBar(llconfirmParcelMain, getResources().getString(R.string.pls_try_again));

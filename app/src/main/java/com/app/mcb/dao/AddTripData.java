@@ -4,9 +4,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * Created by user on 13/10/16.
+ * Created by Hitesh on 08-11-2016.
  */
-public class MyTripsData implements Serializable {
+public class AddTripData implements Serializable
+{
     public String id;
     public String source;
     public String destination;
@@ -33,5 +34,6 @@ public class MyTripsData implements Serializable {
     public String transportername;
     public String transporteremail;
     public String errorMessage;
-    public ArrayList<MyTripsData> response;
+    public AddTripData response;
+
 }

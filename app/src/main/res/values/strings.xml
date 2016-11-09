@@ -132,6 +132,7 @@
     <string name="delivery_completed">Delivery Completed</string>
     <string name="cancelled">Cancelled</string>
     <string name="rejected_by_tr">Rejected by TR</string>
+    <string name="parcel_received">Parcel Received</string>
     <string name="feedback">Feedback</string>
     <string name="pls_try_again">Please try again.</string>
     <string name="trip_unavailable">Trip unavailable.</string>
@@ -183,4 +184,5 @@
     <string name="use_mcb_available_amount">Use MCB Wallet available Amount</string>
     <string name="pay_now">PayNow</string>
     <string name="amount_to_pay">Amount To Pay</string>
+    <string name="parcel_create_successfully">Parcel create successfully.</string>
 </resources>

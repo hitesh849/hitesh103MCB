@@ -221,7 +221,7 @@ public class MyTripParcelActivity extends AbstractFragmentActivity implements Vi
             usrUpdateTripStatus(parcelDetailsData, Constants.ParcelCollected, "Parcel Collected");
         } else if (id == R.id.txtDeliveredMyTripParcel) {
             ParcelDetailsData parcelDetailsData = ((ParcelDetailsData) view.getTag());
-            usrUpdateTripStatus(parcelDetailsData, Constants.ParcelDelivered, "Parcel Delivered");
+            usrUpdateTripStatus(parcelDetailsData, "6", "Parcel Delivered");
         }
 
     }

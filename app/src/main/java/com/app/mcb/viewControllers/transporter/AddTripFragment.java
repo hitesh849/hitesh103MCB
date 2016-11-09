@@ -30,6 +30,7 @@ import com.app.mcb.R;
 import com.app.mcb.Utility.Constants;
 import com.app.mcb.Utility.Util;
 import com.app.mcb.dao.AddTrip;
+import com.app.mcb.dao.AddTripData;
 import com.app.mcb.dao.AirportData;
 import com.app.mcb.dao.CommonResponseData;
 import com.app.mcb.dao.MyTripsData;
@@ -161,8 +162,8 @@ public class AddTripFragment extends AbstractFragment implements View.OnClickLis
     public void update(Observable observable, Object data) {
 
         Util.dimissProDialog();
-        if (data instanceof CommonResponseData) {
-            CommonResponseData commonResponseData = (CommonResponseData) data;
+        if (data instanceof MyTripsData) {
+            MyTripsData commonResponseData = (MyTripsData) data;
             if ("success".equals(commonResponseData.status)) {
                 Util.showAlertDialog(new DialogInterface.OnClickListener() {
                     @Override
@@ -175,15 +176,15 @@ public class AddTripFragment extends AbstractFragment implements View.OnClickLis
                 Util.showOKSnakBar(llAddTripMain, commonResponseData.errorMessage);
             }
 
-        } else if (data instanceof AddTrip) {
-            AddTrip addTripData = (AddTrip) data;
+        } else if (data instanceof AddTripData) {
+            AddTripData addTripData = (AddTripData) data;
             if ("success".equals(addTripData.status)) {
                 Util.showAlertDialog(new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Util.replaceFragment(getActivity(), R.id.fmHomeContainer, new DashBoardFragment());
                     }
-                }, addTripData.response);
+                }, getString(R.string.trip_add_success));
 
             } else if ("Error".equals(addTripData.status)) {
                 Util.showOKSnakBar(llAddTripMain, (addTripData.errorMessage != null) ? addTripData.errorMessage : getResources().getString(R.string.trip_add_success));
@@ -409,7 +410,7 @@ public class AddTripFragment extends AbstractFragment implements View.OnClickLis
                         Bitmap bmp = BitmapFactory.decodeStream(fis);
                         Bitmap rotated = Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(), matrix, true);
                         FileOutputStream fos = new FileOutputStream(captured_image_uri.getPath());
-                        rotated.compress(Bitmap.CompressFormat.JPEG, 85, fos);
+                        rotated.compress(Bitmap.CompressFormat.JPEG, 65, fos);
                         tripData.image = Util.getEncoded64ImageStringFromBitmap(bmp);
                         txtUploadStatusAddTrip.setText(getString(R.string.ticked_uploaded));
 
