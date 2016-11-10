@@ -2,6 +2,7 @@ package com.app.mcb.model;
 
 import com.app.mcb.Utility.Constants;
 import com.app.mcb.dao.MyTripsData;
+import com.app.mcb.dao.ParcelBookingChangeStatusData;
 import com.app.mcb.retrointerface.RestInterface;
 import com.app.mcb.sharedPreferences.Config;
 import com.google.gson.JsonElement;
@@ -37,9 +38,9 @@ public class MyTripsModel extends BasicModel {
     }
 
     public void cancelTrip(HashMap<String,Object> requestData) {
-        restInterface.cancelTrip(requestData, new Callback<JsonElement>() {
+        restInterface.cancelTrip(requestData, new Callback<ParcelBookingChangeStatusData>() {
             @Override
-            public void success(JsonElement jsonElement, Response response) {
+            public void success(ParcelBookingChangeStatusData jsonElement, Response response) {
                 notifyObservers(jsonElement);
             }
 

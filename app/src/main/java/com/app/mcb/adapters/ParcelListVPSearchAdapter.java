@@ -7,27 +7,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.app.mcb.R;
 import com.app.mcb.Utility.Constants;
 import com.app.mcb.Utility.Util;
 import com.app.mcb.dao.ParcelDetailsData;
-import com.app.mcb.dao.ParcelListData;
-import com.app.mcb.dao.TripTransporterData;
 
 import java.util.ArrayList;
 
 /**
- * Created by Hitesh kumawat on 18-09-2016.
+ * Created by Hitesh on 10-11-2016.
  */
-public class ParcelsListVPAdapter extends PagerAdapter {
+public class ParcelListVPSearchAdapter extends PagerAdapter {
 
     private Context mContext;
     private View.OnClickListener onClickListener;
-    private ImageView imgViewParcelListRow;
-    private ImageView imgSettingsParcelList;
     private TextView txtFromCityShortPl;
     private TextView txtFromCityLongPl;
     private TextView txtToCityShortPl;
@@ -42,14 +36,9 @@ public class ParcelsListVPAdapter extends PagerAdapter {
     private TextView txtTransporterIdPL;
     private TextView txtReceiverIdPL;
     private TextView txtBookedPL;
-    private ImageView imgViewPLR;
-    private ImageView imgEditPLR;
-    private ImageView imgCancelPLR;
-    private ImageView imgSettingsPLR;
-    private ImageView imgChatParcelList;
     private ArrayList<ParcelDetailsData> parcelList;
 
-    public ParcelsListVPAdapter(Context context, ArrayList<ParcelDetailsData> parcelList, View.OnClickListener onClickListener) {
+    public ParcelListVPSearchAdapter(Context context, ArrayList<ParcelDetailsData> parcelList, View.OnClickListener onClickListener) {
         mContext = context;
         this.parcelList = parcelList;
         this.onClickListener = onClickListener;
@@ -58,7 +47,7 @@ public class ParcelsListVPAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup collection, int position) {
         LayoutInflater inflater = LayoutInflater.from(mContext);
-        ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.parcels_list_row, collection, false);
+        ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.parcels_list_senders_row, collection, false);
         init(layout);
         setValues(position);
         collection.addView(layout);
@@ -66,8 +55,6 @@ public class ParcelsListVPAdapter extends PagerAdapter {
     }
 
     private void init(ViewGroup viewGroup) {
-        imgSettingsPLR = (ImageView) viewGroup.findViewById(R.id.imgSettingsPLR);
-        imgChatParcelList = (ImageView) viewGroup.findViewById(R.id.imgChatParcelList);
         txtFromCityShortPl = (TextView) viewGroup.findViewById(R.id.txtFromCityShortPl);
         txtFromCityLongPl = (TextView) viewGroup.findViewById(R.id.txtFromCityLongPl);
         txtToCityShortPl = (TextView) viewGroup.findViewById(R.id.txtToCityShortPl);
@@ -82,14 +69,7 @@ public class ParcelsListVPAdapter extends PagerAdapter {
         txtTransporterIdPL = (TextView) viewGroup.findViewById(R.id.txtTransporterIdPL);
         txtReceiverIdPL = (TextView) viewGroup.findViewById(R.id.txtReceiverIdPL);
         txtBookedPL = (TextView) viewGroup.findViewById(R.id.txtBookedPL);
-        imgViewPLR = (ImageView) viewGroup.findViewById(R.id.imgViewPLR);
-        imgEditPLR = (ImageView) viewGroup.findViewById(R.id.imgEditPLR);
-        imgCancelPLR = (ImageView) viewGroup.findViewById(R.id.imgCancelPLR);
-        imgViewPLR.setOnClickListener(onClickListener);
-        imgSettingsPLR.setOnClickListener(onClickListener);
-        imgCancelPLR.setOnClickListener(onClickListener);
-        imgEditPLR.setOnClickListener(onClickListener);
-        imgChatParcelList.setOnClickListener(onClickListener);
+
     }
 
     private void setValues(int position) {
@@ -102,11 +82,7 @@ public class ParcelsListVPAdapter extends PagerAdapter {
         txtFromDatePl.setText(Util.getDateFromDateTimeFormat(parcelListData.created));
         txtFromTimePl.setText(Util.getTimeFromDateTimeFormat(parcelListData.created));
         txtToDatePl.setText(Util.getDDMMYYYYFormat(parcelListData.till_date, "yyyy-MM-dd"));
-        imgViewPLR.setTag(parcelListData);
-        imgEditPLR.setTag(parcelListData);
-        imgCancelPLR.setTag(parcelListData);
-        imgChatParcelList.setTag(parcelListData);
-        imgSettingsPLR.setTag(parcelListData);
+
         if ("E".equals(parcelListData.type))
             txtPrcelTypePL.setText(Constants.ENVELOPE);
         else if ("B".equals(parcelListData.type))
@@ -134,30 +110,7 @@ public class ParcelsListVPAdapter extends PagerAdapter {
         else
             txtBookedPL.setText("");
 
-        setViewVisible();
-        switch (parcelListData.status) {
-            case Constants.ParcelIdCreated:
-                imgChatParcelList.setVisibility(View.GONE);
-                imgSettingsPLR.setVisibility(View.GONE);
-                break;
-            case Constants.ParcelPaymentDue:
-                imgChatParcelList.setVisibility(View.GONE);
-                break;
-            case Constants.ParcelDeliveryComplete:
-                imgSettingsPLR.setVisibility(View.GONE);
-                break;
-            case Constants.ParcelBookedWithTR:
-                imgSettingsPLR.setVisibility(View.GONE);
-                break;
-            case Constants.ParcelCollected:
-                imgSettingsPLR.setVisibility(View.GONE);
-                break;
-        }
-    }
 
-    void setViewVisible() {
-        imgChatParcelList.setVisibility(View.VISIBLE);
-        imgSettingsPLR.setVisibility(View.VISIBLE);
     }
 
     @Override

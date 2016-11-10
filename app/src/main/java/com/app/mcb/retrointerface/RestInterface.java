@@ -133,7 +133,7 @@ public interface RestInterface {
 
     @Headers({"Content-Type:application/json"})
     @POST("/usrupdatetripstatus")
-    public void cancelTrip(@Body HashMap<String, Object> request, Callback<JsonElement> cb);
+    public void cancelTrip(@Body HashMap<String, Object> request, Callback<ParcelBookingChangeStatusData> cb);
 
     @Headers({"Content-Type:application/json"})
     @POST("/updateparcel")

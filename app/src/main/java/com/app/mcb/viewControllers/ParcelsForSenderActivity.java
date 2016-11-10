@@ -1,5 +1,6 @@
 package com.app.mcb.viewControllers;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,11 +15,13 @@ import com.app.mcb.adapters.ParcelListHomeAdapter;
 import com.app.mcb.adapters.TripListStateWiseAdapter;
 import com.app.mcb.custom.AppHeaderView;
 import com.app.mcb.dao.FilterData;
+import com.app.mcb.dao.ParcelDetailsData;
 import com.app.mcb.dao.ParcelListData;
 import com.app.mcb.dao.TripTransporterData;
 import com.app.mcb.filters.CommonListener;
 import com.app.mcb.filters.TransporterFilter;
 import com.app.mcb.model.HomeTripModel;
+import com.app.mcb.viewControllers.sender.ParcelDetailsSenderSearchActivity;
 
 import org.byteclues.lib.model.BasicModel;
 import org.byteclues.lib.view.AbstractFragmentActivity;
@@ -60,8 +63,8 @@ public class ParcelsForSenderActivity extends AbstractFragmentActivity implement
                 filterData.toDate = tripTransporterData.dep_time;
             }
         } else {*/
-            filterData.fromDate = Util.getCurrentDate();
-            filterData.toDate = Util.getNextDays(5);
+        filterData.fromDate = Util.getCurrentDate();
+        filterData.toDate = Util.getNextDays(5);
         //}
         getParcelsListByFilter(filterData);
     }
@@ -115,15 +118,31 @@ public class ParcelsForSenderActivity extends AbstractFragmentActivity implement
         if (id == R.id.llBackHeader) {
             onBackPressed();
         } else if (id == R.id.llSenderHomeRowMain) {
-            Intent intent = new Intent(this, ParcelsDetailsForSenderHome.class);
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("KEY_DATA", parcelListData);
-            intent.putExtra("KEY_BUNDLE", bundle);
+            ParcelDetailsData parcelDetailsData= ((ParcelDetailsData) v.getTag());
+            Intent intent = new Intent(this, ParcelDetailsSenderSearchActivity.class);
+            intent.putExtra("data",parcelDetailsData);
             startActivity(intent);
         } else if (id == R.id.llBecomeTransporter) {
             Intent intent = new Intent(this, SignUpActivity.class);
             startActivity(intent);
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case (101): {
+                if (resultCode == Activity.RESULT_OK) {
+                    ParcelListData parcelListData = ((ParcelListData) data.getSerializableExtra("data"));
+                    if (parcelListData.response != null && parcelListData.response.size() > 0) {
+                        rvTripHome.setAdapter(new ParcelListHomeAdapter(this, this, parcelListData.response));
+                    }
+                }
+                break;
+            }
+        }
+
     }
 
     private void getAirportList() {

@@ -144,6 +144,7 @@
     <string name="pass_do_not_match_error_msg">Passwords do not match.</string>
     <string name="rs">&#x20B9;</string>
     <string name="update">Update</string>
+    <string name="trip_update_successfully">Trip update successfully.</string>
     <string name="box">Box</string>
     <string name="envelope">Envelope</string>
     <string name="parcel">Parcel</string>
@@ -185,4 +186,6 @@
     <string name="pay_now">PayNow</string>
     <string name="amount_to_pay">Amount To Pay</string>
     <string name="parcel_create_successfully">Parcel create successfully.</string>
+    <string name="reason_cancel_trip">Do you want to cancel this Trip? Give Reason.</string>
+    <string name="valid_trip_reason">Please give valid reason for cancel trip!</string>
 </resources>

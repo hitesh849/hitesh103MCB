@@ -95,10 +95,8 @@ public class AddTripFragment extends AbstractFragment implements View.OnClickLis
             if (myTripsData != null) {
                 TripMode = "edit";
                 setValuesInEditMode();
-
             }
         }
-
         return view;
     }
 
@@ -119,6 +117,7 @@ public class AddTripFragment extends AbstractFragment implements View.OnClickLis
         txtTimeDeparture.setTag(myTripsData.dep_time.split(" ")[1]);
         txtDateArrival.setTag(myTripsData.arrival_time.split(" ")[0]);
         txtTimeArrival.setTag(myTripsData.arrival_time.split(" ")[1]);
+        txtAddButton.setText(getString(R.string.update));
     }
 
     private void init(View view) {
@@ -185,6 +184,20 @@ public class AddTripFragment extends AbstractFragment implements View.OnClickLis
                         Util.replaceFragment(getActivity(), R.id.fmHomeContainer, new DashBoardFragment());
                     }
                 }, getString(R.string.trip_add_success));
+
+            } else if ("Error".equals(addTripData.status)) {
+                Util.showOKSnakBar(llAddTripMain, (addTripData.errorMessage != null) ? addTripData.errorMessage : getResources().getString(R.string.trip_add_success));
+            }
+
+        }else if (data instanceof AddTrip) {
+            AddTrip addTripData = (AddTrip) data;
+            if ("success".equals(addTripData.status)) {
+                Util.showAlertDialog(new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Util.replaceFragment(getActivity(), R.id.fmHomeContainer, new DashBoardFragment());
+                    }
+                }, (!TextUtils.isEmpty(addTripData.response))?addTripData.response:getString(R.string.trip_update_successfully));
 
             } else if ("Error".equals(addTripData.status)) {
                 Util.showOKSnakBar(llAddTripMain, (addTripData.errorMessage != null) ? addTripData.errorMessage : getResources().getString(R.string.trip_add_success));

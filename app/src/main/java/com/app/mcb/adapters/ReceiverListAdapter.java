@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.app.mcb.R;
@@ -36,6 +37,8 @@ public class ReceiverListAdapter extends PagerAdapter {
     private TextView txtParcelWeightReceiver;
     private TextView txtTransporterIdReceiver;
     private TextView txtParcelStatusReceiver;
+    private ImageView imgSettingReceiverSide;
+    private LinearLayout llSettingReceiverSide;
     private View.OnClickListener onClickListener;
     private ArrayList<ReceiverData> receiverDataList;
 
@@ -70,15 +73,18 @@ public class ReceiverListAdapter extends PagerAdapter {
         txtParcelWeightReceiver = (TextView) viewGroup.findViewById(R.id.txtParcelWeightReceiver);
         txtTransporterIdReceiver = (TextView) viewGroup.findViewById(R.id.txtTransporterIdReceiver);
         txtParcelStatusReceiver = (TextView) viewGroup.findViewById(R.id.txtParcelStatusReceiver);
+        imgSettingReceiverSide = (ImageView) viewGroup.findViewById(R.id.imgSettingReceiverSide);
+        llSettingReceiverSide = (LinearLayout) viewGroup.findViewById(R.id.llSettingReceiverSide);
+        imgSettingReceiverSide.setOnClickListener(onClickListener);
     }
 
 
     private void setValue(int position) {
         ReceiverData receiverData = receiverDataList.get(position);
         txtFromCityShortReceiver.setText(Util.getFirstName(receiverData.source));
-        txtFromCityLongReceiver.setText("("+receiverData.source+")");
+        txtFromCityLongReceiver.setText("(" + receiverData.source + ")");
         txtToCityShortReceiver.setText(Util.getFirstName(receiverData.destination));
-        txtToCityLongReceiver.setText("("+receiverData.destination+")");
+        txtToCityLongReceiver.setText("(" + receiverData.destination + ")");
         txtFlightNumReceiver.setText(receiverData.flight_no);
         txtFromDateReceiver.setText(Util.getDateFromDateTimeFormat(receiverData.arrival_time));
         txtToDateReceiver.setText(Util.getDateFromDateTimeFormat(receiverData.dep_time));
@@ -87,6 +93,7 @@ public class ReceiverListAdapter extends PagerAdapter {
         txtParcelIdReceiver.setText(receiverData.ParcelID);
         txtTransporterIdReceiver.setText(receiverData.TripID);
         txtParcelStatusReceiver.setText(receiverData.statusdescription);
+        imgSettingReceiverSide.setTag(receiverData);
         if (!TextUtils.isEmpty(receiverData.weight))
             txtParcelWeightReceiver.setText(receiverData.weight + " " + "Kg");
         else
@@ -96,6 +103,11 @@ public class ReceiverListAdapter extends PagerAdapter {
             txtParcelTypeReceiver.setText(Constants.ENVELOPE);
         else if ("B".equals(receiverData.type))
             txtParcelTypeReceiver.setText(Constants.BOX);
+        else if ("P".equals(receiverData.status))
+            txtParcelTypeReceiver.setText(Constants.PACKET);
+        if(!receiverData.status.equals(Constants.ParcelDelivered))
+            llSettingReceiverSide.setVisibility(View.GONE);
+
     }
 
     @Override

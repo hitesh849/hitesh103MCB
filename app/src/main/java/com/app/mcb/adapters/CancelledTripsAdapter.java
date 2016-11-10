@@ -21,7 +21,6 @@ public class CancelledTripsAdapter extends PagerAdapter {
 
     private Context mContext;
     private View.OnClickListener onClickListener;
-    private ImageView imgViewParcelListRow;
     private TextView txtCapacityMyTripListRow;
     private TextView txtPnrMyTripListRow;
     private TextView txtTripIdMyTripListRow;
@@ -53,7 +52,6 @@ public class CancelledTripsAdapter extends PagerAdapter {
     }
 
     private void init(ViewGroup viewGroup, MyTripsData myTripsData) {
-        imgViewParcelListRow = (ImageView) viewGroup.findViewById(R.id.imgViewParcelListRow);
         txtCapacityMyTripListRow = (TextView) viewGroup.findViewById(R.id.txtCapacityMyTripListRow);
         txtPnrMyTripListRow = (TextView) viewGroup.findViewById(R.id.txtPnrMyTripListRow);
         txtTripIdMyTripListRow = (TextView) viewGroup.findViewById(R.id.txtTripIdMyTripListRow);
@@ -78,8 +76,7 @@ public class CancelledTripsAdapter extends PagerAdapter {
         txtDestinationDateMyTripsRow.setText(Util.getDDMMYYYYFormat(myTripsData.arrival_time, "yyyy-MM-dd HH:mm:ss"));
         txtSourceTimeMyTripsListRow.setText(Util.getTimeFromDateTimeFormat(myTripsData.dep_time));
         txtDestinationTimeMyTripsRow.setText(Util.getTimeFromDateTimeFormat(myTripsData.arrival_time));
-        if(imgViewParcelListRow!=null)
-        imgViewParcelListRow.setOnClickListener(onClickListener);
+
     }
 
     @Override

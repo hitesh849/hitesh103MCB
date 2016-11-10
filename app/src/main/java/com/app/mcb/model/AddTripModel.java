@@ -70,7 +70,8 @@ public class AddTripModel extends BasicModel {
         requestData.put("status", tripData.status);
         requestData.put("t_id", Config.getUserId());
         requestData.put("id", tripData.id);
-        requestData.put("ticket", "");
+        tripData.image = (tripData.image == null) ? "" : tripData.image;
+        requestData.put("ticket", tripData.image);
         System.out.println(requestData.toString());
         restInterface.updateTrip(requestData, new Callback<AddTrip>() {
             @Override

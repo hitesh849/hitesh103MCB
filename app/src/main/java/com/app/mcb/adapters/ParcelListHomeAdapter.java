@@ -56,6 +56,7 @@ public class ParcelListHomeAdapter extends RecyclerView.Adapter<ParcelListHomeAd
         holder.txtToParcelListHome.setText(Util.getFirstName(parcelListData.destination));
         holder.txtFromDateParcelListHome.setText(Util.getTimeFromDateTimeFormat(parcelListData.created));
         holder.txtToDateParcelListHome.setText(Util.getTimeFromDateTimeFormat(parcelListData.till_date));
+        holder.llSenderHomeRowMain.setTag(parcelListData);
         if (!TextUtils.isEmpty(parcelListData.weight))
             holder.txtWeightParcelListHome.setText(parcelListData.weight + " " + "KG");
         else

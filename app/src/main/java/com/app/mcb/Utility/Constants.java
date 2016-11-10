@@ -19,6 +19,7 @@ public class Constants {
     public static final String TripApproved = "1";
     public static final String TripRequestSent = "2";
     public static final String TripBooked = "3";
+    public static final String TripCanceled = "4";
     public static final String TripRejected = "5";
     public static final String TripDelivered = "6";
     public static final String TripComplete = "7";

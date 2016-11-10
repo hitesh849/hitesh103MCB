@@ -1,9 +1,13 @@
 package com.app.mcb.viewControllers.dashboardFragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.PopupMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -11,13 +15,17 @@ import android.widget.LinearLayout;
 
 import com.app.mcb.MainActivity;
 import com.app.mcb.R;
+import com.app.mcb.Utility.Constants;
 import com.app.mcb.Utility.Util;
 import com.app.mcb.adapters.ParcelsListVPAdapter;
 import com.app.mcb.adapters.ReceiverListAdapter;
+import com.app.mcb.dao.ParcelBookingChangeStatusData;
+import com.app.mcb.dao.ParcelDetailsData;
 import com.app.mcb.dao.ParcelListData;
 import com.app.mcb.dao.ReceiverData;
 import com.app.mcb.model.ReceiverModel;
 import com.app.mcb.viewControllers.sender.ParcelDetailsFragment;
+import com.app.mcb.viewControllers.sender.ParcelPayNowActivity;
 
 import org.byteclues.lib.model.BasicModel;
 import org.byteclues.lib.view.AbstractFragment;
@@ -83,10 +91,59 @@ public class ReceiverListFragment extends AbstractFragment implements View.OnCli
     public void onClick(View view) {
 
         int id = view.getId();
-        if (id == R.id.imgViewParcelListRow) {
+        /*if (id == R.id.imgViewParcelListRow) {
             Util.replaceFragment(getActivity(), R.id.fmContainerSenderHomeMain, new ParcelDetailsFragment());
+        }*/  if (id == R.id.imgSettingReceiverSide) {
+
+            final ReceiverData receiverData = ((ReceiverData) view.getTag());
+            PopupMenu popup = new PopupMenu(getActivity(), view);
+            MenuInflater inflater = popup.getMenuInflater();
+            inflater.inflate(R.menu.parcel_status, popup.getMenu());
+            popup.show();
+            hideAllPopUPMenuItem(popup);
+            switch (receiverData.status) {
+                case Constants.ParcelDelivered:
+                    MenuItem menuItem1 = popup.getMenu().findItem(R.id.action_parcel_received);
+                    menuItem1.setVisible(true);
+                    break;
+
+            }
+
+            popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    int id = item.getItemId();
+                    switch (id) {
+                        case R.id.action_parcel_received:
+                            usrUpdateTripStatus(receiverData);
+                            break;
+                    }
+                    return false;
+                }
+            });
+
         }
     }
+
+    private void usrUpdateTripStatus(ReceiverData parcelDetailsData) {
+        try {
+            if (Util.isDeviceOnline()) {
+                Util.showProDialog(getActivity());
+                receiverModel.usrUpdateTripStatus(parcelDetailsData, Constants.ParcelDeliveryComplete, "Add Comment");
+            } else {
+                Util.showAlertDialog(null, getResources().getString(R.string.noInternetMsg));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private void hideAllPopUPMenuItem(PopupMenu popup) {
+        for (int i = 0; i < popup.getMenu().size(); i++) {
+            popup.getMenu().getItem(i).setVisible(false);
+        }
+    }
+
 
     private void drawPageSelectionIndicators(int mPosition) {
         if (llCountDotsMain != null) {
@@ -144,6 +201,12 @@ public class ReceiverListFragment extends AbstractFragment implements View.OnCli
                 } else if (receiverData.status.equals("Error")) {
                     Util.showOKSnakBar(llCountDotsMain, receiverData.errorMessage);
                 }
+            } else if (data != null && data instanceof ParcelBookingChangeStatusData) {
+                ParcelBookingChangeStatusData parcelBookingRejectedData = ((ParcelBookingChangeStatusData) data);
+                if ("success".equals(parcelBookingRejectedData.status))
+                    getReceiverData();
+                else
+                    Util.showOKSnakBar(llCountDotsMain, parcelBookingRejectedData.errorMessage);
             } else if (data != null && data instanceof RetrofitError) {
                 Util.showOKSnakBar(llReceiverListMain, getResources().getString(R.string.pls_try_again));
             }

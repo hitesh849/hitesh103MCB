@@ -289,7 +289,6 @@ public class ParcelsListFragment extends AbstractFragment implements View.OnClic
 
     @Override
     public void filterData(FilterData filterData) {
-
         if (TextUtils.isEmpty(filterData.parcelId) && TextUtils.isEmpty(filterData.tillDate) && TextUtils.isEmpty(filterData.parcelStatus)) {
             Util.showSnakBar(llParcelListMain, getResources().getString(R.string.filter_validation));
         } else {

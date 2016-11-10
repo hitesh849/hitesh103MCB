@@ -56,7 +56,7 @@
                                     style="@style/text_large"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="JPR" />
+                                    android:text="" />
 
                                 <TextView
                                     android:id="@+id/txtSourceMyTripsListRow"
@@ -64,7 +64,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="@dimen/dim_4"
-                                    android:text="(Jaipur)" />
+                                    android:text="" />
                             </LinearLayout>
 
                             <LinearLayout
@@ -84,7 +84,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="@dimen/dim_4"
-                                    android:text="17 July, 2016" />
+                                    android:text="" />
                             </LinearLayout>
 
 
@@ -105,7 +105,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="@dimen/dim_4"
-                                    android:text="9:30 AM" />
+                                    android:text="" />
                             </LinearLayout>
                         </LinearLayout>
 
@@ -132,7 +132,7 @@
                                     style="@style/text_large"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="DEL" />
+                                    android:text="" />
 
                                 <TextView
                                     android:id="@+id/txtDestinationMyTripsListRow"
@@ -140,7 +140,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="@dimen/dim_4"
-                                    android:text="(New Delhi)" />
+                                    android:text="" />
                             </LinearLayout>
 
                             <LinearLayout
@@ -160,7 +160,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="@dimen/dim_4"
-                                    android:text="18 July, 2016" />
+                                    android:text="" />
                             </LinearLayout>
 
                             <LinearLayout
@@ -180,7 +180,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="@dimen/dim_4"
-                                    android:text="12:30 PM" />
+                                    android:text="" />
                             </LinearLayout>
 
                         </LinearLayout>
@@ -193,8 +193,8 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginBottom="@dimen/dim_8"
-                android:layout_marginTop="@dimen/dim_8"
+                android:layout_marginBottom="@dimen/dim_6"
+                android:layout_marginTop="@dimen/dim_6"
                 android:background="@color/black" />
 
 
@@ -253,7 +253,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dim_8"
+                android:layout_marginTop="@dimen/dim_6"
                 android:orientation="horizontal"
                 android:weightSum="2">
 
@@ -306,9 +306,47 @@
                         style="@style/text_small"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="" />
+                         />
 
                 </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/text_medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/status" />
+
+                    <TextView
+
+                        style="@style/text_medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="  :  "
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txtStatusMyTripListRow"
+                        style="@style/text_large"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+
+                </LinearLayout>
+
 
             </LinearLayout>
 
@@ -321,7 +359,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginBottom="@dimen/dim_8"
+                    android:layout_marginBottom="@dimen/dim_6"
                     android:background="@color/black" />
 
 
@@ -386,47 +424,43 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginBottom="@dimen/dim_8"
+                android:layout_marginBottom="@dimen/dim_6"
                 android:background="@color/black" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
+                android:weightSum="2"
                 android:orientation="horizontal">
 
                 <TextView
                     style="@style/text_large"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="1.4"
                     android:text="@string/action" />
 
                 <ImageView
-                    android:id="@+id/imgViewParcelListRow"
-                    android:layout_width="@dimen/dim_46"
-                    android:layout_height="@dimen/dim_46"
-                    android:src="@mipmap/process" />
-
-                <ImageView
                     android:id="@+id/imgEditTrip"
-                    android:layout_width="@dimen/dim_46"
-                    android:layout_height="@dimen/dim_46"
+                    android:layout_width="@dimen/dim_48"
+                    android:layout_height="@dimen/dim_48"
                     android:layout_marginLeft="@dimen/dim_6"
                     android:layout_marginRight="@dimen/dim_6"
                     android:src="@mipmap/action_edit" />
 
                 <ImageView
                     android:id="@+id/imgCancelTrip"
-                    android:layout_width="@dimen/dim_46"
-                    android:layout_height="@dimen/dim_46"
+                    android:layout_width="@dimen/dim_42"
+                    android:layout_height="@dimen/dim_42"
                     android:layout_marginLeft="@dimen/dim_6"
                     android:layout_marginRight="@dimen/dim_6"
                     android:src="@mipmap/cancel" />
 
                 <ImageView
-                    android:layout_width="@dimen/dim_46"
-                    android:layout_height="@dimen/dim_46"
+                    android:id="@+id/imgViewTicketMyTripListRow"
+                    android:layout_width="@dimen/dim_42"
+                    android:layout_height="@dimen/dim_42"
                     android:src="@mipmap/upload" />
 
 
@@ -435,8 +469,8 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginBottom="@dimen/dim_8"
-                android:layout_marginTop="@dimen/dim_8"
+                android:layout_marginBottom="@dimen/dim_6"
+                android:layout_marginTop="@dimen/dim_6"
                 android:background="@color/black" />
         </LinearLayout>
     </ScrollView>

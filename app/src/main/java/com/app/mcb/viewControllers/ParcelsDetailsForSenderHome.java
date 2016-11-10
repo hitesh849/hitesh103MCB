@@ -1,5 +1,6 @@
 package com.app.mcb.viewControllers;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.widget.LinearLayout;
 import com.app.mcb.R;
 import com.app.mcb.Utility.Constants;
 import com.app.mcb.Utility.Util;
+import com.app.mcb.adapters.ParcelListHomeAdapter;
+import com.app.mcb.adapters.ParcelListVPSearchAdapter;
 import com.app.mcb.adapters.ParcelsListVPAdapter;
 import com.app.mcb.custom.AppHeaderView;
 import com.app.mcb.dao.FilterData;
@@ -21,6 +24,8 @@ import org.byteclues.lib.model.BasicModel;
 import org.byteclues.lib.view.AbstractFragmentActivity;
 
 import java.util.Observable;
+
+import retrofit.RetrofitError;
 
 /**
  * Created by u on 10/27/2016.
@@ -47,8 +52,8 @@ public class ParcelsDetailsForSenderHome extends AbstractFragmentActivity implem
         viewPagerChangeListener();
         Bundle bundle = getIntent().getBundleExtra("KEY_BUNDLE");
         if (bundle != null) {
-            ParcelListData parcelListData = (ParcelListData) bundle.getSerializable("KEY_DATA");
-            vpParcelList.setAdapter(new ParcelsListVPAdapter(this, parcelListData.response, this));
+            ParcelListData parcelListData = (ParcelListData) bundle.getSerializable("data");
+            vpParcelList.setAdapter(new ParcelListVPSearchAdapter(this, parcelListData.response, this));
         }
         drawPageSelectionIndicators(0);
     }
@@ -72,7 +77,29 @@ public class ParcelsDetailsForSenderHome extends AbstractFragmentActivity implem
     }
 
     @Override
-    public void update(Observable o, Object arg) {
+    public void update(Observable o, Object data) {
+        Util.dimissProDialog();
+
+        try {
+            if (data != null && data instanceof ParcelListData) {
+                ParcelListData parcelListData = (ParcelListData) data;
+                if (parcelListData.status.equals("success")) {
+
+                    if (parcelListData.response.size() <= 0)
+                        Util.showOKSnakBar(llParcelListMain, getResources().getString(R.string.trip_unavailable));
+                    else {
+                        Intent intent = new Intent();
+                        intent.putExtra("data", parcelListData);
+                        setResult(RESULT_OK, intent);
+                        finish();
+                    }
+                }
+            } else if (data != null && data instanceof RetrofitError) {
+                Util.showOKSnakBar(llParcelListMain, getResources().getString(R.string.pls_try_again));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Override
@@ -81,7 +108,7 @@ public class ParcelsDetailsForSenderHome extends AbstractFragmentActivity implem
 
     @Override
     public void filterData(FilterData filterData) {
-        filterData.type = Constants.KEY_TRANSPORTER;
+        filterData.type = Constants.SENDER;
         getParcelsListByFilter(filterData);
     }
 
