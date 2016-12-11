@@ -1,5 +1,6 @@
 package com.app.mcb.viewControllers;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.app.mcb.MainActivity;
 import com.app.mcb.R;
@@ -17,6 +20,7 @@ import com.app.mcb.Utility.Constants;
 import com.app.mcb.Utility.Util;
 import com.app.mcb.adapters.TripListCommonAdapter;
 import com.app.mcb.adapters.TripListWithAllStateAdapter;
+import com.app.mcb.dao.AddParcelData;
 import com.app.mcb.dao.AirportData;
 import com.app.mcb.dao.FilterData;
 import com.app.mcb.dao.TripTransporterData;
@@ -24,6 +28,7 @@ import com.app.mcb.database.DatabaseMgr;
 import com.app.mcb.filters.CommonListener;
 import com.app.mcb.filters.TransporterFilter;
 import com.app.mcb.model.HomeTripModel;
+import com.app.mcb.retrointerface.TryAgainInterface;
 
 import org.byteclues.lib.model.BasicModel;
 import org.byteclues.lib.view.AbstractFragment;
@@ -42,8 +47,10 @@ public class CommonListWithAllStateFragment extends AbstractFragment implements 
     private HomeTripModel homeTripModel = new HomeTripModel();
     private TripTransporterData tripTransporterData;
     private LinearLayout llHomeFragmentMain;
+    private RelativeLayout rlHomFragmentContainer;
     private LinearLayout llFindSenderTransporter;
     private TransporterFilter transporterFilter;
+    private TextView txtAddTripParcel;
 
     @Override
     protected View onCreateViewPost(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -67,15 +74,18 @@ public class CommonListWithAllStateFragment extends AbstractFragment implements 
         rvTripHome = (RecyclerView) rootView.findViewById(R.id.rvTripHome);
         llBecomeTransporter = (LinearLayout) rootView.findViewById(R.id.llBecomeTransporter);
         llHomeFragmentMain = (LinearLayout) rootView.findViewById(R.id.llHomeFragmentMain);
+        rlHomFragmentContainer = (RelativeLayout) rootView.findViewById(R.id.rlHomFragmentContainer);
         llFindSenderTransporter = (LinearLayout) rootView.findViewById(R.id.llFindSenderTransporter);
+        txtAddTripParcel = (TextView) rootView.findViewById(R.id.txtAddTripParcel);
         llBecomeTransporter.setOnClickListener(this);
         llFindSenderTransporter.setOnClickListener(this);
+        txtAddTripParcel.setOnClickListener(this);
         transporterFilter = TransporterFilter.addFilterView(getActivity(), rootView, this);
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         rvTripHome.setLayoutManager(llm);
-        rvTripHome.setAdapter(new TripListCommonAdapter(getActivity(), this, true));
         ((MainActivity) getActivity()).setHeader("Welcome");
+        txtAddTripParcel.setText(getString(R.string.add_parcels));
     }
 
     @Override
@@ -95,15 +105,21 @@ public class CommonListWithAllStateFragment extends AbstractFragment implements 
                     if (tripTransporterData.response != null)
                         rvTripHome.setAdapter(new TripListWithAllStateAdapter(getActivity(), this, tripTransporterData.response));
 
-                    if (tripTransporterData.response.size() <= 0)
-                        Util.showOKSnakBar(llHomeFragmentMain, getResources().getString(R.string.trip_unavailable));
+                    if (tripTransporterData.response.size() <= 0) {
+                        rlHomFragmentContainer.addView(Util.getViewDataNotFound(getActivity(), rlHomFragmentContainer, getString(R.string.trip_unavailable)));
+                    }
                 }
-
             } else if (data != null && data instanceof AirportData) {
                 getTopForCityInHome();
                 transporterFilter.setAdapter();
             } else if (data != null && data instanceof RetrofitError) {
-                Util.showOKSnakBar(llHomeFragmentMain, getResources().getString(R.string.pls_try_again));
+                // Util.showOKSnakBar(llHomeFragmentMain, getResources().getString(R.string.pls_try_again));
+                rlHomFragmentContainer.addView(Util.getViewServerNotResponding(getActivity(), rlHomFragmentContainer, new TryAgainInterface() {
+                    @Override
+                    public void callBack() {
+                        Util.replaceFragment(getActivity(), R.id.fmHomeContainer, new CommonListWithAllStateFragment());
+                    }
+                }));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -133,8 +149,11 @@ public class CommonListWithAllStateFragment extends AbstractFragment implements 
             Intent intent = new Intent(getActivity(), SignUpActivity.class);
             startActivity(intent);
         } else if (id == R.id.llFindSenderTransporter) {
-            Intent intent = new Intent(getActivity(), ParcelsForSenderActivity.class);
+            Intent intent = new Intent(getActivity(), FindASenderActivity.class);
             startActivity(intent);
+        }else if (id == R.id.txtAddTripParcel) {
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            startActivityForResult(intent, 502);
         }
     }
 
@@ -142,16 +161,31 @@ public class CommonListWithAllStateFragment extends AbstractFragment implements 
     @Override
     public void filterData(FilterData filterData) {
         filterData.type = Constants.KEY_TRANSPORTER;
-        getTripByFilter(filterData);
+        Intent intent = new Intent(getActivity(), CommonListWithStateActivity.class);
+        Bundle bundle = new Bundle();
+        TripTransporterData tripTransporterData = new TripTransporterData();
+        tripTransporterData.source=filterData.fromLocation;
+        tripTransporterData.destination=filterData.toLocation;
+        tripTransporterData.arrival_time=filterData.fromDate;
+        tripTransporterData.destination=filterData.toDate;
+        bundle.putSerializable("KEY_DATA", tripTransporterData);
+        bundle.putString("FLAG", "filter");
+        intent.putExtra("KEY_BUNDLE", bundle);
+        startActivity(intent);
     }
 
-    private void getTripByFilter(FilterData filterData) {
+    private void getTripByFilter(final FilterData filterData) {
         try {
             if (Util.isDeviceOnline()) {
                 Util.showProDialog(getActivity());
                 homeTripModel.getTripListByFilter(filterData);
             } else {
-                Util.showAlertDialog(null, getResources().getString(R.string.noInternetMsg));
+                rlHomFragmentContainer.addView(Util.getViewInternetNotFound(getActivity(), rlHomFragmentContainer, new TryAgainInterface() {
+                    @Override
+                    public void callBack() {
+                        Util.replaceFragment(getActivity(), R.id.fmHomeContainer, new CommonListWithAllStateFragment());
+                    }
+                }));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -164,7 +198,12 @@ public class CommonListWithAllStateFragment extends AbstractFragment implements 
                 Util.showProDialog(getActivity());
                 homeTripModel.getAirportData(getActivity());
             } else {
-                Util.showAlertDialog(null, getResources().getString(R.string.noInternetMsg));
+                rlHomFragmentContainer.addView(Util.getViewInternetNotFound(getActivity(), rlHomFragmentContainer, new TryAgainInterface() {
+                    @Override
+                    public void callBack() {
+                        Util.replaceFragment(getActivity(), R.id.fmHomeContainer, new CommonListWithAllStateFragment());
+                    }
+                }));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -177,10 +216,31 @@ public class CommonListWithAllStateFragment extends AbstractFragment implements 
                 Util.showProDialog(getActivity());
                 homeTripModel.getTopForCityInHome();
             } else {
-                Util.showAlertDialog(null, getResources().getString(R.string.noInternetMsg));
+                rlHomFragmentContainer.addView(Util.getViewInternetNotFound(getActivity(), rlHomFragmentContainer, new TryAgainInterface() {
+                    @Override
+                    public void callBack() {
+                        Util.replaceFragment(getActivity(), R.id.fmHomeContainer, new CommonListWithAllStateFragment());
+                    }
+                }));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
+        }
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+
+            case (502): {
+                if (resultCode == Activity.RESULT_OK) {
+                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                    intent.putExtra(Constants.ADD_PARCELS_KEY, new AddParcelData());
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                }
+                break;
+            }
         }
     }
 }

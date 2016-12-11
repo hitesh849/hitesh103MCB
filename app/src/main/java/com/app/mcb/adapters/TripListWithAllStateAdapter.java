@@ -13,6 +13,7 @@ import com.app.mcb.R;
 import com.app.mcb.Utility.Constants;
 import com.app.mcb.Utility.Util;
 import com.app.mcb.dao.TripTransporterData;
+import com.app.mcb.sharedPreferences.Config;
 
 import java.util.ArrayList;
 
@@ -22,10 +23,12 @@ import java.util.ArrayList;
 public class TripListWithAllStateAdapter extends RecyclerView.Adapter<TripListWithAllStateAdapter.ViewHolder> {
     private View.OnClickListener onClickListener;
     private ArrayList<TripTransporterData> tripDatas;
+    private Context context;
 
     public TripListWithAllStateAdapter(Context context, View.OnClickListener onClickListener, ArrayList<TripTransporterData> tripDatas) {
         this.onClickListener = onClickListener;
         this.tripDatas = tripDatas;
+        this.context = context;
     }
 
     @Override
@@ -60,6 +63,7 @@ public class TripListWithAllStateAdapter extends RecyclerView.Adapter<TripListWi
         holder.txtWeightTripList.setText(tripDataTransporter.capacity);
         holder.txtArrivalCityTripList.setText(tripDataTransporter.destination);
         holder.txtArrivalTripList.setText(Util.getFirstName(tripDataTransporter.destination));
+        holder.totalCount.setText(String.format(context.getString(R.string.totalTrips),tripDataTransporter.totaltrips));
         if (!TextUtils.isEmpty(tripDataTransporter.city)) {
             holder.txtFromStateRowTripList.setText(tripDataTransporter.city);
             holder.txtFromRow.setVisibility(View.VISIBLE);
@@ -87,6 +91,7 @@ public class TripListWithAllStateAdapter extends RecyclerView.Adapter<TripListWi
         public TextView txtArrivalTimeTripList;
         public TextView txtWeightTripList;
         public TextView txtArrivalCityTripList;
+        public TextView totalCount;
         public TextView txtFromRow;
 
         public ViewHolder(View itemView) {
@@ -103,6 +108,7 @@ public class TripListWithAllStateAdapter extends RecyclerView.Adapter<TripListWi
             txtArrivalTimeTripList = (TextView) itemView.findViewById(R.id.txtArrivalTimeTripList);
             txtWeightTripList = (TextView) itemView.findViewById(R.id.txtWeightTripList);
             txtArrivalCityTripList = (TextView) itemView.findViewById(R.id.txtArrivalCityTripList);
+            totalCount = (TextView) itemView.findViewById(R.id.totalCount);
             txtFromRow = (TextView) itemView.findViewById(R.id.txtFromRow);
         }
     }

@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.app.mcb.MainActivity;
 import com.app.mcb.R;
@@ -20,6 +21,7 @@ import com.app.mcb.dao.MyTripsData;
 import com.app.mcb.filters.CommonListener;
 import com.app.mcb.filters.TripFilter;
 import com.app.mcb.model.CancelledTripsModel;
+import com.app.mcb.retrointerface.TryAgainInterface;
 
 import org.byteclues.lib.model.BasicModel;
 import org.byteclues.lib.view.AbstractFragment;
@@ -37,23 +39,32 @@ public class CancelledTrips extends AbstractFragment implements View.OnClickList
     private LinearLayout llCountDotsMain;
     private CancelledTripsModel cancelledTripsModel = new CancelledTripsModel();
     private CancelledTripsAdapter cancelledTripsAdapter;
+    private RelativeLayout rlCancelTrips;
     private ArrayList<MyTripsData> tripListMain = new ArrayList<MyTripsData>();
 
     @Override
-    protected View onCreateViewPost(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    protected View onCreateViewPost(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.cancelled_trips_layout, container, false);
         init(view);
         return view;
     }
 
     private void init(View view) {
-        ((MainActivity) getActivity()).setHeader(getResources().getString(R.string.my_trip));
+            ((MainActivity) getActivity()).setHeader(getResources().getString(R.string.my_trip));
         vpCancelledTripsList = (ViewPager) view.findViewById(R.id.vpCancelledTripsList);
         llCountDotsMain = (LinearLayout) view.findViewById(R.id.llCountDotsMain);
+        rlCancelTrips = (RelativeLayout) view.findViewById(R.id.rlCancelTrips);
         TripFilter.addFilterView(getActivity(), view, this);
         viewPagerChangeListener();
         drawPageSelectionIndicators(0);
         getCancelledTripsList();
+    }
+
+
+    private void addMainView() {
+        rlCancelTrips.removeAllViews();
+        rlCancelTrips.addView(vpCancelledTripsList);
+        rlCancelTrips.addView(llCountDotsMain);
     }
 
     @Override
@@ -70,10 +81,18 @@ public class CancelledTrips extends AbstractFragment implements View.OnClickList
                 tripListMain = myTripsData.response;
                 cancelledTripsAdapter = new CancelledTripsAdapter(getActivity(), this, tripListMain);
                 vpCancelledTripsList.setAdapter(cancelledTripsAdapter);
+                if (tripListMain.size() <= 0) {
+                    rlCancelTrips.addView(Util.getViewDataNotFound(getActivity(), rlCancelTrips, getString(R.string.trip_unavailable)));
+                }
             }
         } else if (o instanceof RetrofitError) {
+            rlCancelTrips.addView(Util.getViewServerNotResponding(getActivity(), rlCancelTrips, new TryAgainInterface() {
+                @Override
+                public void callBack() {
+                    Util.replaceFragment(getActivity(), R.id.fmContainerTransporterHomeMain, new CancelledTrips());
+                }
+            }));
         }
-
     }
 
     private void getCancelledTripsList() {
@@ -81,7 +100,13 @@ public class CancelledTrips extends AbstractFragment implements View.OnClickList
             Util.showProDialog(getActivity());
             cancelledTripsModel.getCancelledTrip();
         } else {
-            Util.showAlertDialog(null, getResources().getString(R.string.noInternetMsg));
+            rlCancelTrips.addView(Util.getViewInternetNotFound(getActivity(), rlCancelTrips, new TryAgainInterface() {
+                @Override
+                public void callBack() {
+                    addMainView();
+                    getCancelledTripsList();
+                }
+            }));
         }
     }
 

@@ -8,6 +8,7 @@
     <include layout="@layout/existing_trip_search_filter" />
 
     <RelativeLayout
+        android:id="@+id/rlCancelTrips"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/screen_bg">

@@ -122,6 +122,7 @@ public class TripDetailsVPAdapter extends PagerAdapter {
             txtFromLong2TD.setText("(" + tripTransporterData2.source + ")");
             txtToShort2TD.setText(Util.getFirstName(tripTransporterData2.destination));
             txtToLong2TD.setText("(" + tripTransporterData2.destination + ")");
+            txtWeight2TD.setText(tripTransporterData2.capacity);
             txtDateFrom2TD.setText(Util.getDateFromDateTimeFormat(tripTransporterData2.arrival_time));
             txtDateTo2TD.setText(Util.getDateFromDateTimeFormat(tripTransporterData2.dep_time));
             txtTimeFrom2TD.setText(Util.getTimeFromDateTimeFormat(tripTransporterData2.arrival_time));

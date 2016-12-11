@@ -2,15 +2,16 @@ package com.app.mcb.viewControllers.transporter;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Matrix;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.EditText;
@@ -23,7 +24,6 @@ import com.app.mcb.R;
 import com.app.mcb.Utility.Constants;
 import com.app.mcb.Utility.Util;
 import com.app.mcb.adapters.MyTripListVPAdapter;
-import com.app.mcb.dao.BookingRequestData;
 import com.app.mcb.dao.CommonResponseData;
 import com.app.mcb.dao.FilterData;
 import com.app.mcb.dao.MyTripsData;
@@ -31,7 +31,9 @@ import com.app.mcb.dao.ParcelBookingChangeStatusData;
 import com.app.mcb.filters.CommonListener;
 import com.app.mcb.filters.TripFilter;
 import com.app.mcb.model.MyTripsModel;
+import com.app.mcb.retrointerface.TryAgainInterface;
 import com.app.mcb.sharedPreferences.Config;
+import com.squareup.picasso.Picasso;
 
 import org.byteclues.lib.model.BasicModel;
 import org.byteclues.lib.view.AbstractFragment;
@@ -45,19 +47,25 @@ import retrofit.RetrofitError;
 /**
  * Created by Hitesh kumawat on 19-09-2016.
  */
-public class MyTripList extends AbstractFragment implements View.OnClickListener, CommonListener {
+public class MyTripListFragment extends AbstractFragment implements View.OnClickListener, CommonListener {
 
     private ViewPager vpMyList;
     private LinearLayout llCountDotsMain;
     private MyTripsModel myTripsModel = new MyTripsModel();
     private MyTripListVPAdapter myTripListVPAdapter;
     private RelativeLayout rlMyTripMain;
+    private ImageView ticketImage;
+    private ScaleGestureDetector scaleGestureDetector;
+    private Matrix matrix = new Matrix();
     ArrayList<MyTripsData> tripListMain = new ArrayList<MyTripsData>();
+    private View view;
 
     @Override
     protected View onCreateViewPost(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.my_trip_list_fragment, container, false);
-        init(view);
+        if (view == null) {
+            view = inflater.inflate(R.layout.my_trip_list_fragment, container, false);
+            init(view);
+        }
         return view;
     }
 
@@ -86,13 +94,16 @@ public class MyTripList extends AbstractFragment implements View.OnClickListener
                 tripListMain = myTripsData.response;
                 myTripListVPAdapter = new MyTripListVPAdapter(getActivity(), this, tripListMain);
                 vpMyList.setAdapter(myTripListVPAdapter);
+                if (tripListMain.size() <= 0) {
+                    rlMyTripMain.addView(Util.getViewDataNotFound(getActivity(), rlMyTripMain, getString(R.string.trip_unavailable)));
+                }
             }
         } else if (o != null && o instanceof ParcelBookingChangeStatusData) {
             ParcelBookingChangeStatusData commonResponseData = ((ParcelBookingChangeStatusData) o);
             if (Constants.RESPONSE_SUCCESS_MSG.equals(commonResponseData.status)) {
                 getMyTripsList();
             } else
-                Util.showOKSnakBar(rlMyTripMain, commonResponseData.errorMessage);
+                rlMyTripMain.addView(Util.getViewDataNotFound(getActivity(), rlMyTripMain, commonResponseData.errorMessage));
 
         } else if (o instanceof CommonResponseData) {
             CommonResponseData responseData = ((CommonResponseData) o);
@@ -100,7 +111,13 @@ public class MyTripList extends AbstractFragment implements View.OnClickListener
                 getMyTripsList();
             }
         } else if (o instanceof RetrofitError) {
-            Util.showOKSnakBar(rlMyTripMain, getResources().getString(R.string.pls_try_again));
+            Util.showSnakBar(rlMyTripMain, getResources().getString(R.string.pls_try_again));
+            rlMyTripMain.addView(Util.getViewServerNotResponding(getActivity(), rlMyTripMain, new TryAgainInterface() {
+                @Override
+                public void callBack() {
+                    Util.replaceFragment(getActivity(), R.id.fmContainerTransporterHomeMain, new MyTripListFragment());
+                }
+            }));
         }
     }
 
@@ -109,16 +126,39 @@ public class MyTripList extends AbstractFragment implements View.OnClickListener
             Util.showProDialog(getActivity());
             myTripsModel.getUserTripList();
         } else {
-            Util.showAlertDialog(null, getResources().getString(R.string.noInternetMsg));
+            rlMyTripMain.addView(Util.getViewInternetNotFound(getActivity(), rlMyTripMain, new TryAgainInterface() {
+                @Override
+                public void callBack() {
+                    addMainView();
+                    getMyTripsList();
+                }
+            }));
+
         }
+    }
+
+    public void addMainView() {
+        rlMyTripMain.removeAllViews();
+        rlMyTripMain.addView(vpMyList);
+        rlMyTripMain.addView(llCountDotsMain);
     }
 
     @Override
     public void onClick(View view) {
         int id = view.getId();
         if (id == R.id.imgCancelTrip) {
-            MyTripsData myTripsData = ((MyTripsData) view.getTag());
-            showAlertInputDialogBox(myTripsData);
+            final MyTripsData myTripsData = ((MyTripsData) view.getTag());
+
+
+            if (Constants.TripRequestSent.equals(myTripsData.status) || Constants.TripBooked.equals(myTripsData.status)) {
+                Util.showAlertWithCancelDialog(new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        showAlertInputDialogBox(myTripsData);
+                    }
+                }, getString(R.string.trip_edit_if_booked));
+            } else
+                showAlertInputDialogBox(myTripsData);
 
         } else if (id == R.id.imgEditTrip) {
             MyTripsData myTripsData = (MyTripsData) view.getTag();
@@ -126,8 +166,7 @@ public class MyTripList extends AbstractFragment implements View.OnClickListener
             Bundle bundle = new Bundle();
             bundle.putSerializable("tripData", myTripsData);
             addTripFragment.setArguments(bundle);
-
-            Util.replaceFragment(getActivity(), R.id.fmContainerTransporterHomeMain, addTripFragment);
+            Util.addFragmentWithOnBack(getActivity(), R.id.fmContainerTransporterHomeMain, addTripFragment);
         } else if (id == R.id.llBookedParcelsMyTripList || id == R.id.llFindParcelsMyTripList) {
             MyTripsData myTripsData = (MyTripsData) view.getTag();
             Intent intent = new Intent(getActivity(), MyTripParcelActivity.class);
@@ -142,12 +181,18 @@ public class MyTripList extends AbstractFragment implements View.OnClickListener
         }
     }
 
-    private void cancelTrip(HashMap<String, Object> requestData) {
+    private void cancelTrip(final HashMap<String, Object> requestData) {
         if (Util.isDeviceOnline()) {
             Util.showProDialog(getActivity());
             myTripsModel.cancelTrip(requestData);
         } else {
-            Util.showAlertDialog(null, getResources().getString(R.string.noInternetMsg));
+            rlMyTripMain.addView(Util.getViewInternetNotFound(getActivity(), rlMyTripMain, new TryAgainInterface() {
+                @Override
+                public void callBack() {
+                    addMainView();
+                    cancelTrip(requestData);
+                }
+            }));
         }
     }
 
@@ -197,11 +242,11 @@ public class MyTripList extends AbstractFragment implements View.OnClickListener
     @Override
     public void filterData(FilterData filterData) {
         ArrayList<MyTripsData> filterList = new ArrayList<MyTripsData>();
-
+        addMainView();
         if (!TextUtils.isEmpty(filterData.tripId)) {
             ArrayList<MyTripsData> filterList1 = new ArrayList<MyTripsData>();
-            for (MyTripsData myTripsData : filterList) {
-                if (myTripsData.TripID.equalsIgnoreCase(filterData.tripId)) {
+            for (MyTripsData myTripsData : tripListMain) {
+                if (myTripsData.id.equalsIgnoreCase(filterData.tripId)) {
                     filterList1.add(myTripsData);
                 }
             }
@@ -232,7 +277,12 @@ public class MyTripList extends AbstractFragment implements View.OnClickListener
             filterList.addAll(filterList1);
         }
 
-        vpMyList.setAdapter(new MyTripListVPAdapter(getActivity(), this, filterList));
+
+        if (filterList.size() <= 0) {
+            rlMyTripMain.addView(Util.getViewDataNotFound(getActivity(), rlMyTripMain, getString(R.string.trip_unavailable)));
+        } else {
+            vpMyList.setAdapter(new MyTripListVPAdapter(getActivity(), this, filterList));
+        }
     }
 
     void showAlertInputDialogBox(final MyTripsData myTripsData) {
@@ -274,7 +324,7 @@ public class MyTripList extends AbstractFragment implements View.OnClickListener
         builder.show();
     }
 
-    void showWebViewDialog(String url) {
+    void showWebViewDialoga(String url) {
         AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
         WebView webView = new WebView(getActivity());
         webView.setInitialScale(1);
@@ -301,4 +351,21 @@ public class MyTripList extends AbstractFragment implements View.OnClickListener
         });
         alert.show();
     }
+
+    void showWebViewDialog(String imageName) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+        ImageView imageView = new ImageView(getActivity());
+        String imageUrl = Constants.image_url + imageName;
+        imageView.setImageResource(R.mipmap.ticket);
+        Picasso.with(getActivity()).load(imageUrl).placeholder(getResources().getDrawable(R.mipmap.alert_circle)).into(imageView);
+        alert.setView(imageView);
+        alert.setNegativeButton("Close", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+            }
+        });
+        alert.show();
+    }
+
 }

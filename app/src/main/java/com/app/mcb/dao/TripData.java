@@ -27,6 +27,7 @@ public class TripData implements Serializable {
     public String requirement;
     public String payment;
     public String TripID;
+    public String trans_id;
     public String awailableweight;
     public String statusdescription;
     public String airlinelink;

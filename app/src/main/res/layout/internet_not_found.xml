@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="@dimen/dim_10"
+        android:layout_margin="@dimen/dim_10">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="@color/trans_blue"
+            >
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/internet"
+                android:tint="@color/colorPrimary"
+                />
+
+                <TextView
+                    android:id="@+id/txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/noInternetMsg"
+                    android:textColor="@color/primary_blue"
+                    style="@style/text_extra_large"
+                    android:layout_marginTop="@dimen/dim_6"
+                    android:textStyle="bold"
+                    />
+
+
+                    <ImageView
+                        android:id="@+id/imgRefresh"
+                        android:layout_width="@dimen/dim_42"
+                        android:layout_height="@dimen/dim_42"
+                        android:src="@mipmap/refresh"
+                        android:tint="@color/colorPrimary"
+                        android:layout_marginTop="@dimen/dim_8"
+                        android:layout_below="@id/txt"
+                        />
+
+        </LinearLayout>
+
+
+    </android.support.v7.widget.CardView>
+</LinearLayout>

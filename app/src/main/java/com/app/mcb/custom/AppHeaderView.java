@@ -1,8 +1,10 @@
 package com.app.mcb.custom;
 
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -27,6 +29,7 @@ public class AppHeaderView extends RelativeLayout {
     public RelativeLayout rlNotificationHeader;
     public RelativeLayout rlLogoutHeader;
     public ImageView imgBackHeaderArrow;
+    public ImageView imgToolbarNameLeft;
     public TextView txtHeaderNamecenter;
 
 
@@ -65,6 +68,7 @@ public class AppHeaderView extends RelativeLayout {
         this.rlLogoutHeader = (RelativeLayout) findViewById(R.id.rlLogoutHeader);
         this.imgBackHeaderArrow = (ImageView) findViewById(R.id.imgBackHeaderArrow);
         this.txtHeaderNamecenter = (TextView) findViewById(R.id.txtHeaderNamecenter);
+        this.imgToolbarNameLeft = (ImageView) findViewById(R.id.imgToolbarNameLeft);
         this.llBackHeader.setOnClickListener((OnClickListener) Env.currentActivity);
 
 
@@ -72,6 +76,7 @@ public class AppHeaderView extends RelativeLayout {
             this.llBackHeader.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                     ((AbstractFragmentActivity) Env.currentActivity).onBackPressed();
                 }
             });
@@ -88,6 +93,16 @@ public class AppHeaderView extends RelativeLayout {
             public void onClick(View view) {
                 Config.clearPreferences();
                 Env.currentActivity.startActivity(new Intent(Env.currentActivity, MainActivity.class));
+                ((AbstractFragmentActivity) Env.currentActivity).finish();
+            }
+        });
+        this.imgToolbarNameLeft.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent=new Intent(context,MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                ((AbstractFragmentActivity) Env.currentActivity).startActivity(intent);
                 ((AbstractFragmentActivity) Env.currentActivity).finish();
             }
         });

@@ -13,20 +13,48 @@
 
     <include layout="@layout/transporter_search_filter" />
 
-    <TextView
-        style="@style/text_medium"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dim_6"
-        android:background="@color/trans_blue"
-        android:padding="@dimen/dim_16"
-        android:text="@string/where_send_your_parcel"
-        android:textColor="@color/primary_blue"
-        android:textStyle="bold" />
-
     <RelativeLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/trans_blue">
+        <TextView
+            android:id="@+id/txtTittleMessage"
+            style="@style/text_medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dim_6"
+            android:padding="@dimen/dim_16"
+            android:text="@string/find_parcel_for_your_trip"
+            android:textColor="@color/primary_blue"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtAddTripParcel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_trip"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dim_8"
+            android:padding="@dimen/dim_6"
+            android:textColor="@color/white"
+            android:layout_marginLeft="@dimen/dim_8"
+           android:background="@drawable/rounded_blue"
+            />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/rlStateWiseContainerMain"
+        android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/rlStateWiseContainerMainSub"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rvTripHome"
@@ -116,7 +144,7 @@
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
-
+    </RelativeLayout>
 
     </RelativeLayout>
 

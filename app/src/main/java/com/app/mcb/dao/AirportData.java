@@ -15,6 +15,7 @@ public class AirportData extends CommonResponseData {
     public static final String FLD_STATUS = "status";
     public static final String FLD_CREATED = "created";
     public static final String FLD_ZONELIST_ID = "zonelistid";
+    public static final String FLD_City = "city";
     public static final String FLD_CODE = "code";
     public static final String FLD_ZONE_NAME = "Zonename";
 
@@ -23,6 +24,7 @@ public class AirportData extends CommonResponseData {
     public String type;
     public String zone;
     public String created;
+    public String city;
     public String zonelistid;
     public String code;
     public String Zonename;

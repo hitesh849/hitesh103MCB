@@ -36,6 +36,14 @@
 
             </android.support.design.widget.TextInputLayout>
 
+            <TextView
+                android:id="@+id/txtFromAirportName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/text_small"
+                android:maxLines="1"
+                android:paddingLeft="@dimen/dim_6"
+                android:textColor="@color/white"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -86,7 +94,14 @@
                     android:textSize="@dimen/text_dim_14" />
 
             </android.support.design.widget.TextInputLayout>
-
+            <TextView
+                android:id="@+id/txtToAirportName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/text_small"
+                android:maxLines="1"
+                android:paddingLeft="@dimen/dim_6"
+                android:textColor="@color/white"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

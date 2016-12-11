@@ -8,6 +8,7 @@
     <include layout="@layout/existing_parcel_search_filter" />
 
     <RelativeLayout
+        android:id="@+id/rlParcelListContainerMain"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

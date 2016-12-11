@@ -1,0 +1,82 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/productHeader"
+        layout="@layout/app_header_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"/>
+    <ScrollView
+        android:id="@+id/scrlChatMain"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/productHeader"
+        android:layout_above="@+id/rlChatFooter">
+
+        <LinearLayout
+            android:id="@+id/llChatViewMain"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <RelativeLayout
+        android:id="@+id/rlChatFooter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerVertical="true">
+
+        <android.support.v7.widget.CardView
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/imgSendMessage"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dim_8"
+            android:background="@color/blue"
+            >
+
+                <EditText
+                    android:id="@+id/etxtMesssageChat"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dim_42"
+                    android:hint="Message"
+                    android:textColor="@color/black"
+                    android:layout_marginLeft="@dimen/dim_8"
+                    android:layout_marginRight="@dimen/dim_8"
+                    android:background="@null"
+                    style="@style/text_medium"
+                    />
+
+
+
+        </android.support.v7.widget.CardView>
+
+
+
+            <com.mikhaellopez.circularimageview.CircularImageView
+                android:id="@+id/imgSendMessage"
+                android:layout_width="@dimen/dim_42"
+                android:layout_height="@dimen/dim_42"
+                android:layout_gravity="bottom|end"
+                android:layout_alignParentRight="true"
+                android:src="@mipmap/send"
+                android:layout_margin="@dimen/dim_8"
+                app:civ_border_color="@color/colorPrimary"
+               />
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

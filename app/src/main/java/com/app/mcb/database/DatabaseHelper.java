@@ -32,6 +32,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + AirportData.FLD_STATUS + " TEXT,"
                 + AirportData.FLD_CREATED + " TEXT,"
                 + AirportData.FLD_ZONELIST_ID + " TEXT,"
+                + AirportData.FLD_City + " TEXT,"
                 + AirportData.FLD_CODE + " TEXT,"
                 + AirportData.FLD_ZONE_NAME + " TEXT);");
         sqLiteDatabase.execSQL("CREATE INDEX IF NOT EXISTS airport_id on " + AirportData.TABLE_NAME + "(" + AirportData.FLD_AIRPORT_ID + ");");

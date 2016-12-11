@@ -1,6 +1,7 @@
 package com.app.mcb.viewControllers;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,7 +11,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
+import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -31,14 +34,18 @@ import org.byteclues.lib.view.AbstractFragmentActivity;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 
+import rebus.permissionutils.FullCallback;
+import rebus.permissionutils.PermissionEnum;
 import retrofit.RetrofitError;
 
 /**
  * Created by Hitesh on 9/16/2016.
  */
-public class SignUpActivity extends AbstractFragmentActivity implements View.OnClickListener {
+public class SignUpActivity extends AbstractFragmentActivity implements View.OnClickListener, FullCallback {
 
     private LinearLayout llSignUpMain;
     private TextView txtRagisterSignUp;
@@ -47,7 +54,6 @@ public class SignUpActivity extends AbstractFragmentActivity implements View.OnC
     private EditText etextLastName;
     private EditText etextEmail;
     private EditText etextPassword;
-    private EditText etextMobile;
     private EditText etextConfirmPassword;
     private CircularImageView imgEditProfileRegister;
     private Uri captured_image_uri;
@@ -69,7 +75,6 @@ public class SignUpActivity extends AbstractFragmentActivity implements View.OnC
         etextFirstName = (EditText) findViewById(R.id.etextFirstName);
         etextLastName = (EditText) findViewById(R.id.etextLastName);
         etextEmail = (EditText) findViewById(R.id.etextEmail);
-        etextMobile = (EditText) findViewById(R.id.etextMobile);
         etextPassword = (EditText) findViewById(R.id.etextPassword);
         imgEditProfileRegister = (CircularImageView) findViewById(R.id.imgEditProfileRegister);
         ImageView imgCameraRegister = (ImageView) findViewById(R.id.imgCameraRegister);
@@ -90,28 +95,27 @@ public class SignUpActivity extends AbstractFragmentActivity implements View.OnC
         userInfoData.lastName = etextLastName.getText().toString();
         userInfoData.email = etextEmail.getText().toString();
         userInfoData.password = etextPassword.getText().toString();
-        userInfoData.mobile = etextMobile.getText().toString();
 
-        if (TextUtils.isEmpty(userInfoData.firstName)) {
+        if (TextUtils.isEmpty(userInfoData.firstName.trim())) {
             etextFirstName.setError(getString(R.string.can_not_be_empty));
             etextFirstName.requestFocus();
             return false;
         }
-        if (TextUtils.isEmpty(userInfoData.lastName)) {
+        if (TextUtils.isEmpty(userInfoData.lastName.trim())) {
             etextLastName.setError(getString(R.string.can_not_be_empty));
             etextLastName.requestFocus();
             return false;
         }
-        if (TextUtils.isEmpty(userInfoData.email)) {
+        if (TextUtils.isEmpty(userInfoData.email.trim())) {
             etextEmail.setError(getString(R.string.can_not_be_empty));
             etextEmail.requestFocus();
             return false;
         }
-        if (TextUtils.isEmpty(userInfoData.mobile)) {
-            etextPassword.setError(getString(R.string.can_not_be_empty));
-            etextPassword.requestFocus();
+        if (!Util.emailValidation(this, etextEmail, userInfoData.email.trim()))
+        {
             return false;
         }
+
         if (TextUtils.isEmpty(userInfoData.password)) {
             etextPassword.setError(getString(R.string.can_not_be_empty));
             etextPassword.requestFocus();
@@ -141,7 +145,11 @@ public class SignUpActivity extends AbstractFragmentActivity implements View.OnC
         } else if (id == R.id.llBackHeader) {
             onBackPressed();
         } else if (id == R.id.imgCameraRegister) {
-            attachmentDialog = Util.showAttachmentDialog(this, this);
+            if (Util.isCallPermissionGranted(this)) {
+                attachmentDialog = Util.showAttachmentDialog(this, this);
+            } else {
+                Util.permission(this,this);
+            }
         } else if (id == R.id.txtCameraAttachment) {
             attachmentDialog.dismiss();
             captureImage();
@@ -235,8 +243,9 @@ public class SignUpActivity extends AbstractFragmentActivity implements View.OnC
                         Bitmap bmp = BitmapFactory.decodeStream(fis);
                         Bitmap rotated = Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(), matrix, true);
                         FileOutputStream fos = new FileOutputStream(captured_image_uri.getPath());
-                        rotated.compress(Bitmap.CompressFormat.JPEG, 85, fos);
+                        rotated.compress(Bitmap.CompressFormat.JPEG, 65, fos);
                         imgEditProfileRegister.setImageBitmap(bmp);
+                        userInfoData.image = Util.getEncoded64ImageStringFromBitmap(bmp);
                     }
 
                 } catch (Exception e) {
@@ -248,9 +257,39 @@ public class SignUpActivity extends AbstractFragmentActivity implements View.OnC
                 String imagePath = Util.getPath(this, pickedImage);
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), pickedImage);
                 imgEditProfileRegister.setImageBitmap(bitmap);
+                userInfoData.image = Util.getEncoded64ImageStringFromBitmap(bitmap);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
+    @Override
+    public void result(ArrayList<PermissionEnum> permissionsGranted, ArrayList<PermissionEnum> permissionsDenied, ArrayList<PermissionEnum> permissionsDeniedForever, ArrayList<PermissionEnum> permissionsAsked) {
+        List<String> msg = new ArrayList<>();
+        for (PermissionEnum permissionEnum : permissionsGranted) {
+            msg.add(permissionEnum.toString() + " [Granted]");
+        }
+        for (PermissionEnum permissionEnum : permissionsDenied) {
+            msg.add(permissionEnum.toString() + " [Denied]");
+        }
+        for (PermissionEnum permissionEnum : permissionsDeniedForever) {
+            msg.add(permissionEnum.toString() + " [DeniedForever]");
+        }
+        /*for (PermissionEnum permissionEnum : permissionsAsked) {
+            msg.add(permissionEnum.toString() + " [Asked]");
+        }*/
+        String[] items = msg.toArray(new String[msg.size()]);
+
+        ContextThemeWrapper cw = new ContextThemeWrapper(this, R.style.AlertDialogTheme);
+        new AlertDialog.Builder(cw)
+                .setTitle("Permission result")
+                .setItems(items, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                })
+                .show();
+    }
+
 }

@@ -331,6 +331,7 @@
                 android:weightSum="3">
 
                 <TextView
+                    android:id="@+id/txtActionLabel"
                     style="@style/text_large"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

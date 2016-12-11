@@ -1,1 +1,1 @@
-include ':app', ':byteclueslib'
+include ':app', ':byteclueslib', ':payUMoneysdk'

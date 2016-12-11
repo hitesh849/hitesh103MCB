@@ -19,6 +19,10 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.ColorDrawable;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -29,18 +33,27 @@ import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.provider.Settings;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.ScrollingView;
+import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.app.mcb.MainActivity;
 import com.app.mcb.R;
+import com.app.mcb.custom.AppLocationService;
+import com.app.mcb.retrointerface.TryAgainInterface;
 import com.squareup.picasso.Picasso;
 
 import org.byteclues.lib.init.Env;
@@ -51,6 +64,7 @@ import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
@@ -67,6 +81,14 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+
+import rebus.permissionutils.AskagainCallback;
+import rebus.permissionutils.FullCallback;
+import rebus.permissionutils.PermissionEnum;
+import rebus.permissionutils.PermissionManager;
+import rebus.permissionutils.PermissionUtils;
 
 /**
  * Created by u on 9/15/2016.
@@ -147,6 +169,33 @@ public class Util {
         return alertDialog;
     }
 
+
+    public static AlertDialog showAlertWithCancelDialog(DialogInterface.OnClickListener okClicklistener, String msg) {
+        if (alertDialog != null && alertDialog.isShowing()) {
+            alertDialog.dismiss();
+        }
+        AlertDialog.Builder builder = new AlertDialog.Builder(Env.currentActivity);
+        DialogInterface.OnClickListener clickListener = okClicklistener != null ? okClicklistener : new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+                alertDialog = null;
+            }
+        };
+        builder.setPositiveButton("Ok", clickListener);
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+                alertDialog = null;
+            }
+        });
+        builder.setMessage(msg);
+        alertDialog = builder.create();
+        alertDialog.show();
+        return alertDialog;
+    }
+
     public static String getDeviceID(Context context) {
         return Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
     }
@@ -204,11 +253,20 @@ public class Util {
     }
 
     public static void replaceFragment(Context context, int container, AbstractFragment abstractFragment) {
+        ((MainActivity) context).appHeaderView.imgBackHeaderArrow.setImageResource(R.mipmap.hamber);
         ((AbstractFragmentActivity) context).getSupportFragmentManager().beginTransaction().replace(container, abstractFragment).commit();
     }
 
     public static void addFragment(Context context, int container, AbstractFragment abstractFragment) {
+        ((MainActivity) context).appHeaderView.imgBackHeaderArrow.setImageResource(R.mipmap.hamber);
         ((AbstractFragmentActivity) context).getSupportFragmentManager().beginTransaction().add(container, abstractFragment).commit();
+
+
+    }
+
+    public static void addFragmentWithOnBack(Context context, int container, AbstractFragment abstractFragment) {
+        ((MainActivity) context).appHeaderView.imgBackHeaderArrow.setImageResource(R.mipmap.back);
+        ((AbstractFragmentActivity) context).getSupportFragmentManager().beginTransaction().replace(container, abstractFragment, abstractFragment.getClass().getSimpleName()).addToBackStack(null).commit();
     }
 
     public static void showOKSnakBar(android.view.View view, String msg) {
@@ -305,7 +363,7 @@ public class Util {
         try {
             DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
             DateTime obj = formatter.parseDateTime(dateTime).toDateTime();
-            DateTimeFormatter localDateFormat = DateTimeFormat.forPattern("HH:mm a");
+            DateTimeFormatter localDateFormat = DateTimeFormat.forPattern("hh:mm a");
             obj.toString(localDateFormat);
             return obj.toString(localDateFormat);
         } catch (Exception ex) {
@@ -552,7 +610,6 @@ public class Util {
         bitmap.compress(Bitmap.CompressFormat.JPEG, 70, stream);
         byte[] byteFormat = stream.toByteArray();
         String imgString = Base64.encodeToString(byteFormat, Base64.NO_WRAP);
-
         return imgString;
     }
 
@@ -630,4 +687,165 @@ public class Util {
         return statusStr;
     }
 
+    public static boolean emailValidation(Context conetext, EditText editText, String eMailId) {
+        if (eMailId.trim().length() != 0 && android.util.Patterns.EMAIL_ADDRESS.matcher(eMailId).matches()) {
+            return true;
+        } else {
+            editText.setError(conetext.getString(R.string.email_error_msg));
+            editText.requestFocus();
+        }
+        return false;
+    }
+
+    public static View getViewDataNotFound(Context context, View view, String msg) {
+        if (view instanceof RelativeLayout) {
+            ((RelativeLayout) view).removeAllViews();
+        } else if (view instanceof LinearLayout) {
+            ((LinearLayout) view).removeAllViews();
+        } else if (view instanceof ScrollView) {
+            ((ScrollView) view).removeAllViews();
+        }
+
+        LayoutInflater inflater = LayoutInflater.from(context);
+        LinearLayout linearLayout = (LinearLayout) inflater.inflate(R.layout.data_not_found, null, false);
+        TextView textView = ((TextView) linearLayout.findViewById(R.id.txtDataMessage));
+        textView.setText(msg);
+        linearLayout.setLayoutParams(new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        return linearLayout;
+    }
+
+    public static View getViewInternetNotFound(Context context, View view, final TryAgainInterface tryAgainInterface) {
+        if (view instanceof RelativeLayout) {
+            ((RelativeLayout) view).removeAllViews();
+        } else if (view instanceof LinearLayout) {
+            ((LinearLayout) view).removeAllViews();
+        } else if (view instanceof ScrollView) {
+            ((ScrollView) view).removeAllViews();
+        }
+        LayoutInflater inflater = LayoutInflater.from(context);
+        LinearLayout linearLayout = (LinearLayout) inflater.inflate(R.layout.internet_not_found, null, false);
+        linearLayout.findViewById(R.id.imgRefresh).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tryAgainInterface.callBack();
+            }
+        });
+        linearLayout.setLayoutParams(new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        return linearLayout;
+    }
+
+    public static View getViewServerNotResponding(Context context, View view, final TryAgainInterface tryAgainInterface) {
+        if (view instanceof RelativeLayout) {
+            ((RelativeLayout) view).removeAllViews();
+        } else if (view instanceof LinearLayout) {
+            ((LinearLayout) view).removeAllViews();
+        } else if (view instanceof ScrollView) {
+            ((ScrollView) view).removeAllViews();
+        }
+
+        LayoutInflater inflater = LayoutInflater.from(context);
+        LinearLayout linearLayout = (LinearLayout) inflater.inflate(R.layout.server_not_responding, null, false);
+        linearLayout.findViewById(R.id.imgRefresh).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tryAgainInterface.callBack();
+            }
+        });
+        linearLayout.setLayoutParams(new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        return linearLayout;
+    }
+
+    public static void showDialog(Context context, final AskagainCallback.UserResponse response) {
+        new android.support.v7.app.AlertDialog.Builder(context)
+                .setTitle("Permission needed")
+                .setMessage("This app realy need to use this permission, you wont to authorize it?")
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        response.result(true);
+                    }
+                })
+                .setNegativeButton("NOT NOW", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        response.result(false);
+                    }
+                })
+                .show();
+    }
+
+    public static boolean isCallPermissionGranted(Context context) {
+        PermissionEnum permissionEnum = PermissionEnum.WRITE_EXTERNAL_STORAGE;
+        boolean granted = PermissionUtils.isGranted(context, PermissionEnum.WRITE_EXTERNAL_STORAGE);
+
+        return granted;
+    }
+
+    public static void permission(final Context context, FullCallback fullCallback) {
+
+        PermissionManager.with(context)
+                .permission(PermissionEnum.WRITE_EXTERNAL_STORAGE, PermissionEnum.READ_EXTERNAL_STORAGE)
+                .askagain(true)
+                .askagainCallback(new AskagainCallback() {
+                    @Override
+                    public void showRequestPermission(UserResponse response) {
+                        Util.showDialog(context, response);
+                    }
+                })
+                .callback(fullCallback)
+                .ask();
+    }
+
+    public static String getCityName(Context context) {
+        try {
+
+            AppLocationService appLocationService = new AppLocationService(
+                    context);
+
+            Location nwLocation = appLocationService
+                    .getLocation(LocationManager.NETWORK_PROVIDER);
+
+            if (nwLocation != null) {
+                double latitude = nwLocation.getLatitude();
+                double longitude = nwLocation.getLongitude();
+                Geocoder geocoder = new Geocoder(context, Locale.getDefault());
+                List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
+                String cityName = addresses.get(0).getLocality();
+                return cityName;
+            } else {
+                showSettingsAlert("NETWORK", context);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+            return null;
+    }
+
+    public static void showSettingsAlert(String provider, final Context context) {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(
+                context);
+
+        alertDialog.setTitle(provider + " SETTINGS");
+
+        alertDialog
+                .setMessage(provider + " is not enabled! Want to go to settings menu?");
+
+        alertDialog.setPositiveButton("Settings",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(
+                                Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        context.startActivity(intent);
+                    }
+                });
+
+        alertDialog.setNegativeButton("Cancel",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+        alertDialog.show();
+    }
 }

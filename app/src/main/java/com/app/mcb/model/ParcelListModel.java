@@ -89,9 +89,9 @@ public class ParcelListModel extends BasicModel {
         request.put("process_by", Config.getUserId());
         request.put("reason", "");
         request.put("status", "6");
-        restInterface.cancelParcel(request, new Callback<JsonElement>() {
+        restInterface.cancelParcel(request, new Callback<ParcelBookingChangeStatusData>() {
             @Override
-            public void success(JsonElement jsonElement, Response response) {
+            public void success(ParcelBookingChangeStatusData jsonElement, Response response) {
 
                 notifyObservers(jsonElement);
             }
@@ -103,15 +103,14 @@ public class ParcelListModel extends BasicModel {
         });
     }
 
-    public void usrUpdateTripStatus(ParcelDetailsData parcelDetailsData,String status,String msg) {
+    public void usrUpdateParcelStatus(ParcelDetailsData parcelDetailsData,String status,String msg) {
         try {
             HashMap<String,Object> request=new HashMap<String,Object>();
-            request.put("id", parcelDetailsData.trans_id);
+            request.put("id", parcelDetailsData.id);
             request.put("status", Integer.parseInt(status));
             request.put("process_by", Config.getUserId());
             request.put("reason", msg);
-            request.put("parcelid", parcelDetailsData.id);
-            restInterface.usrUpdateTripStatus(request, new Callback<ParcelBookingChangeStatusData>() {
+            restInterface.usrUpdateParcelStatus(request, new Callback<ParcelBookingChangeStatusData>() {
                 @Override
                 public void success(ParcelBookingChangeStatusData commonResponseData, Response response) {
                     notifyObservers(commonResponseData);

@@ -17,11 +17,16 @@ import android.widget.TextView;
 
 import com.app.mcb.MainActivity;
 import com.app.mcb.R;
+import com.app.mcb.Utility.Constants;
 import com.app.mcb.Utility.Util;
 import com.app.mcb.adapters.WithDrawVPAdapter;
+import com.app.mcb.dao.CommonResponseData;
 import com.app.mcb.dao.UserInfoData;
 import com.app.mcb.dao.WithDrawData;
 import com.app.mcb.model.WithDrawModel;
+import com.app.mcb.retrointerface.TryAgainInterface;
+import com.app.mcb.sharedPreferences.Config;
+import com.app.mcb.viewControllers.LoginActivity;
 
 import org.byteclues.lib.model.BasicModel;
 import org.byteclues.lib.view.AbstractFragment;
@@ -54,17 +59,21 @@ public class WithDrawFragment extends AbstractFragment implements View.OnClickLi
     private UserInfoData userInfoData;
     private ViewPager vpWithDrawStatus;
     private LinearLayout llCountDotsMain;
+    private LinearLayout llWithDrawMain;
+    private LinearLayout llWithDrawSub;
     private WithDrawModel withDrawModel = new WithDrawModel();
 
     @Override
     protected View onCreateViewPost(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.withdraw, container, false);
         init(view);
-        getUserDetails();
+        withDrawStatusList();
         return view;
     }
 
     private void init(View view) {
+        llWithDrawMain = (LinearLayout) view.findViewById(R.id.llWithDrawMain);
+        llWithDrawSub = (LinearLayout) view.findViewById(R.id.llWithDrawSub);
         rlWithDrawMain = (RelativeLayout) view.findViewById(R.id.rlWithDrawMain);
         txtWithDrawStatus = (TextView) view.findViewById(R.id.txtWithDrawStatus);
         txtNewUserWithDraw = (TextView) view.findViewById(R.id.txtNewUserWithDraw);
@@ -99,10 +108,14 @@ public class WithDrawFragment extends AbstractFragment implements View.OnClickLi
         RelativeLayout relativeLayout = (RelativeLayout) inflater.inflate(layout, null, false);
         rlWithDrawMain.addView(relativeLayout);
         if (layout == R.layout.withdraw_status) {
-            withDrawStatusInit(rlWithDrawMain);
+
         } else {
-            withDrawCreateNewInit(rlWithDrawMain);
-            setMyWithdrawValue();
+            if (userInfoData == null) {
+                getUserDetails();
+            } else {
+                withDrawCreateNewInit(rlWithDrawMain);
+                setMyWithdrawValue();
+            }
         }
     }
 
@@ -120,29 +133,51 @@ public class WithDrawFragment extends AbstractFragment implements View.OnClickLi
                 if ("success".equals(userInfoData.status)) {
                     if (userInfoData.response != null) {
                         this.userInfoData = userInfoData.response.get(0);
+                        LoginActivity.saveUserData(this.userInfoData);
+                        addViewInRelayout(R.layout.create_new_withdraw);
+                        withDrawCreateNewInit(rlWithDrawMain);
+                        setMyWithdrawValue();
                     }
                 } else if ("Error".equals(userInfoData.status)) {
-                    Util.showOKSnakBar(rlWithDrawMain, userInfoData.errorMessage);
+                    llWithDrawMain.addView(Util.getViewDataNotFound(getActivity(), llWithDrawMain, userInfoData.errorMessage));
                 }
             } else if (data != null && data instanceof WithDrawData) {
                 WithDrawData withDrawData = (WithDrawData) data;
                 if ("success".equals(withDrawData.status)) {
+                    addViewInRelayout(R.layout.withdraw_status);
+                    withDrawStatusInit(rlWithDrawMain);
+                    unSelectTextView();
+                    selectLeftTextView();
                     vpWithDrawStatus.setAdapter(new WithDrawVPAdapter(getActivity(), withDrawData.response));
 
                     if (withDrawData.response.size() == 0) {
-                        Util.showOKSnakBar(rlWithDrawMain, getString(R.string.no_pending_request_available));
+                        llWithDrawMain.addView(Util.getViewDataNotFound(getActivity(), llWithDrawMain, getString(R.string.no_pending_request_available)));
                     }
                 } else if ("Error".equals(userInfoData.status)) {
-                    Util.showOKSnakBar(rlWithDrawMain, userInfoData.errorMessage);
+                    llWithDrawMain.addView(Util.getViewDataNotFound(getActivity(), llWithDrawMain, userInfoData.errorMessage));
+                }
+            } else if (data != null && data instanceof CommonResponseData) {
+                if ("success".equals(((CommonResponseData) data).status)) {
+                    withDrawStatusList();
                 }
             } else if (data != null && data instanceof RetrofitError) {
                 Util.showOKSnakBar(rlWithDrawMain, getResources().getString(R.string.pls_try_again));
+                llWithDrawMain.addView(Util.getViewServerNotResponding(getActivity(), llWithDrawMain, new TryAgainInterface() {
+                    @Override
+                    public void callBack() {
+                        Util.replaceFragment(getActivity(), R.id.fmHomeContainer, new WithDrawFragment());
+                    }
+                }));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
 
+    private void addMainView() {
+        llWithDrawMain.removeAllViews();
+        llWithDrawMain.addView(llWithDrawSub);
+    }
 
     private void getUserDetails() {
         try {
@@ -150,7 +185,14 @@ public class WithDrawFragment extends AbstractFragment implements View.OnClickLi
                 Util.showProDialog(getActivity());
                 withDrawModel.getUserDetails();
             } else {
-                Util.showAlertDialog(null, getResources().getString(R.string.noInternetMsg));
+                llWithDrawMain.addView(Util.getViewInternetNotFound(getActivity(), llWithDrawMain, new TryAgainInterface() {
+                    @Override
+                    public void callBack() {
+                        addMainView();
+                        getUserDetails();
+                    }
+                }));
+
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -163,7 +205,32 @@ public class WithDrawFragment extends AbstractFragment implements View.OnClickLi
                 Util.showProDialog(getActivity());
                 withDrawModel.withDrawStatusList();
             } else {
-                Util.showAlertDialog(null, getResources().getString(R.string.noInternetMsg));
+                llWithDrawMain.addView(Util.getViewInternetNotFound(getActivity(), llWithDrawMain, new TryAgainInterface() {
+                    @Override
+                    public void callBack() {
+                        addMainView();
+                        withDrawStatusList();
+                    }
+                }));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private void createPaymentRequest(final WithDrawData withDrawData) {
+        try {
+            if (Util.isDeviceOnline()) {
+                Util.showProDialog(getActivity());
+                withDrawModel.createPaymentRequest(withDrawData);
+            } else {
+                llWithDrawMain.addView(Util.getViewInternetNotFound(getActivity(), llWithDrawMain, new TryAgainInterface() {
+                    @Override
+                    public void callBack() {
+                        addMainView();
+                        createPaymentRequest(withDrawData);
+                    }
+                }));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -176,8 +243,6 @@ public class WithDrawFragment extends AbstractFragment implements View.OnClickLi
         int id = v.getId();
         if (id == R.id.txtWithDrawStatus) {
             addViewInRelayout(R.layout.withdraw_status);
-            unSelectTextView();
-            selectLeftTextView();
             withDrawStatusList();
         } else if (id == R.id.txtNewUserWithDraw) {
             addViewInRelayout(R.layout.create_new_withdraw);
@@ -185,7 +250,15 @@ public class WithDrawFragment extends AbstractFragment implements View.OnClickLi
             selectRightTextView();
         } else if (id == R.id.txtSubmitWithDraw) {
             WithDrawData withDrawData = getValue();
-            validation(withDrawData);
+            if (validation(withDrawData)) {
+                if (Float.parseFloat(withDrawData.amount) > 50)
+                    if (Float.parseFloat(withDrawData.amount) <= Float.parseFloat(Config.getUserWallet()))
+                        createPaymentRequest(withDrawData);
+                    else
+                        Util.showAlertDialog(null, String.format(getString(R.string.withdraw_validation), Config.getUserWallet()));
+                else
+                    Util.showAlertDialog(null, getString(R.string.wallet_grater_than_50));
+            }
         }
     }
 
@@ -237,13 +310,15 @@ public class WithDrawFragment extends AbstractFragment implements View.OnClickLi
     }
 
     private void setMyWithdrawValue() {
-        etAmountNewWithDraw.setText("0");
-        etAccountNumNewWithDraw.setText(userInfoData.bank_act_no);
-        etReAccountNumNewWithDraw.setText(userInfoData.bank_act_no);
-        etAccHolderNameWithDraw.setText(userInfoData.bank_act_name);
-        etBankNameNewWithDraw.setText(userInfoData.bank_name);
-        etIFSCNewWithDraw.setText(userInfoData.bank_ifsc);
-        etSwiftNumNewWithDraw.setText(userInfoData.bank_swift_code);
+        etAmountNewWithDraw.setText(userInfoData.wallet);
+        if (userInfoData != null) {
+            etAccountNumNewWithDraw.setText(userInfoData.bank_act_no);
+            etReAccountNumNewWithDraw.setText(userInfoData.bank_act_no);
+            etAccHolderNameWithDraw.setText(userInfoData.bank_act_name);
+            etBankNameNewWithDraw.setText(userInfoData.bank_name);
+            etIFSCNewWithDraw.setText(userInfoData.bank_ifsc);
+            etSwiftNumNewWithDraw.setText(userInfoData.bank_swift_code);
+        }
     }
 
     private WithDrawData getValue() {

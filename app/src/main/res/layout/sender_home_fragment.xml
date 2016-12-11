@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <FrameLayout
         android:id="@+id/fmContainerSenderHomeMain"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:layout_above="@+id/llFooterSenderMian">
 
 
@@ -21,6 +23,7 @@
         android:layout_alignParentBottom="true"
         android:background="@color/primary_blue"
         android:orientation="horizontal"
+        android:layout_gravity="bottom"
         android:padding="@dimen/dim_4">
 
         <LinearLayout
@@ -84,5 +87,5 @@
         </LinearLayout>
 
     </LinearLayout>
-</RelativeLayout>
+</LinearLayout>
 

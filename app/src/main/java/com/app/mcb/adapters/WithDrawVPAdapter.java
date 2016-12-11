@@ -54,7 +54,7 @@ public class WithDrawVPAdapter extends PagerAdapter {
         txtBankNameWithDraw.setText(withDrawData.bank_name);
         txtAmountWithDraw.setText(withDrawData.amount);
         txtIFSCCodeWithDraw.setText(withDrawData.ifsc);
-        txtStatusWithDraw.setText(withDrawData.status);
+        txtStatusWithDraw.setText(("N".equals(withDrawData.status)?mContext.getString(R.string.pending):mContext.getString(R.string.completed)));
         txtProcessingDateWithDraw.setText(Util.getDateFromDateTimeFormat(withDrawData.created));
     }
 

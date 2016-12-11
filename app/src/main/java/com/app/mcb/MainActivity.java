@@ -1,15 +1,23 @@
 package com.app.mcb;
 
+import android.app.Activity;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.app.mcb.Utility.Constants;
 import com.app.mcb.custom.AppHeaderView;
+import com.app.mcb.dao.AddParcelData;
+import com.app.mcb.dao.AddTrip;
+import com.app.mcb.dao.AddTripData;
+import com.app.mcb.dao.ParcelDetailsData;
 import com.app.mcb.dao.TripTransporterData;
 import com.app.mcb.sharedPreferences.Config;
 import com.app.mcb.viewControllers.LoginActivity;
@@ -30,7 +38,7 @@ import java.util.Observable;
 
 public class MainActivity extends AbstractFragmentActivity implements View.OnClickListener {
     private DrawerLayout drawer;
-    private AppHeaderView appHeaderView;
+    public AppHeaderView appHeaderView;
     private LinearLayout llLoginMain;
     private LinearLayout llDashboardMain;
     private LinearLayout llDashBoardDrawer;
@@ -57,19 +65,37 @@ public class MainActivity extends AbstractFragmentActivity implements View.OnCli
             llLoginMain.setVisibility(View.GONE);
             abstractFragment = new DashBoardFragment();
             TripTransporterData tripTransporterData = (TripTransporterData) getIntent().getSerializableExtra("data");
+            ParcelDetailsData parcelDetailsData = (ParcelDetailsData) getIntent().getSerializableExtra("KEY_PARCEL_DETAIL");
+            AddParcelData addParcelData = (AddParcelData) getIntent().getSerializableExtra(Constants.ADD_PARCELS_KEY);
+            AddTripData addTrip = (AddTripData) getIntent().getSerializableExtra(Constants.ADD_TRIP_KEY);
             if (tripTransporterData != null) {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("tripData", tripTransporterData);
                 abstractFragment = new SenderHomeFragment();
                 abstractFragment.setArguments(bundle);
+            } else if (parcelDetailsData != null) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("KEY_PARCEL_DETAIL", parcelDetailsData);
+                abstractFragment = new TransporterHomeFragment();
+                abstractFragment.setArguments(bundle);
+            } else if (addParcelData != null) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(Constants.ADD_PARCELS_KEY, addParcelData);
+                abstractFragment = new SenderHomeFragment();
+                abstractFragment.setArguments(bundle);
+            } else if (addTrip != null) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(Constants.ADD_TRIP_KEY, addTrip);
+                abstractFragment = new TransporterHomeFragment();
+                abstractFragment.setArguments(bundle);
             }
+
         } else {
             llDashBoardDrawer.setVisibility(View.GONE);
             llLoginMain.setVisibility(View.VISIBLE);
             abstractFragment = new CommonListWithAllStateFragment();
         }
         getSupportFragmentManager().beginTransaction().add(R.id.fmHomeContainer, abstractFragment, "HomeFragment").commit();
-
 
     }
 
@@ -112,6 +138,7 @@ public class MainActivity extends AbstractFragmentActivity implements View.OnCli
         llPrivacyPolicyMain.setOnClickListener(this);
         llLoginMain.setOnClickListener(this);
 
+
     }
 
     public void setHeader(String tittle) {
@@ -121,10 +148,36 @@ public class MainActivity extends AbstractFragmentActivity implements View.OnCli
     @Override
     public void onBackPressed() {
 
-        if (drawer.isDrawerOpen(GravityCompat.START))
-            drawer.closeDrawer(GravityCompat.START);
-        else
-            super.onBackPressed();
+       android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
+        if (fm.getBackStackEntryCount() > 0) {
+            Log.i("MainActivity", "popping backstack");
+            fm.popBackStackImmediate();
+        } else {
+            if (drawer.isDrawerOpen(GravityCompat.START))
+                drawer.closeDrawer(GravityCompat.START);
+            else
+                super.onBackPressed();
+        }
+        android.support.v4.app.Fragment senderHome = getSupportFragmentManager().findFragmentById(R.id.fmContainerSenderHomeMain);
+        android.support.v4.app.Fragment transporterHome = getSupportFragmentManager().findFragmentById(R.id.fmContainerTransporterHomeMain);
+        if (senderHome!=null && senderHome.isVisible()) {
+            if (senderHome.getFragmentManager().getBackStackEntryCount() > 0) {
+                senderHome.getFragmentManager().popBackStack();
+                appHeaderView.imgBackHeaderArrow.setImageResource(R.mipmap.hamber);
+                return;
+            }
+        } else if (transporterHome!=null && transporterHome.isVisible()) {
+            if (transporterHome.getFragmentManager().getBackStackEntryCount() > 0) {
+                transporterHome.getFragmentManager().popBackStack();
+                appHeaderView.imgBackHeaderArrow.setImageResource(R.mipmap.hamber);
+                return;
+            }
+        } else {
+            if (drawer.isDrawerOpen(GravityCompat.START))
+                drawer.closeDrawer(GravityCompat.START);
+            else
+                super.onBackPressed();
+        }
 
     }
 
@@ -133,7 +186,26 @@ public class MainActivity extends AbstractFragmentActivity implements View.OnCli
     public void onClick(View view) {
         int id = view.getId();
         if (id == R.id.llBackHeader) {
-            drawerStateChanged();
+            android.support.v4.app.Fragment senderHome = getSupportFragmentManager().findFragmentById(R.id.fmContainerSenderHomeMain);
+            android.support.v4.app.Fragment transporterHome = getSupportFragmentManager().findFragmentById(R.id.fmContainerTransporterHomeMain);
+            if (senderHome != null && senderHome.isVisible()) {
+                if (senderHome.getFragmentManager().getBackStackEntryCount() > 0) {
+                    senderHome.getFragmentManager().popBackStack();
+                    appHeaderView.imgBackHeaderArrow.setImageResource(R.mipmap.hamber);
+                    return;
+                } else
+                    drawerStateChanged();
+            } else if (transporterHome != null && transporterHome.isVisible()) {
+                if (transporterHome.getFragmentManager().getBackStackEntryCount() > 0) {
+                    transporterHome.getFragmentManager().popBackStack();
+                    appHeaderView.imgBackHeaderArrow.setImageResource(R.mipmap.hamber);
+                    return;
+                } else
+                    drawerStateChanged();
+            } else {
+                drawerStateChanged();
+            }
+
         } else if (id == R.id.llDashboardMain) {
             addFragment(new DashBoardFragment());
         } else if (id == R.id.llProfileMain) {
@@ -155,7 +227,7 @@ public class MainActivity extends AbstractFragmentActivity implements View.OnCli
         } else if (id == R.id.llPrivacyPolicyMain) {
 
         } else if (id == R.id.llLoginMain) {
-            startActivity(new Intent(this,LoginActivity.class));
+            startActivityForResult(new Intent(this, LoginActivity.class), 503);
         }
     }
 
@@ -165,12 +237,36 @@ public class MainActivity extends AbstractFragmentActivity implements View.OnCli
 
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case (503): {
+                if (resultCode == Activity.RESULT_OK) {
+                    TripTransporterData tripTransporterData = ((TripTransporterData) data.getSerializableExtra("data"));
+                    if (Config.getLoginStatus()) {
+                        Intent intent = new Intent(this, MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.putExtra("data", tripTransporterData);
+                        startActivity(intent);
+                    }
+                }
+                break;
+            }
+        }
+    }
+
+
     private void drawerStateChanged() {
+
+
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
             drawer.openDrawer(GravityCompat.START);
         }
+
+
     }
 
     @Override

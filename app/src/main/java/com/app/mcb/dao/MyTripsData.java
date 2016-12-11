@@ -32,6 +32,10 @@ public class MyTripsData implements Serializable {
     public String myClickOn;
     public String transportername;
     public String transporteremail;
+    public String receiveremail;
+    public String receivermobile;
+    public String receivername;
+    public String receivercountrycode;
     public String errorMessage;
     public ArrayList<MyTripsData> response;
 }

@@ -16,6 +16,7 @@ import com.app.mcb.Utility.Util;
 import com.app.mcb.dao.ParcelDetailsData;
 import com.app.mcb.dao.ParcelListData;
 import com.app.mcb.dao.TripTransporterData;
+import com.app.mcb.sharedPreferences.Config;
 
 import java.util.ArrayList;
 
@@ -41,12 +42,14 @@ public class ParcelsListVPAdapter extends PagerAdapter {
     private TextView txtPrcelWeightPL;
     private TextView txtTransporterIdPL;
     private TextView txtReceiverIdPL;
+    private TextView txtParcelAmount;
     private TextView txtBookedPL;
     private ImageView imgViewPLR;
     private ImageView imgEditPLR;
     private ImageView imgCancelPLR;
     private ImageView imgSettingsPLR;
     private ImageView imgChatParcelList;
+    private LinearLayout llParcelActionMain;
     private ArrayList<ParcelDetailsData> parcelList;
 
     public ParcelsListVPAdapter(Context context, ArrayList<ParcelDetailsData> parcelList, View.OnClickListener onClickListener) {
@@ -78,6 +81,7 @@ public class ParcelsListVPAdapter extends PagerAdapter {
         txtToTimePl = (TextView) viewGroup.findViewById(R.id.txtToTimePl);
         txtParcelIdPL = (TextView) viewGroup.findViewById(R.id.txtParcelIdPL);
         txtPrcelTypePL = (TextView) viewGroup.findViewById(R.id.txtPrcelTypePL);
+        txtParcelAmount = (TextView) viewGroup.findViewById(R.id.txtParcelAmount);
         txtPrcelWeightPL = (TextView) viewGroup.findViewById(R.id.txtPrcelWeightPL);
         txtTransporterIdPL = (TextView) viewGroup.findViewById(R.id.txtTransporterIdPL);
         txtReceiverIdPL = (TextView) viewGroup.findViewById(R.id.txtReceiverIdPL);
@@ -85,6 +89,7 @@ public class ParcelsListVPAdapter extends PagerAdapter {
         imgViewPLR = (ImageView) viewGroup.findViewById(R.id.imgViewPLR);
         imgEditPLR = (ImageView) viewGroup.findViewById(R.id.imgEditPLR);
         imgCancelPLR = (ImageView) viewGroup.findViewById(R.id.imgCancelPLR);
+        llParcelActionMain = (LinearLayout) viewGroup.findViewById(R.id.llParcelActionMain);
         imgViewPLR.setOnClickListener(onClickListener);
         imgSettingsPLR.setOnClickListener(onClickListener);
         imgCancelPLR.setOnClickListener(onClickListener);
@@ -102,6 +107,7 @@ public class ParcelsListVPAdapter extends PagerAdapter {
         txtFromDatePl.setText(Util.getDateFromDateTimeFormat(parcelListData.created));
         txtFromTimePl.setText(Util.getTimeFromDateTimeFormat(parcelListData.created));
         txtToDatePl.setText(Util.getDDMMYYYYFormat(parcelListData.till_date, "yyyy-MM-dd"));
+        txtParcelAmount.setText(parcelListData.payment+" "+"\u20B9");
         imgViewPLR.setTag(parcelListData);
         imgEditPLR.setTag(parcelListData);
         imgCancelPLR.setTag(parcelListData);
@@ -118,6 +124,7 @@ public class ParcelsListVPAdapter extends PagerAdapter {
             txtPrcelWeightPL.setText(parcelListData.weight + " " + "KG");
         else
             txtPrcelWeightPL.setText("");
+
 
         if ((!TextUtils.isEmpty(parcelListData.trans_id)) && (!parcelListData.trans_id.equals("0")))
             txtTransporterIdPL.setText(Constants.BEGIN_WITH_TRANSPORTER_ID + parcelListData.trans_id);
@@ -145,12 +152,23 @@ public class ParcelsListVPAdapter extends PagerAdapter {
                 break;
             case Constants.ParcelDeliveryComplete:
                 imgSettingsPLR.setVisibility(View.GONE);
+                imgCancelPLR.setVisibility(View.GONE);
+                imgEditPLR.setVisibility(View.GONE);
+                break;
+            case Constants.ParcelCancelled:
+                llParcelActionMain.setVisibility(View.GONE);
                 break;
             case Constants.ParcelBookedWithTR:
                 imgSettingsPLR.setVisibility(View.GONE);
                 break;
             case Constants.ParcelCollected:
                 imgSettingsPLR.setVisibility(View.GONE);
+                imgCancelPLR.setVisibility(View.GONE);
+                imgEditPLR.setVisibility(View.GONE);
+                break;
+            case Constants.ParcelDelivered:
+                imgCancelPLR.setVisibility(View.GONE);
+                imgEditPLR.setVisibility(View.GONE);
                 break;
         }
     }
@@ -158,6 +176,7 @@ public class ParcelsListVPAdapter extends PagerAdapter {
     void setViewVisible() {
         imgChatParcelList.setVisibility(View.VISIBLE);
         imgSettingsPLR.setVisibility(View.VISIBLE);
+        llParcelActionMain.setVisibility(View.VISIBLE);
     }
 
     @Override

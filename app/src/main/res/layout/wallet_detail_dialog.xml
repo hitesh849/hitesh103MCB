@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/dim_16">
+
+    <TextView
+        android:id="@+id/txtWithDrawId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dim_8"
+        android:gravity="center"
+        android:textSize="@dimen/text_dim_18"
+        android:textStyle="bold" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dim_8">
+
+        <TableRow>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/bank_name"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_dim_16" />
+
+            <TextView
+                android:id="@+id/txtBankName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/bank_name"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_dim_16" />
+        </TableRow>
+
+        <TableRow android:layout_marginTop="@dimen/dim_8">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/bank_account_number"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_dim_16" />
+
+            <TextView
+                android:id="@+id/txtBankAccNoDialog"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/bank_account_number"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_dim_16" />
+        </TableRow>
+
+        <TableRow android:layout_marginTop="@dimen/dim_8">
+
+            <TextView
+                android:id="@+id/toDialog"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/transId"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_dim_16" />
+
+            <TextView
+                android:id="@+id/txtTransNoDialog"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/transId"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_dim_16" />
+        </TableRow>
+
+
+        <TableRow>
+
+        </TableRow>
+    </TableLayout>
+
+</LinearLayout>

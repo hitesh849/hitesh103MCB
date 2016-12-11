@@ -33,7 +33,6 @@ public class HomeTripModel extends BasicModel {
 
     public void getAirportData(final Context context) {
         try {
-
             restInterface.getAirportData(new Callback<AirportData>() {
                 @Override
                 public void success(AirportData airportData, Response response) {
@@ -55,8 +54,8 @@ public class HomeTripModel extends BasicModel {
 
     public void getTripListByFilter(FilterData filterData) {
         try {
-            HashMap<String,Object> request = new HashMap<String,Object>();
-            HashMap<String,String> subrequest = new HashMap<String,String>();
+            HashMap<String, Object> request = new HashMap<String, Object>();
+            HashMap<String, String> subrequest = new HashMap<String, String>();
             String blank = " ";
             if (!TextUtils.isEmpty(filterData.fromDate))
                 subrequest.put("dateFrom", filterData.fromDate);
@@ -78,6 +77,7 @@ public class HomeTripModel extends BasicModel {
             else
                 subrequest.put("locationto", blank);
 
+            subrequest.put("city", filterData.city);
             subrequest.put("type", filterData.type);
             request.put("params", subrequest);
             Log.d("test", request.toString());
@@ -99,8 +99,8 @@ public class HomeTripModel extends BasicModel {
 
     public void getParcelsListByFilter(FilterData filterData) {
         try {
-            HashMap<String,Object> request = new HashMap<String,Object>();
-            HashMap<String,String> subrequest = new HashMap<String,String>();
+            HashMap<String, Object> request = new HashMap<String, Object>();
+            HashMap<String, String> subrequest = new HashMap<String, String>();
             String blank = " ";
             if (!TextUtils.isEmpty(filterData.fromDate))
                 subrequest.put("dateFrom", filterData.fromDate);

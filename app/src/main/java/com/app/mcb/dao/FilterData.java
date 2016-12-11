@@ -1,9 +1,11 @@
 package com.app.mcb.dao;
 
+import java.io.Serializable;
+
 /**
  * Created by u on 9/23/2016.
  */
-public class FilterData {
+public class FilterData implements Serializable{
     public String fromDate;
     public String toDate;
     public String fromLocation;
@@ -15,4 +17,5 @@ public class FilterData {
     public String departure_date;
     public String parcelStatus;
     public String tripStatus;
+    public String city;
 }

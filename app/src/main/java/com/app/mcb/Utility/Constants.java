@@ -6,6 +6,7 @@ package com.app.mcb.Utility;
 public class Constants {
     //public static String BASE_URL ="https://mycourierbuddy.com/apis/index.php/api";
     public static String BASE_URL = "http://webservice.mycourierbuddy.com/apis/index.php/api";
+    public static String image_url="http://webservice.mycourierbuddy.com/apis/uploads";
     public static final String RESPONSE_SUCCESS_MSG = "success";
     public static final String RESPONSE_ERROR_MSG = "error";
     public static final String KEY_SENDER = "Sender";
@@ -39,5 +40,12 @@ public class Constants {
     public static int MAX_WEIGHT = 30;
     public static String TRANSPORTER = "Transporter";
     public static String SENDER = "Sender";
+    /*public static String MERCHANT_ID = "1SKAsxey";
+    public static String SALT = "lj0ofR1er9";
+    */public static String MERCHANT_ID = "fB7m8s";
+    public static String SALT = "eRis5Chv";
+    public static final int OnBackFilter = 501;
+    public static final String ADD_PARCELS_KEY = "ADD_PARCELS_KEY";
+    public static final String ADD_TRIP_KEY = "ADD_TRIP_KEY";
 }
 

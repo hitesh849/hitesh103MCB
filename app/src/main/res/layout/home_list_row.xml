@@ -30,20 +30,31 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/txtFromRow" />
 
-            <LinearLayout
+              <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="bottom|right">
+                >
 
                 <TextView
                     android:id="@+id/txtViewAllStateRow"
                     style="@style/text_small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/txtFromRow"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
                     android:text="@string/view_all" />
 
-            </LinearLayout>
+                <TextView
+                    android:id="@+id/totalCount"
+                    style="@style/text_small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dim_8"
+                     />
+
+            </RelativeLayout>
         </LinearLayout>
     </RelativeLayout>
 

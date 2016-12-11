@@ -3,6 +3,7 @@ package com.app.mcb.model;
 import com.app.mcb.Utility.Constants;
 import com.app.mcb.dao.GenerateOrderData;
 import com.app.mcb.dao.MyTripDetailsData;
+import com.app.mcb.dao.OrderConfirmData;
 import com.app.mcb.dao.ParcelDetailsData;
 import com.app.mcb.dao.TripData;
 import com.app.mcb.dao.UserInfoData;
@@ -73,7 +74,7 @@ public class PayNowModel extends BasicModel {
             request.put("ParcelID", parcelDetailsData.id);
             request.put("TransID", myTripsData.id);
             request.put("status", Constants.ParcelPaymentDue);
-            request.put("ordernumber", "" + System.currentTimeMillis());
+            request.put("ordernumber", "" +getTxnId());
             request.put("Amount", parcelDetailsData.payment);
             request.put("Paymentvia", "Payu Money Gateway");
             request.put("usewalletamount", usewalletamount);
@@ -94,17 +95,20 @@ public class PayNowModel extends BasicModel {
             e.printStackTrace();
         }
     }
+    private String getTxnId() {
+        return ("0nf7" + System.currentTimeMillis());
+    }
 
     public void orderConfirm(GenerateOrderData generateOrderData) {
         try {
 
             HashMap<String, Object> request = new HashMap<String, Object>();
             request.put("txnid", generateOrderData.ordernumber);
-            request.put("payuMoneyId", "898989898989");
+            request.put("payuMoneyId", generateOrderData.payUMoneyId);
 
-            restInterface.orderConfirm(request, new Callback<JsonElement>() {
+            restInterface.orderConfirm(request, new Callback<OrderConfirmData>() {
                 @Override
-                public void success(JsonElement generateOrderData, Response response) {
+                public void success(OrderConfirmData generateOrderData, Response response) {
                     notifyObservers(generateOrderData);
                 }
 

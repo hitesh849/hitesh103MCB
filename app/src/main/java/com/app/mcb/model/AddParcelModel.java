@@ -41,9 +41,9 @@ public class AddParcelModel extends BasicModel {
         request.put("message", userInfoData.message);
         request.put("name", userInfoData.name);
         request.put("number", userInfoData.mobile);
-        restInterface.sendInvitation(request, new Callback<UserInfoData>() {
+        restInterface.sendInvitation(request, new Callback<SearchReceiverData>() {
             @Override
-            public void success(UserInfoData userInfoData, Response response) {
+            public void success(SearchReceiverData userInfoData, Response response) {
                 userInfoData.userType = "N";
                 notifyObservers(userInfoData);
             }
@@ -135,11 +135,9 @@ public class AddParcelModel extends BasicModel {
         try {
             Date now = new Date();
             Locale locale;
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                locale = Env.appContext.getResources().getConfiguration().getLocales().get(0);
-            } else {
+
                 locale = Env.appContext.getResources().getConfiguration().locale;
-            }
+
             SimpleDateFormat simpleDateFormat=new SimpleDateFormat();
             DateFormat df = DateFormat.getDateTimeInstance(
                     DateFormat.DEFAULT, DateFormat.DEFAULT, locale);
@@ -167,7 +165,6 @@ public class AddParcelModel extends BasicModel {
         request.put("height", parcelDetailsData.height);
         request.put("width", parcelDetailsData.width);
         request.put("length", parcelDetailsData.length);
-        request.put("created", new Date());
         request.put("usr_id", Config.getUserId());
         request.put("recv_id", parcelDetailsData.receiverInfoData.id);
         request.put("status", parcelDetailsData.status);

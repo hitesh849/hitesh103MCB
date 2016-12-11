@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.app.mcb.R;
@@ -22,10 +23,12 @@ public class MyWalletAdapter extends RecyclerView.Adapter<MyWalletAdapter.ViewHo
 
     private ArrayList<MyWalletData> myWalletTripList;
     private Context context;
+    private View.OnClickListener onClickListener;
 
-    public MyWalletAdapter(Context context, ArrayList<MyWalletData> myWalletTripList) {
+    public MyWalletAdapter(Context context, ArrayList<MyWalletData> myWalletTripList, View.OnClickListener onClickListener) {
         this.context = context;
         this.myWalletTripList = myWalletTripList;
+        this.onClickListener = onClickListener;
     }
 
     @Override
@@ -46,23 +49,47 @@ public class MyWalletAdapter extends RecyclerView.Adapter<MyWalletAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, int position) {
 
         MyWalletData myWalletData = myWalletTripList.get(position);
-        holder.txtDateMyWalletRow.setText(Util.getDDMMYYYYFormat(myWalletData.insertdate,"yyyy-MM-dd HH:mm:ss"));
-        if (!TextUtils.isEmpty(myWalletData.MTripID))
+        holder.txtDateMyWalletRow.setText(Util.getDDMMYYYYFormat(myWalletData.insertdate, "yyyy-MM-dd HH:mm:ss"));
+        if (!TextUtils.isEmpty(myWalletData.MTripID)) {
             holder.txtTripIdMyWalletRow.setText(myWalletData.MTripID);
-        else
-            holder.txtTripIdMyWalletRow.setText("-");
+            holder.imgTripIdDetailMyWalletRow.setOnClickListener(onClickListener);
+            holder.imgTripIdDetailMyWalletRow.setTag(myWalletData);
+            holder.imgTripIdDetailMyWalletRow.setVisibility(View.VISIBLE);
 
-        if (!TextUtils.isEmpty(myWalletData.MParcelID))
+        } else {
+            holder.txtTripIdMyWalletRow.setText("-");
+            holder.imgTripIdDetailMyWalletRow.setOnClickListener(null);
+            holder.imgTripIdDetailMyWalletRow.setVisibility(View.INVISIBLE);
+        }
+
+
+        if (!TextUtils.isEmpty(myWalletData.MParcelID)) {
             holder.txtParcelIdMyWalletRow.setText(myWalletData.MParcelID);
-        else
+            holder.imgParcelIdDetailMyWalletRow.setOnClickListener(onClickListener);
+            holder.imgParcelIdDetailMyWalletRow.setTag(myWalletData);
+
+            holder.imgParcelIdDetailMyWalletRow.setVisibility(View.VISIBLE);
+
+        } else {
             holder.txtParcelIdMyWalletRow.setText("-");
-        if (!TextUtils.isEmpty(myWalletData.withdrawamount))
-            holder.txtWithDrawMyWalletRow.setText(context.getResources().getString(R.string.rs) + " " + myWalletData.withdrawamount);
-        else
+            holder.imgParcelIdDetailMyWalletRow.setOnClickListener(null);
+            holder.imgParcelIdDetailMyWalletRow.setVisibility(View.INVISIBLE);
+        }
+
+        if (!TextUtils.isEmpty(myWalletData.withdrawID)) {
+            holder.txtWithDrawMyWalletRow.setText(myWalletData.withdrawID);
+            holder.imgWithDrawMyDetailWalletRow.setTag(myWalletData);
+            holder.imgWithDrawMyDetailWalletRow.setVisibility(View.VISIBLE);
+            holder.imgWithDrawMyDetailWalletRow.setOnClickListener(onClickListener);
+        } else {
             holder.txtWithDrawMyWalletRow.setText("-");
+            holder.imgWithDrawMyDetailWalletRow.setOnClickListener(null);
+            holder.imgWithDrawMyDetailWalletRow.setVisibility(View.INVISIBLE);
+        }
+
 
         if (!TextUtils.isEmpty(myWalletData.credit))
-            holder.txtEarnedAmtWalletRow.setText(context.getResources().getString(R.string.rs)+ " " + myWalletData.credit);
+            holder.txtEarnedAmtWalletRow.setText(context.getResources().getString(R.string.rs) + " " + myWalletData.credit);
         else
             holder.txtEarnedAmtWalletRow.setText("-");
         if (!TextUtils.isEmpty(myWalletData.debit))
@@ -91,6 +118,9 @@ public class MyWalletAdapter extends RecyclerView.Adapter<MyWalletAdapter.ViewHo
         public TextView txtEarnedAmtWalletRow;
         public TextView txtUsedAmtWalletRow;
         public TextView txtStatusWalletRow;
+        public ImageView imgTripIdDetailMyWalletRow;
+        public ImageView imgParcelIdDetailMyWalletRow;
+        public ImageView imgWithDrawMyDetailWalletRow;
 
         public ViewHolder(View view) {
             super(view);
@@ -101,6 +131,9 @@ public class MyWalletAdapter extends RecyclerView.Adapter<MyWalletAdapter.ViewHo
             txtEarnedAmtWalletRow = (TextView) view.findViewById(R.id.txtEarnedAmtWalletRow);
             txtUsedAmtWalletRow = (TextView) view.findViewById(R.id.txtUsedAmtWalletRow);
             txtStatusWalletRow = (TextView) view.findViewById(R.id.txtStatusWalletRow);
+            imgTripIdDetailMyWalletRow = (ImageView) view.findViewById(R.id.imgTripIdDetailMyWalletRow);
+            imgParcelIdDetailMyWalletRow = (ImageView) view.findViewById(R.id.imgParcelIdDetailMyWalletRow);
+            imgWithDrawMyDetailWalletRow = (ImageView) view.findViewById(R.id.imgWithDrawMyDetailWalletRow);
         }
     }
 }

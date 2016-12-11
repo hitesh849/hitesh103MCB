@@ -3,6 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:clickable="false"
+    android:background="@color/screen_bg"
     android:id="@+id/llParcelDetailsMain">
 
     <include layout="@layout/transporter_search_filter" />
@@ -35,7 +37,7 @@
                     style="@style/text_large"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="JPR" />
+                    android:text="" />
 
 
                 <TextView
@@ -44,7 +46,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
-                    android:text="Jaipur" />
+                    android:text="" />
 
 
                 <LinearLayout
@@ -60,12 +62,12 @@
                         android:src="@mipmap/blackcalender" />
 
                     <TextView
-                        android:id="@+id/txtFromDateParcelDetails"
+                        android:id="@+id/txtToDateParcelDetails"
                         style="@style/text_small"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dim_4"
-                        android:text="17 July, 2016" />
+                        android:text="" />
                 </LinearLayout>
 
 
@@ -153,7 +155,7 @@
                     style="@style/text_large"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="DEL" />
+                    android:text="" />
 
 
                 <TextView
@@ -170,6 +172,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dim_8"
                     android:gravity="center_vertical"
+                    android:visibility="invisible"
                     android:orientation="horizontal">
 
                     <ImageView
@@ -178,12 +181,13 @@
                         android:src="@mipmap/blackcalender" />
 
                     <TextView
-                        android:id="@+id/txtToDateParcelDetails"
+
+                        android:id="@+id/txtFromDateParcelDetails"
                         style="@style/text_small"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dim_4"
-                        android:text="17 July, 2016" />
+                        android:text="" />
                 </LinearLayout>
 
 
@@ -228,7 +232,7 @@
                     style="@style/text_large"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="P11786" />
+                    android:text="" />
 
 
             </LinearLayout>
@@ -252,8 +256,7 @@
                     android:id="@+id/txtParcelWeightParcelDetails"
                     style="@style/text_large"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="10 kg" />
+                    android:layout_height="wrap_content" />
 
 
             </LinearLayout>
@@ -275,7 +278,7 @@
                     style="@style/text_large"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Envlope" />
+                    android:text="" />
 
             </LinearLayout>
         </LinearLayout>

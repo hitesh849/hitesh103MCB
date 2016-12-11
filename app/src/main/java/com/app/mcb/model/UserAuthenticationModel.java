@@ -62,6 +62,7 @@ public class UserAuthenticationModel extends BasicModel {
             response.put("mobilenumber", userInfoData.mobile);
             response.put("password", userInfoData.password);
             response.put("passwordRepeat", userInfoData.password);
+            response.put("photo", userInfoData.image);
             response.toString();
             restInterface.registerUser(response, new Callback<UserInfoData>() {
                 @Override

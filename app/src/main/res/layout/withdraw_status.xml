@@ -17,7 +17,7 @@
         android:layout_height="@dimen/dim_30"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/dim_6"
+        android:layout_marginBottom="@dimen/dim_24"
         android:gravity="center"
         android:orientation="horizontal" />
 

@@ -3,12 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:id="@+id/llReceiverListMain"
     >
 
     <include layout="@layout/existing_parcel_search_filter" />
 
     <RelativeLayout
+        android:id="@+id/rlReceiverListMain"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >

@@ -1,4 +1,4 @@
-package com.app.mcb.viewControllers;
+package com.app.mcb.viewControllers.sender;
 
 import android.content.Intent;
 import android.os.Bundle;

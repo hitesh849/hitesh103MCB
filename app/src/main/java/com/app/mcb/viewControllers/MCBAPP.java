@@ -4,6 +4,8 @@ import android.support.multidex.MultiDexApplication;
 
 import com.app.mcb.database.DatabaseMgr;
 import com.app.mcb.sharedPreferences.Config;
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
 
 import org.byteclues.lib.init.Env;
 
@@ -17,6 +19,8 @@ public class MCBAPP extends MultiDexApplication {
         Env.appContext = this;
         Config.init(this);
         DatabaseMgr.getInstance(this);
+        FacebookSdk.sdkInitialize(this);
+        AppEventsLogger.activateApp(this);
     }
 
     @Override

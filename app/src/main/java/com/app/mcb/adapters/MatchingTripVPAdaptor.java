@@ -2,6 +2,7 @@ package com.app.mcb.adapters;
 
 import android.content.Context;
 import android.media.Image;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,6 +39,7 @@ public class MatchingTripVPAdaptor extends PagerAdapter {
     private TextView txtDestinationCityMyTripsListRow;
     private TextView txtSourceCityMyTripsListRow;
     private TextView txtRemainingCapacityMyTripListRow;
+    private TextView txtActionLabel;
     private ImageView imgBookNowParcelMatchingTrip;
     private ArrayList<MyTripsData> myTripsList;
 
@@ -72,6 +74,7 @@ public class MatchingTripVPAdaptor extends PagerAdapter {
         txtSourceCityMyTripsListRow = (TextView) viewGroup.findViewById(R.id.txtSourceCityMyTripsListRow);
         txtRemainingCapacityMyTripListRow = (TextView) viewGroup.findViewById(R.id.txtRemainingCapacityMyTripListRow);
         imgBookNowParcelMatchingTrip = (ImageView) viewGroup.findViewById(R.id.imgBookNowParcelMatchingTrip);
+        txtActionLabel = (TextView) viewGroup.findViewById(R.id.txtActionLabel);
         imgBookNowParcelMatchingTrip.setOnClickListener(onClickListener);
         imgBookNowParcelMatchingTrip.setTag(myTripsData);
         txtCapacityMyTripListRow.setText("Total " + myTripsData.capacity + " Kg");
@@ -87,6 +90,12 @@ public class MatchingTripVPAdaptor extends PagerAdapter {
         txtSourceTimeMyTripsListRow.setText(Util.getTimeFromDateTimeFormat(myTripsData.dep_time));
         txtDestinationTimeMyTripsRow.setText(Util.getTimeFromDateTimeFormat(myTripsData.arrival_time));
         manageStatus(myTripsData);
+        if(myTripsData.capacity!=null && Float.parseFloat(myTripsData.capacity)<=0)
+        {
+            txtActionLabel.setText(mContext.getString(R.string.fully_booked));
+            imgBookNowParcelMatchingTrip.setVisibility(View.GONE);
+            txtActionLabel.setTextColor(ContextCompat.getColor(mContext, R.color.colorPrimary));
+        }
     }
 
     private void manageStatus(MyTripsData myTripsData) {

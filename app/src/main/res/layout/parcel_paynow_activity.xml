@@ -3,8 +3,8 @@
     android:id="@+id/llParcelDetailsMain"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
+
     <include
         android:id="@+id/productHeader"
         layout="@layout/app_header_layout"
@@ -63,7 +63,7 @@
                         android:src="@mipmap/blackcalender" />
 
                     <TextView
-                        android:id="@+id/txtFromDateParcelDetails"
+                        android:id="@+id/txtToDateParcelDetails"
                         style="@style/text_small"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -167,26 +167,18 @@
                     android:singleLine="true"
                     android:text="Delhi" />
 
-
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dim_8"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="invisible">
 
                     <ImageView
                         android:layout_width="@dimen/dim_16"
                         android:layout_height="@dimen/dim_16"
                         android:src="@mipmap/blackcalender" />
-
-                    <TextView
-                        android:id="@+id/txtToDateParcelDetails"
-                        style="@style/text_small"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/dim_4"
-                        android:text="17 July, 2016" />
                 </LinearLayout>
 
 
@@ -332,26 +324,28 @@
             android:id="@+id/llChkWallet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_margin="@dimen/dim_8"
-            android:gravity="center"
-            >
-        <CheckBox
-            android:id="@+id/chkUseWallet"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="@string/use_mcb_available_amount" />
+            android:gravity="left|center_vertical"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/chkUseWallet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/use_mcb_available_amount" />
+
             <TextView
                 android:id="@+id/txtWalletAmount"
                 style="@style/text_medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                />
+                android:layout_marginLeft="@dimen/dim_8" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dim_12"
             android:gravity="right"
             android:orientation="horizontal"
             android:weightSum="2">
@@ -375,8 +369,8 @@
                 android:background="@drawable/rect_black_border_rounded"
                 android:padding="@dimen/dim_4"
                 android:text="@string/confirm"
-                android:visibility="gone"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:visibility="gone" />
 
         </LinearLayout>
     </LinearLayout>

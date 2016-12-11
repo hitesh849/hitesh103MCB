@@ -1,6 +1,8 @@
 package com.app.mcb.model;
 
 import com.app.mcb.Utility.Constants;
+import com.app.mcb.dao.AddParcelData;
+import com.app.mcb.dao.BookingRequestData;
 import com.app.mcb.dao.GenerateOrderData;
 import com.app.mcb.dao.MyTripDetailsData;
 import com.app.mcb.dao.MyTripsData;
@@ -78,5 +80,55 @@ public class MatchingTripModel extends BasicModel {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void bookingRequest(String tripId,String trans_id) {
+        try {
+            restInterface.bookingRequest(tripId,trans_id, new Callback<BookingRequestData>() {
+                @Override
+                public void success(BookingRequestData commonResponseData, Response response) {
+                    notifyObservers(commonResponseData);
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    notifyObservers(error);
+                }
+            });
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void updateParcels(final ParcelDetailsData parcelDetailsData) {
+
+        HashMap<String, Object> request = new HashMap<String, Object>();
+        request.put("source", parcelDetailsData.source);
+        request.put("id", parcelDetailsData.id);
+        request.put("destination", parcelDetailsData.destination);
+        request.put("till_date", parcelDetailsData.till_date);
+        request.put("type", parcelDetailsData.type);
+        request.put("weight", parcelDetailsData.weight);
+        request.put("height", parcelDetailsData.height);
+        request.put("width", parcelDetailsData.width);
+        request.put("length", parcelDetailsData.length);
+        request.put("usr_id", parcelDetailsData.usr_id);
+        request.put("trans_id", parcelDetailsData.trans_id);
+        request.put("recv_id", parcelDetailsData.recv_id);
+        request.put("status", parcelDetailsData.status);
+        request.put("description", parcelDetailsData.description);
+        request.put("payment", parcelDetailsData.payment);
+        restInterface.updateParcels(request, new Callback<AddParcelData>() {
+            @Override
+            public void success(AddParcelData addParcelData, Response response) {
+
+                notifyObservers(addParcelData);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                notifyObservers(error);
+            }
+        });
     }
 }

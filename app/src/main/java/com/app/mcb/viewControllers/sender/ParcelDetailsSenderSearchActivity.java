@@ -1,12 +1,15 @@
 package com.app.mcb.viewControllers.sender;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.PopupMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -14,18 +17,21 @@ import com.app.mcb.MainActivity;
 import com.app.mcb.R;
 import com.app.mcb.Utility.Constants;
 import com.app.mcb.Utility.Util;
+import com.app.mcb.dao.AddTripData;
 import com.app.mcb.dao.FilterData;
 import com.app.mcb.dao.MyTripsData;
 import com.app.mcb.dao.ParcelDetailsData;
-import com.app.mcb.dao.UserInfoData;
 import com.app.mcb.filters.CommonListener;
 import com.app.mcb.filters.TransporterFilter;
 import com.app.mcb.model.MatchingTripModel;
+import com.app.mcb.retrointerface.TryAgainInterface;
+import com.app.mcb.sharedPreferences.Config;
+import com.app.mcb.viewControllers.LoginActivity;
 
 import org.byteclues.lib.model.BasicModel;
-import org.byteclues.lib.view.AbstractFragment;
 import org.byteclues.lib.view.AbstractFragmentActivity;
 
+import java.util.ArrayList;
 import java.util.Observable;
 
 import retrofit.RetrofitError;
@@ -45,32 +51,33 @@ public class ParcelDetailsSenderSearchActivity extends AbstractFragmentActivity 
     private TextView txtParcelIdParcelDetails;
     private TextView txtParcelWeightParcelDetails;
     private TextView txtParcelTypeParcelDetails;
-    private TextView txtSelectorTransDetails;
-    private TextView txtSelectorReceiverDetails;
     private ParcelDetailsData parcelDetailsData;
     private LinearLayout llTranOrReceiverContainer;
     private TextView txtReceiverIdParcelDetails;
     private TextView txtReceiverMobileParcelDetails;
     private TextView txtReceiverNameParcelDetails;
     private TextView txtReceiverEmailParcelDetails;
-    private TextView txtTransporterNameParcelDetails;
-    private TextView txtTransporterEmailParcelDetails;
-    private TextView txtFlightNumberParcelDetails;
-    private TextView txtDepartureDateParcelDetails;
-    private TextView txtDepartureTimeParcelDetails;
-    private TextView txtArrivalDateParcelDetails;
-    private TextView txtArrivalTimeParcelDetails;
     private LinearLayout llFindParcelsMyParcel;
     private LinearLayout llParcelDetailsMain;
+    private ImageView imgSettingParcelDetailsSearch;
+    private LinearLayout llParcelSearchMain;
+    private LinearLayout llParcelSearchSub;
+    private TextView txtAddTripParcel;
     private MyTripsData myTripsData;
+    PopupMenu popup;
     private MatchingTripModel matchingTripModel = new MatchingTripModel();
 
     @Override
     protected void onCreatePost(Bundle savedInstanceState) {
-        setContentView(R.layout.parcel_details);
+        setContentView(R.layout.parcel_details_parcel_search);
         init();
         parcelDetailsData = (ParcelDetailsData) getIntent().getSerializableExtra("data");
         getParcelDetails(parcelDetailsData.id);
+    }
+
+    private void addMainView() {
+        llParcelSearchMain.removeAllViews();
+        llParcelSearchMain.addView(llParcelSearchSub);
     }
 
     private void setValues(ParcelDetailsData parcelDetailsData) {
@@ -81,12 +88,14 @@ public class ParcelDetailsSenderSearchActivity extends AbstractFragmentActivity 
         txtFromDateParcelDetails.setText(Util.getDateFromDateTimeFormat(parcelDetailsData.created));
         txtToDateParcelDetails.setText(Util.getDDMMYYYYFormat(parcelDetailsData.till_date, "yyyy-MM-dd"));
         txtParcelIdParcelDetails.setText(parcelDetailsData.ParcelID);
-        txtParcelWeightParcelDetails.setText(parcelDetailsData.weight);
+        txtParcelWeightParcelDetails.setText(parcelDetailsData.weight + " " + "KG");
         txtParcelTypeParcelDetails.setText(Util.getParcelType(parcelDetailsData.type));
     }
 
     private void init() {
         llParcelDetailsMain = (LinearLayout) findViewById(R.id.llParcelDetailsMain);
+        llParcelSearchMain = (LinearLayout) findViewById(R.id.llParcelSearchMain);
+        llParcelSearchSub = (LinearLayout) findViewById(R.id.llParcelSearchSub);
         txtFromShortParcelDetails = (TextView) findViewById(R.id.txtFromShortParcelDetails);
         txtToShortParcelDetails = (TextView) findViewById(R.id.txtToShortParcelDetails);
         txtFromLongParcelDetails = (TextView) findViewById(R.id.txtFromLongParcelDetails);
@@ -96,29 +105,44 @@ public class ParcelDetailsSenderSearchActivity extends AbstractFragmentActivity 
         txtParcelIdParcelDetails = (TextView) findViewById(R.id.txtParcelIdParcelDetails);
         txtParcelWeightParcelDetails = (TextView) findViewById(R.id.txtParcelWeightParcelDetails);
         txtParcelTypeParcelDetails = (TextView) findViewById(R.id.txtParcelTypeParcelDetails);
-        txtSelectorTransDetails = (TextView) findViewById(R.id.txtSelectorTransDetails);
-        txtSelectorReceiverDetails = (TextView) findViewById(R.id.txtSelectorReceiverDetails);
         llTranOrReceiverContainer = (LinearLayout) findViewById(R.id.llTranOrReceiverContainer);
-        txtSelectorTransDetails.setOnClickListener(this);
-        txtSelectorReceiverDetails.setOnClickListener(this);
+        imgSettingParcelDetailsSearch = (ImageView) findViewById(R.id.imgSettingParcelDetailsSearch);
+        txtAddTripParcel = (TextView) findViewById(R.id.txtAddTripParcel);
+        imgSettingParcelDetailsSearch.setOnClickListener(this);
+        txtAddTripParcel.setOnClickListener(this);
+        TransporterFilter.addFilterView(this, llParcelDetailsMain, this);
+        popup = new PopupMenu(this, imgSettingParcelDetailsSearch);
+        MenuInflater inflater = popup.getMenuInflater();
+        inflater.inflate(R.menu.parcel_add_my_trip, popup.getMenu());
     }
 
-
-    private void getParcelDetails(String parcelId) {
+    private void getParcelDetails(final String parcelId) {
         if (Util.isDeviceOnline()) {
             Util.showProDialog(this);
             matchingTripModel.getParcelDetails(parcelId);
         } else {
-            Util.showAlertDialog(null, getResources().getString(R.string.noInternetMsg));
+            llParcelSearchMain.addView(Util.getViewInternetNotFound(this, llParcelSearchMain, new TryAgainInterface() {
+                @Override
+                public void callBack() {
+                    addMainView();
+                    getParcelDetails(parcelId);
+                }
+            }));
         }
     }
 
-    private void getMyTripDetails(String tripId) {
+    private void getMyTripDetails(final String tripId) {
         if (Util.isDeviceOnline()) {
             Util.showProDialog(this);
             matchingTripModel.getMyTripDetails(tripId);
         } else {
-            Util.showAlertDialog(null, getResources().getString(R.string.noInternetMsg));
+            llParcelSearchMain.addView(Util.getViewInternetNotFound(this, llParcelSearchMain, new TryAgainInterface() {
+                @Override
+                public void callBack() {
+                    addMainView();
+                    getMyTripDetails(tripId);
+                }
+            }));
         }
     }
 
@@ -139,27 +163,20 @@ public class ParcelDetailsSenderSearchActivity extends AbstractFragmentActivity 
                     if (parcelDetailsDataMain.trip != null)
                         myTripsData = parcelDetailsDataMain.trip.get(0);
 
-                    if (Constants.ParcelPaymentDue.equals(parcelDetailsData.status))
-                        getMyTripDetails(parcelDetailsData.trans_id);
-                    addTransPorterView();
+                    if (parcelDetailsDataMain.tripsmatch != null) {
+                        parcelDetailsData.tripsmatch = parcelDetailsDataMain.tripsmatch;
+                    }
                     setValues(parcelDetailsData);
                 }
-            } else if (data != null && data instanceof MyTripsData) {
-                MyTripsData myTripsData = ((MyTripsData) data);
-                this.myTripsData = myTripsData.response.get(0);
-                getUserDetails(this.myTripsData.processed_by);
-                addTransPorterView();
-            } else if (data != null && data instanceof UserInfoData) {
-                UserInfoData userInfoData = (UserInfoData) data;
-                if ("success".equals(userInfoData.status)) {
-                    UserInfoData obj = userInfoData.response.get(0);
-                    myTripsData.transporteremail = obj.username;
-                    String transName = (obj.l_name != null) ? obj.name + " " + obj.l_name : obj.name;
-                    myTripsData.transportername = transName;
-                    addTransPorterView();
-                }
             } else if (data != null && data instanceof RetrofitError) {
-                Util.showOKSnakBar(llParcelDetailsMain, getResources().getString(R.string.pls_try_again));
+                Util.showSnakBar(llParcelDetailsMain, getResources().getString(R.string.pls_try_again));
+                llParcelSearchMain.addView(Util.getViewServerNotResponding(this, llParcelSearchMain, new TryAgainInterface() {
+                    @Override
+                    public void callBack() {
+                        startActivity(getIntent());
+                        finish();
+                    }
+                }));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -179,23 +196,73 @@ public class ParcelDetailsSenderSearchActivity extends AbstractFragmentActivity 
     public void onClick(View view) {
 
         int id = view.getId();
-        if (id == R.id.txtSelectorTransDetails) {
-            txtSelectorTransDetails.setTextColor(getResources().getColor(R.color.white));
-            txtSelectorReceiverDetails.setTextColor(getResources().getColor(R.color.colorPrimary));
-            txtSelectorTransDetails.setBackgroundResource(R.drawable.rect_left_corners_pink_bg);
-            txtSelectorReceiverDetails.setBackgroundResource(R.drawable.rect_right_corners_pink_border_grey_bg);
-            addTransPorterView();
-        } else if (id == R.id.txtSelectorReceiverDetails) {
-            txtSelectorTransDetails.setTextColor(getResources().getColor(R.color.colorPrimary));
-            txtSelectorReceiverDetails.setTextColor(getResources().getColor(R.color.white));
-            txtSelectorTransDetails.setBackgroundResource(R.drawable.rect_left_corners_pink_border_grey_bg);
-            txtSelectorReceiverDetails.setBackgroundResource(R.drawable.rect_right_corners_pink_bg);
-            initReceiverInfoParcelDetails(addViewInRelayout(R.layout.receiver_info_parcel_details));
-        } else if (id == R.id.llFindParcelsMyParcel) {
-            Intent intent = new Intent(this, MatchingTripListActivity.class);
-            Bundle bundle=new Bundle();
-            bundle.putSerializable("data", parcelDetailsData);
-            intent.putExtra("KEY_BUNDLE",bundle);
+        if (id == R.id.llFindParcelsMyParcel) {
+
+        } else if (id == R.id.imgSettingParcelDetailsSearch) {
+
+            popup.show();
+            popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    int id = item.getItemId();
+                    switch (id) {
+                        case R.id.action_my_trip:
+                            if (Config.getLoginStatus()) {
+                                sendToScreen();
+                            } else {
+                                Intent intent = new Intent(ParcelDetailsSenderSearchActivity.this, LoginActivity.class);
+                                startActivityForResult(intent, 502);
+                            }
+                            break;
+                    }
+                    return false;
+                }
+            });
+        } else if (id == R.id.txtAddTripParcel) {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivityForResult(intent, 503);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case (502): {
+                if (resultCode == Activity.RESULT_OK) {
+                    sendToScreen();
+                }
+                break;
+            }
+
+            case (503): {
+                if (resultCode == Activity.RESULT_OK) {
+                    Intent intent = new Intent(this, MainActivity.class);
+                    intent.putExtra(Constants.ADD_TRIP_KEY, new AddTripData());
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                }
+                break;
+            }
+        }
+    }
+
+    private void sendToScreen() {
+        ArrayList<MyTripsData> tripsmatch = new ArrayList<MyTripsData>();
+        for (MyTripsData myTripsData : parcelDetailsData.tripsmatch) {
+            if (myTripsData.t_id.equalsIgnoreCase(Config.getUserId())) {
+                tripsmatch.add(myTripsData);
+            }
+        }
+        parcelDetailsData.tripsmatch = tripsmatch;
+        if (parcelDetailsData.tripsmatch.size() > 0) {
+            Intent intent = new Intent(ParcelDetailsSenderSearchActivity.this, MyTripInParcelSearchActivity.class);
+            intent.putExtra("data", parcelDetailsData);
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.putExtra("KEY_PARCEL_DETAIL", parcelDetailsData);
             startActivity(intent);
         }
     }
@@ -219,38 +286,13 @@ public class ParcelDetailsSenderSearchActivity extends AbstractFragmentActivity 
         txtReceiverEmailParcelDetails.setText(parcelDetailsData.receiveremail);
     }
 
-    private void addTransPorterView() {
-
-        if (parcelDetailsData.status != null && (parcelDetailsData.status.equals(Constants.ParcelIdCreated) || parcelDetailsData.status.equals(Constants.ParcelRejectedByTr)))
-            initFindMatchingParcel(addViewInRelayout(R.layout.no_transformer_found));
-        else
-            initTransporterInfoParcelDetails(addViewInRelayout(R.layout.transporter_info_parcel_details));
-    }
-
-    private void initFindMatchingParcel(View view) {
-        llFindParcelsMyParcel = (LinearLayout) view.findViewById(R.id.llFindParcelsMyParcel);
-        llFindParcelsMyParcel.setOnClickListener(this);
-    }
-
-    private void initTransporterInfoParcelDetails(View view) {
-        txtTransporterNameParcelDetails = (TextView) view.findViewById(R.id.txtTransporterNameParcelDetails);
-        txtTransporterEmailParcelDetails = (TextView) view.findViewById(R.id.txtTransporterEmailParcelDetails);
-        txtFlightNumberParcelDetails = (TextView) view.findViewById(R.id.txtFlightNumberParcelDetails);
-        txtDepartureDateParcelDetails = (TextView) view.findViewById(R.id.txtDepartureDateParcelDetails);
-        txtDepartureTimeParcelDetails = (TextView) view.findViewById(R.id.txtDepartureTimeParcelDetails);
-        txtArrivalDateParcelDetails = (TextView) view.findViewById(R.id.txtArrivalDateParcelDetails);
-        txtArrivalTimeParcelDetails = (TextView) view.findViewById(R.id.txtArrivalTimeParcelDetails);
-        txtTransporterNameParcelDetails.setText(myTripsData.transportername);
-        txtTransporterEmailParcelDetails.setText(myTripsData.transporteremail);
-        txtFlightNumberParcelDetails.setText(myTripsData.flight_no);
-        txtDepartureDateParcelDetails.setText(Util.getDDMMYYYYFormat(myTripsData.dep_time, "yyyy-MM-dd HH:mm:ss"));
-        txtArrivalDateParcelDetails.setText(Util.getDDMMYYYYFormat(myTripsData.arrival_time, "yyyy-MM-dd HH:mm:ss"));
-        txtDepartureTimeParcelDetails.setText(Util.getTimeFromDateTimeFormat(myTripsData.dep_time));
-        txtArrivalTimeParcelDetails.setText(Util.getTimeFromDateTimeFormat(myTripsData.arrival_time));
-    }
 
     @Override
     public void filterData(FilterData filterData) {
 
+        Intent intent = new Intent();
+        intent.putExtra("FILTER_DATA", filterData);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 }

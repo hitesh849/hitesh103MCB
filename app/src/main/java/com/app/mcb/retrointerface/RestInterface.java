@@ -13,6 +13,7 @@ import com.app.mcb.dao.GenerateOrderData;
 import com.app.mcb.dao.MyTripDetailsData;
 import com.app.mcb.dao.MyTripsData;
 import com.app.mcb.dao.MyWalletData;
+import com.app.mcb.dao.OrderConfirmData;
 import com.app.mcb.dao.ParcelBookingChangeStatusData;
 import com.app.mcb.dao.ParcelDetailsData;
 import com.app.mcb.dao.ParcelListData;
@@ -117,7 +118,7 @@ public interface RestInterface {
 
     @Headers({"Content-Type:application/json"})
     @POST("/sendinvite")
-    public void sendInvitation(@Body HashMap<String, String> request, Callback<UserInfoData> cb);
+    public void sendInvitation(@Body HashMap<String, String> request, Callback<SearchReceiverData> cb);
 
     @Headers({"Content-Type:application/json"})
     @POST("/searchuser")
@@ -129,7 +130,7 @@ public interface RestInterface {
 
     @Headers({"Content-Type:application/json"})
     @POST("/usrupdateParceltatus")
-    public void cancelParcel(@Body HashMap<String, Object> request, Callback<JsonElement> cb);
+    public void cancelParcel(@Body HashMap<String, Object> request, Callback<ParcelBookingChangeStatusData> cb);
 
     @Headers({"Content-Type:application/json"})
     @POST("/usrupdatetripstatus")
@@ -149,13 +150,18 @@ public interface RestInterface {
     public void withDrawStatusList(@Path("userId") String userId, Callback<WithDrawData> cb);
 
     @Headers({"Content-Type:application/json"})
+    @POST("/createpaymentrequest")
+    public void createPaymentRequest(@Body HashMap<String, String> request, Callback<CommonResponseData> cb);
+
+    @Headers({"Content-Type:application/json"})
     @POST("/addtrip")
-    public void addTrip(@Body HashMap<String,String> request, Callback<AddTripData> cb);
+    public void addTrip(@Body HashMap<String, String> request, Callback<AddTripData> cb);
 
 
     @Headers({"Content-Type:application/json"})
     @POST("/updatetrip")
     public void updateTrip(@Body HashMap<String, String> request, Callback<AddTrip> cb);
+
 
     @Headers({"Content-Type:application/json"})
     @GET("/gettransporterdetail/{tripId}")
@@ -179,11 +185,16 @@ public interface RestInterface {
     public void usrUpdateTripStatus(@Body HashMap<String, Object> request, Callback<ParcelBookingChangeStatusData> cb);
 
     @Headers({"Content-Type:application/json"})
+    @POST("//usrupdateParceltatus")
+    public void usrUpdateParcelStatus(@Body HashMap<String, Object> request, Callback<ParcelBookingChangeStatusData> cb);
+
+    @Headers({"Content-Type:application/json"})
     @POST("/generateordernumber")
     public void generateOrder(@Body HashMap<String, Object> request, Callback<GenerateOrderData> cb);
 
     @Headers({"Content-Type:application/json"})
     @POST("/payordernumber")
-    public void orderConfirm(@Body HashMap<String, Object> request, Callback<JsonElement> cb);
+    public void orderConfirm(@Body HashMap<String, Object> request, Callback<OrderConfirmData> cb);
 
+    //rating
 }

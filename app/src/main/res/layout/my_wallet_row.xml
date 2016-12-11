@@ -3,8 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingTop="@dimen/dim_12"
->
+    android:paddingTop="@dimen/dim_12">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,8 +26,8 @@
             android:layout_height="match_parent"
             android:background="@color/white"
             android:orientation="vertical"
-            android:paddingTop="@dimen/dim_12"
-            android:paddingBottom="@dimen/dim_12">
+            android:paddingBottom="@dimen/dim_12"
+            android:paddingTop="@dimen/dim_12">
 
 
             <LinearLayout
@@ -42,47 +41,37 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="horizontal">
 
-
-                    <TextView
-                        style="@style/text_semi_medium"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/trip_id" />
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/text_semi_medium"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/trip_id" />
 
 
-                    <TextView
-                        android:id="@+id/txtTripIdMyWalletRow"
-                        style="@style/text_large"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="T1115" />
+                        <TextView
+                            android:id="@+id/txtTripIdMyWalletRow"
+                            style="@style/text_large"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
 
 
-                </LinearLayout>
+                    </LinearLayout>
 
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/text_semi_medium"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/parcel_id" />
-
-                    <TextView
-                        android:id="@+id/txtParcelIdMyWalletRow"
-                        style="@style/text_large"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="P1115" />
-
+                    <ImageView
+                        android:id="@+id/imgTripIdDetailMyWalletRow"
+                        android:layout_width="@dimen/dim_22"
+                        android:layout_height="@dimen/dim_22"
+                        android:layout_gravity="bottom"
+                        android:layout_marginLeft="@dimen/dim_6"
+                        android:src="@mipmap/eye" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -90,21 +79,75 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="horizontal">
 
-                    <TextView
-                        style="@style/text_semi_medium"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/withdraw" />
+                        android:gravity="center"
+                        android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/txtWithDrawMyWalletRow"
-                        style="@style/text_large"
+                        <TextView
+                            style="@style/text_semi_medium"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="@string/parcel_id" />
+
+
+                        <TextView
+                            android:id="@+id/txtParcelIdMyWalletRow"
+                            style="@style/text_large"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
+
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/imgParcelIdDetailMyWalletRow"
+                        android:layout_width="@dimen/dim_22"
+                        android:layout_height="@dimen/dim_22"
+                        android:layout_gravity="bottom"
+                        android:layout_marginLeft="@dimen/dim_6"
+                        android:src="@mipmap/eye" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="W5521" />
+                        android:gravity="center"
+                        android:orientation="vertical">
 
+                        <TextView
+                            style="@style/text_semi_medium"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/withdraw" />
+
+                        <TextView
+                            android:id="@+id/txtWithDrawMyWalletRow"
+                            style="@style/text_large"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/imgWithDrawMyDetailWalletRow"
+                        android:layout_width="@dimen/dim_22"
+                        android:layout_height="@dimen/dim_22"
+                        android:layout_gravity="bottom"
+                        android:layout_marginLeft="@dimen/dim_6"
+                        android:src="@mipmap/eye" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -116,91 +159,84 @@
                 android:orientation="horizontal"
                 android:weightSum="3">
 
+
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:orientation="vertical">
-
-
-                    <TextView
-                        style="@style/text_semi_medium"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/earned_amt" />
-
+                    android:orientation="horizontal">
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
 
                         <TextView
-                            style="@style/text_large"
+                            style="@style/text_semi_medium"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="&#x20B9;"
-                            android:textColor="@color/colorPrimary"
-                            android:visibility="gone"
-                            android:textStyle="bold" />
+                            android:text="@string/earned_amt" />
+
 
                         <TextView
                             android:id="@+id/txtEarnedAmtWalletRow"
                             style="@style/text_large"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/dim_4"
-                            android:text="1900.00"
                             android:textColor="@color/colorPrimary"
                             android:textStyle="bold" />
+
                     </LinearLayout>
 
-
+                    <ImageView
+                        android:layout_width="@dimen/dim_18"
+                        android:layout_height="@dimen/dim_18"
+                        android:layout_gravity="bottom"
+                        android:layout_marginLeft="@dimen/dim_6"
+                        android:src="@mipmap/eye"
+                        android:visibility="invisible" />
                 </LinearLayout>
-
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/text_semi_medium"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/used_amt" />
-
+                    android:orientation="horizontal">
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center">
+                        android:gravity="center"
+                        android:orientation="vertical">
 
                         <TextView
-                            style="@style/text_large"
+                            style="@style/text_semi_medium"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="&#x20B9;"
-                            android:textColor="@color/colorPrimary"
-                            android:visibility="gone"
-                            android:textStyle="bold" />
+                            android:text="@string/used_amt" />
 
                         <TextView
                             android:id="@+id/txtUsedAmtWalletRow"
                             style="@style/text_large"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/dim_4"
                             android:text="-"
                             android:textColor="@color/colorPrimary"
                             android:textStyle="bold" />
+
+
                     </LinearLayout>
 
+                    <ImageView
+                        android:layout_width="@dimen/dim_18"
+                        android:layout_height="@dimen/dim_18"
+                        android:layout_gravity="bottom"
+                        android:layout_marginLeft="@dimen/dim_6"
+                        android:src="@mipmap/eye"
+                        android:visibility="invisible" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -208,27 +244,39 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="horizontal">
 
-                    <TextView
-                        style="@style/text_semi_medium"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/status_small" />
-                    <TextView
-                        android:id="@+id/txtStatusWalletRow"
-                        style="@style/text_medium"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/dim_4"
-                        android:text="300.00"
                         android:gravity="center"
+                        android:orientation="vertical">
 
-                        android:textColor="@color/colorPrimary"
-                        android:textStyle="bold" />
+                        <TextView
+                            style="@style/text_semi_medium"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/status_small" />
 
 
+                        <TextView
+                            android:id="@+id/txtStatusWalletRow"
+                            style="@style/text_medium"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="@dimen/dim_22"
+                        android:layout_height="@dimen/dim_22"
+                        android:layout_gravity="bottom"
+                        android:layout_marginLeft="@dimen/dim_6"
+                        android:src="@mipmap/eye"
+                        android:visibility="invisible" />
                 </LinearLayout>
+
             </LinearLayout>
         </LinearLayout>
 

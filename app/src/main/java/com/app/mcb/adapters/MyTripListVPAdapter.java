@@ -80,7 +80,7 @@ public class MyTripListVPAdapter extends PagerAdapter {
                 llFindParcelsMyTripList.setVisibility(View.GONE);
                 break;
             case Constants.TripComplete:
-                llFindParcelsMyTripList.setVisibility(View.GONE);
+                llFindBookedParcel.setVisibility(View.GONE);
                 break;
             case Constants.TripDelivered:
                 llFindParcelsMyTripList.setVisibility(View.GONE);

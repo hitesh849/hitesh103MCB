@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/bubble_layout_parent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+
+
+    <LinearLayout
+        android:id="@+id/llCharViewRight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bubble2"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtRightMsgChat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:maxEms="12"
+                android:layout_margin="@dimen/dim_6"
+                android:textColor="@android:color/primary_text_light" />
+
+            <TextView
+                android:id="@+id/txtDateTimeRight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/dim_8"
+                android:layout_marginRight="@dimen/dim_8"
+                android:textSize="@dimen/text_dim_8"
+                android:gravity="left"
+                android:textColor="@android:color/primary_text_light" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

@@ -136,6 +136,7 @@ public class DatabaseMgr {
             contentValues.put(AirportData.FLD_ZONE, airportData.zone);
             contentValues.put(AirportData.FLD_STATUS, airportData.status);
             contentValues.put(AirportData.FLD_CREATED, airportData.created);
+            contentValues.put(AirportData.FLD_City, airportData.city);
             contentValues.put(AirportData.FLD_ZONELIST_ID, airportData.zonelistid);
             contentValues.put(AirportData.FLD_ZONE_NAME, airportData.Zonename);
         } catch (Exception e) {
@@ -159,6 +160,32 @@ public class DatabaseMgr {
                     airportData.status = cursor.getString(cursor.getColumnIndex(AirportData.FLD_STATUS));
                     airportData.created = cursor.getString(cursor.getColumnIndex(AirportData.FLD_CREATED));
                     airportData.zonelistid = cursor.getString(cursor.getColumnIndex(AirportData.FLD_ZONELIST_ID));
+                    airportData.city = cursor.getString(cursor.getColumnIndex(AirportData.FLD_City));
+                    airportData.Zonename = cursor.getString(cursor.getColumnIndex(AirportData.FLD_ZONE_NAME));
+                    airportDatas.add(airportData);
+                    cursor.moveToNext();
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return airportDatas;
+    }public ArrayList<AirportData> getCityAirportList(String city) {
+        ArrayList<AirportData> airportDatas = new ArrayList<AirportData>();
+        try {
+            Cursor cursor = sqLiteDb.query(AirportData.TABLE_NAME, null, AirportData.FLD_City + " = ?", new String[] { city }, null, null, null, null);
+            if (cursor != null && cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                while (!cursor.isAfterLast()) {
+                    AirportData airportData = new AirportData();
+                    airportData.id = cursor.getString(cursor.getColumnIndex(AirportData.FLD_AIRPORT_ID));
+                    airportData.location = cursor.getString(cursor.getColumnIndex(AirportData.FLD_LOCATION));
+                    airportData.zone = cursor.getString(cursor.getColumnIndex(AirportData.FLD_ZONE));
+                    airportData.status = cursor.getString(cursor.getColumnIndex(AirportData.FLD_STATUS));
+                    airportData.created = cursor.getString(cursor.getColumnIndex(AirportData.FLD_CREATED));
+                    airportData.zonelistid = cursor.getString(cursor.getColumnIndex(AirportData.FLD_ZONELIST_ID));
+                    airportData.city = cursor.getString(cursor.getColumnIndex(AirportData.FLD_City));
                     airportData.Zonename = cursor.getString(cursor.getColumnIndex(AirportData.FLD_ZONE_NAME));
                     airportDatas.add(airportData);
                     cursor.moveToNext();

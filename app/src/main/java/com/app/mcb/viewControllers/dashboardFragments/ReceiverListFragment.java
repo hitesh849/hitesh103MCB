@@ -5,31 +5,43 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.PopupMenu;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.app.mcb.MainActivity;
 import com.app.mcb.R;
 import com.app.mcb.Utility.Constants;
 import com.app.mcb.Utility.Util;
+import com.app.mcb.adapters.MyTripListVPAdapter;
 import com.app.mcb.adapters.ParcelsListVPAdapter;
 import com.app.mcb.adapters.ReceiverListAdapter;
+import com.app.mcb.dao.FilterData;
+import com.app.mcb.dao.MyTripsData;
 import com.app.mcb.dao.ParcelBookingChangeStatusData;
 import com.app.mcb.dao.ParcelDetailsData;
 import com.app.mcb.dao.ParcelListData;
 import com.app.mcb.dao.ReceiverData;
+import com.app.mcb.filters.CommonListener;
+import com.app.mcb.filters.ParcelFilter;
+import com.app.mcb.filters.ParcelFilterListener;
+import com.app.mcb.filters.TransporterFilter;
 import com.app.mcb.model.ReceiverModel;
+import com.app.mcb.retrointerface.TryAgainInterface;
 import com.app.mcb.viewControllers.sender.ParcelDetailsFragment;
 import com.app.mcb.viewControllers.sender.ParcelPayNowActivity;
 
 import org.byteclues.lib.model.BasicModel;
 import org.byteclues.lib.view.AbstractFragment;
 
+import java.util.ArrayList;
 import java.util.Observable;
 
 import retrofit.RetrofitError;
@@ -37,12 +49,13 @@ import retrofit.RetrofitError;
 /**
  * Created by Hitesh kumawat on 19-09-2016.
  */
-public class ReceiverListFragment extends AbstractFragment implements View.OnClickListener {
+public class ReceiverListFragment extends AbstractFragment implements View.OnClickListener, ParcelFilterListener {
 
     private ViewPager vpReceiverList;
     private LinearLayout llCountDotsMain;
-    private LinearLayout llReceiverListMain;
+    private RelativeLayout rlReceiverListMain;
     private ReceiverModel receiverModel = new ReceiverModel();
+    private ArrayList<ReceiverData> receiverListMain;
 
     @Override
     protected View onCreateViewPost(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -53,10 +66,10 @@ public class ReceiverListFragment extends AbstractFragment implements View.OnCli
     }
 
     private void init(View view) {
-        llReceiverListMain = (LinearLayout) view.findViewById(R.id.llReceiverListMain);
+        ParcelFilter.addFilterView(getActivity(), view, this);
+        rlReceiverListMain = (RelativeLayout) view.findViewById(R.id.rlReceiverListMain);
         vpReceiverList = (ViewPager) view.findViewById(R.id.vpReceiverList);
         llCountDotsMain = (LinearLayout) view.findViewById(R.id.llCountDotsMain);
-
         drawPageSelectionIndicators(0);
         ((MainActivity) getActivity()).setHeader(getResources().getString(R.string.receiver_details));
         viewPagerChangeListener();
@@ -93,7 +106,8 @@ public class ReceiverListFragment extends AbstractFragment implements View.OnCli
         int id = view.getId();
         /*if (id == R.id.imgViewParcelListRow) {
             Util.replaceFragment(getActivity(), R.id.fmContainerSenderHomeMain, new ParcelDetailsFragment());
-        }*/  if (id == R.id.imgSettingReceiverSide) {
+        }*/
+        if (id == R.id.imgSettingReceiverSide) {
 
             final ReceiverData receiverData = ((ReceiverData) view.getTag());
             PopupMenu popup = new PopupMenu(getActivity(), view);
@@ -125,13 +139,25 @@ public class ReceiverListFragment extends AbstractFragment implements View.OnCli
         }
     }
 
-    private void usrUpdateTripStatus(ReceiverData parcelDetailsData) {
+    private void addMainView() {
+        rlReceiverListMain.removeAllViews();
+        rlReceiverListMain.addView(vpReceiverList);
+        rlReceiverListMain.addView(llCountDotsMain);
+    }
+
+    private void usrUpdateTripStatus(final ReceiverData parcelDetailsData) {
         try {
             if (Util.isDeviceOnline()) {
                 Util.showProDialog(getActivity());
                 receiverModel.usrUpdateTripStatus(parcelDetailsData, Constants.ParcelDeliveryComplete, "Add Comment");
             } else {
-                Util.showAlertDialog(null, getResources().getString(R.string.noInternetMsg));
+                rlReceiverListMain.addView(Util.getViewInternetNotFound(getActivity(), rlReceiverListMain, new TryAgainInterface() {
+                    @Override
+                    public void callBack() {
+                        addMainView();
+                        usrUpdateTripStatus(parcelDetailsData);
+                    }
+                }));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -181,7 +207,13 @@ public class ReceiverListFragment extends AbstractFragment implements View.OnCli
                 Util.showProDialog(getActivity());
                 receiverModel.getReceiverData();
             } else {
-                Util.showAlertDialog(null, getResources().getString(R.string.noInternetMsg));
+                rlReceiverListMain.addView(Util.getViewInternetNotFound(getActivity(), rlReceiverListMain, new TryAgainInterface() {
+                    @Override
+                    public void callBack() {
+                        addMainView();
+                        getReceiverData();
+                    }
+                }));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -196,22 +228,76 @@ public class ReceiverListFragment extends AbstractFragment implements View.OnCli
                 ReceiverData receiverData = (ReceiverData) data;
                 if ("success".equals(receiverData.status)) {
                     if (receiverData.response != null) {
+                        receiverListMain = receiverData.response;
                         vpReceiverList.setAdapter(new ReceiverListAdapter(getActivity(), receiverData.response, this));
+
+                        if (receiverData.response.size() <= 0) {
+                            rlReceiverListMain.addView(Util.getViewDataNotFound(getActivity(), rlReceiverListMain, getString(R.string.parcel_unavailable)));
+                        }
                     }
                 } else if (receiverData.status.equals("Error")) {
-                    Util.showOKSnakBar(llCountDotsMain, receiverData.errorMessage);
+                    rlReceiverListMain.addView(Util.getViewDataNotFound(getActivity(), rlReceiverListMain, receiverData.errorMessage));
                 }
             } else if (data != null && data instanceof ParcelBookingChangeStatusData) {
                 ParcelBookingChangeStatusData parcelBookingRejectedData = ((ParcelBookingChangeStatusData) data);
                 if ("success".equals(parcelBookingRejectedData.status))
                     getReceiverData();
                 else
-                    Util.showOKSnakBar(llCountDotsMain, parcelBookingRejectedData.errorMessage);
+                    rlReceiverListMain.addView(Util.getViewDataNotFound(getActivity(), rlReceiverListMain, parcelBookingRejectedData.errorMessage));
             } else if (data != null && data instanceof RetrofitError) {
-                Util.showOKSnakBar(llReceiverListMain, getResources().getString(R.string.pls_try_again));
+                rlReceiverListMain.addView(Util.getViewServerNotResponding(getActivity(), rlReceiverListMain, new TryAgainInterface() {
+                    @Override
+                    public void callBack() {
+                        addMainView();
+                    }
+                }));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
+        }
+    }
+
+    @Override
+    public void filterData(FilterData filterData) {
+        ArrayList<ReceiverData> filterList = new ArrayList<ReceiverData>();
+        addMainView();
+        if (!TextUtils.isEmpty(filterData.parcelId)) {
+            ArrayList<ReceiverData> filterList1 = new ArrayList<ReceiverData>();
+            for (ReceiverData myTripsData : receiverListMain) {
+                if (myTripsData.id.equalsIgnoreCase(filterData.tripId)) {
+                    filterList1.add(myTripsData);
+                }
+            }
+            filterList.clear();
+            filterList.addAll(filterList1);
+        } else {
+            filterList.addAll(receiverListMain);
+        }
+        if (!TextUtils.isEmpty(filterData.tillDate)) {
+            ArrayList<ReceiverData> filterList1 = new ArrayList<ReceiverData>();
+            for (ReceiverData myTripsData : filterList) {
+                if (Util.getDateFromDateTimeFormat(myTripsData.dep_time).equalsIgnoreCase(filterData.departure_date)) {
+                    filterList1.add(myTripsData);
+                }
+            }
+            filterList.clear();
+            filterList.addAll(filterList1);
+        }
+
+        if (!TextUtils.isEmpty(filterData.parcelStatus)) {
+            ArrayList<ReceiverData> filterList1 = new ArrayList<ReceiverData>();
+            for (ReceiverData receiverData : filterList) {
+                if (receiverData.status.equalsIgnoreCase(filterData.tripStatus)) {
+                    filterList1.add(receiverData);
+                }
+            }
+            filterList.clear();
+            filterList.addAll(filterList1);
+        }
+
+        vpReceiverList.setAdapter(new ReceiverListAdapter(getActivity(), filterList, this));
+        if (filterList.size() <= 0) {
+            rlReceiverListMain.addView(Util.getViewDataNotFound(getActivity(), rlReceiverListMain, getString(R.string.parcel_unavailable)));
         }
     }
 }

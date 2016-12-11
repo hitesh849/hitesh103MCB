@@ -2,8 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,7 +23,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="1.2"
                 android:orientation="vertical">
 
 
@@ -39,7 +38,7 @@
                     style="@style/text_large"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="P11786" />
+                   />
 
 
             </LinearLayout>
@@ -61,12 +60,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
-                <TextView
-                    android:id="@+id/txtWeight1TD"
-                    style="@style/text_large"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="10" />
+
+                    <TextView
+                        android:id="@+id/txtWeight1TD"
+                        style="@style/text_large"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                         />
+
                     <TextView
                         android:id="@+id/txtWeightUnit1TD"
                         style="@style/text_semi_medium"
@@ -124,7 +125,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="1.2"
                 android:orientation="vertical">
 
 
@@ -144,7 +145,7 @@
                         style="@style/text_large"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="JPR" />
+                       />
 
                     <TextView
                         android:id="@+id/txtFromLong1TD"
@@ -152,7 +153,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dim_4"
-                        android:text="(Jaipur)" />
+                       />
                 </LinearLayout>
 
             </LinearLayout>
@@ -161,7 +162,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="1.2"
                 android:orientation="vertical">
 
                 <TextView
@@ -180,7 +181,7 @@
                         style="@style/text_large"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="DEL" />
+                         />
 
                     <TextView
                         android:id="@+id/txtToLong1TD"
@@ -188,7 +189,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dim_4"
-                        android:text="(New Delhi)" />
+                     />
                 </LinearLayout>
 
             </LinearLayout>
@@ -206,7 +207,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="1.2"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -226,7 +227,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dim_4"
-                        android:text="17 July, 2016" />
+                         />
                 </LinearLayout>
 
             </LinearLayout>
@@ -235,7 +236,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="1.2"
                 android:orientation="vertical">
 
 
@@ -256,7 +257,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dim_4"
-                        android:text="18 July, 2016" />
+                        />
                 </LinearLayout>
 
             </LinearLayout>
@@ -275,7 +276,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="1.2"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -295,7 +296,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dim_4"
-                        android:text="9:30 AM" />
+                        />
                 </LinearLayout>
 
             </LinearLayout>
@@ -304,7 +305,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="1.2"
                 android:orientation="vertical">
 
 
@@ -325,7 +326,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dim_4"
-                        android:text="12:30 PM" />
+                        />
                 </LinearLayout>
 
             </LinearLayout>
@@ -354,7 +355,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="1.2"
                 android:orientation="vertical">
 
 
@@ -369,7 +370,7 @@
                     style="@style/text_large"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="P11786" />
+                     />
 
 
             </LinearLayout>
@@ -391,12 +392,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
+
                     <TextView
                         android:id="@+id/txtWeight2TD"
                         style="@style/text_large"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="10" />
+                  />
+
                     <TextView
                         android:id="@+id/txtWeightUnit2TD"
                         style="@style/text_semi_medium"
@@ -455,7 +458,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="1.2"
                 android:orientation="vertical">
 
 
@@ -475,7 +478,7 @@
                         style="@style/text_large"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="JPR" />
+                      />
 
                     <TextView
                         android:id="@+id/txtFromLong2TD"
@@ -483,7 +486,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dim_4"
-                        android:text="(Jaipur)" />
+                       />
                 </LinearLayout>
 
             </LinearLayout>
@@ -492,7 +495,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="1.2"
                 android:orientation="vertical">
 
                 <TextView
@@ -511,7 +514,7 @@
                         style="@style/text_large"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="DEL" />
+                        />
 
                     <TextView
                         android:id="@+id/txtToLong2TD"
@@ -519,7 +522,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dim_4"
-                        android:text="(New Delhi)" />
+                        />
                 </LinearLayout>
 
             </LinearLayout>
@@ -537,7 +540,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="1.2"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -557,7 +560,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dim_4"
-                        android:text="17 July, 2016" />
+                       />
                 </LinearLayout>
 
             </LinearLayout>
@@ -566,7 +569,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="1.2"
                 android:orientation="vertical">
 
 
@@ -587,7 +590,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dim_4"
-                        android:text="18 July, 2016" />
+                       />
                 </LinearLayout>
 
             </LinearLayout>
@@ -605,7 +608,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="1.2"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -625,7 +628,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dim_4"
-                        android:text="9:30 AM" />
+                         />
                 </LinearLayout>
 
             </LinearLayout>
@@ -634,7 +637,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="1.2"
                 android:orientation="vertical">
 
 
@@ -655,7 +658,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dim_4"
-                        android:text="12:30 PM" />
+                   />
                 </LinearLayout>
 
             </LinearLayout>

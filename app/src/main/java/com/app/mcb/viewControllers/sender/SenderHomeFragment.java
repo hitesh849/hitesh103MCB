@@ -37,6 +37,8 @@ public class SenderHomeFragment extends AbstractFragment implements View.OnClick
         init(view);
         Bundle bundle = getArguments();
         AbstractFragment abstractFragment = new ParcelsListFragment();
+
+
         if (bundle != null) {
             abstractFragment = new AddParcelFragment();
             abstractFragment.setArguments(bundle);

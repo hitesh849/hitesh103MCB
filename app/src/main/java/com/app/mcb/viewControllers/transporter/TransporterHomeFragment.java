@@ -32,6 +32,7 @@ public class TransporterHomeFragment extends AbstractFragment implements View.On
     protected View onCreateViewPost(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.transporter_home_screen, container, false);
         init(view);
+
         return view;
     }
 
@@ -42,7 +43,19 @@ public class TransporterHomeFragment extends AbstractFragment implements View.On
         llActiveTripTransporterHome.setOnClickListener(this);
         llAddTripTransporterHome.setOnClickListener(this);
         llCancelledTripTransporterHome.setOnClickListener(this);
-        onClick(llActiveTripTransporterHome);
+
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            AbstractFragment abstractFragment = new AddTripFragment();
+            abstractFragment.setArguments(bundle);
+            backgroundChange(llAddTripTransporterHome);
+            Util.addFragment(getActivity(), R.id.fmContainerTransporterHomeMain, abstractFragment);
+        }
+        else
+        {
+            onClick(llActiveTripTransporterHome);
+        }
+
     }
 
     @Override
@@ -59,7 +72,7 @@ public class TransporterHomeFragment extends AbstractFragment implements View.On
     public void onClick(View view) {
         int id = view.getId();
         if (id == R.id.llActiveTripTransporterHome) {
-            Util.replaceFragment(getActivity(), R.id.fmContainerTransporterHomeMain, new MyTripList());
+            Util.replaceFragment(getActivity(), R.id.fmContainerTransporterHomeMain, new MyTripListFragment());
             backgroundChange(llActiveTripTransporterHome);
         } else if (id == R.id.llAddTripTransporterHome) {
             Util.replaceFragment(getActivity(), R.id.fmContainerTransporterHomeMain, new AddTripFragment());

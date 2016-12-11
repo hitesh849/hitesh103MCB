@@ -1,9 +1,12 @@
 package com.app.mcb.viewControllers.sender;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,7 +75,6 @@ public class ParcelDetailsFragment extends AbstractFragment implements View.OnCl
         if (bundle != null) {
             parcelDetailsData = (ParcelDetailsData) bundle.getSerializable("data");
         }
-
         getParcelDetails(parcelDetailsData.id);
         return view;
     }
@@ -85,7 +87,7 @@ public class ParcelDetailsFragment extends AbstractFragment implements View.OnCl
         txtFromDateParcelDetails.setText(Util.getDateFromDateTimeFormat(parcelDetailsData.created));
         txtToDateParcelDetails.setText(Util.getDDMMYYYYFormat(parcelDetailsData.till_date, "yyyy-MM-dd"));
         txtParcelIdParcelDetails.setText(parcelDetailsData.ParcelID);
-        txtParcelWeightParcelDetails.setText(parcelDetailsData.weight);
+        txtParcelWeightParcelDetails.setText(parcelDetailsData.weight + " " + "KG");
         txtParcelTypeParcelDetails.setText(Util.getParcelType(parcelDetailsData.type));
     }
 
@@ -146,7 +148,8 @@ public class ParcelDetailsFragment extends AbstractFragment implements View.OnCl
 
                     if (Constants.ParcelPaymentDue.equals(parcelDetailsData.status))
                         getMyTripDetails(parcelDetailsData.trans_id);
-                    addTransPorterView();
+
+                        addTransPorterView();
                     setValues(parcelDetailsData);
                 }
             } else if (data != null && data instanceof MyTripsData) {
@@ -216,9 +219,9 @@ public class ParcelDetailsFragment extends AbstractFragment implements View.OnCl
         txtReceiverMobileParcelDetails = (TextView) view.findViewById(R.id.txtReceiverMobileParcelDetails);
         txtReceiverNameParcelDetails = (TextView) view.findViewById(R.id.txtReceiverNameParcelDetails);
         txtReceiverEmailParcelDetails = (TextView) view.findViewById(R.id.txtReceiverEmailParcelDetails);
-        txtReceiverIdParcelDetails.setText(parcelDetailsData.MCBreceiverID);
-        txtReceiverMobileParcelDetails.setText(parcelDetailsData.recv_mobile);
-        txtReceiverNameParcelDetails.setText(parcelDetailsData.recv_name);
+        txtReceiverIdParcelDetails.setText(Constants.BEGIN_WITH_USER_ID + " " + parcelDetailsData.recv_id);
+        txtReceiverMobileParcelDetails.setText(parcelDetailsData.receivermobile);
+        txtReceiverNameParcelDetails.setText(parcelDetailsData.receivername);
         txtReceiverEmailParcelDetails.setText(parcelDetailsData.receiveremail);
     }
 

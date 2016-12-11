@@ -18,5 +18,6 @@ public class GenerateOrderData implements Serializable
     public String Paymentvia;
     public String PaymentTransaction;
     public String Txnid;
+    public String payUMoneyId;
     public ArrayList<GenerateOrderData> response;
 }

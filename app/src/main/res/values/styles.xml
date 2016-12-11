@@ -123,5 +123,8 @@
         <item name="android:background">@null</item>
     </style>
 
-
+    <style name="AlertDialogTheme" parent="android:Theme.Dialog">
+        <item name="android:textSize">@dimen/dim_12</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 </resources>

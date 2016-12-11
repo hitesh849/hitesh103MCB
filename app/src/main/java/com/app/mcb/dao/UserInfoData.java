@@ -44,6 +44,8 @@ public class UserInfoData implements Serializable
     public String errorMessage;
     public String message;
     public String userType;
+    public String pinCode;
+    public String image;
     public ArrayList<UserInfoData> response;
 
 }

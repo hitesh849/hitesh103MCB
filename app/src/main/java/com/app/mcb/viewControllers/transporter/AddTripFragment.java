@@ -1,5 +1,6 @@
 package com.app.mcb.viewControllers.transporter;
 
+import android.animation.ObjectAnimator;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
@@ -13,10 +14,13 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
@@ -33,10 +37,16 @@ import com.app.mcb.dao.AddTrip;
 import com.app.mcb.dao.AddTripData;
 import com.app.mcb.dao.AirportData;
 import com.app.mcb.dao.CommonResponseData;
+import com.app.mcb.dao.FilterData;
 import com.app.mcb.dao.MyTripsData;
+import com.app.mcb.dao.ParcelDetailsData;
 import com.app.mcb.dao.TripData;
 import com.app.mcb.database.DatabaseMgr;
+import com.app.mcb.filters.CommonListener;
+import com.app.mcb.filters.TransporterFilter;
 import com.app.mcb.model.AddTripModel;
+import com.app.mcb.retrointerface.TryAgainInterface;
+import com.app.mcb.viewControllers.FindASenderActivity;
 import com.app.mcb.viewControllers.dashboardFragments.DashBoardFragment;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
@@ -49,14 +59,20 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Observable;
 
+import rebus.permissionutils.AskagainCallback;
+import rebus.permissionutils.FullCallback;
+import rebus.permissionutils.PermissionEnum;
+import rebus.permissionutils.PermissionManager;
+import rebus.permissionutils.PermissionUtils;
 import retrofit.RetrofitError;
 
 /**
  * Created by Hitesh kumawat on 19-09-2016.
  */
-public class AddTripFragment extends AbstractFragment implements View.OnClickListener {
+public class AddTripFragment extends AbstractFragment implements View.OnClickListener, CommonListener, FullCallback {
 
     private AddTripModel addTripModel = new AddTripModel();
     private AutoCompleteTextView txtAutoCompleteSource;
@@ -77,27 +93,38 @@ public class AddTripFragment extends AbstractFragment implements View.OnClickLis
     private EditText etxtCapacity;
     private EditText etxtComment;
     private LinearLayout llAddTripMain;
+    private LinearLayout llAddTripSubMain;
     private ArrayList<AirportData> airportList;
     private TripData tripData = new TripData();
     private MyTripsData myTripsData;
+    private ParcelDetailsData parcelDetailsData;
     private String TripMode;
     private Dialog attachmentDialog;
     private Uri captured_image_uri;
+    private Bundle bundle;
 
     @Override
     protected View onCreateViewPost(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.add_trip_fragment, container, false);
         init(view);
-
-        Bundle bundle = getArguments();
+        bundle = getArguments();
         if (bundle != null) {
             myTripsData = (MyTripsData) bundle.getSerializable("tripData");
+            parcelDetailsData = (ParcelDetailsData) bundle.getSerializable("KEY_PARCEL_DETAIL");
             if (myTripsData != null) {
                 TripMode = "edit";
                 setValuesInEditMode();
+            } else if (parcelDetailsData != null) {
+                setParcelValueInForm();
             }
         }
+
         return view;
+    }
+
+    private void addView() {
+        llAddTripMain.removeAllViews();
+        llAddTripMain.addView(llAddTripSubMain);
     }
 
     private void setValuesInEditMode() {
@@ -118,11 +145,23 @@ public class AddTripFragment extends AbstractFragment implements View.OnClickLis
         txtDateArrival.setTag(myTripsData.arrival_time.split(" ")[0]);
         txtTimeArrival.setTag(myTripsData.arrival_time.split(" ")[1]);
         txtAddButton.setText(getString(R.string.update));
+        ((MainActivity) getActivity()).setHeader(getResources().getString(R.string.update_trip));
+
+    }
+
+    private void setParcelValueInForm() {
+        txtAutoCompleteSource.setText(parcelDetailsData.source);
+        txtAutoCompleteDestination.setText(parcelDetailsData.destination);
+        etxtCapacity.setText(parcelDetailsData.weight+ " " + "KG");
+        txtDateArrival.setText(Util.getDDMMYYYYFormat(parcelDetailsData.till_date, "yyyy-MM-dd HH:mm:ss"));
+        txtDateArrival.setTag(parcelDetailsData.till_date.split(" ")[0]);
     }
 
     private void init(View view) {
         ((MainActivity) getActivity()).setHeader(getResources().getString(R.string.add_trip));
         llAddTripMain = (LinearLayout) view.findViewById(R.id.llAddTripMain);
+
+        llAddTripSubMain = (LinearLayout) view.findViewById(R.id.llAddTripSubMain);
         txtAutoCompleteSource = (AutoCompleteTextView) view.findViewById(R.id.txtAutoCompleteSource);
         txtAutoCompleteDestination = (AutoCompleteTextView) view.findViewById(R.id.txtAutoCompleteDestination);
         etxtFlightNo = (EditText) view.findViewById(R.id.etxtFlightNo);
@@ -146,7 +185,9 @@ public class AddTripFragment extends AbstractFragment implements View.OnClickLis
         imgClockArrival.setOnClickListener(this);
         txtAddButton.setOnClickListener(this);
         imgUploadTicket.setOnClickListener(this);
+        TransporterFilter.addFilterView(getActivity(), llAddTripSubMain, this);
         airportList = DatabaseMgr.getInstance(getActivity()).getAirportList();
+
         ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, airportList);
         txtAutoCompleteSource.setAdapter(arrayAdapter);
         txtAutoCompleteDestination.setAdapter(arrayAdapter);
@@ -172,7 +213,7 @@ public class AddTripFragment extends AbstractFragment implements View.OnClickLis
                 }, (commonResponseData.errorMessage != null) ? commonResponseData.errorMessage : getResources().getString(R.string.trip_add_success));
 
             } else if ("Error".equals(commonResponseData.status)) {
-                Util.showOKSnakBar(llAddTripMain, commonResponseData.errorMessage);
+                llAddTripMain.addView(Util.getViewDataNotFound(getActivity(), llAddTripMain, commonResponseData.errorMessage));
             }
 
         } else if (data instanceof AddTripData) {
@@ -186,10 +227,10 @@ public class AddTripFragment extends AbstractFragment implements View.OnClickLis
                 }, getString(R.string.trip_add_success));
 
             } else if ("Error".equals(addTripData.status)) {
-                Util.showOKSnakBar(llAddTripMain, (addTripData.errorMessage != null) ? addTripData.errorMessage : getResources().getString(R.string.trip_add_success));
+                llAddTripMain.addView(Util.getViewDataNotFound(getActivity(), llAddTripMain, (addTripData.errorMessage != null) ? addTripData.errorMessage : getResources().getString(R.string.trip_add_success)));
             }
 
-        }else if (data instanceof AddTrip) {
+        } else if (data instanceof AddTrip) {
             AddTrip addTripData = (AddTrip) data;
             if ("success".equals(addTripData.status)) {
                 Util.showAlertDialog(new DialogInterface.OnClickListener() {
@@ -197,15 +238,20 @@ public class AddTripFragment extends AbstractFragment implements View.OnClickLis
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Util.replaceFragment(getActivity(), R.id.fmHomeContainer, new DashBoardFragment());
                     }
-                }, (!TextUtils.isEmpty(addTripData.response))?addTripData.response:getString(R.string.trip_update_successfully));
+                }, (!TextUtils.isEmpty(addTripData.response)) ? addTripData.response : ((TripMode.equals("edit")?getString(R.string.trip_update_successfully):getString(R.string.trip_add_successfully))));
 
             } else if ("Error".equals(addTripData.status)) {
-                Util.showOKSnakBar(llAddTripMain, (addTripData.errorMessage != null) ? addTripData.errorMessage : getResources().getString(R.string.trip_add_success));
-            }
+                llAddTripMain.addView(Util.getViewDataNotFound(getActivity(), llAddTripMain, addTripData.errorMessage));
+  }
 
-        }
-        else if (data instanceof RetrofitError) {
-            Util.showOKSnakBar(llAddTripMain, getResources().getString(R.string.pls_try_again));
+        } else if (data instanceof RetrofitError) {
+            Util.showSnakBar(llAddTripMain, getResources().getString(R.string.pls_try_again));
+            llAddTripMain.addView(Util.getViewServerNotResponding(getActivity(), llAddTripMain, new TryAgainInterface() {
+                @Override
+                public void callBack() {
+                    addView();
+                }
+            }));
         }
     }
 
@@ -233,13 +279,29 @@ public class AddTripFragment extends AbstractFragment implements View.OnClickLis
             tripData.arrival_time = ((String) txtDateArrival.getTag()) + " " + txtTimeArrival.getTag();
             if (validation(tripData)) {
                 if ("edit".equals(TripMode)) {
+
+                    if(Constants.TripRequestSent.equals(tripData.status) || Constants.TripBooked.equals(tripData.status))
+                    {
+                        Util.showAlertDialog(new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                updateTrip(tripData);
+                            }
+                        },getString(R.string.trip_edit_if_booked));
+                    }
+                    else
                     updateTrip(tripData);
                 } else {
                     addTrip(tripData);
                 }
             }
         } else if (id == R.id.imgUploadTicket) {
-            attachmentDialog = Util.showAttachmentDialog(this, getActivity());
+            if (Util.isCallPermissionGranted(getActivity())) {
+                attachmentDialog = Util.showAttachmentDialog(this, getActivity());
+            } else {
+                Util.permission(getActivity(),this);
+            }
+
         } else if (id == R.id.txtCameraAttachment) {
             attachmentDialog.dismiss();
             captureImage();
@@ -346,26 +408,40 @@ public class AddTripFragment extends AbstractFragment implements View.OnClickLis
         mTimePicker.show();
     }
 
-    private void addTrip(TripData tripData) {
+    private void addTrip(final TripData tripData) {
         try {
             if (Util.isDeviceOnline()) {
                 Util.showProDialog(getActivity());
                 addTripModel.addTrip(tripData);
             } else {
-                Util.showAlertDialog(null, getResources().getString(R.string.noInternetMsg));
+
+                llAddTripMain.addView(Util.getViewInternetNotFound(getActivity(), llAddTripMain, new TryAgainInterface() {
+                    @Override
+                    public void callBack() {
+                        addView();
+                        addTrip(tripData);
+                    }
+                }));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
 
-    private void updateTrip(TripData tripData) {
+    private void updateTrip(final TripData tripData) {
         try {
             if (Util.isDeviceOnline()) {
                 Util.showProDialog(getActivity());
                 addTripModel.updateTrip(tripData);
             } else {
-                Util.showAlertDialog(null, getResources().getString(R.string.noInternetMsg));
+
+                llAddTripMain.addView(Util.getViewInternetNotFound(getActivity(), llAddTripMain, new TryAgainInterface() {
+                    @Override
+                    public void callBack() {
+                        addView();
+                        updateTrip(tripData);
+                    }
+                }));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -443,4 +519,46 @@ public class AddTripFragment extends AbstractFragment implements View.OnClickLis
             ex.printStackTrace();
         }
     }
+
+    @Override
+    public void filterData(FilterData filterData) {
+
+        Intent intent = new Intent(getActivity(), FindASenderActivity.class);
+        intent.putExtra("KEY_DATA", filterData);
+        startActivity(intent);
+    }
+
+
+
+
+
+    @Override
+    public void result(ArrayList<PermissionEnum> permissionsGranted, ArrayList<PermissionEnum> permissionsDenied, ArrayList<PermissionEnum> permissionsDeniedForever, ArrayList<PermissionEnum> permissionsAsked) {
+        List<String> msg = new ArrayList<>();
+        for (PermissionEnum permissionEnum : permissionsGranted) {
+            msg.add(permissionEnum.toString() + " [Granted]");
+        }
+        for (PermissionEnum permissionEnum : permissionsDenied) {
+            msg.add(permissionEnum.toString() + " [Denied]");
+        }
+        for (PermissionEnum permissionEnum : permissionsDeniedForever) {
+            msg.add(permissionEnum.toString() + " [DeniedForever]");
+        }
+        /*for (PermissionEnum permissionEnum : permissionsAsked) {
+            msg.add(permissionEnum.toString() + " [Asked]");
+        }*/
+        String[] items = msg.toArray(new String[msg.size()]);
+
+        ContextThemeWrapper cw = new ContextThemeWrapper(getActivity(), R.style.AlertDialogTheme);
+        new AlertDialog.Builder(cw)
+                .setTitle("Permission result")
+                .setItems(items, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                })
+                .show();
+    }
+
 }

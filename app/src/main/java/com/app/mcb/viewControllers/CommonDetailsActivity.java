@@ -1,23 +1,31 @@
 package com.app.mcb.viewControllers;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.app.mcb.MainActivity;
 import com.app.mcb.R;
 import com.app.mcb.Utility.Constants;
 import com.app.mcb.Utility.Util;
+import com.app.mcb.adapters.ParcelListHomeAdapter;
 import com.app.mcb.adapters.TripDetailsVPAdapter;
 import com.app.mcb.custom.AppHeaderView;
+import com.app.mcb.dao.AddParcelData;
 import com.app.mcb.dao.FilterData;
+import com.app.mcb.dao.ParcelListData;
 import com.app.mcb.dao.TripTransporterData;
 import com.app.mcb.filters.CommonListener;
 import com.app.mcb.filters.HomeFilter;
+import com.app.mcb.filters.TransporterFilter;
 import com.app.mcb.model.HomeTripModel;
+import com.app.mcb.retrointerface.TryAgainInterface;
 import com.app.mcb.sharedPreferences.Config;
 
 import org.byteclues.lib.model.BasicModel;
@@ -36,6 +44,9 @@ public class CommonDetailsActivity extends AbstractFragmentActivity implements V
     private LinearLayout llCountDotsMain;
     private AppHeaderView appHeaderView;
     private LinearLayout llTripDetailsMain;
+    private RelativeLayout rlTripDetailsContainer;
+    private TextView txtAddTripParcel;
+    int tripCount;
     private HomeTripModel homeTripModel = new HomeTripModel();
     private TripTransporterData tripTransporterData;
 
@@ -47,17 +58,32 @@ public class CommonDetailsActivity extends AbstractFragmentActivity implements V
         if (bundle != null) {
             tripTransporterData = (TripTransporterData) bundle.getSerializable("KEY_DATA");
             vpTripDetails.setAdapter(new TripDetailsVPAdapter(this, tripTransporterData.response, this));
+            tripCount = tripTransporterData.response.size();
+            if (tripTransporterData.response.size() <= 0) {
+                rlTripDetailsContainer.addView(Util.getViewDataNotFound(this, rlTripDetailsContainer, getString(R.string.trip_unavailable)));
+            }
         }
-        drawPageSelectionIndicators(0);
+        if (tripCount > 1)
+            drawPageSelectionIndicators(0);
     }
 
     private void init() {
         llTripDetailsMain = (LinearLayout) findViewById(R.id.llTripDetailsMain);
-        HomeFilter.addFilterView(this, llTripDetailsMain, this);
+        TransporterFilter.addFilterView(this, llTripDetailsMain, this);
         vpTripDetails = (ViewPager) findViewById(R.id.vpTripDetails);
         appHeaderView = (AppHeaderView) findViewById(R.id.appHeaderView);
+        rlTripDetailsContainer = (RelativeLayout) findViewById(R.id.rlTripDetailsContainer);
+        txtAddTripParcel = (TextView) findViewById(R.id.txtAddTripParcel);
         appHeaderView.txtHeaderNamecenter.setText(getResources().getString(R.string.trip_details));
+        txtAddTripParcel.setText(getString(R.string.add_parcels));
+        txtAddTripParcel.setOnClickListener(this);
         viewPagerChangeListener();
+    }
+
+    private void addMainView() {
+        rlTripDetailsContainer.removeAllViews();
+        rlTripDetailsContainer.addView(vpTripDetails);
+        rlTripDetailsContainer.addView(llCountDotsMain);
     }
 
     private void viewPagerChangeListener() {
@@ -98,8 +124,15 @@ public class CommonDetailsActivity extends AbstractFragmentActivity implements V
                     if (tripTransporterData.response.size() <= 0)
                         Util.showOKSnakBar(llTripDetailsMain, getResources().getString(R.string.trip_unavailable));
                 }
-            } else if (data != null && data instanceof RetrofitError) {
-                Util.showOKSnakBar(llTripDetailsMain, getResources().getString(R.string.pls_try_again));
+            }
+            if (data != null && data instanceof RetrofitError) {
+                rlTripDetailsContainer.addView(Util.getViewServerNotResponding(this, rlTripDetailsContainer, new TryAgainInterface() {
+                    @Override
+                    public void callBack() {
+                        startActivity(getIntent());
+                        finish();
+                    }
+                }));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -118,7 +151,38 @@ public class CommonDetailsActivity extends AbstractFragmentActivity implements V
                 intent = new Intent(this, LoginActivity.class);
             }
             intent.putExtra("data", ((TripTransporterData) v.getTag()));
-            startActivity(intent);
+            startActivityForResult(intent, 501);
+        } else if (id == R.id.txtAddTripParcel) {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivityForResult(intent, 502);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case (501): {
+                if (resultCode == Activity.RESULT_OK) {
+                    TripTransporterData tripTransporterData = ((TripTransporterData) data.getSerializableExtra("data"));
+                    if (Config.getLoginStatus()) {
+                        Intent intent = new Intent(this, MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.putExtra("data", tripTransporterData);
+                        startActivity(intent);
+                    }
+                }
+                break;
+            }
+            case (502): {
+                if (resultCode == Activity.RESULT_OK) {
+                    Intent intent = new Intent(this, MainActivity.class);
+                    intent.putExtra(Constants.ADD_PARCELS_KEY, new AddParcelData());
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                }
+                break;
+            }
         }
     }
 
@@ -126,13 +190,15 @@ public class CommonDetailsActivity extends AbstractFragmentActivity implements V
         if (llCountDotsMain != null) {
             llCountDotsMain.removeAllViews();
         }
+
+        int count = (tripCount > 2) ? 3 : tripCount;
         llCountDotsMain = (LinearLayout) findViewById(R.id.llCountDotsMain);
         ImageView[] dots = new ImageView[3];
 
-        if (mPosition > 2) {
-            mPosition = (mPosition % 3);
+        if (mPosition >= count) {
+            mPosition = (mPosition % count);
         }
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < count; i++) {
             dots[i] = new ImageView(this);
             if (i == mPosition)
                 dots[i].setImageDrawable(getResources().getDrawable(R.drawable.item_selected));
@@ -154,16 +220,16 @@ public class CommonDetailsActivity extends AbstractFragmentActivity implements V
         getTripByFilter(filterData);
     }
 
-    private void getTripByFilter(FilterData filterData) {
+    private void getTripByFilter(final FilterData filterData) {
         try {
-            if (Util.isDeviceOnline()) {
-                Util.showProDialog(this);
-                homeTripModel.getTripListByFilter(filterData);
-            } else {
-                Util.showAlertDialog(null, getResources().getString(R.string.noInternetMsg));
-            }
+            Intent intent = new Intent();
+            intent.putExtra("FILTER_DATA", filterData);
+            setResult(RESULT_OK, intent);
+            finish();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
+
+
 }

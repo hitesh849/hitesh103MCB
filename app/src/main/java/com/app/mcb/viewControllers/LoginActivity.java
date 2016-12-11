@@ -38,13 +38,11 @@ public class LoginActivity extends AbstractFragmentActivity implements View.OnCl
     private LinearLayout llLoginMain;
     private UserAuthenticationModel userAuthenticationModel = new UserAuthenticationModel();
     private Bundle bundle;
-    private TripTransporterData tripTransporterData;
 
     @Override
     protected void onCreatePost(Bundle savedInstanceState) {
         setContentView(R.layout.login);
         init();
-        tripTransporterData = (TripTransporterData) getIntent().getSerializableExtra("data");
     }
 
     private void init() {
@@ -76,10 +74,8 @@ public class LoginActivity extends AbstractFragmentActivity implements View.OnCl
                     if (userInfoData.response != null) {
                         userInfoData = userInfoData.response.get(0);
                         saveUserData(userInfoData);
-                        Intent intent = new Intent(this, MainActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        intent.putExtra("data", tripTransporterData);
-                        startActivity(intent);
+                        setResult(RESULT_OK, getIntent());
+                        finish();
                     }
                 } else if (userInfoData.status.equals("Error")) {
                     Util.showOKSnakBar(llLoginMain, userInfoData.errorMessage);

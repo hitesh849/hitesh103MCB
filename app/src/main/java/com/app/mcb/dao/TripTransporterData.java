@@ -24,5 +24,6 @@ public class TripTransporterData implements Serializable{
     public String update;
     public String city;
     public int position;
+    public int totaltrips;
     public ArrayList<TripTransporterData> response;
 }

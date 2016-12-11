@@ -1,5 +1,6 @@
 package com.app.mcb.viewControllers.transporter;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -11,12 +12,14 @@ import com.app.mcb.R;
 import com.app.mcb.Utility.Constants;
 import com.app.mcb.Utility.Util;
 import com.app.mcb.adapters.MyTripDetailsVPAdapter;
+import com.app.mcb.custom.AppHeaderView;
 import com.app.mcb.dao.BookingRequestData;
 import com.app.mcb.dao.MyTripDetailsData;
 import com.app.mcb.dao.MyTripsData;
 import com.app.mcb.dao.ParcelBookingChangeStatusData;
 import com.app.mcb.dao.ParcelDetailsData;
 import com.app.mcb.model.MyTripParcelListModel;
+import com.app.mcb.retrointerface.TryAgainInterface;
 
 import org.byteclues.lib.model.BasicModel;
 import org.byteclues.lib.view.AbstractFragmentActivity;
@@ -34,7 +37,9 @@ public class MyTripParcelActivity extends AbstractFragmentActivity implements Vi
     private ViewPager vpMyTripParcelList;
     private LinearLayout llCountDotsMain;
     private RelativeLayout rlMyTripParcelListMain;
-    MyTripsData myTripsData;
+    private MyTripsData myTripsData;
+    private int parcelCount;
+    private AppHeaderView appHeaderView;
     private MyTripParcelListModel myTripParcelListModel = new MyTripParcelListModel();
 
     @Override
@@ -43,35 +48,56 @@ public class MyTripParcelActivity extends AbstractFragmentActivity implements Vi
         rlMyTripParcelListMain = (RelativeLayout) findViewById(R.id.rlMyTripParcelListMain);
         vpMyTripParcelList = (ViewPager) findViewById(R.id.vpMyTripParcelList);
         llCountDotsMain = (LinearLayout) findViewById(R.id.llCountDotsMain);
+        appHeaderView = ((AppHeaderView) findViewById(R.id.appHeaderView));
+
         Bundle bundle = getIntent().getBundleExtra("KEY_BUNDLE");
         if (bundle != null) {
             myTripsData = (MyTripsData) bundle.getSerializable("KEY_DATA");
         }
         getMyTripDetails(myTripsData.id);
         viewPagerChangeListener();
-        drawPageSelectionIndicators(0);
+        appHeaderView.txtHeaderNamecenter.setText((myTripsData.myClickOn.equals("Find") ? getString(R.string.matching_parcels) : getString(R.string.booked_parcels)));
+
     }
 
-    private void getMyTripDetails(String tripId) {
+    private void addMainView() {
+        rlMyTripParcelListMain.removeAllViews();
+        rlMyTripParcelListMain.addView(vpMyTripParcelList);
+        rlMyTripParcelListMain.addView(llCountDotsMain);
+    }
+
+    private void getMyTripDetails(final String tripId) {
         try {
             if (Util.isDeviceOnline()) {
                 Util.showProDialog(this);
                 myTripParcelListModel.getMyTripDetails(tripId);
             } else {
-                Util.showAlertDialog(null, getResources().getString(R.string.noInternetMsg));
+                rlMyTripParcelListMain.addView(Util.getViewInternetNotFound(this, rlMyTripParcelListMain, new TryAgainInterface() {
+                    @Override
+                    public void callBack() {
+                        addMainView();
+                        getMyTripDetails(tripId);
+                    }
+                }));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
 
-    private void bookingRequest(String tripId, String trans_id) {
+    private void bookingRequest(final String tripId, final String trans_id) {
         try {
             if (Util.isDeviceOnline()) {
                 Util.showProDialog(this);
                 myTripParcelListModel.bookingRequest(tripId, trans_id);
             } else {
-                Util.showAlertDialog(null, getResources().getString(R.string.noInternetMsg));
+                rlMyTripParcelListMain.addView(Util.getViewInternetNotFound(this, rlMyTripParcelListMain, new TryAgainInterface() {
+                    @Override
+                    public void callBack() {
+                        addMainView();
+                        bookingRequest(tripId, trans_id);
+                    }
+                }));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -164,29 +190,41 @@ public class MyTripParcelActivity extends AbstractFragmentActivity implements Vi
                 if (myTripDetailsData.status.equals("success")) {
                     if ("Booked".equals(myTripsData.myClickOn) && myTripDetailsData.parcel != null && myTripDetailsData.parcel.size() > 0) {
                         vpMyTripParcelList.setAdapter(new MyTripDetailsVPAdapter(this, this, myTripDetailsData.parcel));
-
+                        parcelCount = myTripDetailsData.parcel.size();
+                        if (parcelCount > 1)
+                            drawPageSelectionIndicators(0);
                     } else if ("Find".equals(myTripsData.myClickOn) && myTripDetailsData.parcellist != null && myTripDetailsData.parcellist.size() > 0) {
                         vpMyTripParcelList.setAdapter(new MyTripDetailsVPAdapter(this, this, myTripDetailsData.parcellist));
+                        parcelCount = myTripDetailsData.parcellist.size();
+                        if (parcelCount > 1)
+                            drawPageSelectionIndicators(0);
                     } else {
                         vpMyTripParcelList.setVisibility(View.GONE);
-                        Util.showOKSnakBar(rlMyTripParcelListMain, getResources().getString(R.string.parcel_unavailable));
+                        rlMyTripParcelListMain.addView(Util.getViewDataNotFound(this, rlMyTripParcelListMain, getString(R.string.parcel_unavailable)));
                     }
                 }
             } else if (data != null && data instanceof BookingRequestData) {
                 BookingRequestData commonResponseData = ((BookingRequestData) data);
                 if ("success".equals(commonResponseData.status)) {
-                    Util.showOKSnakBar(rlMyTripParcelListMain, commonResponseData.response);
+                    Util.showAlertDialog(null, commonResponseData.response);
                 } else
-                    Util.showOKSnakBar(rlMyTripParcelListMain, commonResponseData.errorMessage);
+                    Util.showAlertDialog(null, commonResponseData.errorMessage);
 
             } else if (data != null && data instanceof ParcelBookingChangeStatusData) {
                 ParcelBookingChangeStatusData parcelBookingRejectedData = ((ParcelBookingChangeStatusData) data);
                 if ("success".equals(parcelBookingRejectedData.status))
                     getMyTripDetails(myTripsData.id);
                 else
-                    Util.showOKSnakBar(rlMyTripParcelListMain, parcelBookingRejectedData.errorMessage);
+                    Util.showAlertDialog(null, parcelBookingRejectedData.errorMessage);
             } else if (data != null && data instanceof RetrofitError) {
                 Util.showOKSnakBar(rlMyTripParcelListMain, getResources().getString(R.string.pls_try_again));
+                rlMyTripParcelListMain.addView(Util.getViewServerNotResponding(this, rlMyTripParcelListMain, new TryAgainInterface() {
+                    @Override
+                    public void callBack() {
+                        startActivity(getIntent());
+                        finish();
+                    }
+                }));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -210,11 +248,30 @@ public class MyTripParcelActivity extends AbstractFragmentActivity implements Vi
         int id = view.getId();
         if (id == R.id.imgBookNowMyTripParcel) {
 
-            ParcelDetailsData parcelDetailsData = ((ParcelDetailsData) view.getTag());
-            if (Constants.ParcelBookedWithTR.equals(parcelDetailsData.status) || Constants.ParcelPaymentDue.equals(parcelDetailsData.status))
-                parcelRejectRequest(parcelDetailsData);
-            else
-                bookingRequest(parcelDetailsData.id, myTripsData.id);
+            final ParcelDetailsData parcelDetailsData = ((ParcelDetailsData) view.getTag());
+            if (Constants.ParcelBookedWithTR.equals(parcelDetailsData.status) || Constants.ParcelPaymentDue.equals(parcelDetailsData.status)) {
+                Util.showAlertWithCancelDialog(new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        parcelRejectRequest(parcelDetailsData);
+                    }
+                }, getString(R.string.are_you_sure_delete_this_parcel));
+
+            } else {
+                float tripAvailable = Float.parseFloat(myTripsData.awailableweight);
+                if (Integer.parseInt(parcelDetailsData.weight) > tripAvailable) {
+                    float extendsWeight = Float.parseFloat(myTripsData.awailableweight) * 20 / 100;
+                    tripAvailable += extendsWeight;
+                    if (Integer.parseInt(parcelDetailsData.weight) > tripAvailable) {
+                        Util.showAlertDialog(null, getString(R.string.parcel_weight_available_capacity));
+                    } else {
+                        bookingRequest(parcelDetailsData.id, myTripsData.id);
+                    }
+                } else {
+                    bookingRequest(parcelDetailsData.id, myTripsData.id);
+                }
+            }
+
         } else if (id == R.id.txtCollectedMyTripParcel) {
             ParcelDetailsData parcelDetailsData = ((ParcelDetailsData) view.getTag());
 

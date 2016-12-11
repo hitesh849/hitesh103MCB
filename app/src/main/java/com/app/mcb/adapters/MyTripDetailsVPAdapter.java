@@ -14,6 +14,7 @@ import com.app.mcb.Utility.Constants;
 import com.app.mcb.Utility.Util;
 import com.app.mcb.dao.MyTripsData;
 import com.app.mcb.dao.ParcelDetailsData;
+import com.app.mcb.sharedPreferences.Config;
 
 import java.util.ArrayList;
 
@@ -24,7 +25,6 @@ public class MyTripDetailsVPAdapter extends PagerAdapter {
 
     private Context mContext;
     private View.OnClickListener onClickListener;
-
     private ArrayList<ParcelDetailsData> parcelList;
     private TextView txtBookingId;
     private TextView txtSenderEmailId;
@@ -45,10 +45,17 @@ public class MyTripDetailsVPAdapter extends PagerAdapter {
     private TextView txtToCityLongMyTripParcel;
     private TextView txtToDateMyTripParcel;
     private TextView txtFromDateMyTripParcel;
+    private TextView txtSenderMobile;
+    private TextView txtReceiverMobile;
+    private TextView txtReceiverName;
+    private TextView txtSenderName;
+    private TextView txtReceiverEmailId;
+    private TextView txtActionLabel;
     private TextView txtCollectedMyTripParcel;
     private TextView txtDeliveredMyTripParcel;
     private ImageView imgBookNowMyTripParcel;
     private LinearLayout llBookingInfoMyTripParcel;
+    private LinearLayout llReceiverInfoMyTripParcel;
     private LinearLayout llActionMyTripParcel;
     private String currentParcelStatus;
 
@@ -78,12 +85,17 @@ public class MyTripDetailsVPAdapter extends PagerAdapter {
         switch (parcelDetailsData.status) {
             case Constants.ParcelIdCreated:
                 llBookingInfoMyTripParcel.setVisibility(View.GONE);
+                llReceiverInfoMyTripParcel.setVisibility(View.GONE);
                 txtCollectedMyTripParcel.setVisibility(View.GONE);
                 txtDeliveredMyTripParcel.setVisibility(View.GONE);
+                imgChatMyTripParcel.setVisibility(View.GONE);
                 break;
             case Constants.ParcelPaymentDue:
                 llActionMyTripParcel.setVisibility(View.GONE);
+                llBookingInfoMyTripParcel.setVisibility(View.GONE);
+                llReceiverInfoMyTripParcel.setVisibility(View.GONE);
                 imgChatMyTripParcel.setVisibility(View.GONE);
+                txtActionLabel.setVisibility(View.GONE);
                 break;
             case Constants.ParcelBookedWithTR:
                 imgBookNowMyTripParcel.setImageResource(R.mipmap.reject);
@@ -96,6 +108,7 @@ public class MyTripDetailsVPAdapter extends PagerAdapter {
             case Constants.ParcelDelivered:
                 llActionMyTripParcel.setVisibility(View.GONE);
                 imgChatMyTripParcel.setVisibility(View.GONE);
+                txtActionLabel.setVisibility(View.GONE);
                 break;
         }
 
@@ -106,9 +119,10 @@ public class MyTripDetailsVPAdapter extends PagerAdapter {
         llBookingInfoMyTripParcel.setVisibility(View.VISIBLE);
         imgChatMyTripParcel.setVisibility(View.VISIBLE);
         llActionMyTripParcel.setVisibility(View.VISIBLE);
-        llBookingInfoMyTripParcel.setVisibility(View.VISIBLE);
+        llReceiverInfoMyTripParcel.setVisibility(View.VISIBLE);
         imgBookNowMyTripParcel.setVisibility(View.VISIBLE);
         txtDeliveredMyTripParcel.setVisibility(View.VISIBLE);
+        txtActionLabel.setVisibility(View.VISIBLE);
     }
 
     private void init(ViewGroup viewGroup, ParcelDetailsData parcelDetailsData) {
@@ -131,7 +145,14 @@ public class MyTripDetailsVPAdapter extends PagerAdapter {
         txtToCityLongMyTripParcel = (TextView) viewGroup.findViewById(R.id.txtToCityLongMyTripParcel);
         txtToDateMyTripParcel = (TextView) viewGroup.findViewById(R.id.txtToDateMyTripParcel);
         txtFromDateMyTripParcel = (TextView) viewGroup.findViewById(R.id.txtFromDateMyTripParcel);
+        txtSenderMobile = (TextView) viewGroup.findViewById(R.id.txtSenderMobile);
+        txtReceiverMobile = (TextView) viewGroup.findViewById(R.id.txtReceiverMobile);
+        txtActionLabel = (TextView) viewGroup.findViewById(R.id.txtActionLabel);
+        txtReceiverName = (TextView) viewGroup.findViewById(R.id.txtReceiverName);
+        txtSenderName = (TextView) viewGroup.findViewById(R.id.txtSenderName);
+        txtReceiverEmailId = (TextView) viewGroup.findViewById(R.id.txtReceiverEmailId);
         llBookingInfoMyTripParcel = (LinearLayout) viewGroup.findViewById(R.id.llBookingInfoMyTripParcel);
+        llReceiverInfoMyTripParcel = (LinearLayout) viewGroup.findViewById(R.id.llReceiverInfoMyTripParcel);
         llActionMyTripParcel = (LinearLayout) viewGroup.findViewById(R.id.llActionMyTripParcel);
         imgBookNowMyTripParcel = (ImageView) viewGroup.findViewById(R.id.imgBookNowMyTripParcel);
         txtCollectedMyTripParcel = (TextView) viewGroup.findViewById(R.id.txtCollectedMyTripParcel);
@@ -151,10 +172,15 @@ public class MyTripDetailsVPAdapter extends PagerAdapter {
         txtSenderEmailId.setText(parcelDetailsData.senderemail);
         txtParcelIdMyTripParcel.setText(parcelDetailsData.ParcelID);
         txtPercelMyTripParcel.setText(Util.getParcelType(parcelDetailsData.type));
-        txtPrcelWeightMyTripParcel.setText(parcelDetailsData.weight);
-        txtTransporterIdMyTripList.setText(parcelDetailsData.trans_id);
-        txtReceiverIdMyTripParcel.setText(parcelDetailsData.recv_id);
+        txtPrcelWeightMyTripParcel.setText(parcelDetailsData.weight + " " + "KG");
+        txtTransporterIdMyTripList.setText(Constants.BEGIN_WITH_USER_ID + Config.getUserId());
+        txtReceiverIdMyTripParcel.setText(Constants.BEGIN_WITH_USER_ID + parcelDetailsData.recv_id);
         txtStatusMyTripParcel.setText(parcelDetailsData.statusdescription);
+        txtReceiverEmailId.setText(parcelDetailsData.receiveremail);
+        txtReceiverMobile.setText(parcelDetailsData.receivermobile);
+        txtReceiverName.setText(parcelDetailsData.receivername);
+        txtSenderName.setText(parcelDetailsData.sendername);
+        txtSenderMobile.setText(parcelDetailsData.sendermobile);
         txtHeightMyTripParcel.setText(parcelDetailsData.height);
         txtWidthMyTripParcel.setText(parcelDetailsData.width);
         txLengthMyTripParcel.setText(parcelDetailsData.length);
